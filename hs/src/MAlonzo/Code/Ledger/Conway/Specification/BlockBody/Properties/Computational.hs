@@ -144,17 +144,11 @@ d_BBODY'45'computeProof_2416 v0 v1 v2 v3 v4
         -> let v7
                  = MAlonzo.Code.Class.Decidable.Core.d_dec_16
                      (coe
-                        MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_'8805''7497''45'Dec_246
+                        MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_'8804''7497''7512''45'Dec_246
                         (MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ps_334
                            (coe
                               MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_2068
                               (coe v0)))
-                        (MAlonzo.Code.Ledger.Conway.Specification.PParams.d_maxBlockExUnits_368
-                           (coe
-                              MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-                              (coe
-                                 MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pparams_1204
-                                 (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v2)))))
                         (coe
                            MAlonzo.Code.Axiom.Set.Sum.du_indexedSumL_932
                            (MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ExUnit'45'CommutativeMonoid_230
@@ -167,7 +161,13 @@ d_BBODY'45'computeProof_2416 v0 v1 v2 v3 v4
                               MAlonzo.Code.Ledger.Conway.Specification.Utxo.du_totExUnits_2476
                               (coe v0))
                            (MAlonzo.Code.Ledger.Conway.Specification.BlockBody.d_ts_2382
-                              (coe v4)))) in
+                              (coe v4)))
+                        (MAlonzo.Code.Ledger.Conway.Specification.PParams.d_maxBlockExUnits_368
+                           (coe
+                              MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                              (coe
+                                 MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pparams_1204
+                                 (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v2)))))) in
            coe
              (case coe v7 of
                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v8 v9

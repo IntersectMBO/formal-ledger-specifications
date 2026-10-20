@@ -29,7 +29,6 @@ import qualified MAlonzo.Code.Class.Convertible.Core
 import qualified MAlonzo.Code.Class.Convertible.Foreign
 import qualified MAlonzo.Code.Class.Convertible.Instances
 import qualified MAlonzo.Code.Class.DecEq.Instances
-import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Class.Functor.Core
 import qualified MAlonzo.Code.Class.Functor.Instances
 import qualified MAlonzo.Code.Class.HasHsType.Core
@@ -82,7 +81,7 @@ import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
 import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base
 
 import GHC.Generics (Generic)
-data BHBody = MkBHBody {bhbBvkcold :: MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.HSVKey, bhbBsize :: Integer, bhbSlot :: Integer, bhbBhash :: Integer, bhbHBbsize :: Integer, bhbAnnouncedEB :: (Maybe (Integer, Integer)), bhbCertifiedEB :: Bool}
+data BHBody = MkBHBody {bhbBvkcold :: MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.HSVKey, bhbBsize :: Integer, bhbSlot :: Integer, bhbBhash :: Integer, bhbHBbsize :: Integer, bhbAnnouncedEB :: (Maybe (Integer, Integer)), bhbCertifiesEB :: Bool}
   deriving (Show, Eq, Generic)
 data BHeader = MkBHeader {bhBhbody :: MAlonzo.Code.Ledger.Dijkstra.Foreign.Chain.BHBody, bhBhsig :: Integer}
   deriving (Show, Eq, Generic)
@@ -102,19 +101,19 @@ data ChainState = MkChainState {csNewEpochState :: MAlonzo.Code.Ledger.Dijkstra.
 d_EBCert_10 = ()
 -- Ledger.Dijkstra.Foreign.Chain._.EBCert.sig
 d_sig_16 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1644 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1648 ->
   Integer
 d_sig_16 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_sig_1652
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_sig_1656
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.EBCert.signers
 d_signers_18 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1644 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1648 ->
   [Integer]
 d_signers_18 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_signers_1650
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_signers_1654
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.EndorserBlock
 d_EndorserBlock_22 = ()
@@ -151,530 +150,488 @@ d_Block_54 = ()
 d_CertifyEnv_64 = ()
 -- Ledger.Dijkstra.Foreign.Chain._.ChainState
 d_ChainState_68 = ()
--- Ledger.Dijkstra.Foreign.Chain._.Dec-ValidLeiosBlock
-d_Dec'45'ValidLeiosBlock_72 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3078 ->
-  MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_Dec'45'ValidLeiosBlock_72
-  = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.du_Dec'45'ValidLeiosBlock_3176
--- Ledger.Dijkstra.Foreign.Chain._.Dec-delayChecks
-d_Dec'45'delayChecks_74 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_314 ->
-  Maybe
-    MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4426 ->
-  Maybe
-    MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1644 ->
-  Integer -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_Dec'45'delayChecks_74
-  = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_Dec'45'delayChecks_4630
-      (coe
-         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
-         (coe
-            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
 -- Ledger.Dijkstra.Foreign.Chain._.HasCast-CertifyEnv
-d_HasCast'45'CertifyEnv_76 ::
+d_HasCast'45'CertifyEnv_72 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-d_HasCast'45'CertifyEnv_76
+d_HasCast'45'CertifyEnv_72
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_HasCast'45'CertifyEnv_4504
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_HasCast'45'CertifyEnv_4506
 -- Ledger.Dijkstra.Foreign.Chain._.HasCast-LastAppliedBlock
-d_HasCast'45'LastAppliedBlock_78 ::
+d_HasCast'45'LastAppliedBlock_74 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-d_HasCast'45'LastAppliedBlock_78
+d_HasCast'45'LastAppliedBlock_74
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_HasCast'45'LastAppliedBlock_4454
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_HasCast'45'LastAppliedBlock_4460
 -- Ledger.Dijkstra.Foreign.Chain._.HasCertState-ChainState
-d_HasCertState'45'ChainState_80 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasCertState_1908
-d_HasCertState'45'ChainState_80
+d_HasCertState'45'ChainState_76 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasCertState_1912
+d_HasCertState'45'ChainState_76
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_HasCertState'45'ChainState_4468
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_HasCertState'45'ChainState_4474
 -- Ledger.Dijkstra.Foreign.Chain._.HasEnactState-ChainState
-d_HasEnactState'45'ChainState_82 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_HasEnactState_1352
-d_HasEnactState'45'ChainState_82
+d_HasEnactState'45'ChainState_78 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_HasEnactState_1356
+d_HasEnactState'45'ChainState_78
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_HasEnactState'45'ChainState_4462
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_HasEnactState'45'ChainState_4468
 -- Ledger.Dijkstra.Foreign.Chain._.HasEpochState-ChainState
-d_HasEpochState'45'ChainState_84 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_HasEpochState_4226
-d_HasEpochState'45'ChainState_84
+d_HasEpochState'45'ChainState_80 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_HasEpochState_4238
+d_HasEpochState'45'ChainState_80
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_HasEpochState'45'ChainState_4460
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_HasEpochState'45'ChainState_4466
 -- Ledger.Dijkstra.Foreign.Chain._.HasLastEpoch-ChainState
-d_HasLastEpoch'45'ChainState_86 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_HasLastEpoch_4320
-d_HasLastEpoch'45'ChainState_86
+d_HasLastEpoch'45'ChainState_82 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_HasLastEpoch_4332
+d_HasLastEpoch'45'ChainState_82
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_HasLastEpoch'45'ChainState_4458
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_HasLastEpoch'45'ChainState_4464
 -- Ledger.Dijkstra.Foreign.Chain._.HasLedgerState-ChainState
-d_HasLedgerState'45'ChainState_88 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_HasLedgerState_3944
-d_HasLedgerState'45'ChainState_88
+d_HasLedgerState'45'ChainState_84 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_HasLedgerState_3956
+d_HasLedgerState'45'ChainState_84
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_HasLedgerState'45'ChainState_4464
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_HasLedgerState'45'ChainState_4470
 -- Ledger.Dijkstra.Foreign.Chain._.HasNewEpochState-ChainState
-d_HasNewEpochState'45'ChainState_90 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_HasNewEpochState_4300
-d_HasNewEpochState'45'ChainState_90
+d_HasNewEpochState'45'ChainState_86 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_HasNewEpochState_4312
+d_HasNewEpochState'45'ChainState_86
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_HasNewEpochState'45'ChainState_4456
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_HasNewEpochState'45'ChainState_4462
 -- Ledger.Dijkstra.Foreign.Chain._.HasPParams-ChainState
-d_HasPParams'45'ChainState_92 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_732
-d_HasPParams'45'ChainState_92
+d_HasPParams'45'ChainState_88 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_736
+d_HasPParams'45'ChainState_88
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_HasPParams'45'ChainState_4472
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_HasPParams'45'ChainState_4478
 -- Ledger.Dijkstra.Foreign.Chain._.HasRewards-ChainState
-d_HasRewards'45'ChainState_94 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasRewards_1788
-d_HasRewards'45'ChainState_94
+d_HasRewards'45'ChainState_90 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasRewards_1792
+d_HasRewards'45'ChainState_90
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_HasRewards'45'ChainState_4470
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_HasRewards'45'ChainState_4476
 -- Ledger.Dijkstra.Foreign.Chain._.HasUTxOState-ChainState
-d_HasUTxOState'45'ChainState_96 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_HasUTxOState_3310
-d_HasUTxOState'45'ChainState_96
+d_HasUTxOState'45'ChainState_92 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_HasUTxOState_3336
+d_HasUTxOState'45'ChainState_92
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_HasUTxOState'45'ChainState_4466
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_HasUTxOState'45'ChainState_4472
 -- Ledger.Dijkstra.Foreign.Chain._.LastAppliedBlock
-d_LastAppliedBlock_98 = ()
+d_LastAppliedBlock_94 = ()
 -- Ledger.Dijkstra.Foreign.Chain._.ResolvedEB
-d_ResolvedEB_102 = ()
+d_ResolvedEB_98 = ()
 -- Ledger.Dijkstra.Foreign.Chain._.ValidLeiosBlock
-d_ValidLeiosBlock_106 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3078 ->
+d_ValidLeiosBlock_102 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3090 ->
   ()
-d_ValidLeiosBlock_106 = erased
--- Ledger.Dijkstra.Foreign.Chain._.ValidLeiosBlock?
-d_ValidLeiosBlock'63'_108 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3078 ->
-  MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-d_ValidLeiosBlock'63'_108
-  = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.du_ValidLeiosBlock'63'_3146
--- Ledger.Dijkstra.Foreign.Chain._.certifiedBit
-d_certifiedBit_110 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3078 ->
-  Bool
-d_certifiedBit_110 v0
-  = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_certifiedEB_3062
-      (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3072
-         (coe
-            MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bheader_3096
-            (coe v0)))
+d_ValidLeiosBlock_102 = erased
 -- Ledger.Dijkstra.Foreign.Chain._.certifyEnv
-d_certifyEnv_112 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_ChainState_4442 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_CertifyEnv_4484
-d_certifyEnv_112
+d_certifyEnv_104 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_ChainState_4448 ->
+  Integer ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_CertifyEnv_4482
+d_certifyEnv_104
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_certifyEnv_4506
--- Ledger.Dijkstra.Foreign.Chain._.delayChecks
-d_delayChecks_114 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_314 ->
-  Maybe
-    MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4426 ->
-  Maybe
-    MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1644 ->
-  Integer -> ()
-d_delayChecks_114 = erased
--- Ledger.Dijkstra.Foreign.Chain._.delayChecks?
-d_delayChecks'63'_116 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_314 ->
-  Maybe
-    MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4426 ->
-  Maybe
-    MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1644 ->
-  Integer -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-d_delayChecks'63'_116
-  = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_delayChecks'63'_4614
-      (coe
-         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
-         (coe
-            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_certifyEnv_4508
 -- Ledger.Dijkstra.Foreign.Chain._.incrBlocks
-d_incrBlocks_118 ::
+d_incrBlocks_106 ::
   Integer ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_incrBlocks_118
+d_incrBlocks_106
   = let v0
           = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
               (coe
                  MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.du_incrBlocks_3118
+         MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.du_incrBlocks_3130
          (coe v0))
 -- Ledger.Dijkstra.Foreign.Chain._.pendingEB
-d_pendingEB_120 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4426 ->
+d_pendingEB_108 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4432 ->
   Maybe Integer
-d_pendingEB_120
+d_pendingEB_108
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_pendingEB_4524
--- Ledger.Dijkstra.Foreign.Chain._.totalRefScriptsSize
-d_totalRefScriptsSize_122 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3924 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3842] ->
-  Integer
-d_totalRefScriptsSize_122
-  = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_totalRefScriptsSize_4474
-      (coe
-         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
-         (coe
-            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
-      (coe
-         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSAbstractFunctions_3952
-         (coe
-            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_pendingEB_4528
 -- Ledger.Dijkstra.Foreign.Chain._.BHBody.announcedEB
-d_announcedEB_140 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHBody_3034 ->
+d_announcedEB_126 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHBody_3046 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_announcedEB_140 v0
+d_announcedEB_126 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_announcedEB_3060
+      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_announcedEB_3072
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.BHBody.bhash
-d_bhash_142 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHBody_3034 ->
+d_bhash_128 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHBody_3046 ->
   Integer
-d_bhash_142 v0
+d_bhash_128 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhash_3056
+      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhash_3068
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.BHBody.bsize
-d_bsize_144 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHBody_3034 ->
+d_bsize_130 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHBody_3046 ->
   Integer
-d_bsize_144 v0
+d_bsize_130 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bsize_3052
+      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bsize_3064
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.BHBody.bvkcold
-d_bvkcold_146 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHBody_3034 ->
+d_bvkcold_132 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHBody_3046 ->
   MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.T_HSVKey_10
-d_bvkcold_146 v0
+d_bvkcold_132 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bvkcold_3050
+      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bvkcold_3062
       (coe v0)
--- Ledger.Dijkstra.Foreign.Chain._.BHBody.certifiedEB
-d_certifiedEB_148 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHBody_3034 ->
+-- Ledger.Dijkstra.Foreign.Chain._.BHBody.certifiesEB
+d_certifiesEB_134 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHBody_3046 ->
   Bool
-d_certifiedEB_148 v0
+d_certifiesEB_134 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_certifiedEB_3062
+      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_certifiesEB_3074
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.BHBody.hBbsize
-d_hBbsize_150 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHBody_3034 ->
+d_hBbsize_136 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHBody_3046 ->
   Integer
-d_hBbsize_150 v0
+d_hBbsize_136 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_hBbsize_3058
+      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_hBbsize_3070
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.BHBody.slot
-d_slot_152 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHBody_3034 ->
+d_slot_138 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHBody_3046 ->
   Integer
-d_slot_152 v0
+d_slot_138 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_slot_3054
+      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_slot_3066
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.BHeader.bhbody
-d_bhbody_156 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHeader_3066 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHBody_3034
-d_bhbody_156 v0
+d_bhbody_142 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHeader_3078 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHBody_3046
+d_bhbody_142 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3072
+      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3084
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.BHeader.bhsig
-d_bhsig_158 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHeader_3066 ->
+d_bhsig_144 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHeader_3078 ->
   Integer
-d_bhsig_158 v0
+d_bhsig_144 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhsig_3074
+      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhsig_3086
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.Block.bBodyHash
-d_bBodyHash_162 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3078 ->
+d_bBodyHash_148 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3090 ->
   Integer
-d_bBodyHash_162 v0
+d_bBodyHash_148 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bBodyHash_3106
+      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bBodyHash_3118
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.Block.bBodySize
-d_bBodySize_164 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3078 ->
+d_bBodySize_150 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3090 ->
   Integer
-d_bBodySize_164 v0
+d_bBodySize_150 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bBodySize_3104
+      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bBodySize_3116
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.Block.bHeaderHash
-d_bHeaderHash_166 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3078 ->
+d_bHeaderHash_152 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3090 ->
   Integer
-d_bHeaderHash_166 v0
+d_bHeaderHash_152 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bHeaderHash_3098
+      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bHeaderHash_3110
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.Block.bheader
-d_bheader_168 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3078 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHeader_3066
-d_bheader_168 v0
+d_bheader_154 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3090 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHeader_3078
+d_bheader_154 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bheader_3096
+      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bheader_3108
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.Block.ebCert
-d_ebCert_170 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3078 ->
+d_ebCert_156 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3090 ->
   Maybe
-    MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1644
-d_ebCert_170 v0
+    MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1648
+d_ebCert_156 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_ebCert_3102
+      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_ebCert_3114
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.Block.ts
-d_ts_172 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3078 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3842]
-d_ts_172 v0
+d_ts_158 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3090 ->
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3866]
+d_ts_158 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_ts_3100
+      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_ts_3112
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.Block.≡-bBodyHash
-d_'8801''45'bBodyHash_174 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3078 ->
+d_'8801''45'bBodyHash_160 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3090 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'8801''45'bBodyHash_174 = erased
+d_'8801''45'bBodyHash_160 = erased
 -- Ledger.Dijkstra.Foreign.Chain._.Block.≡-bBodySize
-d_'8801''45'bBodySize_176 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3078 ->
+d_'8801''45'bBodySize_162 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3090 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'8801''45'bBodySize_176 = erased
+d_'8801''45'bBodySize_162 = erased
 -- Ledger.Dijkstra.Foreign.Chain._.CertifyEnv.committee
-d_committee_180 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_CertifyEnv_4484 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1458]
-d_committee_180 v0
+d_committee_166 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_CertifyEnv_4482 ->
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_LeiosSeat_1462]
+d_committee_166 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_committee_4496
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_committee_4498
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.CertifyEnv.enactState
-d_enactState_182 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_CertifyEnv_4484 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1324
-d_enactState_182 v0
+d_enactState_168 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_CertifyEnv_4482 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1328
+d_enactState_168 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_enactState_4498
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_enactState_4500
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.CertifyEnv.lastApplied
-d_lastApplied_184 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_CertifyEnv_4484 ->
+d_lastApplied_170 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_CertifyEnv_4482 ->
   Maybe
-    MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4426
-d_lastApplied_184 v0
+    MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4432
+d_lastApplied_170 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_lastApplied_4494
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_lastApplied_4496
+      (coe v0)
+-- Ledger.Dijkstra.Foreign.Chain._.CertifyEnv.slot
+d_slot_172 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_CertifyEnv_4482 ->
+  Integer
+d_slot_172 v0
+  = coe
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_slot_4494
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.CertifyEnv.treasury
-d_treasury_186 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_CertifyEnv_4484 ->
+d_treasury_174 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_CertifyEnv_4482 ->
   Integer
-d_treasury_186 v0
+d_treasury_174 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_treasury_4500
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_treasury_4502
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.ChainState.lastApplied
-d_lastApplied_190 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_ChainState_4442 ->
+d_lastApplied_178 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_ChainState_4448 ->
   Maybe
-    MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4426
-d_lastApplied_190 v0
+    MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4432
+d_lastApplied_178 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_lastApplied_4450
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_lastApplied_4456
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.ChainState.newEpochState
-d_newEpochState_192 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_ChainState_4442 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_NewEpochState_4264
-d_newEpochState_192 v0
+d_newEpochState_180 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_ChainState_4448 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_NewEpochState_4276
+d_newEpochState_180 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_newEpochState_4448
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_newEpochState_4454
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.LastAppliedBlock.announcedEB
-d_announcedEB_196 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4426 ->
+d_announcedEB_184 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4432 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_announcedEB_196 v0
+d_announcedEB_184 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_announcedEB_4438
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_announcedEB_4444
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.LastAppliedBlock.headerHash
-d_headerHash_198 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4426 ->
+d_headerHash_186 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4432 ->
   Integer
-d_headerHash_198 v0
+d_headerHash_186 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_headerHash_4436
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_headerHash_4442
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.LastAppliedBlock.slot
-d_slot_200 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4426 ->
+d_slot_188 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4432 ->
   Integer
-d_slot_200 v0
+d_slot_188 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_slot_4434
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_slot_4440
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.ResolvedEB.closure
-d_closure_204 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_ResolvedEB_4528 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3842]
-d_closure_204 v0
+d_closure_192 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_ResolvedEB_4532 ->
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3866]
+d_closure_192 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_closure_4536
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_closure_4540
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.ResolvedEB.eb
-d_eb_206 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_ResolvedEB_4528 ->
+d_eb_194 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_ResolvedEB_4532 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.Types.T_EndorserBlock_22
-d_eb_206 v0
+d_eb_194 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_eb_4534 (coe v0)
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_eb_4538 (coe v0)
 -- Ledger.Dijkstra.Foreign.Chain._.Computational-CERTIFY
-d_Computational'45'CERTIFY_210 ::
+d_Computational'45'CERTIFY_198 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'CERTIFY_210
+d_Computational'45'CERTIFY_198
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.Properties.Computational.d_Computational'45'CERTIFY_3556
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.Properties.Computational.d_Computational'45'CERTIFY_3820
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
          (coe
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSAbstractFunctions_3952
+         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSAbstractFunctions_3964
          (coe
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
 -- Ledger.Dijkstra.Foreign.Chain._.Computational-CHAIN
-d_Computational'45'CHAIN_212 ::
+d_Computational'45'CHAIN_200 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'CHAIN_212
+d_Computational'45'CHAIN_200
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.Properties.Computational.d_Computational'45'CHAIN_4004
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.Properties.Computational.d_Computational'45'CHAIN_4524
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
          (coe
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSAbstractFunctions_3952
+         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSAbstractFunctions_3964
          (coe
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
 -- Ledger.Dijkstra.Foreign.Chain._.blockSlot
-d_blockSlot_214 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3078 ->
+d_blockSlot_202 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3090 ->
   Integer
-d_blockSlot_214 v0
+d_blockSlot_202 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_slot_3054
+      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_slot_3066
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3072
+         MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3084
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bheader_3096
+            MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bheader_3108
             (coe v0)))
+-- Ledger.Dijkstra.Foreign.Chain._.delay?
+d_delay'63'_204 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_CertifyEnv_4482 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4432 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1648 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_ResolvedEB_4532 ->
+  MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
+d_delay'63'_204 v0 v1 v2 v3
+  = coe
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.Properties.Computational.du_delay'63'_3814
+      (coe
+         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
+      v0 v1
 -- Ledger.Dijkstra.Foreign.Chain._.pending?
-d_pending'63'_216 ::
+d_pending'63'_206 ::
   Maybe
-    MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4426 ->
+    MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4432 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-d_pending'63'_216
+d_pending'63'_206
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.Properties.Computational.du_pending'63'_3494
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.Properties.Computational.du_pending'63'_3750
 -- Ledger.Dijkstra.Foreign.Chain._.pendingEB?
-d_pendingEB'63'_218 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_CertifyEnv_4484 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4426 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1644 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_ResolvedEB_4528 ->
+d_pendingEB'63'_208 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_CertifyEnv_4482 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4432 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1648 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_ResolvedEB_4532 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-d_pendingEB'63'_218 v0 v1 v2 v3
+d_pendingEB'63'_208 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.Properties.Computational.du_pendingEB'63'_3552
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.Properties.Computational.du_pendingEB'63'_3812
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
          (coe
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
       v1 v3
 -- Ledger.Dijkstra.Foreign.Chain._.pendingFailure
-d_pendingFailure_220 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4426 ->
+d_pendingFailure_210 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4432 ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_pendingFailure_220
+d_pendingFailure_210
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.Properties.Computational.du_pendingFailure_3504
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.Properties.Computational.du_pendingFailure_3760
 -- Ledger.Dijkstra.Foreign.Chain._.refScriptSize≤?Bound
-d_refScriptSize'8804''63'Bound_222 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_NewEpochState_4264 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3842] ->
+d_refScriptSize'8804''63'Bound_212 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.T_NewEpochState_4276 ->
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3866] ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-d_refScriptSize'8804''63'Bound_222
+d_refScriptSize'8804''63'Bound_212
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.Properties.Computational.d_refScriptSize'8804''63'Bound_3488
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.Properties.Computational.d_refScriptSize'8804''63'Bound_3742
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
          (coe
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSAbstractFunctions_3952
+         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSAbstractFunctions_3964
          (coe
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
--- Ledger.Dijkstra.Foreign.Chain._.validCert?
-d_validCert'63'_224 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_CertifyEnv_4484 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4426 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1644 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_ResolvedEB_4528 ->
+-- Ledger.Dijkstra.Foreign.Chain._.sameEpoch?
+d_sameEpoch'63'_214 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_CertifyEnv_4482 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4432 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1648 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_ResolvedEB_4532 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-d_validCert'63'_224 v0 v1 v2 v3
+d_sameEpoch'63'_214 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.Properties.Computational.du_validCert'63'_3554
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.Properties.Computational.du_sameEpoch'63'_3816
+      (coe
+         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+         (coe
+            MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
+      v0 v1
+-- Ledger.Dijkstra.Foreign.Chain._.validCert?
+d_validCert'63'_216 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_CertifyEnv_4482 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_LastAppliedBlock_4432 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1648 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.T_ResolvedEB_4532 ->
+  MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
+d_validCert'63'_216 v0 v1 v2 v3
+  = coe
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.Properties.Computational.du_validCert'63'_3818
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
          (coe
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
       v0 v1 v2
 -- Ledger.Dijkstra.Foreign.Chain._.RBHeaderHash
-d_RBHeaderHash_228 :: ()
-d_RBHeaderHash_228 = erased
+d_RBHeaderHash_220 :: ()
+d_RBHeaderHash_220 = erased
 -- Ledger.Dijkstra.Foreign.Chain.HsTy-BHBody
-d_HsTy'45'BHBody_230 ::
+d_HsTy'45'BHBody_222 ::
   MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
-d_HsTy'45'BHBody_230 = erased
+d_HsTy'45'BHBody_222 = erased
 -- Ledger.Dijkstra.Foreign.Chain.Conv-BHBody
-d_Conv'45'BHBody_232 ::
+d_Conv'45'BHBody_224 ::
   MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
-d_Conv'45'BHBody_232
+d_Conv'45'BHBody_224
   = coe
       MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_3064 v1 v2 v3 v4 v5 v6 v7
+              MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_3076 v1 v2 v3 v4 v5 v6 v7
                 -> coe
-                     C_MkBHBody_371
+                     C_MkBHBody_335
                      (coe
                         MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.C_MkHSVKey_8383
                         (coe
@@ -698,9 +655,9 @@ d_Conv'45'BHBody_232
       (coe
          (\ v0 ->
             case coe v0 of
-              C_MkBHBody_371 v1 v2 v3 v4 v5 v6 v7
+              C_MkBHBody_335 v1 v2 v3 v4 v5 v6 v7
                 -> coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_3064
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_3076
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
                         (coe
@@ -736,46 +693,46 @@ d_Conv'45'BHBody_232
                      (coe v7)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Dijkstra.Foreign.Chain.HsTy-BHeader
-d_HsTy'45'BHeader_234 ::
+d_HsTy'45'BHeader_226 ::
   MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
-d_HsTy'45'BHeader_234 = erased
+d_HsTy'45'BHeader_226 = erased
 -- Ledger.Dijkstra.Foreign.Chain.Conv-BHeader
-d_Conv'45'BHeader_236 ::
+d_Conv'45'BHeader_228 ::
   MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
-d_Conv'45'BHeader_236
+d_Conv'45'BHeader_228
   = coe
       MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_3076 v1 v2
+              MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_3088 v1 v2
                 -> coe
-                     C_MkBHeader_6067
+                     C_MkBHeader_6031
                      (coe
-                        C_MkBHBody_371
+                        C_MkBHBody_335
                         (coe
                            MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.C_MkHSVKey_8383
                            (coe
                               MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.d_hvkVKey_16
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bvkcold_3050
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bvkcold_3062
                                  (coe v1)))
                            (coe
                               MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.d_hvkStoredHash_18
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bvkcold_3050
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bvkcold_3062
                                  (coe v1))))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bsize_3052
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bsize_3064
                            (coe v1))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_slot_3054
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_slot_3066
                            (coe v1))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhash_3056
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhash_3068
                            (coe v1))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_hBbsize_3058
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_hBbsize_3070
                            (coe v1))
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -786,19 +743,19 @@ d_Conv'45'BHeader_236
                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                  (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                  (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
-                           (MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_announcedEB_3060
+                           (MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_announcedEB_3072
                               (coe v1)))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_certifiedEB_3062
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_certifiesEB_3074
                            (coe v1)))
                      (coe v2)
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
          (\ v0 ->
             case coe v0 of
-              C_MkBHeader_6067 v1 v2
+              C_MkBHeader_6031 v1 v2
                 -> coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_3076
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_3088
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
                         (coe
@@ -806,9 +763,9 @@ d_Conv'45'BHeader_236
                            (coe
                               (\ v3 ->
                                  case coe v3 of
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_3064 v4 v5 v6 v7 v8 v9 v10
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_3076 v4 v5 v6 v7 v8 v9 v10
                                      -> coe
-                                          C_MkBHBody_371
+                                          C_MkBHBody_335
                                           (coe
                                              MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.C_MkHSVKey_8383
                                              (coe
@@ -836,9 +793,9 @@ d_Conv'45'BHeader_236
                            (coe
                               (\ v3 ->
                                  case coe v3 of
-                                   C_MkBHBody_371 v4 v5 v6 v7 v8 v9 v10
+                                   C_MkBHBody_335 v4 v5 v6 v7 v8 v9 v10
                                      -> coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_3064
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_3076
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_from_22
                                              (coe
@@ -880,21 +837,21 @@ d_Conv'45'BHeader_236
                      (coe v2)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Dijkstra.Foreign.Chain.HsTy-EBCert
-d_HsTy'45'EBCert_238 ::
+d_HsTy'45'EBCert_230 ::
   MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
-d_HsTy'45'EBCert_238 = erased
+d_HsTy'45'EBCert_230 = erased
 -- Ledger.Dijkstra.Foreign.Chain.Conv-EBCert
-d_Conv'45'EBCert_240 ::
+d_Conv'45'EBCert_232 ::
   MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
-d_Conv'45'EBCert_240
+d_Conv'45'EBCert_232
   = coe
       MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.C_constructor_1654 v1 v2
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.C_constructor_1658 v1 v2
                 -> coe
-                     C_MkEBCert_6711
+                     C_MkEBCert_6675
                      (coe
                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_68
                         (coe
@@ -908,9 +865,9 @@ d_Conv'45'EBCert_240
       (coe
          (\ v0 ->
             case coe v0 of
-              C_MkEBCert_6711 v1 v2
+              C_MkEBCert_6675 v1 v2
                 -> coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.C_constructor_1654
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.C_constructor_1658
                      (coe
                         MAlonzo.Code.Axiom.Set.du_fromList_456
                         (coe
@@ -926,13 +883,13 @@ d_Conv'45'EBCert_240
                      (coe v2)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Dijkstra.Foreign.Chain.HsTy-EndorserBlock
-d_HsTy'45'EndorserBlock_242 ::
+d_HsTy'45'EndorserBlock_234 ::
   MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
-d_HsTy'45'EndorserBlock_242 = erased
+d_HsTy'45'EndorserBlock_234 = erased
 -- Ledger.Dijkstra.Foreign.Chain.Conv-EndorserBlock
-d_Conv'45'EndorserBlock_244 ::
+d_Conv'45'EndorserBlock_236 ::
   MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
-d_Conv'45'EndorserBlock_244
+d_Conv'45'EndorserBlock_236
   = coe
       MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
@@ -940,7 +897,7 @@ d_Conv'45'EndorserBlock_244
             case coe v0 of
               MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.Types.C_constructor_28 v1
                 -> coe
-                     C_MkEndorserBlock_7447
+                     C_MkEndorserBlock_7411
                      (coe
                         MAlonzo.Code.Class.Functor.Core.du_fmap_22
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
@@ -955,7 +912,7 @@ d_Conv'45'EndorserBlock_244
       (coe
          (\ v0 ->
             case coe v0 of
-              C_MkEndorserBlock_7447 v1
+              C_MkEndorserBlock_7411 v1
                 -> coe
                      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.Types.C_constructor_28
                      (coe
@@ -970,23 +927,23 @@ d_Conv'45'EndorserBlock_244
                         v1)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Dijkstra.Foreign.Chain.HsTy-ResolvedEB
-d_HsTy'45'ResolvedEB_246 ::
+d_HsTy'45'ResolvedEB_238 ::
   MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
-d_HsTy'45'ResolvedEB_246 = erased
+d_HsTy'45'ResolvedEB_238 = erased
 -- Ledger.Dijkstra.Foreign.Chain.Conv-ResolvedEB
-d_Conv'45'ResolvedEB_248 ::
+d_Conv'45'ResolvedEB_240 ::
   MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
-d_Conv'45'ResolvedEB_248
+d_Conv'45'ResolvedEB_240
   = coe
       MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.C_constructor_4538 v1 v2
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.C_constructor_4542 v1 v2
                 -> coe
-                     C_MkResolvedEB_8053
+                     C_MkResolvedEB_8017
                      (coe
-                        C_MkEndorserBlock_7447
+                        C_MkEndorserBlock_7411
                         (coe
                            MAlonzo.Code.Class.Functor.Core.du_fmap_22
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
@@ -1010,9 +967,9 @@ d_Conv'45'ResolvedEB_248
       (coe
          (\ v0 ->
             case coe v0 of
-              C_MkResolvedEB_8053 v1 v2
+              C_MkResolvedEB_8017 v1 v2
                 -> coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.C_constructor_4538
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.C_constructor_4542
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
                         (coe
@@ -1022,7 +979,7 @@ d_Conv'45'ResolvedEB_248
                                  case coe v3 of
                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.Types.C_constructor_28 v4
                                      -> coe
-                                          C_MkEndorserBlock_7447
+                                          C_MkEndorserBlock_7411
                                           (coe
                                              MAlonzo.Code.Class.Functor.Core.du_fmap_22
                                              MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
@@ -1039,7 +996,7 @@ d_Conv'45'ResolvedEB_248
                            (coe
                               (\ v3 ->
                                  case coe v3 of
-                                   C_MkEndorserBlock_7447 v4
+                                   C_MkEndorserBlock_7411 v4
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.Types.C_constructor_28
                                           (coe
@@ -1066,84 +1023,84 @@ d_Conv'45'ResolvedEB_248
                         v2)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Dijkstra.Foreign.Chain.HSBlock
-d_HSBlock_250 = ()
-data T_HSBlock_250
-  = C_constructor_276 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHeader_3066
+d_HSBlock_242 = ()
+data T_HSBlock_242
+  = C_constructor_268 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHeader_3078
                       Integer
-                      [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3842]
+                      [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3866]
                       (Maybe
-                         MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1644)
+                         MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1648)
                       Integer Integer
 -- Ledger.Dijkstra.Foreign.Chain.HSBlock.bheader
-d_bheader_264 ::
-  T_HSBlock_250 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHeader_3066
-d_bheader_264 v0
+d_bheader_256 ::
+  T_HSBlock_242 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_BHeader_3078
+d_bheader_256 v0
   = case coe v0 of
-      C_constructor_276 v1 v2 v3 v4 v5 v6 -> coe v1
+      C_constructor_268 v1 v2 v3 v4 v5 v6 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Foreign.Chain.HSBlock.bHeaderHash
-d_bHeaderHash_266 :: T_HSBlock_250 -> Integer
-d_bHeaderHash_266 v0
+d_bHeaderHash_258 :: T_HSBlock_242 -> Integer
+d_bHeaderHash_258 v0
   = case coe v0 of
-      C_constructor_276 v1 v2 v3 v4 v5 v6 -> coe v2
+      C_constructor_268 v1 v2 v3 v4 v5 v6 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Foreign.Chain.HSBlock.ts
-d_ts_268 ::
-  T_HSBlock_250 ->
-  [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3842]
-d_ts_268 v0
+d_ts_260 ::
+  T_HSBlock_242 ->
+  [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3866]
+d_ts_260 v0
   = case coe v0 of
-      C_constructor_276 v1 v2 v3 v4 v5 v6 -> coe v3
+      C_constructor_268 v1 v2 v3 v4 v5 v6 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Foreign.Chain.HSBlock.ebCert
-d_ebCert_270 ::
-  T_HSBlock_250 ->
+d_ebCert_262 ::
+  T_HSBlock_242 ->
   Maybe
-    MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1644
-d_ebCert_270 v0
+    MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1648
+d_ebCert_262 v0
   = case coe v0 of
-      C_constructor_276 v1 v2 v3 v4 v5 v6 -> coe v4
+      C_constructor_268 v1 v2 v3 v4 v5 v6 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Foreign.Chain.HSBlock.bBodySize
-d_bBodySize_272 :: T_HSBlock_250 -> Integer
-d_bBodySize_272 v0
+d_bBodySize_264 :: T_HSBlock_242 -> Integer
+d_bBodySize_264 v0
   = case coe v0 of
-      C_constructor_276 v1 v2 v3 v4 v5 v6 -> coe v5
+      C_constructor_268 v1 v2 v3 v4 v5 v6 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Foreign.Chain.HSBlock.bBodyHash
-d_bBodyHash_274 :: T_HSBlock_250 -> Integer
-d_bBodyHash_274 v0
+d_bBodyHash_266 :: T_HSBlock_242 -> Integer
+d_bBodyHash_266 v0
   = case coe v0 of
-      C_constructor_276 v1 v2 v3 v4 v5 v6 -> coe v6
+      C_constructor_268 v1 v2 v3 v4 v5 v6 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Foreign.Chain.Conv-Block-HSBlock
-d_Conv'45'Block'45'HSBlock_278 ::
+d_Conv'45'Block'45'HSBlock_270 ::
   MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
-d_Conv'45'Block'45'HSBlock_278
+d_Conv'45'Block'45'HSBlock_270
   = coe
       MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
          (\ v0 ->
             coe
-              C_constructor_276
+              C_constructor_268
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bheader_3096
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bheader_3108
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bHeaderHash_3098
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bHeaderHash_3110
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_ts_3100
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_ts_3112
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_ebCert_3102
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_ebCert_3114
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bBodySize_3104
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bBodySize_3116
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bBodyHash_3106
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bBodyHash_3118
                  (coe v0))))
       (coe
          (\ v0 ->
@@ -1154,16 +1111,16 @@ d_Conv'45'Block'45'HSBlock_278
                       (\ v1 ->
                          coe
                            MAlonzo.Code.Data.Nat.Properties.du_'8801''8658''8801''7495'_2786
-                           (coe d_bBodySize_272 (coe v0)))
+                           (coe d_bBodySize_264 (coe v0)))
                       (coe
                          MAlonzo.Code.Relation.Nullary.Decidable.Core.d_T'63'_72
                          (coe
-                            eqInt (coe d_bBodySize_272 (coe v0))
+                            eqInt (coe d_bBodySize_264 (coe v0))
                             (coe
-                               MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_hBbsize_3058
+                               MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_hBbsize_3070
                                (coe
-                                  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3072
-                                  (coe d_bheader_264 (coe v0)))))) in
+                                  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3084
+                                  (coe d_bheader_256 (coe v0)))))) in
             coe
               (case coe v1 of
                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v2 v3
@@ -1177,16 +1134,16 @@ d_Conv'45'Block'45'HSBlock_278
                                               (\ v5 ->
                                                  coe
                                                    MAlonzo.Code.Data.Nat.Properties.du_'8801''8658''8801''7495'_2786
-                                                   (coe d_bBodyHash_274 (coe v0)))
+                                                   (coe d_bBodyHash_266 (coe v0)))
                                               (coe
                                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.d_T'63'_72
                                                  (coe
-                                                    eqInt (coe d_bBodyHash_274 (coe v0))
+                                                    eqInt (coe d_bBodyHash_266 (coe v0))
                                                     (coe
-                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhash_3056
+                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhash_3068
                                                        (coe
-                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3072
-                                                          (coe d_bheader_264 (coe v0)))))) in
+                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3084
+                                                          (coe d_bheader_256 (coe v0)))))) in
                                     coe
                                       (case coe v5 of
                                          MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v6 v7
@@ -1196,13 +1153,13 @@ d_Conv'45'Block'45'HSBlock_278
                                                        (coe
                                                           (\ v8 ->
                                                              coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_3112
-                                                               (d_bheader_264 (coe v0))
-                                                               (d_bHeaderHash_266 (coe v0))
-                                                               (d_ts_268 (coe v0))
-                                                               (d_ebCert_270 (coe v0))
-                                                               (d_bBodySize_272 (coe v0))
-                                                               (d_bBodyHash_274 (coe v0))))
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_3124
+                                                               (d_bheader_256 (coe v0))
+                                                               (d_bHeaderHash_258 (coe v0))
+                                                               (d_ts_260 (coe v0))
+                                                               (d_ebCert_262 (coe v0))
+                                                               (d_bBodySize_264 (coe v0))
+                                                               (d_bBodyHash_266 (coe v0))))
                                                        (coe v4)
                                                 else coe
                                                        seq (coe v7)
@@ -1220,7 +1177,7 @@ d_Conv'45'Block'45'HSBlock_278
                                                                      MAlonzo.Code.Data.String.Base.d__'43''43'__20
                                                                      (coe
                                                                         MAlonzo.Code.Data.Nat.Show.d_show_56
-                                                                        (d_bBodyHash_274 (coe v0)))
+                                                                        (d_bBodyHash_266 (coe v0)))
                                                                      (coe
                                                                         MAlonzo.Code.Data.String.Base.d__'43''43'__20
                                                                         (" \8800 "
@@ -1228,11 +1185,11 @@ d_Conv'45'Block'45'HSBlock_278
                                                                          Data.Text.Text)
                                                                         (coe
                                                                            MAlonzo.Code.Data.Nat.Show.d_show_56
-                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhash_3056
+                                                                           (MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhash_3068
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3072
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3084
                                                                                  (coe
-                                                                                    d_bheader_264
+                                                                                    d_bheader_256
                                                                                     (coe
                                                                                        v0))))))))))
                                                        (coe v4)
@@ -1249,72 +1206,72 @@ d_Conv'45'Block'45'HSBlock_278
                                         MAlonzo.Code.Data.String.Base.d__'43''43'__20
                                         (coe
                                            MAlonzo.Code.Data.Nat.Show.d_show_56
-                                           (d_bBodySize_272 (coe v0)))
+                                           (d_bBodySize_264 (coe v0)))
                                         (coe
                                            MAlonzo.Code.Data.String.Base.d__'43''43'__20
                                            (" \8800 " :: Data.Text.Text)
                                            (coe
                                               MAlonzo.Code.Data.Nat.Show.d_show_56
-                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_hBbsize_3058
+                                              (MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_hBbsize_3070
                                                  (coe
-                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3072
-                                                    (coe d_bheader_264 (coe v0)))))))))
+                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3084
+                                                    (coe d_bheader_256 (coe v0)))))))))
                  _ -> MAlonzo.RTE.mazUnreachableError)))
 -- Ledger.Dijkstra.Foreign.Chain.HsTy-HSBlock
-d_HsTy'45'HSBlock_328 ::
+d_HsTy'45'HSBlock_320 ::
   MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
-d_HsTy'45'HSBlock_328 = erased
+d_HsTy'45'HSBlock_320 = erased
 -- Ledger.Dijkstra.Foreign.Chain.Conv-HSBlock
-d_Conv'45'HSBlock_330 ::
+d_Conv'45'HSBlock_322 ::
   MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
-d_Conv'45'HSBlock_330
+d_Conv'45'HSBlock_322
   = coe
       MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
          (\ v0 ->
             case coe v0 of
-              C_constructor_276 v1 v2 v3 v4 v5 v6
+              C_constructor_268 v1 v2 v3 v4 v5 v6
                 -> coe
-                     C_MkBlock_11393
+                     C_MkBlock_11357
                      (coe
-                        C_MkBHeader_6067
+                        C_MkBHeader_6031
                         (coe
-                           C_MkBHBody_371
+                           C_MkBHBody_335
                            (coe
                               MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.C_MkHSVKey_8383
                               (coe
                                  MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.d_hvkVKey_16
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bvkcold_3050
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bvkcold_3062
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3072
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3084
                                        (coe v1))))
                               (coe
                                  MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.d_hvkStoredHash_18
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bvkcold_3050
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bvkcold_3062
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3072
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3084
                                        (coe v1)))))
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bsize_3052
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bsize_3064
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3072
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3084
                                  (coe v1)))
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_slot_3054
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_slot_3066
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3072
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3084
                                  (coe v1)))
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhash_3056
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhash_3068
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3072
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3084
                                  (coe v1)))
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_hBbsize_3058
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_hBbsize_3070
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3072
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3084
                                  (coe v1)))
                            (coe
                               MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1326,17 +1283,17 @@ d_Conv'45'HSBlock_330
                                     (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_announcedEB_3060
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_announcedEB_3072
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3072
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3084
                                     (coe v1))))
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_certifiedEB_3062
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_certifiesEB_3074
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3072
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhbody_3084
                                  (coe v1))))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhsig_3074
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhsig_3086
                            (coe v1)))
                      (coe v2)
                      (coe
@@ -1352,16 +1309,16 @@ d_Conv'45'HSBlock_330
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
-                           (coe d_Conv'45'EBCert_240))
+                           (coe d_Conv'45'EBCert_232))
                         v4)
                      (coe v5) (coe v6)
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
          (\ v0 ->
             case coe v0 of
-              C_MkBlock_11393 v1 v2 v3 v4 v5 v6
+              C_MkBlock_11357 v1 v2 v3 v4 v5 v6
                 -> coe
-                     C_constructor_276
+                     C_constructor_268
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
                         (coe
@@ -1369,34 +1326,34 @@ d_Conv'45'HSBlock_330
                            (coe
                               (\ v7 ->
                                  case coe v7 of
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_3076 v8 v9
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_3088 v8 v9
                                      -> coe
-                                          C_MkBHeader_6067
+                                          C_MkBHeader_6031
                                           (coe
-                                             C_MkBHBody_371
+                                             C_MkBHBody_335
                                              (coe
                                                 MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.C_MkHSVKey_8383
                                                 (coe
                                                    MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.d_hvkVKey_16
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bvkcold_3050
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bvkcold_3062
                                                       (coe v8)))
                                                 (coe
                                                    MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.d_hvkStoredHash_18
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bvkcold_3050
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bvkcold_3062
                                                       (coe v8))))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bsize_3052
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bsize_3064
                                                 (coe v8))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_slot_3054
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_slot_3066
                                                 (coe v8))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhash_3056
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_bhash_3068
                                                 (coe v8))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_hBbsize_3058
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_hBbsize_3070
                                                 (coe v8))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1410,19 +1367,19 @@ d_Conv'45'HSBlock_330
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_announcedEB_3060
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_announcedEB_3072
                                                    (coe v8)))
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_certifiedEB_3062
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_certifiesEB_3074
                                                 (coe v8)))
                                           (coe v9)
                                    _ -> MAlonzo.RTE.mazUnreachableError))
                            (coe
                               (\ v7 ->
                                  case coe v7 of
-                                   C_MkBHeader_6067 v8 v9
+                                   C_MkBHeader_6031 v8 v9
                                      -> coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_3076
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_3088
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_from_22
                                              (coe
@@ -1430,9 +1387,9 @@ d_Conv'45'HSBlock_330
                                                 (coe
                                                    (\ v10 ->
                                                       case coe v10 of
-                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_3064 v11 v12 v13 v14 v15 v16 v17
+                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_3076 v11 v12 v13 v14 v15 v16 v17
                                                           -> coe
-                                                               C_MkBHBody_371
+                                                               C_MkBHBody_335
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.C_MkHSVKey_8383
                                                                   (coe
@@ -1461,9 +1418,9 @@ d_Conv'45'HSBlock_330
                                                 (coe
                                                    (\ v10 ->
                                                       case coe v10 of
-                                                        C_MkBHBody_371 v11 v12 v13 v14 v15 v16 v17
+                                                        C_MkBHBody_335 v11 v12 v13 v14 v15 v16 v17
                                                           -> coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_3064
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.C_constructor_3076
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                   (coe
@@ -1522,37 +1479,37 @@ d_Conv'45'HSBlock_330
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
-                           (coe d_Conv'45'EBCert_240))
+                           (coe d_Conv'45'EBCert_232))
                         v4)
                      (coe v5) (coe v6)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Dijkstra.Foreign.Chain.HsTy-Block
-d_HsTy'45'Block_332 ::
+d_HsTy'45'Block_324 ::
   MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
-d_HsTy'45'Block_332 = erased
+d_HsTy'45'Block_324 = erased
 -- Ledger.Dijkstra.Foreign.Chain.Conv-Block
-d_Conv'45'Block_334 ::
+d_Conv'45'Block_326 ::
   MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
-d_Conv'45'Block_334
+d_Conv'45'Block_326
   = coe
       MAlonzo.Code.Class.Convertible.Core.du__'10814'__76
-      (coe d_Conv'45'Block'45'HSBlock_278) (coe d_Conv'45'HSBlock_330)
+      (coe d_Conv'45'Block'45'HSBlock_270) (coe d_Conv'45'HSBlock_322)
 -- Ledger.Dijkstra.Foreign.Chain.HsTy-LastAppliedBlock
-d_HsTy'45'LastAppliedBlock_336 ::
+d_HsTy'45'LastAppliedBlock_328 ::
   MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
-d_HsTy'45'LastAppliedBlock_336 = erased
+d_HsTy'45'LastAppliedBlock_328 = erased
 -- Ledger.Dijkstra.Foreign.Chain.Conv-LastAppliedBlock
-d_Conv'45'LastAppliedBlock_338 ::
+d_Conv'45'LastAppliedBlock_330 ::
   MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
-d_Conv'45'LastAppliedBlock_338
+d_Conv'45'LastAppliedBlock_330
   = coe
       MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.C_constructor_4440 v1 v2 v3
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.C_constructor_4446 v1 v2 v3
                 -> coe
-                     C_MkLastAppliedBlock_15295 (coe v1) (coe v2)
+                     C_MkLastAppliedBlock_15259 (coe v1) (coe v2)
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                         (coe
@@ -1567,9 +1524,9 @@ d_Conv'45'LastAppliedBlock_338
       (coe
          (\ v0 ->
             case coe v0 of
-              C_MkLastAppliedBlock_15295 v1 v2 v3
+              C_MkLastAppliedBlock_15259 v1 v2 v3
                 -> coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.C_constructor_4440
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.C_constructor_4446
                      (coe v1) (coe v2)
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -1583,25 +1540,45 @@ d_Conv'45'LastAppliedBlock_338
                         v3)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Dijkstra.Foreign.Chain.HsTy-ChainState
-d_HsTy'45'ChainState_340 ::
+d_HsTy'45'ChainState_332 ::
   MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
-d_HsTy'45'ChainState_340 = erased
+d_HsTy'45'ChainState_332 = erased
+-- Ledger.Dijkstra.Foreign.Chain.BHBody
+d_BHBody_333 = ()
+type T_BHBody_333 = BHBody
+pattern C_MkBHBody_335 a0 a1 a2 a3 a4 a5 a6 = MkBHBody a0 a1 a2 a3 a4 a5 a6
+check_MkBHBody_335 ::
+  MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.T_HSVKey_8381 ->
+  Integer ->
+  Integer ->
+  Integer ->
+  Integer ->
+  MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10
+    ()
+    (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
+       () () Integer Integer) ->
+  Bool -> T_BHBody_333
+check_MkBHBody_335 = MkBHBody
+cover_BHBody_333 :: BHBody -> ()
+cover_BHBody_333 x
+  = case x of
+      MkBHBody _ _ _ _ _ _ _ -> ()
 -- Ledger.Dijkstra.Foreign.Chain.Conv-ChainState
-d_Conv'45'ChainState_342 ::
+d_Conv'45'ChainState_334 ::
   MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
-d_Conv'45'ChainState_342
+d_Conv'45'ChainState_334
   = coe
       MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.C_constructor_4452 v1 v2
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.C_constructor_4458 v1 v2
                 -> coe
-                     C_MkChainState_17091
+                     C_MkChainState_17055
                      (coe
                         MAlonzo.Code.Ledger.Dijkstra.Foreign.NewEpoch.C_MkNewEpochState_2097
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_lastEpoch_4280
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_lastEpoch_4292
                            (coe v1))
                         (coe
                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -1616,7 +1593,7 @@ d_Conv'45'ChainState_342
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_bprev_4282
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_bprev_4294
                                     (coe v1)))))
                         (coe
                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -1631,25 +1608,25 @@ d_Conv'45'ChainState_342
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_bcur_4284
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_bcur_4296
                                     (coe v1)))))
                         (coe
                            MAlonzo.Code.Ledger.Dijkstra.Foreign.Epoch.C_MkEpochState_655
                            (coe
                               MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkAcnt_11715
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasury_202
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasury_206
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4210
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4222
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                        (coe v1))))
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_reserves_204
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_reserves_208
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4210
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4222
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                        (coe v1)))))
                            (coe
                               MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshots_3019
@@ -1669,13 +1646,13 @@ d_Conv'45'ChainState_342
                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_stake_3910
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_stake_3922
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_mark_3970
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_mark_3982
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4212
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4224
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                       (coe v1))))))))
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -1691,13 +1668,13 @@ d_Conv'45'ChainState_342
                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_delegations_3912
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_delegations_3924
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_mark_3970
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_mark_3982
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4212
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4224
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                       (coe v1))))))))
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -1713,13 +1690,13 @@ d_Conv'45'ChainState_342
                                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolState_22)))
                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_pools_3914
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_pools_3926
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_mark_3970
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_mark_3982
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4212
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4224
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                       (coe v1)))))))))
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshot_187
@@ -1737,13 +1714,13 @@ d_Conv'45'ChainState_342
                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_stake_3910
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_stake_3922
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_set_3972
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_set_3984
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4212
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4224
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                       (coe v1))))))))
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -1759,13 +1736,13 @@ d_Conv'45'ChainState_342
                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_delegations_3912
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_delegations_3924
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_set_3972
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_set_3984
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4212
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4224
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                       (coe v1))))))))
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -1781,13 +1758,13 @@ d_Conv'45'ChainState_342
                                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolState_22)))
                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_pools_3914
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_pools_3926
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_set_3972
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_set_3984
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4212
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4224
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                       (coe v1)))))))))
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshot_187
@@ -1805,13 +1782,13 @@ d_Conv'45'ChainState_342
                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_stake_3910
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_stake_3922
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_go_3974
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_go_3986
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4212
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4224
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                       (coe v1))))))))
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -1827,13 +1804,13 @@ d_Conv'45'ChainState_342
                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_delegations_3912
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_delegations_3924
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_go_3974
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_go_3986
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4212
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4224
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                       (coe v1))))))))
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -1849,25 +1826,25 @@ d_Conv'45'ChainState_342
                                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolState_22)))
                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_pools_3914
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_pools_3926
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_go_3974
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_go_3986
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4212
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4224
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                       (coe v1)))))))))
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_feeSS_3976
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_feeSS_3988
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4212
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4224
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                        (coe v1)))))
                            (coe
                               MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33313
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_41043
+                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_41039
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                     (coe
@@ -1914,31 +1891,31 @@ d_Conv'45'ChainState_342
                                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'HSPlutusScript_22))))))))
                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo_3298
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo_3324
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3932
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3944
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                       (coe v1))))))))
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_fees_3300
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_fees_3326
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3932
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3944
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                              (coe v1)))))
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_donations_3302
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_donations_3328
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3932
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3944
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                              (coe v1))))))
                               (coe
                                  MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -1955,11 +1932,11 @@ d_Conv'45'ChainState_342
                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                        (coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.d_Conv'45'GovActionState_356)))
-                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_govSt_3934
+                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_govSt_3946
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                           (coe v1)))))
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkCertState_37147
@@ -1979,15 +1956,15 @@ d_Conv'45'ChainState_342
                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.d_Conv'45'VDeleg_32)))
                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_voteDelegs_1534
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_voteDelegs_1538
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1588
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1592
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                             (coe v1)))))))))
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -2003,15 +1980,15 @@ d_Conv'45'ChainState_342
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_stakeDelegs_1536
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_stakeDelegs_1540
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1588
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1592
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                             (coe v1)))))))))
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -2027,15 +2004,15 @@ d_Conv'45'ChainState_342
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewards_1538
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewards_1542
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1588
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1592
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                             (coe v1)))))))))
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -2051,15 +2028,15 @@ d_Conv'45'ChainState_342
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1540
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1544
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1588
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1592
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                             (coe v1))))))))))
                                  (coe
                                     MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkPState_22495
@@ -2077,15 +2054,15 @@ d_Conv'45'ChainState_342
                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolState_22)))
                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1554
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1558
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1590
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1594
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                             (coe v1)))))))))
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -2101,15 +2078,15 @@ d_Conv'45'ChainState_342
                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolParams_18)))
                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_fPools_1556
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_fPools_1560
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1590
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1594
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                             (coe v1)))))))))
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -2125,15 +2102,15 @@ d_Conv'45'ChainState_342
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1558
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1562
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1590
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1594
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                             (coe v1)))))))))
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -2149,15 +2126,15 @@ d_Conv'45'ChainState_342
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1560
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1564
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1590
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1594
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                             (coe v1))))))))))
                                  (coe
                                     MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkGState_31571
@@ -2175,15 +2152,15 @@ d_Conv'45'ChainState_342
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dreps_1572
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dreps_1576
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1592
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1596
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                             (coe v1)))))))))
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -2201,15 +2178,15 @@ d_Conv'45'ChainState_342
                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218))))
                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_ccHotKeys_1574
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_ccHotKeys_1578
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1592
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1596
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                             (coe v1)))))))))
                                     (coe
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -2225,15 +2202,15 @@ d_Conv'45'ChainState_342
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1576
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1580
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1592
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1596
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                             (coe v1))))))))))))
                            (coe
                               MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1623
@@ -2264,12 +2241,12 @@ d_Conv'45'ChainState_342
                                                             (coe
                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                   (coe v4))))
                                                          (coe
                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                (coe v4))))))
                                                 (coe
                                                    MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218)
@@ -2287,11 +2264,11 @@ d_Conv'45'ChainState_342
                                                (coe
                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1336
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1340
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4216
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4228
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                              (coe v1))))))
                               (coe
                                  MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
@@ -2318,11 +2295,11 @@ d_Conv'45'ChainState_342
                                                (coe
                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1338
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1342
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4216
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4228
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                              (coe v1))))))
                               (coe
                                  MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
@@ -2347,11 +2324,11 @@ d_Conv'45'ChainState_342
                                                (coe
                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1340
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1344
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4216
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4228
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                              (coe v1))))))
                               (coe
                                  MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
@@ -2372,11 +2349,11 @@ d_Conv'45'ChainState_342
                                                (coe
                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1342
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1346
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4216
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4228
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                              (coe v1))))))
                               (coe
                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -2392,11 +2369,11 @@ d_Conv'45'ChainState_342
                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1344
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1348
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4216
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4228
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                 (coe v1))))))))
                            (coe
                               MAlonzo.Code.Ledger.Dijkstra.Foreign.Ratify.C_MkRatifyState_14679
@@ -2430,12 +2407,12 @@ d_Conv'45'ChainState_342
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                      (coe v4))))
                                                             (coe
                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                   (coe v4))))))
                                                    (coe
                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218)
@@ -2453,13 +2430,13 @@ d_Conv'45'ChainState_342
                                                   (coe
                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1336
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1340
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2164
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2168
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4218
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4230
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                    (coe v1)))))))
                                  (coe
                                     MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased ()
@@ -2487,13 +2464,13 @@ d_Conv'45'ChainState_342
                                                   (coe
                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1338
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1342
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2164
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2168
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4218
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4230
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                    (coe v1)))))))
                                  (coe
                                     MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased ()
@@ -2519,13 +2496,13 @@ d_Conv'45'ChainState_342
                                                   (coe
                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1340
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1344
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2164
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2168
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4218
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4230
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                    (coe v1)))))))
                                  (coe
                                     MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased ()
@@ -2547,13 +2524,13 @@ d_Conv'45'ChainState_342
                                                   (coe
                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1342
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1346
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2164
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2168
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4218
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4230
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                    (coe v1)))))))
                                  (coe
                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -2569,13 +2546,13 @@ d_Conv'45'ChainState_342
                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1344
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1348
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2164
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2168
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4218
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4230
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                                       (coe v1)))))))))
                               (coe
                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_68
@@ -2593,18 +2570,18 @@ d_Conv'45'ChainState_342
                                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.d_Conv'45'GovActionState_356)))
-                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_removed_2166
+                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_removed_2170
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4218
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4230
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                              (coe v1))))))
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_delay_2168
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_delay_2172
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4218
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4230
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4286
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_epochState_4298
                                        (coe v1))))))
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2613,7 +2590,7 @@ d_Conv'45'ChainState_342
                               (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.d_Conv'45'RewardUpdate_204))
-                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ru_4288
+                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ru_4300
                               (coe v1)))
                         (coe
                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -2628,7 +2605,7 @@ d_Conv'45'ChainState_342
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pd_4290
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_pd_4302
                                     (coe v1)))))
                         (coe
                            MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -2637,22 +2614,22 @@ d_Conv'45'ChainState_342
                            (MAlonzo.Code.Class.Convertible.Core.d_to_20
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.NewEpoch.d_Conv'45'LeiosSeat_340))
-                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_leiosCommittee_4292
+                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_leiosCommittee_4304
                               (coe v1))))
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
-                           (coe d_Conv'45'LastAppliedBlock_338))
+                           (coe d_Conv'45'LastAppliedBlock_330))
                         v2)
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
          (\ v0 ->
             case coe v0 of
-              C_MkChainState_17091 v1 v2
+              C_MkChainState_17055 v1 v2
                 -> coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.C_constructor_4452
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.C_constructor_4458
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
                         (coe
@@ -2660,7 +2637,7 @@ d_Conv'45'ChainState_342
                            (coe
                               (\ v3 ->
                                  case coe v3 of
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_constructor_4294 v4 v5 v6 v7 v8 v9 v10
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_constructor_4306 v4 v5 v6 v7 v8 v9 v10
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.NewEpoch.C_MkNewEpochState_2097
                                           (coe v4)
@@ -2697,14 +2674,14 @@ d_Conv'45'ChainState_342
                                              (coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkAcnt_11715
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasury_202
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasury_206
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4210
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4222
                                                       (coe v7)))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_reserves_204
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_reserves_208
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4210
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_acnt_4222
                                                       (coe v7))))
                                              (coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshots_3019
@@ -2724,11 +2701,11 @@ d_Conv'45'ChainState_342
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_stake_3910
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_stake_3922
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_mark_3970
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_mark_3982
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4212
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4224
                                                                      (coe v7)))))))
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -2744,11 +2721,11 @@ d_Conv'45'ChainState_342
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_delegations_3912
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_delegations_3924
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_mark_3970
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_mark_3982
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4212
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4224
                                                                      (coe v7)))))))
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -2764,11 +2741,11 @@ d_Conv'45'ChainState_342
                                                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolState_22)))
                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_pools_3914
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_pools_3926
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_mark_3970
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_mark_3982
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4212
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4224
                                                                      (coe v7))))))))
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshot_187
@@ -2786,11 +2763,11 @@ d_Conv'45'ChainState_342
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_stake_3910
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_stake_3922
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_set_3972
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_set_3984
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4212
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4224
                                                                      (coe v7)))))))
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -2806,11 +2783,11 @@ d_Conv'45'ChainState_342
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_delegations_3912
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_delegations_3924
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_set_3972
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_set_3984
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4212
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4224
                                                                      (coe v7)))))))
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -2826,11 +2803,11 @@ d_Conv'45'ChainState_342
                                                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolState_22)))
                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_pools_3914
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_pools_3926
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_set_3972
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_set_3984
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4212
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4224
                                                                      (coe v7))))))))
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshot_187
@@ -2848,11 +2825,11 @@ d_Conv'45'ChainState_342
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_stake_3910
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_stake_3922
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_go_3974
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_go_3986
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4212
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4224
                                                                      (coe v7)))))))
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -2868,11 +2845,11 @@ d_Conv'45'ChainState_342
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_delegations_3912
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_delegations_3924
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_go_3974
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_go_3986
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4212
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4224
                                                                      (coe v7)))))))
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -2888,21 +2865,21 @@ d_Conv'45'ChainState_342
                                                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolState_22)))
                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_pools_3914
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_pools_3926
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_go_3974
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_go_3986
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4212
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4224
                                                                      (coe v7))))))))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_feeSS_3976
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_feeSS_3988
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4212
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ss_4224
                                                       (coe v7))))
                                              (coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33313
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_41043
+                                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_41039
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                       (coe
@@ -2949,25 +2926,25 @@ d_Conv'45'ChainState_342
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'HSPlutusScript_22))))))))
                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo_3298
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo_3324
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3932
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3944
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                                      (coe v7)))))))
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_fees_3300
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_fees_3326
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3932
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3944
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                             (coe v7))))
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_donations_3302
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_donations_3328
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3932
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3944
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                             (coe v7)))))
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -2984,9 +2961,9 @@ d_Conv'45'ChainState_342
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                          (coe
                                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.d_Conv'45'GovActionState_356)))
-                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_govSt_3934
+                                                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_govSt_3946
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                          (coe v7))))
                                                 (coe
                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkCertState_37147
@@ -3006,13 +2983,13 @@ d_Conv'45'ChainState_342
                                                                      MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.d_Conv'45'VDeleg_32)))
                                                             (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_voteDelegs_1534
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_voteDelegs_1538
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1588
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1592
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                                            (coe v7))))))))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -3028,13 +3005,13 @@ d_Conv'45'ChainState_342
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                             (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_stakeDelegs_1536
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_stakeDelegs_1540
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1588
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1592
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                                            (coe v7))))))))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -3050,13 +3027,13 @@ d_Conv'45'ChainState_342
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                             (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewards_1538
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewards_1542
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1588
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1592
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                                            (coe v7))))))))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -3072,13 +3049,13 @@ d_Conv'45'ChainState_342
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                             (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1540
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1544
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1588
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1592
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                                            (coe v7)))))))))
                                                    (coe
                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkPState_22495
@@ -3096,13 +3073,13 @@ d_Conv'45'ChainState_342
                                                                      MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolState_22)))
                                                             (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1554
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1558
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1590
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1594
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                                            (coe v7))))))))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -3118,13 +3095,13 @@ d_Conv'45'ChainState_342
                                                                      MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolParams_18)))
                                                             (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_fPools_1556
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_fPools_1560
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1590
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1594
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                                            (coe v7))))))))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -3140,13 +3117,13 @@ d_Conv'45'ChainState_342
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                             (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1558
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1562
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1590
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1594
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                                            (coe v7))))))))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -3162,13 +3139,13 @@ d_Conv'45'ChainState_342
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                             (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1560
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1564
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1590
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1594
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                                            (coe v7)))))))))
                                                    (coe
                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkGState_31571
@@ -3186,13 +3163,13 @@ d_Conv'45'ChainState_342
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                             (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dreps_1572
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dreps_1576
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1592
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1596
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                                            (coe v7))))))))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -3210,13 +3187,13 @@ d_Conv'45'ChainState_342
                                                                         MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218))))
                                                             (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_ccHotKeys_1574
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_ccHotKeys_1578
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1592
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1596
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                                            (coe v7))))))))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -3232,13 +3209,13 @@ d_Conv'45'ChainState_342
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                             (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1576
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1580
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1592
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1596
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4214
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_ls_4226
                                                                            (coe v7)))))))))))
                                              (coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1623
@@ -3271,12 +3248,12 @@ d_Conv'45'ChainState_342
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                     (coe v12))))
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                  (coe v12))))))
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218)
@@ -3294,9 +3271,9 @@ d_Conv'45'ChainState_342
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1336
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1340
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4216
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4228
                                                             (coe v7)))))
                                                 (coe
                                                    MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
@@ -3325,9 +3302,9 @@ d_Conv'45'ChainState_342
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1338
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1342
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4216
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4228
                                                             (coe v7)))))
                                                 (coe
                                                    MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
@@ -3354,9 +3331,9 @@ d_Conv'45'ChainState_342
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1340
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1344
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4216
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4228
                                                             (coe v7)))))
                                                 (coe
                                                    MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
@@ -3379,9 +3356,9 @@ d_Conv'45'ChainState_342
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1342
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1346
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4216
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4228
                                                             (coe v7)))))
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -3397,9 +3374,9 @@ d_Conv'45'ChainState_342
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1344
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1348
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4216
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_es_4228
                                                                (coe v7)))))))
                                              (coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Ratify.C_MkRatifyState_14679
@@ -3434,12 +3411,12 @@ d_Conv'45'ChainState_342
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                        (coe v12))))
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                     (coe v12))))))
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218)
@@ -3457,11 +3434,11 @@ d_Conv'45'ChainState_342
                                                                     (coe
                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1336
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1340
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2164
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2168
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4218
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4230
                                                                   (coe v7))))))
                                                    (coe
                                                       MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
@@ -3490,11 +3467,11 @@ d_Conv'45'ChainState_342
                                                                     (coe
                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1338
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1342
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2164
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2168
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4218
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4230
                                                                   (coe v7))))))
                                                    (coe
                                                       MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
@@ -3521,11 +3498,11 @@ d_Conv'45'ChainState_342
                                                                     (coe
                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1340
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1344
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2164
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2168
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4218
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4230
                                                                   (coe v7))))))
                                                    (coe
                                                       MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
@@ -3548,11 +3525,11 @@ d_Conv'45'ChainState_342
                                                                     (coe
                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1342
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1346
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2164
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2168
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4218
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4230
                                                                   (coe v7))))))
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -3568,11 +3545,11 @@ d_Conv'45'ChainState_342
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1344
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1348
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2164
+                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2168
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4218
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4230
                                                                      (coe v7))))))))
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_68
@@ -3590,14 +3567,14 @@ d_Conv'45'ChainState_342
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                             (coe
                                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.d_Conv'45'GovActionState_356)))
-                                                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_removed_2166
+                                                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_removed_2170
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4218
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4230
                                                             (coe v7)))))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_delay_2168
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_delay_2172
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4218
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.d_fut_4230
                                                       (coe v7)))))
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3636,7 +3613,7 @@ d_Conv'45'ChainState_342
                                  case coe v3 of
                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.NewEpoch.C_MkNewEpochState_2097 v4 v5 v6 v7 v8 v9 v10
                                      -> coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_constructor_4294
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_constructor_4306
                                           (coe v4)
                                           (coe
                                              MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
@@ -3709,16 +3686,16 @@ d_Conv'45'ChainState_342
                                                 (coe
                                                    (\ v11 ->
                                                       case coe v11 of
-                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4220 v12 v13 v14 v15 v16
+                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4232 v12 v13 v14 v15 v16
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.Epoch.C_MkEpochState_655
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkAcnt_11715
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasury_202
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasury_206
                                                                      (coe v12))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_reserves_204
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_reserves_208
                                                                      (coe v12)))
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshots_3019
@@ -3738,9 +3715,9 @@ d_Conv'45'ChainState_342
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_stake_3910
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_stake_3922
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_mark_3970
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_mark_3982
                                                                                     (coe v13))))))
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -3756,9 +3733,9 @@ d_Conv'45'ChainState_342
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_delegations_3912
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_delegations_3924
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_mark_3970
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_mark_3982
                                                                                     (coe v13))))))
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -3774,9 +3751,9 @@ d_Conv'45'ChainState_342
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolState_22)))
                                                                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_pools_3914
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_pools_3926
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_mark_3970
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_mark_3982
                                                                                     (coe v13)))))))
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshot_187
@@ -3794,9 +3771,9 @@ d_Conv'45'ChainState_342
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_stake_3910
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_stake_3922
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_set_3972
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_set_3984
                                                                                     (coe v13))))))
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -3812,9 +3789,9 @@ d_Conv'45'ChainState_342
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_delegations_3912
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_delegations_3924
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_set_3972
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_set_3984
                                                                                     (coe v13))))))
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -3830,9 +3807,9 @@ d_Conv'45'ChainState_342
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolState_22)))
                                                                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_pools_3914
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_pools_3926
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_set_3972
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_set_3984
                                                                                     (coe v13)))))))
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshot_187
@@ -3850,9 +3827,9 @@ d_Conv'45'ChainState_342
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_stake_3910
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_stake_3922
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_go_3974
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_go_3986
                                                                                     (coe v13))))))
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -3868,9 +3845,9 @@ d_Conv'45'ChainState_342
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_delegations_3912
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_delegations_3924
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_go_3974
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_go_3986
                                                                                     (coe v13))))))
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -3886,17 +3863,17 @@ d_Conv'45'ChainState_342
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolState_22)))
                                                                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_pools_3914
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_pools_3926
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_go_3974
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_go_3986
                                                                                     (coe v13)))))))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_feeSS_3976
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_feeSS_3988
                                                                      (coe v13)))
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33313
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_41043
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_41039
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                         (coe
@@ -3943,19 +3920,19 @@ d_Conv'45'ChainState_342
                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'HSPlutusScript_22))))))))
                                                                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo_3298
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo_3324
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3932
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3944
                                                                                     (coe v14))))))
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_fees_3300
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_fees_3326
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3932
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3944
                                                                            (coe v14)))
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_donations_3302
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_donations_3328
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3932
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3944
                                                                            (coe v14))))
                                                                   (coe
                                                                      MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -3972,7 +3949,7 @@ d_Conv'45'ChainState_342
                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.d_Conv'45'GovActionState_356)))
-                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_govSt_3934
+                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_govSt_3946
                                                                         (coe v14)))
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkCertState_37147
@@ -3992,11 +3969,11 @@ d_Conv'45'ChainState_342
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.d_Conv'45'VDeleg_32)))
                                                                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_voteDelegs_1534
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_voteDelegs_1538
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1588
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1592
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                                                           (coe
                                                                                              v14)))))))
                                                                         (coe
@@ -4013,11 +3990,11 @@ d_Conv'45'ChainState_342
                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_stakeDelegs_1536
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_stakeDelegs_1540
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1588
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1592
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                                                           (coe
                                                                                              v14)))))))
                                                                         (coe
@@ -4034,11 +4011,11 @@ d_Conv'45'ChainState_342
                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewards_1538
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewards_1542
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1588
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1592
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                                                           (coe
                                                                                              v14)))))))
                                                                         (coe
@@ -4055,11 +4032,11 @@ d_Conv'45'ChainState_342
                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1540
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1544
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1588
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1592
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                                                           (coe
                                                                                              v14))))))))
                                                                      (coe
@@ -4078,11 +4055,11 @@ d_Conv'45'ChainState_342
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolState_22)))
                                                                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1554
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1558
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1590
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1594
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                                                           (coe
                                                                                              v14)))))))
                                                                         (coe
@@ -4099,11 +4076,11 @@ d_Conv'45'ChainState_342
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolParams_18)))
                                                                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_fPools_1556
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_fPools_1560
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1590
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1594
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                                                           (coe
                                                                                              v14)))))))
                                                                         (coe
@@ -4120,11 +4097,11 @@ d_Conv'45'ChainState_342
                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1558
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1562
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1590
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1594
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                                                           (coe
                                                                                              v14)))))))
                                                                         (coe
@@ -4141,11 +4118,11 @@ d_Conv'45'ChainState_342
                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1560
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1564
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1590
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1594
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                                                           (coe
                                                                                              v14))))))))
                                                                      (coe
@@ -4164,11 +4141,11 @@ d_Conv'45'ChainState_342
                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dreps_1572
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dreps_1576
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1592
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1596
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                                                           (coe
                                                                                              v14)))))))
                                                                         (coe
@@ -4187,11 +4164,11 @@ d_Conv'45'ChainState_342
                                                                                           MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218))))
                                                                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_ccHotKeys_1574
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_ccHotKeys_1578
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1592
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1596
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                                                           (coe
                                                                                              v14)))))))
                                                                         (coe
@@ -4208,11 +4185,11 @@ d_Conv'45'ChainState_342
                                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1576
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1580
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1592
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1596
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3936
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_certState_3948
                                                                                           (coe
                                                                                              v14))))))))))
                                                                (coe
@@ -4247,13 +4224,13 @@ d_Conv'45'ChainState_342
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                       (coe
                                                                                                          v18))))
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                    (coe
                                                                                                       v18))))))
                                                                                     (coe
@@ -4272,7 +4249,7 @@ d_Conv'45'ChainState_342
                                                                                    (coe
                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1336
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1340
                                                                            (coe v15))))
                                                                   (coe
                                                                      MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
@@ -4301,7 +4278,7 @@ d_Conv'45'ChainState_342
                                                                                    (coe
                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1338
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1342
                                                                            (coe v15))))
                                                                   (coe
                                                                      MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
@@ -4328,7 +4305,7 @@ d_Conv'45'ChainState_342
                                                                                    (coe
                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1340
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1344
                                                                            (coe v15))))
                                                                   (coe
                                                                      MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
@@ -4351,7 +4328,7 @@ d_Conv'45'ChainState_342
                                                                                    (coe
                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1342
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1346
                                                                            (coe v15))))
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -4367,7 +4344,7 @@ d_Conv'45'ChainState_342
                                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1344
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1348
                                                                               (coe v15))))))
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Ratify.C_MkRatifyState_14679
@@ -4403,13 +4380,13 @@ d_Conv'45'ChainState_342
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                          (coe
                                                                                                             v18))))
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                       (coe
                                                                                                          v18))))))
                                                                                        (coe
@@ -4428,9 +4405,9 @@ d_Conv'45'ChainState_342
                                                                                       (coe
                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1336
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1340
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2164
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2168
                                                                                  (coe v16)))))
                                                                      (coe
                                                                         MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
@@ -4459,9 +4436,9 @@ d_Conv'45'ChainState_342
                                                                                       (coe
                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1338
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1342
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2164
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2168
                                                                                  (coe v16)))))
                                                                      (coe
                                                                         MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
@@ -4488,9 +4465,9 @@ d_Conv'45'ChainState_342
                                                                                       (coe
                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1340
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1344
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2164
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2168
                                                                                  (coe v16)))))
                                                                      (coe
                                                                         MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
@@ -4513,9 +4490,9 @@ d_Conv'45'ChainState_342
                                                                                       (coe
                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1342
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1346
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2164
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2168
                                                                                  (coe v16)))))
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
@@ -4531,9 +4508,9 @@ d_Conv'45'ChainState_342
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1344
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1348
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2164
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_es_2168
                                                                                     (coe v16)))))))
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_68
@@ -4551,10 +4528,10 @@ d_Conv'45'ChainState_342
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.d_Conv'45'GovActionState_356)))
-                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_removed_2166
+                                                                        (MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_removed_2170
                                                                            (coe v16))))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_delay_2168
+                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.d_delay_2172
                                                                      (coe v16)))
                                                         _ -> MAlonzo.RTE.mazUnreachableError))
                                                 (coe
@@ -4562,7 +4539,7 @@ d_Conv'45'ChainState_342
                                                       case coe v11 of
                                                         MAlonzo.Code.Ledger.Dijkstra.Foreign.Epoch.C_MkEpochState_655 v12 v13 v14 v15 v16
                                                           -> coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4220
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4232
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                   (coe
@@ -4570,7 +4547,7 @@ d_Conv'45'ChainState_342
                                                                      (coe
                                                                         (\ v17 ->
                                                                            case coe v17 of
-                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_'10214'_'44'_'10215''7491'_206 v18 v19
+                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_'10214'_'44'_'10215''7491'_210 v18 v19
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkAcnt_11715
                                                                                     (coe v18)
@@ -4581,7 +4558,7 @@ d_Conv'45'ChainState_342
                                                                            case coe v17 of
                                                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkAcnt_11715 v18 v19
                                                                                -> coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_'10214'_'44'_'10215''7491'_206
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_'10214'_'44'_'10215''7491'_210
                                                                                     (coe v18)
                                                                                     (coe v19)
                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
@@ -4593,7 +4570,7 @@ d_Conv'45'ChainState_342
                                                                      (coe
                                                                         (\ v17 ->
                                                                            case coe v17 of
-                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.C_constructor_3978 v18 v19 v20 v21
+                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.C_constructor_3990 v18 v19 v20 v21
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshots_3019
                                                                                     (coe
@@ -4612,7 +4589,7 @@ d_Conv'45'ChainState_342
                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                              (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_stake_3910
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_stake_3922
                                                                                                    (coe
                                                                                                       v18)))))
                                                                                        (coe
@@ -4629,7 +4606,7 @@ d_Conv'45'ChainState_342
                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                              (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_delegations_3912
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_delegations_3924
                                                                                                    (coe
                                                                                                       v18)))))
                                                                                        (coe
@@ -4646,7 +4623,7 @@ d_Conv'45'ChainState_342
                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolState_22)))
                                                                                              (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_pools_3914
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_pools_3926
                                                                                                    (coe
                                                                                                       v18))))))
                                                                                     (coe
@@ -4665,7 +4642,7 @@ d_Conv'45'ChainState_342
                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                              (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_stake_3910
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_stake_3922
                                                                                                    (coe
                                                                                                       v19)))))
                                                                                        (coe
@@ -4682,7 +4659,7 @@ d_Conv'45'ChainState_342
                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                              (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_delegations_3912
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_delegations_3924
                                                                                                    (coe
                                                                                                       v19)))))
                                                                                        (coe
@@ -4699,7 +4676,7 @@ d_Conv'45'ChainState_342
                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolState_22)))
                                                                                              (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_pools_3914
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_pools_3926
                                                                                                    (coe
                                                                                                       v19))))))
                                                                                     (coe
@@ -4718,7 +4695,7 @@ d_Conv'45'ChainState_342
                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                              (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_stake_3910
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_stake_3922
                                                                                                    (coe
                                                                                                       v20)))))
                                                                                        (coe
@@ -4735,7 +4712,7 @@ d_Conv'45'ChainState_342
                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                              (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_delegations_3912
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_delegations_3924
                                                                                                    (coe
                                                                                                       v20)))))
                                                                                        (coe
@@ -4752,7 +4729,7 @@ d_Conv'45'ChainState_342
                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolState_22)))
                                                                                              (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_pools_3914
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_pools_3926
                                                                                                    (coe
                                                                                                       v20))))))
                                                                                     (coe v21)
@@ -4762,7 +4739,7 @@ d_Conv'45'ChainState_342
                                                                            case coe v17 of
                                                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshots_3019 v18 v19 v20 v21
                                                                                -> coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.C_constructor_3978
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.C_constructor_3990
                                                                                     (coe
                                                                                        MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                        (coe
@@ -4771,7 +4748,7 @@ d_Conv'45'ChainState_342
                                                                                              (\ v22 ->
                                                                                                 case coe
                                                                                                        v22 of
-                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.C_constructor_3916 v23 v24 v25
+                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.C_constructor_3928 v23 v24 v25
                                                                                                     -> coe
                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshot_187
                                                                                                          (coe
@@ -4826,7 +4803,7 @@ d_Conv'45'ChainState_342
                                                                                                        v22 of
                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshot_187 v23 v24 v25
                                                                                                     -> coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.C_constructor_3916
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.C_constructor_3928
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                             (coe
@@ -4848,13 +4825,13 @@ d_Conv'45'ChainState_342
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                               (coe
                                                                                                                                  v27))))
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                            (coe
                                                                                                                               v27))))))
                                                                                                             (coe
@@ -4909,13 +4886,13 @@ d_Conv'45'ChainState_342
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                               (coe
                                                                                                                                  v27))))
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                            (coe
                                                                                                                               v27))))))
                                                                                                             (coe
@@ -4998,7 +4975,7 @@ d_Conv'45'ChainState_342
                                                                                              (\ v22 ->
                                                                                                 case coe
                                                                                                        v22 of
-                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.C_constructor_3916 v23 v24 v25
+                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.C_constructor_3928 v23 v24 v25
                                                                                                     -> coe
                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshot_187
                                                                                                          (coe
@@ -5053,7 +5030,7 @@ d_Conv'45'ChainState_342
                                                                                                        v22 of
                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshot_187 v23 v24 v25
                                                                                                     -> coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.C_constructor_3916
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.C_constructor_3928
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                             (coe
@@ -5075,13 +5052,13 @@ d_Conv'45'ChainState_342
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                               (coe
                                                                                                                                  v27))))
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                            (coe
                                                                                                                               v27))))))
                                                                                                             (coe
@@ -5136,13 +5113,13 @@ d_Conv'45'ChainState_342
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                               (coe
                                                                                                                                  v27))))
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                            (coe
                                                                                                                               v27))))))
                                                                                                             (coe
@@ -5225,7 +5202,7 @@ d_Conv'45'ChainState_342
                                                                                              (\ v22 ->
                                                                                                 case coe
                                                                                                        v22 of
-                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.C_constructor_3916 v23 v24 v25
+                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.C_constructor_3928 v23 v24 v25
                                                                                                     -> coe
                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshot_187
                                                                                                          (coe
@@ -5280,7 +5257,7 @@ d_Conv'45'ChainState_342
                                                                                                        v22 of
                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards.C_MkSnapshot_187 v23 v24 v25
                                                                                                     -> coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.C_constructor_3916
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.C_constructor_3928
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                             (coe
@@ -5302,13 +5279,13 @@ d_Conv'45'ChainState_342
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                               (coe
                                                                                                                                  v27))))
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                            (coe
                                                                                                                               v27))))))
                                                                                                             (coe
@@ -5363,13 +5340,13 @@ d_Conv'45'ChainState_342
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                               (coe
                                                                                                                                  v27))))
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                            (coe
                                                                                                                               v27))))))
                                                                                                             (coe
@@ -5454,11 +5431,11 @@ d_Conv'45'ChainState_342
                                                                      (coe
                                                                         (\ v17 ->
                                                                            case coe v17 of
-                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.C_'10214'_'44'_'44'_'10215''737'_3938 v18 v19 v20
+                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.C_'10214'_'44'_'44'_'10215''737'_3950 v18 v19 v20
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33313
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_41043
+                                                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_41039
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                           (coe
@@ -5505,14 +5482,14 @@ d_Conv'45'ChainState_342
                                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.d_Conv'45'HSPlutusScript_22))))))))
                                                                                              (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo_3298
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_utxo_3324
                                                                                                    (coe
                                                                                                       v18)))))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_fees_3300
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_fees_3326
                                                                                           (coe v18))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_donations_3302
+                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_donations_3328
                                                                                           (coe
                                                                                              v18)))
                                                                                     (coe
@@ -5550,9 +5527,9 @@ d_Conv'45'ChainState_342
                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.d_Conv'45'VDeleg_32)))
                                                                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_voteDelegs_1534
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_voteDelegs_1538
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1588
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1592
                                                                                                          (coe
                                                                                                             v20))))))
                                                                                           (coe
@@ -5569,9 +5546,9 @@ d_Conv'45'ChainState_342
                                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_stakeDelegs_1536
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_stakeDelegs_1540
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1588
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1592
                                                                                                          (coe
                                                                                                             v20))))))
                                                                                           (coe
@@ -5588,9 +5565,9 @@ d_Conv'45'ChainState_342
                                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewards_1538
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewards_1542
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1588
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1592
                                                                                                          (coe
                                                                                                             v20))))))
                                                                                           (coe
@@ -5607,9 +5584,9 @@ d_Conv'45'ChainState_342
                                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1540
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1544
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1588
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1592
                                                                                                          (coe
                                                                                                             v20)))))))
                                                                                        (coe
@@ -5628,9 +5605,9 @@ d_Conv'45'ChainState_342
                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolState_22)))
                                                                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1554
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1558
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1590
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1594
                                                                                                          (coe
                                                                                                             v20))))))
                                                                                           (coe
@@ -5647,9 +5624,9 @@ d_Conv'45'ChainState_342
                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolParams_18)))
                                                                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_fPools_1556
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_fPools_1560
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1590
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1594
                                                                                                          (coe
                                                                                                             v20))))))
                                                                                           (coe
@@ -5666,9 +5643,9 @@ d_Conv'45'ChainState_342
                                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1558
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1562
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1590
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1594
                                                                                                          (coe
                                                                                                             v20))))))
                                                                                           (coe
@@ -5685,9 +5662,9 @@ d_Conv'45'ChainState_342
                                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1560
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1564
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1590
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1594
                                                                                                          (coe
                                                                                                             v20)))))))
                                                                                        (coe
@@ -5706,9 +5683,9 @@ d_Conv'45'ChainState_342
                                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dreps_1572
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dreps_1576
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1592
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1596
                                                                                                          (coe
                                                                                                             v20))))))
                                                                                           (coe
@@ -5727,9 +5704,9 @@ d_Conv'45'ChainState_342
                                                                                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218))))
                                                                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_ccHotKeys_1574
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_ccHotKeys_1578
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1592
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1596
                                                                                                          (coe
                                                                                                             v20))))))
                                                                                           (coe
@@ -5746,9 +5723,9 @@ d_Conv'45'ChainState_342
                                                                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1576
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1580
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1592
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1596
                                                                                                          (coe
                                                                                                             v20))))))))
                                                                              _ -> MAlonzo.RTE.mazUnreachableError))
@@ -5757,7 +5734,7 @@ d_Conv'45'ChainState_342
                                                                            case coe v17 of
                                                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Ledger.C_MkLedgerState_33313 v18 v19 v20
                                                                                -> coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.C_'10214'_'44'_'44'_'10215''737'_3938
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.C_'10214'_'44'_'44'_'10215''737'_3950
                                                                                     (coe
                                                                                        MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                        (coe
@@ -5766,9 +5743,9 @@ d_Conv'45'ChainState_342
                                                                                              (\ v21 ->
                                                                                                 case coe
                                                                                                        v21 of
-                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.C_'10214'_'44'_'44'_'10215''7512'_3304 v22 v23 v24
+                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.C_'10214'_'44'_'44'_'10215''7512'_3330 v22 v23 v24
                                                                                                     -> coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_41043
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_41039
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
                                                                                                             (coe
@@ -5825,9 +5802,9 @@ d_Conv'45'ChainState_342
                                                                                              (\ v21 ->
                                                                                                 case coe
                                                                                                        v21 of
-                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_41043 v22 v23 v24
+                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo.C_MkUTxOState_41039 v22 v23 v24
                                                                                                     -> coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.C_'10214'_'44'_'44'_'10215''7512'_3304
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.C_'10214'_'44'_'44'_'10215''7512'_3330
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                             (coe
@@ -5936,7 +5913,7 @@ d_Conv'45'ChainState_342
                                                                                              (\ v21 ->
                                                                                                 case coe
                                                                                                        v21 of
-                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_1594 v22 v23 v24
+                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_1598 v22 v23 v24
                                                                                                     -> coe
                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkCertState_37147
                                                                                                          (coe
@@ -5955,7 +5932,7 @@ d_Conv'45'ChainState_342
                                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.d_Conv'45'VDeleg_32)))
                                                                                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_voteDelegs_1534
+                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_voteDelegs_1538
                                                                                                                         (coe
                                                                                                                            v22)))))
                                                                                                             (coe
@@ -5972,7 +5949,7 @@ d_Conv'45'ChainState_342
                                                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_stakeDelegs_1536
+                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_stakeDelegs_1540
                                                                                                                         (coe
                                                                                                                            v22)))))
                                                                                                             (coe
@@ -5989,7 +5966,7 @@ d_Conv'45'ChainState_342
                                                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewards_1538
+                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewards_1542
                                                                                                                         (coe
                                                                                                                            v22)))))
                                                                                                             (coe
@@ -6006,7 +5983,7 @@ d_Conv'45'ChainState_342
                                                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1540
+                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1544
                                                                                                                         (coe
                                                                                                                            v22))))))
                                                                                                          (coe
@@ -6025,7 +6002,7 @@ d_Conv'45'ChainState_342
                                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolState_22)))
                                                                                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1554
+                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1558
                                                                                                                         (coe
                                                                                                                            v23)))))
                                                                                                             (coe
@@ -6042,7 +6019,7 @@ d_Conv'45'ChainState_342
                                                                                                                            MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolParams_18)))
                                                                                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_fPools_1556
+                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_fPools_1560
                                                                                                                         (coe
                                                                                                                            v23)))))
                                                                                                             (coe
@@ -6059,7 +6036,7 @@ d_Conv'45'ChainState_342
                                                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1558
+                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1562
                                                                                                                         (coe
                                                                                                                            v23)))))
                                                                                                             (coe
@@ -6076,7 +6053,7 @@ d_Conv'45'ChainState_342
                                                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1560
+                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1564
                                                                                                                         (coe
                                                                                                                            v23))))))
                                                                                                          (coe
@@ -6095,7 +6072,7 @@ d_Conv'45'ChainState_342
                                                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dreps_1572
+                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dreps_1576
                                                                                                                         (coe
                                                                                                                            v24)))))
                                                                                                             (coe
@@ -6114,7 +6091,7 @@ d_Conv'45'ChainState_342
                                                                                                                               MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218))))
                                                                                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_ccHotKeys_1574
+                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_ccHotKeys_1578
                                                                                                                         (coe
                                                                                                                            v24)))))
                                                                                                             (coe
@@ -6131,7 +6108,7 @@ d_Conv'45'ChainState_342
                                                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1576
+                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1580
                                                                                                                         (coe
                                                                                                                            v24))))))
                                                                                                   _ -> MAlonzo.RTE.mazUnreachableError))
@@ -6141,7 +6118,7 @@ d_Conv'45'ChainState_342
                                                                                                        v21 of
                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkCertState_37147 v22 v23 v24
                                                                                                     -> coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_1594
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_1598
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                                             (coe
@@ -6150,7 +6127,7 @@ d_Conv'45'ChainState_342
                                                                                                                   (\ v25 ->
                                                                                                                      case coe
                                                                                                                             v25 of
-                                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1542 v26 v27 v28 v29
+                                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1546 v26 v27 v28 v29
                                                                                                                          -> coe
                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_26909
                                                                                                                               (coe
@@ -6220,7 +6197,7 @@ d_Conv'45'ChainState_342
                                                                                                                             v25 of
                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_26909 v26 v27 v28 v29
                                                                                                                          -> coe
-                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1542
+                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1546
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                                                  (coe
@@ -6242,13 +6219,13 @@ d_Conv'45'ChainState_342
                                                                                                                                              (coe
                                                                                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                                                                                 (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                                                    (coe
                                                                                                                                                       v31))))
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                                                 (coe
                                                                                                                                                    v31))))))
                                                                                                                                  (coe
@@ -6303,13 +6280,13 @@ d_Conv'45'ChainState_342
                                                                                                                                              (coe
                                                                                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                                                                                 (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                                                    (coe
                                                                                                                                                       v31))))
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                                                 (coe
                                                                                                                                                    v31))))))
                                                                                                                                  (coe
@@ -6364,13 +6341,13 @@ d_Conv'45'ChainState_342
                                                                                                                                              (coe
                                                                                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                                                                                 (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                                                    (coe
                                                                                                                                                       v31))))
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                                                 (coe
                                                                                                                                                    v31))))))
                                                                                                                                  (coe
@@ -6425,13 +6402,13 @@ d_Conv'45'ChainState_342
                                                                                                                                              (coe
                                                                                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                                                                                 (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                                                    (coe
                                                                                                                                                       v31))))
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                                                 (coe
                                                                                                                                                    v31))))))
                                                                                                                                  (coe
@@ -6475,7 +6452,7 @@ d_Conv'45'ChainState_342
                                                                                                                   (\ v25 ->
                                                                                                                      case coe
                                                                                                                             v25 of
-                                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_constructor_1562 v26 v27 v28 v29
+                                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_constructor_1566 v26 v27 v28 v29
                                                                                                                          -> coe
                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkPState_22495
                                                                                                                               (coe
@@ -6545,7 +6522,7 @@ d_Conv'45'ChainState_342
                                                                                                                             v25 of
                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkPState_22495 v26 v27 v28 v29
                                                                                                                          -> coe
-                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_constructor_1562
+                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_constructor_1566
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                                                  (coe
@@ -6712,7 +6689,7 @@ d_Conv'45'ChainState_342
                                                                                                                   (\ v25 ->
                                                                                                                      case coe
                                                                                                                             v25 of
-                                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7515'_1578 v26 v27 v28
+                                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7515'_1582 v26 v27 v28
                                                                                                                          -> coe
                                                                                                                               MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkGState_31571
                                                                                                                               (coe
@@ -6769,7 +6746,7 @@ d_Conv'45'ChainState_342
                                                                                                                             v25 of
                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkGState_31571 v26 v27 v28
                                                                                                                          -> coe
-                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7515'_1578
+                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7515'_1582
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
                                                                                                                                  (coe
@@ -6791,13 +6768,13 @@ d_Conv'45'ChainState_342
                                                                                                                                              (coe
                                                                                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                                                                                 (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                                                    (coe
                                                                                                                                                       v30))))
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                                                 (coe
                                                                                                                                                    v30))))))
                                                                                                                                  (coe
@@ -6852,13 +6829,13 @@ d_Conv'45'ChainState_342
                                                                                                                                              (coe
                                                                                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                                                                                 (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                                                    (coe
                                                                                                                                                       v30))))
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                                                 (coe
                                                                                                                                                    v30))))))
                                                                                                                                  (coe
@@ -6915,13 +6892,13 @@ d_Conv'45'ChainState_342
                                                                                                                                              (coe
                                                                                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                                                                                 (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                                                    (coe
                                                                                                                                                       v30))))
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                                                 (coe
                                                                                                                                                    v30))))))
                                                                                                                                  (coe
@@ -6968,7 +6945,7 @@ d_Conv'45'ChainState_342
                                                                      (coe
                                                                         (\ v17 ->
                                                                            case coe v17 of
-                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1346 v18 v19 v20 v21 v22
+                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1350 v18 v19 v20 v21 v22
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1623
                                                                                     (coe
@@ -7002,13 +6979,13 @@ d_Conv'45'ChainState_342
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                         (coe
                                                                                                                            v24))))
                                                                                                                (coe
                                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                      (coe
                                                                                                                         v24))))))
                                                                                                       (coe
@@ -7128,7 +7105,7 @@ d_Conv'45'ChainState_342
                                                                            case coe v17 of
                                                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1623 v18 v19 v20 v21 v22
                                                                                -> coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1346
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1350
                                                                                     (coe
                                                                                        MAlonzo.Code.Data.Product.Base.du_map_128
                                                                                        (coe
@@ -7154,13 +7131,13 @@ d_Conv'45'ChainState_342
                                                                                                                (coe
                                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                      (coe
                                                                                                                         v24))))
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                   (coe
                                                                                                                      v24))))))
                                                                                                    (coe
@@ -7280,7 +7257,7 @@ d_Conv'45'ChainState_342
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_332
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_globalConstants_1410
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_globalConstants_1422
                                                                                                       (coe
                                                                                                          v24)))
                                                                                                 (coe
@@ -7288,13 +7265,13 @@ d_Conv'45'ChainState_342
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                          (coe
                                                                                                             v24))))
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                       (coe
                                                                                                          v24))))))
                                                                                        (coe
@@ -7335,7 +7312,7 @@ d_Conv'45'ChainState_342
                                                                      (coe
                                                                         (\ v17 ->
                                                                            case coe v17 of
-                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.C_constructor_2170 v18 v19 v20
+                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.C_constructor_2174 v18 v19 v20
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Foreign.Ratify.C_MkRatifyState_14679
                                                                                     (coe
@@ -7371,13 +7348,13 @@ d_Conv'45'ChainState_342
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                            (coe
                                                                                                                               v22))))
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                         (coe
                                                                                                                            v22))))))
                                                                                                          (coe
@@ -7396,7 +7373,7 @@ d_Conv'45'ChainState_342
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1336
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1340
                                                                                                 (coe
                                                                                                    v18))))
                                                                                        (coe
@@ -7427,7 +7404,7 @@ d_Conv'45'ChainState_342
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1338
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1342
                                                                                                 (coe
                                                                                                    v18))))
                                                                                        (coe
@@ -7456,7 +7433,7 @@ d_Conv'45'ChainState_342
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1340
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1344
                                                                                                 (coe
                                                                                                    v18))))
                                                                                        (coe
@@ -7481,7 +7458,7 @@ d_Conv'45'ChainState_342
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1342
+                                                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1346
                                                                                                 (coe
                                                                                                    v18))))
                                                                                        (coe
@@ -7498,7 +7475,7 @@ d_Conv'45'ChainState_342
                                                                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                                                              (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1344
+                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1348
                                                                                                    (coe
                                                                                                       v18))))))
                                                                                     (coe
@@ -7525,7 +7502,7 @@ d_Conv'45'ChainState_342
                                                                            case coe v17 of
                                                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Ratify.C_MkRatifyState_14679 v18 v19 v20
                                                                                -> coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.C_constructor_2170
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.C_constructor_2174
                                                                                     (coe
                                                                                        MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                                        (coe
@@ -7534,7 +7511,7 @@ d_Conv'45'ChainState_342
                                                                                              (\ v21 ->
                                                                                                 case coe
                                                                                                        v21 of
-                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1346 v22 v23 v24 v25 v26
+                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1350 v22 v23 v24 v25 v26
                                                                                                     -> coe
                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1623
                                                                                                          (coe
@@ -7570,13 +7547,13 @@ d_Conv'45'ChainState_342
                                                                                                                                        (coe
                                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                                                                           (coe
-                                                                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                                              (coe
                                                                                                                                                 v28))))
                                                                                                                                     (coe
                                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                                                                                        (coe
-                                                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                                           (coe
                                                                                                                                              v28))))))
                                                                                                                            (coe
@@ -7703,7 +7680,7 @@ d_Conv'45'ChainState_342
                                                                                                        v21 of
                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1623 v22 v23 v24 v25 v26
                                                                                                     -> coe
-                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1346
+                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1350
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Data.Product.Base.du_map_128
                                                                                                             (coe
@@ -7729,13 +7706,13 @@ d_Conv'45'ChainState_342
                                                                                                                                     (coe
                                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                                                                        (coe
-                                                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                                           (coe
                                                                                                                                              v28))))
                                                                                                                                  (coe
                                                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                                        (coe
                                                                                                                                           v28))))))
                                                                                                                         (coe
@@ -7863,7 +7840,7 @@ d_Conv'45'ChainState_342
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_332
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_globalConstants_1410
+                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_globalConstants_1422
                                                                                                                            (coe
                                                                                                                               v28)))
                                                                                                                      (coe
@@ -7871,13 +7848,13 @@ d_Conv'45'ChainState_342
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                               (coe
                                                                                                                                  v28))))
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1412
+                                                                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                                                                                                            (coe
                                                                                                                               v28))))))
                                                                                                             (coe
@@ -7997,182 +7974,162 @@ d_Conv'45'ChainState_342
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
-                           (coe d_Conv'45'LastAppliedBlock_338))
+                           (coe d_Conv'45'LastAppliedBlock_330))
                         v2)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Dijkstra.Foreign.Chain.chain-step
 chainStep ::
   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
-  T_ChainState_17089 ->
+  T_ChainState_17053 ->
   MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
-    () () T_Block_11391
+    () () T_Block_11355
     (MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10
-       () T_ResolvedEB_8051) ->
+       () T_ResolvedEB_8015) ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
-    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_ChainState_17089
-chainStep = coe d_chain'45'step_344
-d_chain'45'step_344 ::
+    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_ChainState_17053
+chainStep = coe d_chain'45'step_336
+d_chain'45'step_336 ::
   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
-  T_ChainState_17089 ->
+  T_ChainState_17053 ->
   MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
-    AgdaAny AgdaAny T_Block_11391 (Maybe T_ResolvedEB_8051) ->
+    AgdaAny AgdaAny T_Block_11355 (Maybe T_ResolvedEB_8015) ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
-    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_ChainState_17089
-d_chain'45'step_344 ~v0 = du_chain'45'step_344
-du_chain'45'step_344 ::
-  T_ChainState_17089 ->
+    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_ChainState_17053
+d_chain'45'step_336 ~v0 = du_chain'45'step_336
+du_chain'45'step_336 ::
+  T_ChainState_17053 ->
   MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
-    AgdaAny AgdaAny T_Block_11391 (Maybe T_ResolvedEB_8051) ->
+    AgdaAny AgdaAny T_Block_11355 (Maybe T_ResolvedEB_8015) ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
-    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_ChainState_17089
-du_chain'45'step_344
+    MAlonzo.Code.Agda.Builtin.String.T_String_6 T_ChainState_17053
+du_chain'45'step_336
   = coe
       MAlonzo.Code.Class.Convertible.Core.d_to_20
       (coe
          MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Fun_34
-         (coe d_Conv'45'ChainState_342)
+         (coe d_Conv'45'ChainState_334)
          (coe
             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Fun_34
             (coe
                MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
-               (coe d_Conv'45'Block_334)
+               (coe d_Conv'45'Block_326)
                (coe
                   MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
-                  (coe d_Conv'45'ResolvedEB_248)))
+                  (coe d_Conv'45'ResolvedEB_240)))
             (coe
                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSComputationResult_134
                (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvString_12)
-               (coe d_Conv'45'ChainState_342))))
+               (coe d_Conv'45'ChainState_334))))
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.Properties.Computational.d_Computational'45'CHAIN_4004
+            MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.Properties.Computational.d_Computational'45'CHAIN_4524
             (coe
                MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
                (coe
                   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSAbstractFunctions_3952
+               MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSAbstractFunctions_3964
                (coe
                   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)))
          (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
--- Ledger.Dijkstra.Foreign.Chain.BHBody
-d_BHBody_369 = ()
-type T_BHBody_369 = BHBody
-pattern C_MkBHBody_371 a0 a1 a2 a3 a4 a5 a6 = MkBHBody a0 a1 a2 a3 a4 a5 a6
-check_MkBHBody_371 ::
-  MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.T_HSVKey_8381 ->
-  Integer ->
-  Integer ->
-  Integer ->
-  Integer ->
-  MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10
-    ()
-    (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
-       () () Integer Integer) ->
-  Bool -> T_BHBody_369
-check_MkBHBody_371 = MkBHBody
-cover_BHBody_369 :: BHBody -> ()
-cover_BHBody_369 x
-  = case x of
-      MkBHBody _ _ _ _ _ _ _ -> ()
 -- Ledger.Dijkstra.Foreign.Chain.BHeader
-d_BHeader_6065 = ()
-type T_BHeader_6065 = BHeader
-pattern C_MkBHeader_6067 a0 a1 = MkBHeader a0 a1
-check_MkBHeader_6067 :: T_BHBody_369 -> Integer -> T_BHeader_6065
-check_MkBHeader_6067 = MkBHeader
-cover_BHeader_6065 :: BHeader -> ()
-cover_BHeader_6065 x
+d_BHeader_6029 = ()
+type T_BHeader_6029 = BHeader
+pattern C_MkBHeader_6031 a0 a1 = MkBHeader a0 a1
+check_MkBHeader_6031 :: T_BHBody_333 -> Integer -> T_BHeader_6029
+check_MkBHeader_6031 = MkBHeader
+cover_BHeader_6029 :: BHeader -> ()
+cover_BHeader_6029 x
   = case x of
       MkBHeader _ _ -> ()
 -- Ledger.Dijkstra.Foreign.Chain.EBCert
-d_EBCert_6709 = ()
-type T_EBCert_6709 = EBCert
-pattern C_MkEBCert_6711 a0 a1 = MkEBCert a0 a1
-check_MkEBCert_6711 ::
+d_EBCert_6673 = ()
+type T_EBCert_6673 = EBCert
+pattern C_MkEBCert_6675 a0 a1 = MkEBCert a0 a1
+check_MkEBCert_6675 ::
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSSet_60 Integer ->
-  Integer -> T_EBCert_6709
-check_MkEBCert_6711 = MkEBCert
-cover_EBCert_6709 :: EBCert -> ()
-cover_EBCert_6709 x
+  Integer -> T_EBCert_6673
+check_MkEBCert_6675 = MkEBCert
+cover_EBCert_6673 :: EBCert -> ()
+cover_EBCert_6673 x
   = case x of
       MkEBCert _ _ -> ()
 -- Ledger.Dijkstra.Foreign.Chain.EndorserBlock
-d_EndorserBlock_7445 = ()
-type T_EndorserBlock_7445 = EndorserBlock
-pattern C_MkEndorserBlock_7447 a0 = MkEndorserBlock a0
-check_MkEndorserBlock_7447 ::
+d_EndorserBlock_7409 = ()
+type T_EndorserBlock_7409 = EndorserBlock
+pattern C_MkEndorserBlock_7411 a0 = MkEndorserBlock a0
+check_MkEndorserBlock_7411 ::
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     ()
     (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
        () () Integer Integer) ->
-  T_EndorserBlock_7445
-check_MkEndorserBlock_7447 = MkEndorserBlock
-cover_EndorserBlock_7445 :: EndorserBlock -> ()
-cover_EndorserBlock_7445 x
+  T_EndorserBlock_7409
+check_MkEndorserBlock_7411 = MkEndorserBlock
+cover_EndorserBlock_7409 :: EndorserBlock -> ()
+cover_EndorserBlock_7409 x
   = case x of
       MkEndorserBlock _ -> ()
 -- Ledger.Dijkstra.Foreign.Chain.ResolvedEB
-d_ResolvedEB_8051 = ()
-type T_ResolvedEB_8051 = ResolvedEB
-pattern C_MkResolvedEB_8053 a0 a1 = MkResolvedEB a0 a1
-check_MkResolvedEB_8053 ::
-  T_EndorserBlock_7445 ->
+d_ResolvedEB_8015 = ()
+type T_ResolvedEB_8015 = ResolvedEB
+pattern C_MkResolvedEB_8017 a0 a1 = MkResolvedEB a0 a1
+check_MkResolvedEB_8017 ::
+  T_EndorserBlock_7409 ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     ()
     MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.T_TxTop_254213 ->
-  T_ResolvedEB_8051
-check_MkResolvedEB_8053 = MkResolvedEB
-cover_ResolvedEB_8051 :: ResolvedEB -> ()
-cover_ResolvedEB_8051 x
+  T_ResolvedEB_8015
+check_MkResolvedEB_8017 = MkResolvedEB
+cover_ResolvedEB_8015 :: ResolvedEB -> ()
+cover_ResolvedEB_8015 x
   = case x of
       MkResolvedEB _ _ -> ()
 -- Ledger.Dijkstra.Foreign.Chain.Block
-d_Block_11391 = ()
-type T_Block_11391 = Block
-pattern C_MkBlock_11393 a0 a1 a2 a3 a4 a5 = MkBlock a0 a1 a2 a3 a4 a5
-check_MkBlock_11393 ::
-  T_BHeader_6065 ->
+d_Block_11355 = ()
+type T_Block_11355 = Block
+pattern C_MkBlock_11357 a0 a1 a2 a3 a4 a5 = MkBlock a0 a1 a2 a3 a4 a5
+check_MkBlock_11357 ::
+  T_BHeader_6029 ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     ()
     MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction.T_TxTop_254213 ->
-  MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () T_EBCert_6709 ->
-  Integer -> Integer -> T_Block_11391
-check_MkBlock_11393 = MkBlock
-cover_Block_11391 :: Block -> ()
-cover_Block_11391 x
+  MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () T_EBCert_6673 ->
+  Integer -> Integer -> T_Block_11355
+check_MkBlock_11357 = MkBlock
+cover_Block_11355 :: Block -> ()
+cover_Block_11355 x
   = case x of
       MkBlock _ _ _ _ _ _ -> ()
 -- Ledger.Dijkstra.Foreign.Chain.LastAppliedBlock
-d_LastAppliedBlock_15293 = ()
-type T_LastAppliedBlock_15293 = LastAppliedBlock
-pattern C_MkLastAppliedBlock_15295 a0 a1 a2 = MkLastAppliedBlock a0 a1 a2
-check_MkLastAppliedBlock_15295 ::
+d_LastAppliedBlock_15257 = ()
+type T_LastAppliedBlock_15257 = LastAppliedBlock
+pattern C_MkLastAppliedBlock_15259 a0 a1 a2 = MkLastAppliedBlock a0 a1 a2
+check_MkLastAppliedBlock_15259 ::
   Integer ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10
     ()
     (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
        () () Integer Integer) ->
-  T_LastAppliedBlock_15293
-check_MkLastAppliedBlock_15295 = MkLastAppliedBlock
-cover_LastAppliedBlock_15293 :: LastAppliedBlock -> ()
-cover_LastAppliedBlock_15293 x
+  T_LastAppliedBlock_15257
+check_MkLastAppliedBlock_15259 = MkLastAppliedBlock
+cover_LastAppliedBlock_15257 :: LastAppliedBlock -> ()
+cover_LastAppliedBlock_15257 x
   = case x of
       MkLastAppliedBlock _ _ _ -> ()
 -- Ledger.Dijkstra.Foreign.Chain.ChainState
-d_ChainState_17089 = ()
-type T_ChainState_17089 = ChainState
-pattern C_MkChainState_17091 a0 a1 = MkChainState a0 a1
-check_MkChainState_17091 ::
+d_ChainState_17053 = ()
+type T_ChainState_17053 = ChainState
+pattern C_MkChainState_17055 a0 a1 = MkChainState a0 a1
+check_MkChainState_17055 ::
   MAlonzo.Code.Ledger.Dijkstra.Foreign.NewEpoch.T_NewEpochState_2095 ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10
-    () T_LastAppliedBlock_15293 ->
-  T_ChainState_17089
-check_MkChainState_17091 = MkChainState
-cover_ChainState_17089 :: ChainState -> ()
-cover_ChainState_17089 x
+    () T_LastAppliedBlock_15257 ->
+  T_ChainState_17053
+check_MkChainState_17055 = MkChainState
+cover_ChainState_17053 :: ChainState -> ()
+cover_ChainState_17053 x
   = case x of
       MkChainState _ _ -> ()
