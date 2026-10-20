@@ -56,7 +56,7 @@ record BHBody : Type where
     bhash        : KeyHash
     hBbsize      : ℕ
     announcedEB  : Maybe Announcement
-    certifiedEB  : Bool
+    certifiesEB  : Bool
 
 record BHeader : Type where
   field
@@ -115,8 +115,8 @@ certificate.
 
 ```agda
 ValidLeiosBlock : Block → Type
-ValidLeiosBlock b =  (Is-nothing ebCert × certifiedEB ≡ false)
-                  ⊎  (Is-just ebCert × certifiedEB ≡ true × length ts ≡ 0)
+ValidLeiosBlock b =  (Is-nothing ebCert × certifiesEB ≡ false)
+                  ⊎  (Is-just ebCert × certifiesEB ≡ true × length ts ≡ 0)
   where
     open Block b
     open BHBody (BHeader.bhbody bheader)

@@ -29,11 +29,11 @@ open Computational ⦃...⦄
 open Block
 
 validLeiosBlockFailure : Block → String
-validLeiosBlockFailure b = go (BHBody.certifiedEB (BHeader.bhbody (bheader b))) (ebCert b)
+validLeiosBlockFailure b = go (BHBody.certifiesEB (BHeader.bhbody (bheader b))) (ebCert b)
   where
     go : Bool → Maybe EBCert → String
-    go _     nothing  = "certifiedEB is set but the block carries no EB certificate"
-    go false (just _) = "the block carries an EB certificate but certifiedEB is not set"
+    go _     nothing  = "certifiesEB is set but the block carries no EB certificate"
+    go false (just _) = "the block carries an EB certificate but certifiesEB is not set"
     go true  (just _) = "a block carrying an EB certificate carries transactions"
 ```
 -->
