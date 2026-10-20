@@ -46,22 +46,17 @@ d_hashEB_30 v0 v1
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Crypto.d_hashEBRefs_170
       v0 (d_ebTxRefs_26 (coe v1))
--- Ledger.Dijkstra.Specification.Leios.Types.Announcement
-d_Announcement_34 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Crypto.T_LeiosCryptoStructure_10 ->
-  ()
-d_Announcement_34 = erased
 -- Ledger.Dijkstra.Specification.Leios.Types.DecEq-EndorserBlock
-d_DecEq'45'EndorserBlock_36 ::
+d_DecEq'45'EndorserBlock_34 ::
   MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_140 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Crypto.T_LeiosCryptoStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'EndorserBlock_36 ~v0 v1
-  = du_DecEq'45'EndorserBlock_36 v1
-du_DecEq'45'EndorserBlock_36 ::
+d_DecEq'45'EndorserBlock_34 ~v0 v1
+  = du_DecEq'45'EndorserBlock_34 v1
+du_DecEq'45'EndorserBlock_34 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Crypto.T_LeiosCryptoStructure_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-du_DecEq'45'EndorserBlock_36 v0
+du_DecEq'45'EndorserBlock_34 v0
   = coe
       MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe
