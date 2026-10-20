@@ -84,9 +84,10 @@ record Block : Type where
     ≡-bBodyHash  : bBodyHash ≡ BHBody.bhash (BHeader.bhbody bheader)
 ```
 
-The header hash is an input: no body contains the hash of its own header,
-so consensus supplies it, and it is the message a later certificate is verified
-against (`ValidEBCert`{.AgdaRecord} in `Leios`{.AgdaModule}).
+The header hash is a field for the same reason the body hash is: it is computed
+from the header's bytes, which the specification does not model, so consensus
+supplies it.  It is the message a later certificate is verified against
+(`ValidEBCert`{.AgdaRecord} in `Leios`{.AgdaModule}).
 
 ## The <span class="AgdaDatatype">BBODY</span> Transition System {#sec:the-bbody-transition-system}
 
