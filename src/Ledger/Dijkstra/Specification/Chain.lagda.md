@@ -149,7 +149,7 @@ pendingEB la = proj₁ <$> LastAppliedBlock.announcedEB la
 
 `pendingEB`{.AgdaFunction} is the hash of the EB the last applied block
 announced, if it announced one; the declared size beside it is no validity
-condition (see `Leios.Types`{.AgdaModule}).
+condition (see `BlockBody`{.AgdaModule}).
 
 The block carries its certificate alone.  The EB it certifies and that EB's
 *closure*, its referenced transactions resolved and in reference order, reach
