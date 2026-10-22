@@ -25,6 +25,8 @@ open import Ledger.Dijkstra.Foreign.NewEpoch
 open import Ledger.Dijkstra.Foreign.Transaction
 open import Ledger.Dijkstra.Specification.Crypto using (LeiosCryptoStructure)
 open import Ledger.Dijkstra.Specification.Leios DummyGovStructure using (EBCert)
+open import Ledger.Dijkstra.Specification.Leios.Types cryptoStructure leiosCryptoStructure
+  using (EndorserBlock)
 open import Ledger.Dijkstra.Specification.Chain it DummyAbstractFunctions
 open import Ledger.Dijkstra.Specification.Chain.Properties.Computational it DummyAbstractFunctions
 
@@ -43,6 +45,13 @@ instance
   HsTy-EBCert = autoHsType EBCert ⊣ withConstructor "MkEBCert"
                                     • fieldPrefix "ebc"
   Conv-EBCert = autoConvert EBCert
+
+  HsTy-EndorserBlock = autoHsType EndorserBlock ⊣ withConstructor "MkEndorserBlock"
+  Conv-EndorserBlock = autoConvert EndorserBlock
+
+  HsTy-ResolvedEB = autoHsType ResolvedEB ⊣ withConstructor "MkResolvedEB"
+                                            • fieldPrefix "reb"
+  Conv-ResolvedEB = autoConvert ResolvedEB
 
 record HSBlock : Type where
   field
@@ -86,11 +95,15 @@ instance
   HsTy-Block = mkHsType Block (HsType HSBlock)
   Conv-Block = Conv-Block-HSBlock ⨾ Conv-HSBlock
 
+  HsTy-LastAppliedBlock = autoHsType LastAppliedBlock ⊣ withConstructor "MkLastAppliedBlock"
+                                                      • fieldPrefix "lab"
+  Conv-LastAppliedBlock = autoConvert LastAppliedBlock
+
   HsTy-ChainState = autoHsType ChainState ⊣ withConstructor "MkChainState"
                                             • fieldPrefix "cs"
   Conv-ChainState = autoConvert ChainState
 
-chain-step : HsType (⊤ → ChainState → Block → ComputationResult String ChainState)
+chain-step : HsType (⊤ → ChainState → Block × Maybe ResolvedEB → ComputationResult String ChainState)
 chain-step = to (compute Computational-CHAIN)
 
 {-# COMPILE GHC chain-step as chainStep #-}
