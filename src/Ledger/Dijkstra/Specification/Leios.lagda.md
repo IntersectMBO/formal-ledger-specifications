@@ -191,6 +191,8 @@ this out: the seats' weights come from the stake distribution, and their keys
 from registrations that expire (`honouredBlsKey`{.AgdaFunction}).
 `certifiable`{.AgdaFunction} names the condition, which is what an operator
 watches when certificates stop appearing.
+It expresses quorum capacity; forming a certificate also requires enough
+members to vote and their votes to arrive in time.
 
 ```agda
   certifiable : LeiosCommittee → Type
