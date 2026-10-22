@@ -9,10 +9,16 @@ dependencies:
   - base
   - text
   - ieee
-source-dirs:
-  - src
 library:
+  source-dirs:
+    - src
   exposed-modules:
     - MAlonzo.Code.Ledger.Core.Foreign.API
     - MAlonzo.Code.Ledger.Conway.Foreign.API
     - MAlonzo.Code.Ledger.Dijkstra.Foreign.API
+tests:
+  leios-chain:
+    main: LeiosChain.hs
+    source-dirs: test
+    dependencies:
+      - cardano-ledger-executable-spec

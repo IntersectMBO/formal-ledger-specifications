@@ -193,4 +193,4 @@ d__'44'_'8866'_'8640''10631'_'44'EB'10632'__2918 a0 a1 a2 a3 a4 a5
                                                  a6
   = ()
 newtype T__'44'_'8866'_'8640''10631'_'44'EB'10632'__2918
-  = C_EB_2926 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+  = C_EB_2924 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
