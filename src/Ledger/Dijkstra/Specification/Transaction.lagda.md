@@ -616,14 +616,18 @@ allowed to inspect utxo for its inputs.
   allSpendInputs txTop = foldl  (λ acc txSub → acc ∪ SpendInputsOf txSub)
                                 (SpendInputsOf txTop)
                                 (SubTransactionsOf txTop)
-  allSpendInputsList : TopLevelTx → List (ℙ TxIn)
-  allSpendInputsList t = SpendInputsOf t ∷ map SpendInputsOf (SubTransactionsOf t)
 
   --| Reference inputs
   allReferenceInputs : TopLevelTx → ℙ TxIn
   allReferenceInputs txTop = foldl  (λ acc txSub → acc ∪ ReferenceInputsOf txSub)
                                     (ReferenceInputsOf txTop)
                                     (SubTransactionsOf txTop)
+
+  --| Outputs
+  allTxOuts : TopLevelTx → ℙ TxOut
+  allTxOuts txTop = foldl (λ acc txSub → acc ∪ (range (TxOutsOf txSub)))
+                          (range (TxOutsOf txTop))
+                          (SubTransactionsOf txTop)
 
   --| Set of TxOuts from a UTxO
   _ : UTxO → ℙ TxOut

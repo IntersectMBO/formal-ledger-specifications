@@ -401,11 +401,11 @@ attempting both.
                       x  ← d
                       isInj₂ x) (range (utxo₀ ∣ txIns))
 
-      dataHashesOutputs : ℙ DataHash
-      dataHashesOutputs = mapPartial txOutToDataHash (range txOuts)
+      allDataHashesOutputs : ℙ DataHash
+      allDataHashesOutputs = mapPartial txOutToDataHash (allTxOuts txTop)
 
-      dataHashesReferenceInputs : ℙ DataHash
-      dataHashesReferenceInputs = mapPartial txOutToDataHash (range (utxo₀ ∣ referenceInputs))
+      allDataHashesReferenceInputs : ℙ DataHash
+      allDataHashesReferenceInputs = mapPartial txOutToDataHash (range (utxo₀ ∣ allReferenceInputs txTop))
 
       allReferenceScriptHashes : ℙ ScriptHash
       allReferenceScriptHashes = mapˢ hash (allReferenceScripts txTop utxo₀)
@@ -433,7 +433,7 @@ attempting both.
     ∙ allScriptHashesNeeded - allReferenceScriptHashes ≡ᵉ allWitnessScriptHashes
     ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
     ∙ dataHashesNeededSpendInputs ⊆ dataHashesProvided
-    ∙ dataHashesProvided ⊆ dataHashesNeededSpendInputs ∪ dataHashesOutputs ∪ dataHashesReferenceInputs
+    ∙ dataHashesProvided ⊆ dataHashesNeededSpendInputs ∪ allDataHashesOutputs ∪ allDataHashesReferenceInputs
     ∙ dom txRedeemers ≡ᵉ scriptRedeemerPtrs
     ∙ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguages txTop utxo₀
     ∙ txADhash ≡ map hash txAuxData
