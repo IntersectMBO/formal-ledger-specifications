@@ -811,17 +811,3 @@ library
     , ieee
     , text
   default-language: Haskell2010
-
-test-suite leios-chain
-  type: exitcode-stdio-1.0
-  main-is: LeiosChain.hs
-  hs-source-dirs:
-      test
-  default-extensions:
-      DeriveGeneric
-  build-depends:
-      base
-    , cardano-ledger-executable-spec
-    , ieee
-    , text
-  default-language: Haskell2010

@@ -616,10 +616,10 @@ d_'61''61''45'GovActionData_944 v0 v1
                                                                MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_epochStructure_668
                                                                (coe v0))))
                                                       (coe
-                                                         MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                                                         MAlonzo.Code.Axiom.Set.Map.du__'738'_580
                                                          (coe v3))
                                                       (coe
-                                                         MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                                                         MAlonzo.Code.Axiom.Set.Map.du__'738'_580
                                                          (coe v8)))
                                                    (coe
                                                       MAlonzo.Code.Data.Bool.Base.d__'8743'__24
@@ -627,7 +627,7 @@ d_'61''61''45'GovActionData_944 v0 v1
                                                          MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18
                                                          (coe ())
                                                          (coe
-                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_DecEq'45'ℙ_1244
+                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_DecEq'45'ℙ_1266
                                                             (let v12
                                                                    = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                        (coe
@@ -719,8 +719,8 @@ d_'61''61''45'GovActionData_944 v0 v1
                                  MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_340
                                  (coe v4) (coe v5) (coe v6)))))
                      (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
-                  (coe MAlonzo.Code.Axiom.Set.Map.du__'738'_570 (coe v2))
-                  (coe MAlonzo.Code.Axiom.Set.Map.du__'738'_570 (coe v3)))
+                  (coe MAlonzo.Code.Axiom.Set.Map.du__'738'_580 (coe v2))
+                  (coe MAlonzo.Code.Axiom.Set.Map.du__'738'_580 (coe v3)))
       C_Info_872
         -> coe
              MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18 (coe ())
@@ -2069,12 +2069,12 @@ du_proposedCC_1454 v0
                          -> coe
                               seq (coe v5)
                               (coe
-                                 MAlonzo.Code.Class.IsSet.du_dom_586
+                                 MAlonzo.Code.Class.IsSet.du_dom_588
                                  (coe
                                     MAlonzo.Code.Axiom.Set.d_th_1516
                                     (coe
                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                                 (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594) (coe v4))
+                                 (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_596) (coe v4))
                        _ -> MAlonzo.RTE.mazUnreachableError
                 _ -> coe v3)
       _ -> MAlonzo.RTE.mazUnreachableError
@@ -2120,7 +2120,7 @@ du_activeDRepsOf_1490 ::
   AgdaAny -> AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_activeDRepsOf_1490 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_filter'7504'_1424
+      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_filter'7504'_1446
       (\ v4 ->
          coe
            MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8846'_16

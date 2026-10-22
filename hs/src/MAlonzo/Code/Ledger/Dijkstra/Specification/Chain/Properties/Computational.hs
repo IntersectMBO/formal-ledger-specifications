@@ -766,7 +766,7 @@ du_validCert'63'_3394 v0 v1 v2 v3
                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_newEpochState_4440
                                        (coe v1)))))))
                      (coe
-                        MAlonzo.Code.Axiom.Set.Sum.du_indexedSumL_932
+                        MAlonzo.Code.Axiom.Set.Sum.du_indexedSumL_938
                         (coe
                            MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                            (coe
@@ -1089,7 +1089,7 @@ d_Computational'45'CHAIN_3396 v0 v1
                                                                                                                                                                                    (coe
                                                                                                                                                                                       v3)))))))
                                                                                                                                                                  (coe
-                                                                                                                                                                    MAlonzo.Code.Axiom.Set.Sum.du_indexedSumL_932
+                                                                                                                                                                    MAlonzo.Code.Axiom.Set.Sum.du_indexedSumL_938
                                                                                                                                                                     (coe
                                                                                                                                                                        MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                                                                                                                                                                        (coe
@@ -1225,7 +1225,7 @@ d_Computational'45'CHAIN_3396 v0 v1
                                                                                                                                                                                             (coe
                                                                                                                                                                                                MAlonzo.Code.Class.Decidable.Instances.d_ℕ'45'Dec'45''8804'_34
                                                                                                                                                                                                (coe
-                                                                                                                                                                                                  MAlonzo.Code.Axiom.Set.Sum.du_indexedSumL_932
+                                                                                                                                                                                                  MAlonzo.Code.Axiom.Set.Sum.du_indexedSumL_938
                                                                                                                                                                                                   (coe
                                                                                                                                                                                                      MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                                                                                                                                                                                                      (coe

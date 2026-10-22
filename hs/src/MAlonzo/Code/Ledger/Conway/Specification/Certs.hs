@@ -1027,7 +1027,7 @@ d_DecEq'45'StakePoolParams_1376 v0
                                      = coe
                                          MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                                          (coe
-                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_DecEq'45'ℙ_1244
+                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_DecEq'45'ℙ_1266
                                             (coe
                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                (coe
@@ -1530,7 +1530,7 @@ d_DecEq'45'DCert_1378 v0
                                                                               = coe
                                                                                   MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                                                                                   (coe
-                                                                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_DecEq'45'ℙ_1244
+                                                                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_DecEq'45'ℙ_1266
                                                                                      (coe
                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                         (coe
@@ -2754,7 +2754,7 @@ d_rewardsBalance_1614 ::
   T_DState_1422 -> Integer
 d_rewardsBalance_1614 v0 v1
   = coe
-      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1446
+      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1468
       (coe
          MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_284
          (coe
@@ -5108,7 +5108,7 @@ d_isPoolRegistered_1716 ::
   AgdaAny -> Maybe T_StakePoolParams_1166
 d_isPoolRegistered_1716 v0 v1 v2
   = coe
-      MAlonzo.Code.Axiom.Set.Map.du_lookup'7504''63'_2048
+      MAlonzo.Code.Axiom.Set.Map.du_lookup'7504''63'_2058
       (coe
          MAlonzo.Code.Axiom.Set.d_th_1516
          (coe
@@ -5133,8 +5133,8 @@ d_isPoolRegistered_1716 v0 v1 v2
                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8) in
           coe
             (coe
-               MAlonzo.Code.Axiom.Set.Rel.du_dom_354 v3
-               (coe MAlonzo.Code.Axiom.Set.Map.du__'738'_570 (coe v1)))))
+               MAlonzo.Code.Axiom.Set.Rel.du_dom_358 v3
+               (coe MAlonzo.Code.Axiom.Set.Map.du__'738'_580 (coe v1)))))
 -- Ledger.Conway.Specification.Certs._⊢_⇀⦇_,POOL⦈_
 d__'8866'_'8640''10631'_'44'POOL'10632'__1722 a0 a1 a2 a3 a4 = ()
 data T__'8866'_'8640''10631'_'44'POOL'10632'__1722

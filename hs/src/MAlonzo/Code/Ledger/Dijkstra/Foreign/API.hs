@@ -19,8 +19,7 @@ import MAlonzo.Code.Ledger.Dijkstra.Foreign.Transaction       as X
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Cert              as X
   (certStep, certsStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Chain             as X
-  (ChainState(..), LastAppliedBlock(..), Block(..), BHeader(..), BHBody(..)
-  , EBCert(..), EndorserBlock(..), ResolvedEB(..), chainStep)
+  (ChainState(..), LastAppliedBlock(..), Block(..), EBCert(..), EndorserBlock(..), ResolvedEB(..), chainStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs             as X
   ( StakePoolParams(..), StakePoolState(..), PState(..)
   , DelegEnv(..), GovCertEnv(..), PoolEnv(..), CertEnv(..)
