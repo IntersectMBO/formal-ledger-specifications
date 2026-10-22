@@ -7271,6 +7271,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -7313,6 +7315,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -7321,52 +7325,24 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#sec:endorser-block-validity" class="md-nav__link">
+  <a href="#auxiliary-types-and-functions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Endorser-Block Validity
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Endorser-Block Validity">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#the-references-match-the-closure" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The references match the closure
+        Auxiliary Types and Functions
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#the-bounds" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#eb-transition-system" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The bounds
+        EB Transition System
       
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#validity" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Validity
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -12025,6 +12001,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -12033,52 +12011,24 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#sec:endorser-block-validity" class="md-nav__link">
+  <a href="#auxiliary-types-and-functions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Endorser-Block Validity
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Endorser-Block Validity">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#the-references-match-the-closure" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The references match the closure
+        Auxiliary Types and Functions
       
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#the-bounds" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#eb-transition-system" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The bounds
+        EB Transition System
       
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#validity" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Validity
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -12110,112 +12060,93 @@
   </a>
 
 
-  <h1>Validity</h1>
+<pre class="Agda hidden-source"><a id="116" class="Symbol">{-#</a> <a id="120" class="Keyword">OPTIONS</a> <a id="128" class="Pragma">--safe</a> <a id="135" class="Symbol">#-}</a>
 
-<h2 id="sec:endorser-block-validity">Endorser-Block Validity<a class="headerlink" href="#sec:endorser-block-validity" title="Permanent link">&para;</a></h2>
-<p>An endorser block is valid for a ledger state when its <em>closure</em> (that is, its
-referenced transactions, resolved and taken in reference order) is exactly what
-its references describe, and applies to that state as a block's transactions
-would.</p>
-<p>The present module defines this property and denotes it by <code class="AgdaRecord">ValidEB</code>.
-It is what an honest committee member checks before voting and what a certificate
-certifies.  The block rules name it as a premise, and the quorum-safety argument
-names it as what a voter checked.</p>
-<pre class="Agda hidden-source"><a id="700" class="Symbol">{-#</a> <a id="704" class="Keyword">OPTIONS</a> <a id="712" class="Pragma">--safe</a> <a id="719" class="Symbol">#-}</a>
+<a id="140" class="Keyword">open</a> <a id="145" class="Keyword">import</a> <a id="152" href="Ledger.Dijkstra.Specification.Abstract.html" class="Module">Ledger.Dijkstra.Specification.Abstract</a>
+<a id="191" class="Keyword">open</a> <a id="196" class="Keyword">import</a> <a id="203" href="Ledger.Dijkstra.Specification.Transaction.html" class="Module">Ledger.Dijkstra.Specification.Transaction</a>
 
-<a id="724" class="Keyword">open</a> <a id="729" class="Keyword">import</a> <a id="736" href="Ledger.Dijkstra.Specification.Abstract.html" class="Module">Ledger.Dijkstra.Specification.Abstract</a>
-<a id="775" class="Keyword">open</a> <a id="780" class="Keyword">import</a> <a id="787" href="Ledger.Dijkstra.Specification.Transaction.html" class="Module">Ledger.Dijkstra.Specification.Transaction</a>
+<a id="246" class="Keyword">module</a> <a id="253" href="Ledger.Dijkstra.Specification.Leios.Validity.html" class="Module">Ledger.Dijkstra.Specification.Leios.Validity</a>
+  <a id="300" class="Symbol">(</a><a id="301" href="Ledger.Dijkstra.Specification.Leios.Validity.html#301" class="Bound">transactionStructure</a> <a id="322" class="Symbol">:</a> <a id="324" class="Symbol">_)</a> <a id="327" class="Symbol">(</a><a id="328" class="Keyword">open</a> <a id="333" href="Ledger.Dijkstra.Specification.Transaction.html#3273" class="Module">TransactionStructure</a> <a id="354" href="Ledger.Dijkstra.Specification.Leios.Validity.html#301" class="Bound">transactionStructure</a><a id="374" class="Symbol">)</a>
+  <a id="378" class="Symbol">(</a><a id="379" href="Ledger.Dijkstra.Specification.Leios.Validity.html#379" class="Bound">abs</a> <a id="383" class="Symbol">:</a> <a id="385" href="Ledger.Dijkstra.Specification.Abstract.html#1175" class="Record">AbstractFunctions</a> <a id="403" href="Ledger.Dijkstra.Specification.Leios.Validity.html#301" class="Bound">transactionStructure</a><a id="423" class="Symbol">)</a> <a id="425" class="Symbol">(</a><a id="426" class="Keyword">open</a> <a id="431" href="Ledger.Dijkstra.Specification.Abstract.html#1175" class="Module">AbstractFunctions</a> <a id="449" href="Ledger.Dijkstra.Specification.Leios.Validity.html#379" class="Bound">abs</a><a id="452" class="Symbol">)</a>
+  <a id="456" class="Keyword">where</a>
 
-<a id="830" class="Keyword">module</a> <a id="837" href="Ledger.Dijkstra.Specification.Leios.Validity.html" class="Module">Ledger.Dijkstra.Specification.Leios.Validity</a>
-  <a id="884" class="Symbol">(</a><a id="885" href="Ledger.Dijkstra.Specification.Leios.Validity.html#885" class="Bound">transactionStructure</a> <a id="906" class="Symbol">:</a> <a id="908" class="Symbol">_)</a> <a id="911" class="Symbol">(</a><a id="912" class="Keyword">open</a> <a id="917" href="Ledger.Dijkstra.Specification.Transaction.html#3273" class="Module">TransactionStructure</a> <a id="938" href="Ledger.Dijkstra.Specification.Leios.Validity.html#885" class="Bound">transactionStructure</a><a id="958" class="Symbol">)</a>
-  <a id="962" class="Symbol">(</a><a id="963" href="Ledger.Dijkstra.Specification.Leios.Validity.html#963" class="Bound">abs</a> <a id="967" class="Symbol">:</a> <a id="969" href="Ledger.Dijkstra.Specification.Abstract.html#1175" class="Record">AbstractFunctions</a> <a id="987" href="Ledger.Dijkstra.Specification.Leios.Validity.html#885" class="Bound">transactionStructure</a><a id="1007" class="Symbol">)</a> <a id="1009" class="Symbol">(</a><a id="1010" class="Keyword">open</a> <a id="1015" href="Ledger.Dijkstra.Specification.Abstract.html#1175" class="Module">AbstractFunctions</a> <a id="1033" href="Ledger.Dijkstra.Specification.Leios.Validity.html#963" class="Bound">abs</a><a id="1036" class="Symbol">)</a>
-  <a id="1040" class="Keyword">where</a>
-
-<a id="1047" class="Keyword">open</a> <a id="1052" class="Keyword">import</a> <a id="1059" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
-<a id="1074" class="Keyword">open</a> <a id="1079" class="Keyword">import</a> <a id="1086" href="Data.List.Relation.Unary.Unique.Propositional.html" class="Module">Data.List.Relation.Unary.Unique.Propositional</a> <a id="1132" class="Keyword">using</a> <a id="1138" class="Symbol">(</a><a id="1139" href="Data.List.Relation.Unary.Unique.Setoid.html#617" class="Datatype">Unique</a><a id="1145" class="Symbol">)</a>
-<a id="1147" class="Keyword">open</a> <a id="1152" class="Keyword">import</a> <a id="1159" href="Data.List.Relation.Unary.Unique.DecPropositional.html" class="Module">Data.List.Relation.Unary.Unique.DecPropositional</a> <a id="1208" class="Keyword">using</a> <a id="1214" class="Symbol">(</a><a id="1215" href="Data.List.Relation.Unary.Unique.DecSetoid.html#883" class="Function">unique?</a><a id="1222" class="Symbol">)</a>
-<a id="1224" class="Keyword">open</a> <a id="1229" class="Keyword">import</a> <a id="1236" href="Ledger.Dijkstra.Specification.Ledger.html" class="Module">Ledger.Dijkstra.Specification.Ledger</a> <a id="1273" href="Ledger.Dijkstra.Specification.Leios.Validity.html#885" class="Bound">transactionStructure</a> <a id="1294" href="Ledger.Dijkstra.Specification.Leios.Validity.html#963" class="Bound">abs</a>
-<a id="1298" class="Keyword">open</a> <a id="1303" class="Keyword">import</a> <a id="1310" href="Ledger.Dijkstra.Specification.Ledgers.html" class="Module">Ledger.Dijkstra.Specification.Ledgers</a> <a id="1348" href="Ledger.Dijkstra.Specification.Leios.Validity.html#885" class="Bound">transactionStructure</a> <a id="1369" href="Ledger.Dijkstra.Specification.Leios.Validity.html#963" class="Bound">abs</a>
-<a id="1373" class="Keyword">open</a> <a id="1378" class="Keyword">import</a> <a id="1385" href="Ledger.Dijkstra.Specification.Utxo.html" class="Module">Ledger.Dijkstra.Specification.Utxo</a> <a id="1420" href="Ledger.Dijkstra.Specification.Leios.Validity.html#885" class="Bound">transactionStructure</a> <a id="1441" href="Ledger.Dijkstra.Specification.Leios.Validity.html#963" class="Bound">abs</a> <a id="1445" class="Keyword">using</a> <a id="1451" class="Symbol">(</a><a id="1452" href="Ledger.Dijkstra.Specification.Utxo.html#1978" class="Function">totalExUnits</a><a id="1464" class="Symbol">;</a> <a id="1466" href="Ledger.Dijkstra.Specification.Utxo.html#2180" class="Function">totalRefScriptsSize</a><a id="1485" class="Symbol">)</a>
-<a id="1487" class="Keyword">open</a> <a id="1492" class="Keyword">import</a> <a id="1499" href="Ledger.Dijkstra.Specification.Leios.Types.html" class="Module">Ledger.Dijkstra.Specification.Leios.Types</a> <a id="1541" href="Ledger.Dijkstra.Specification.Transaction.html#3456" class="Field">cryptoStructure</a> <a id="1557" href="Ledger.Dijkstra.Specification.Transaction.html#3501" class="Field">leiosCryptoStructure</a>
-<a id="1578" class="Keyword">open</a> <a id="1583" class="Keyword">import</a> <a id="1590" href="Ledger.Dijkstra.Specification.Crypto.html" class="Module">Ledger.Dijkstra.Specification.Crypto</a> <a id="1627" class="Keyword">using</a> <a id="1633" class="Symbol">(</a><a id="1634" href="Ledger.Dijkstra.Specification.Crypto.html#1163" class="Record">LeiosCryptoStructure</a><a id="1654" class="Symbol">)</a>
-<a id="1656" class="Keyword">open</a> <a id="1661" href="Ledger.Dijkstra.Specification.Crypto.html#1163" class="Module">LeiosCryptoStructure</a> <a id="1682" href="Ledger.Dijkstra.Specification.Transaction.html#3501" class="Field">leiosCryptoStructure</a> <a id="1703" class="Keyword">using</a> <a id="1709" class="Symbol">(</a><a id="1710" href="Ledger.Dijkstra.Specification.Crypto.html#3470" class="Field">TxRefHash</a><a id="1719" class="Symbol">)</a>
+<a id="463" class="Keyword">open</a> <a id="468" class="Keyword">import</a> <a id="475" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+<a id="490" class="Keyword">open</a> <a id="495" class="Keyword">import</a> <a id="502" href="Data.List.Relation.Unary.Unique.Propositional.html" class="Module">Data.List.Relation.Unary.Unique.Propositional</a> <a id="548" class="Keyword">using</a> <a id="554" class="Symbol">(</a><a id="555" href="Data.List.Relation.Unary.Unique.Setoid.html#617" class="Datatype">Unique</a><a id="561" class="Symbol">)</a>
+<a id="563" class="Keyword">open</a> <a id="568" class="Keyword">import</a> <a id="575" href="Data.List.Relation.Unary.Unique.DecPropositional.html" class="Module">Data.List.Relation.Unary.Unique.DecPropositional</a> <a id="624" class="Keyword">using</a> <a id="630" class="Symbol">(</a><a id="631" href="Data.List.Relation.Unary.Unique.DecSetoid.html#883" class="Function">unique?</a><a id="638" class="Symbol">)</a>
+<a id="640" class="Keyword">open</a> <a id="645" class="Keyword">import</a> <a id="652" href="Ledger.Dijkstra.Specification.Ledger.html" class="Module">Ledger.Dijkstra.Specification.Ledger</a> <a id="689" href="Ledger.Dijkstra.Specification.Leios.Validity.html#301" class="Bound">transactionStructure</a> <a id="710" href="Ledger.Dijkstra.Specification.Leios.Validity.html#379" class="Bound">abs</a>
+<a id="714" class="Keyword">open</a> <a id="719" class="Keyword">import</a> <a id="726" href="Ledger.Dijkstra.Specification.Ledgers.html" class="Module">Ledger.Dijkstra.Specification.Ledgers</a> <a id="764" href="Ledger.Dijkstra.Specification.Leios.Validity.html#301" class="Bound">transactionStructure</a> <a id="785" href="Ledger.Dijkstra.Specification.Leios.Validity.html#379" class="Bound">abs</a>
+<a id="789" class="Keyword">open</a> <a id="794" class="Keyword">import</a> <a id="801" href="Ledger.Dijkstra.Specification.Utxo.html" class="Module">Ledger.Dijkstra.Specification.Utxo</a> <a id="836" href="Ledger.Dijkstra.Specification.Leios.Validity.html#301" class="Bound">transactionStructure</a> <a id="857" href="Ledger.Dijkstra.Specification.Leios.Validity.html#379" class="Bound">abs</a> <a id="861" class="Keyword">using</a> <a id="867" class="Symbol">(</a><a id="868" href="Ledger.Dijkstra.Specification.Utxo.html#1978" class="Function">totalExUnits</a><a id="880" class="Symbol">;</a> <a id="882" href="Ledger.Dijkstra.Specification.Utxo.html#2180" class="Function">totalRefScriptsSize</a><a id="901" class="Symbol">)</a>
+<a id="903" class="Keyword">open</a> <a id="908" class="Keyword">import</a> <a id="915" href="Ledger.Dijkstra.Specification.Leios.Types.html" class="Module">Ledger.Dijkstra.Specification.Leios.Types</a> <a id="957" href="Ledger.Dijkstra.Specification.Transaction.html#3456" class="Field">cryptoStructure</a> <a id="973" href="Ledger.Dijkstra.Specification.Transaction.html#3501" class="Field">leiosCryptoStructure</a>
+<a id="994" class="Keyword">open</a> <a id="999" class="Keyword">import</a> <a id="1006" href="Ledger.Dijkstra.Specification.Crypto.html" class="Module">Ledger.Dijkstra.Specification.Crypto</a> <a id="1043" class="Keyword">using</a> <a id="1049" class="Symbol">(</a><a id="1050" href="Ledger.Dijkstra.Specification.Crypto.html#1163" class="Record">LeiosCryptoStructure</a><a id="1070" class="Symbol">)</a>
+<a id="1072" class="Keyword">open</a> <a id="1077" href="Ledger.Dijkstra.Specification.Crypto.html#1163" class="Module">LeiosCryptoStructure</a> <a id="1098" href="Ledger.Dijkstra.Specification.Transaction.html#3501" class="Field">leiosCryptoStructure</a> <a id="1119" class="Keyword">using</a> <a id="1125" class="Symbol">(</a><a id="1126" href="Ledger.Dijkstra.Specification.Crypto.html#3470" class="Field">TxRefHash</a><a id="1135" class="Symbol">)</a>
 </pre>
 
-<h3 id="the-references-match-the-closure">The references match the closure<a class="headerlink" href="#the-references-match-the-closure" title="Permanent link">&para;</a></h3>
-<pre class="Agda"><a id="refOf"></a><a id="1776" href="Ledger.Dijkstra.Specification.Leios.Validity.html#1776" class="Function">refOf</a> <a id="1782" class="Symbol">:</a> <a id="1784" href="Ledger.Dijkstra.Specification.Transaction.html#10204" class="Function">TopLevelTx</a> <a id="1795" class="Symbol">→</a> <a id="1797" href="Ledger.Dijkstra.Specification.Crypto.html#3470" class="Function">TxRefHash</a> <a id="1807" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="1809" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
-<a id="1811" href="Ledger.Dijkstra.Specification.Leios.Validity.html#1776" class="Function">refOf</a> <a id="1817" href="Ledger.Dijkstra.Specification.Leios.Validity.html#1817" class="Bound">tx</a> <a id="1820" class="Symbol">=</a> <a id="1822" href="Ledger.Dijkstra.Specification.Abstract.html#1499" class="Field">txRefHash</a> <a id="1832" href="Ledger.Dijkstra.Specification.Leios.Validity.html#1817" class="Bound">tx</a> <a id="1835" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1837" href="Ledger.Dijkstra.Specification.Transaction.html#11668" class="Field">SizeOf</a> <a id="1844" href="Ledger.Dijkstra.Specification.Leios.Validity.html#1817" class="Bound">tx</a>
+<h1 id="sec:endorser-block-validity">Endorser-Block Validity<a class="headerlink" href="#sec:endorser-block-validity" title="Permanent link">&para;</a></h1>
+<p>An Endorser Block is valid for a ledger state when:</p>
+<ol>
+<li>
+<p>the referenced transactions (resolved and taken in reference order)
+are exactly what it describes,</p>
+</li>
+<li>
+<p>it satisfies the size limits given by Leios specific protocol
+parameters, and</p>
+</li>
+<li>
+<p>the list of transactions forms a valid extension of the ledger state.</p>
+</li>
+</ol>
+<p>The present module defines the <code class="AgdaDatatype">EB</code> transition system to validate
+Endorser Blocks.</p>
+<pre class="Agda hidden-source"><a id="1628" class="Keyword">private</a>
+  <a id="1638" class="Keyword">variable</a>
+    <a id="1651" href="Ledger.Dijkstra.Specification.Leios.Validity.html#1651" class="Generalizable">Γ</a> <a id="1653" class="Symbol">:</a> <a id="1655" href="Ledger.Dijkstra.Specification.Ledger.html#1396" class="Record">LedgerEnv</a>
+    <a id="1669" href="Ledger.Dijkstra.Specification.Leios.Validity.html#1669" class="Generalizable">ls</a> <a id="1672" href="Ledger.Dijkstra.Specification.Leios.Validity.html#1672" class="Generalizable">ls&#39;</a> <a id="1676" class="Symbol">:</a> <a id="1678" href="Ledger.Dijkstra.Specification.Ledger.html#2456" class="Record">LedgerState</a>
+    <a id="1694" href="Ledger.Dijkstra.Specification.Leios.Validity.html#1694" class="Generalizable">eb</a> <a id="1697" class="Symbol">:</a> <a id="1699" href="Ledger.Dijkstra.Specification.Leios.Types.html#1051" class="Record">EndorserBlock</a>
+    <a id="1717" href="Ledger.Dijkstra.Specification.Leios.Validity.html#1717" class="Generalizable">txs</a> <a id="1721" class="Symbol">:</a> <a id="1723" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="1728" href="Ledger.Dijkstra.Specification.Transaction.html#10204" class="Function">TopLevelTx</a>
+
+  <a id="1742" class="Keyword">open</a> <a id="1747" href="Ledger.Dijkstra.Specification.PParams.html#2607" class="Module">PParams</a>
+  <a id="1757" class="Keyword">open</a> <a id="1762" href="Ledger.Dijkstra.Specification.Leios.Types.html#1051" class="Module">EndorserBlock</a>
 </pre>
-<p>The rules receive the closure resolved, and <code class="AgdaFunction">refOf</code> is what the
-EB's reference to a transaction must be: the hash of its complete bytes paired
-with its declared size.  <code class="AgdaRecord">ValidEB</code> below requires the reference
-list to be, entry for entry, <code class="AgdaFunction">refOf</code> of the closure; order is
-part of the agreement, since the closure applies in reference order.</p>
-<h3 id="the-bounds">The bounds<a class="headerlink" href="#the-bounds" title="Permanent link">&para;</a></h3>
-<p>The environment and state are those of the announcing block.  The closure of the
-EB is judged against the ledger state the announcing block left and the parameters
-in force there.</p>
-<p>The fields of <code class="AgdaRecord">WithinEBBounds</code> are the endorser-block bounds of
-CIP-164's <a href="https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#protocol-parameters">Table 3</a>, as follows:</p>
+
+<h2 id="auxiliary-types-and-functions">Auxiliary Types and Functions<a class="headerlink" href="#auxiliary-types-and-functions" title="Permanent link">&para;</a></h2>
+<p>The predicate <code class="AgdaFunction">EBWellFormed</code> ensures the
+<code class="AgdaDatatype">EnderserBlock</code> is well-formed (see <a href="https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#appendix-b-cddl">Appendix
+B</a>):</p>
 <ul>
-<li><code class="AgdaField">ebSizeOK</code>: the size of the EB itself is at most <code>S_EB</code>
-   (<code class="AgdaField">leiosMaxEBSize</code>);</li>
-<li><code class="AgdaField">txsSizeOK</code>: the total size of the referenced transactions is at
-   most <code>S_EB-tx</code> (<code class="AgdaField">leiosMaxEBTxsSize</code>).</li>
+<li>the list of transaction references is non-empty, and</li>
+<li>the list of transactions admits no duplicate keys.</li>
 </ul>
-<p>The table's remaining rows are enforced by <code class="AgdaDatatype">LEDGERS</code>: the
-closure's Plutus steps and memory fit <code class="AgdaField">leiosMaxEBExUnits</code>, one
-<code class="AgdaFunction">ExUnits</code> value for the table's two budget rows; and the total
-size of the closure's reference scripts is at most <code>S_EB-ref</code>
-(<code class="AgdaField">leiosMaxRefScriptSizePerEB</code>).</p>
-<h3 id="validity">Validity<a class="headerlink" href="#validity" title="Permanent link">&para;</a></h3>
-<pre class="Agda hidden-source"><a id="3154" class="Keyword">private</a>
-  <a id="3164" class="Keyword">variable</a>
-    <a id="3177" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3177" class="Generalizable">Γ</a> <a id="3179" class="Symbol">:</a> <a id="3181" href="Ledger.Dijkstra.Specification.Ledger.html#1396" class="Record">LedgerEnv</a>
-    <a id="3195" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3195" class="Generalizable">ls</a> <a id="3198" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3198" class="Generalizable">ls&#39;</a> <a id="3202" class="Symbol">:</a> <a id="3204" href="Ledger.Dijkstra.Specification.Ledger.html#2456" class="Record">LedgerState</a>
-    <a id="3220" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3220" class="Generalizable">eb</a> <a id="3223" class="Symbol">:</a> <a id="3225" href="Ledger.Dijkstra.Specification.Leios.Types.html#972" class="Record">EndorserBlock</a>
-    <a id="3243" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3243" class="Generalizable">txs</a> <a id="3247" class="Symbol">:</a> <a id="3249" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="3254" href="Ledger.Dijkstra.Specification.Transaction.html#10204" class="Function">TopLevelTx</a>
-
-  <a id="3268" class="Keyword">open</a> <a id="3273" href="Ledger.Dijkstra.Specification.PParams.html#2607" class="Module">PParams</a>
-  <a id="3283" class="Keyword">open</a> <a id="3288" href="Ledger.Dijkstra.Specification.Leios.Types.html#972" class="Module">EndorserBlock</a>
+<pre class="Agda"><a id="EBWellFormed"></a><a id="2069" href="Ledger.Dijkstra.Specification.Leios.Validity.html#2069" class="Function">EBWellFormed</a> <a id="2082" class="Symbol">:</a> <a id="2084" href="Ledger.Dijkstra.Specification.Leios.Types.html#1051" class="Record">EndorserBlock</a> <a id="2098" class="Symbol">→</a> <a id="2100" href="Agda.Primitive.html#388" class="Primitive">Type</a> 
+<a id="2106" href="Ledger.Dijkstra.Specification.Leios.Validity.html#2069" class="Function">EBWellFormed</a> <a id="2119" href="Ledger.Dijkstra.Specification.Leios.Validity.html#2119" class="Bound">eb</a> <a id="2122" class="Symbol">=</a> <a id="2124" href="Ledger.Dijkstra.Specification.Leios.Types.html#1090" class="Field">ebTxRefs</a> <a id="2133" href="Ledger.Dijkstra.Specification.Leios.Validity.html#2119" class="Bound">eb</a> <a id="2136" href="Relation.Binary.PropositionalEquality.Core.html#1000" class="Function Operator">≢</a> <a id="2138" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a> <a id="2141" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="2143" href="Data.List.Relation.Unary.Unique.Setoid.html#617" class="Datatype">Unique</a> <a id="2150" class="Symbol">(</a><a id="2151" href="Class.Functor.Core.html#272" class="Function">map</a> <a id="2155" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="2161" class="Symbol">(</a><a id="2162" href="Ledger.Dijkstra.Specification.Leios.Types.html#1090" class="Field">ebTxRefs</a> <a id="2171" href="Ledger.Dijkstra.Specification.Leios.Validity.html#2119" class="Bound">eb</a><a id="2173" class="Symbol">))</a>
 </pre>
-
-<pre class="Agda"><a id="3319" class="Keyword">data</a> <a id="EBWellFormed"></a><a id="3324" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3324" class="Datatype">EBWellFormed</a> <a id="3337" class="Symbol">:</a> <a id="3339" href="Ledger.Dijkstra.Specification.Leios.Types.html#972" class="Record">EndorserBlock</a> <a id="3353" class="Symbol">→</a> <a id="3355" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="3360" class="Keyword">where</a>
-  <a id="EBWellFormed.ebWellFormed"></a><a id="3368" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3368" class="InductiveConstructor">ebWellFormed</a> <a id="3381" class="Symbol">:</a>
-    <a id="3387" href="Prelude.InferenceRules.html#56075" class="Function Operator">∙</a> <a id="3389" href="Ledger.Dijkstra.Specification.Leios.Types.html#1011" class="Field">ebTxRefs</a> <a id="3398" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3220" class="Generalizable">eb</a> <a id="3401" href="Relation.Binary.PropositionalEquality.Core.html#1000" class="Function Operator">≢</a> <a id="3403" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a>
-    <a id="3410" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a> <a id="3412" href="Data.List.Relation.Unary.Unique.Setoid.html#617" class="Datatype">Unique</a> <a id="3419" class="Symbol">(</a><a id="3420" href="Class.Functor.Core.html#272" class="Function">map</a> <a id="3424" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="3430" class="Symbol">(</a><a id="3431" href="Ledger.Dijkstra.Specification.Leios.Types.html#1011" class="Field">ebTxRefs</a> <a id="3440" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3220" class="Generalizable">eb</a><a id="3442" class="Symbol">))</a>
-    <a id="3449" href="Prelude.InferenceRules.html#13694" class="Function Operator">────────────────────────────────</a>
-    <a id="3486" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3324" class="Datatype">EBWellFormed</a> <a id="3499" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3220" class="Generalizable">eb</a>
+<h2 id="eb-transition-system"><code class="AgdaDatatype">EB</code> Transition System<a class="headerlink" href="#eb-transition-system" title="Permanent link">&para;</a></h2>
+<pre class="Agda"><a id="2231" class="Keyword">data</a>  <a id="_,_⊢_⇀⦇_,EB⦈_"></a><a id="2237" href="Ledger.Dijkstra.Specification.Leios.Validity.html#2237" class="Datatype Operator">_,_⊢_⇀⦇_,EB⦈_</a> <a id="2251" class="Symbol">:</a> <a id="2253" href="Ledger.Dijkstra.Specification.Ledger.html#1396" class="Record">LedgerEnv</a> <a id="2263" class="Symbol">→</a> <a id="2265" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="2270" href="Ledger.Dijkstra.Specification.Transaction.html#10204" class="Function">TopLevelTx</a> <a id="2281" class="Symbol">→</a> <a id="2283" href="Ledger.Dijkstra.Specification.Ledger.html#2456" class="Record">LedgerState</a> <a id="2295" class="Symbol">→</a> <a id="2297" href="Ledger.Dijkstra.Specification.Leios.Types.html#1051" class="Record">EndorserBlock</a> <a id="2311" class="Symbol">→</a> <a id="2313" href="Ledger.Dijkstra.Specification.Ledger.html#2456" class="Record">LedgerState</a> <a id="2325" class="Symbol">→</a> <a id="2327" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="2332" class="Keyword">where</a>
+  <a id="_,_⊢_⇀⦇_,EB⦈_.EB"></a><a id="2340" href="Ledger.Dijkstra.Specification.Leios.Validity.html#2340" class="InductiveConstructor">EB</a> <a id="2343" class="Symbol">:</a>
+    <a id="2349" class="Keyword">let</a>
+      <a id="2359" href="Ledger.Dijkstra.Specification.Leios.Validity.html#2359" class="Bound">pp</a> <a id="2362" class="Symbol">=</a> <a id="2364" href="Ledger.Dijkstra.Specification.PParams.html#8103" class="Field">PParamsOf</a> <a id="2374" href="Ledger.Dijkstra.Specification.Leios.Validity.html#1651" class="Generalizable">Γ</a>
+    <a id="2380" class="Keyword">in</a>
+      <a id="2389" href="Prelude.InferenceRules.html#56075" class="Function Operator">∙</a> <a id="2391" href="Ledger.Dijkstra.Specification.Leios.Validity.html#2069" class="Function">EBWellFormed</a> <a id="2404" href="Ledger.Dijkstra.Specification.Leios.Validity.html#1694" class="Generalizable">eb</a>
+      <a id="2413" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a> <a id="2415" href="Ledger.Dijkstra.Specification.Leios.Types.html#1090" class="Field">ebTxRefs</a> <a id="2424" href="Ledger.Dijkstra.Specification.Leios.Validity.html#1694" class="Generalizable">eb</a> <a id="2427" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="2429" href="Class.Functor.Core.html#272" class="Function">map</a> <a id="2433" class="Symbol">(λ</a> <a id="2436" href="Ledger.Dijkstra.Specification.Leios.Validity.html#2436" class="Bound">tx</a> <a id="2439" class="Symbol">→</a> <a id="2441" href="Ledger.Dijkstra.Specification.Abstract.html#1499" class="Field">txRefHash</a> <a id="2451" href="Ledger.Dijkstra.Specification.Leios.Validity.html#2436" class="Bound">tx</a> <a id="2454" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2456" href="Ledger.Dijkstra.Specification.Transaction.html#11668" class="Field">SizeOf</a> <a id="2463" href="Ledger.Dijkstra.Specification.Leios.Validity.html#2436" class="Bound">tx</a><a id="2465" class="Symbol">)</a> <a id="2467" href="Ledger.Dijkstra.Specification.Leios.Validity.html#1717" class="Generalizable">txs</a>
+      <a id="2477" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a> <a id="2479" href="Ledger.Dijkstra.Specification.Abstract.html#1548" class="Field">ebSize</a> <a id="2486" href="Ledger.Dijkstra.Specification.Leios.Validity.html#1694" class="Generalizable">eb</a> <a id="2489" href="Class.HasOrder.Core.html#613" class="Field Operator">≤</a> <a id="2491" href="Ledger.Dijkstra.Specification.Leios.Validity.html#2359" class="Bound">pp</a> <a id="2494" class="Symbol">.</a><a id="2495" href="Ledger.Dijkstra.Specification.PParams.html#3186" class="Field">leiosMaxEBSize</a>
+      <a id="2516" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a> <a id="2518" href="Axiom.Set.Sum.html#1759" class="Function">∑ˡ[</a> <a id="2522" href="Ledger.Dijkstra.Specification.Leios.Validity.html#2522" class="Bound">tx</a> <a id="2525" href="Axiom.Set.Sum.html#1759" class="Function">←</a> <a id="2527" href="Ledger.Dijkstra.Specification.Leios.Validity.html#1717" class="Generalizable">txs</a> <a id="2531" href="Axiom.Set.Sum.html#1759" class="Function">]</a> <a id="2533" href="Ledger.Dijkstra.Specification.Transaction.html#11668" class="Field">SizeOf</a> <a id="2540" href="Ledger.Dijkstra.Specification.Leios.Validity.html#2522" class="Bound">tx</a> <a id="2543" href="Class.HasOrder.Core.html#613" class="Field Operator">≤</a> <a id="2545" href="Ledger.Dijkstra.Specification.Leios.Validity.html#2359" class="Bound">pp</a> <a id="2548" class="Symbol">.</a><a id="2549" href="Ledger.Dijkstra.Specification.PParams.html#3224" class="Field">leiosMaxEBTxsSize</a>
+      <a id="2573" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Dijkstra.Specification.Leios.Validity.html#1651}{\htmlId{2577}{\htmlClass{Generalizable}{\text{Γ}}}}\, \\ \,\href{Ledger.Dijkstra.Specification.Leios.Validity.html#2359}{\htmlId{2581}{\htmlClass{Bound}{\text{pp}}}}\, \,\htmlId{2584}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Ledger.Dijkstra.Specification.PParams.html#3393}{\htmlId{2585}{\htmlClass{Field}{\text{leiosMaxRefScriptSizePerEB}}}}\, \\ \,\href{Ledger.Dijkstra.Specification.Leios.Validity.html#2359}{\htmlId{2614}{\htmlClass{Bound}{\text{pp}}}}\, \,\htmlId{2617}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Ledger.Dijkstra.Specification.PParams.html#3349}{\htmlId{2618}{\htmlClass{Field}{\text{leiosMaxEBExUnits}}}}\, \end{pmatrix}$</a> <a id="2638" href="Ledger.Dijkstra.Specification.Ledgers.html#2845" class="Function Operator">⊢</a> <a id="2640" href="Ledger.Dijkstra.Specification.Leios.Validity.html#1669" class="Generalizable">ls</a> <a id="2643" href="Ledger.Dijkstra.Specification.Ledgers.html#2845" class="Function Operator">⇀⦇</a> <a id="2646" href="Ledger.Dijkstra.Specification.Leios.Validity.html#1717" class="Generalizable">txs</a> <a id="2650" href="Ledger.Dijkstra.Specification.Ledgers.html#2845" class="Function Operator">,LEDGERS⦈</a> <a id="2660" href="Ledger.Dijkstra.Specification.Leios.Validity.html#1672" class="Generalizable">ls&#39;</a>
+      <a id="2670" href="Prelude.InferenceRules.html#13694" class="Function Operator">────────────────────────────────</a>
+      <a id="2709" href="Ledger.Dijkstra.Specification.Leios.Validity.html#1651" class="Generalizable">Γ</a> <a id="2711" href="Ledger.Dijkstra.Specification.Leios.Validity.html#2237" class="Datatype Operator">,</a> <a id="2713" href="Ledger.Dijkstra.Specification.Leios.Validity.html#1717" class="Generalizable">txs</a> <a id="2717" href="Ledger.Dijkstra.Specification.Leios.Validity.html#2237" class="Datatype Operator">⊢</a> <a id="2719" href="Ledger.Dijkstra.Specification.Leios.Validity.html#1669" class="Generalizable">ls</a> <a id="2722" href="Ledger.Dijkstra.Specification.Leios.Validity.html#2237" class="Datatype Operator">⇀⦇</a> <a id="2725" href="Ledger.Dijkstra.Specification.Leios.Validity.html#1694" class="Generalizable">eb</a> <a id="2728" href="Ledger.Dijkstra.Specification.Leios.Validity.html#2237" class="Datatype Operator">,EB⦈</a> <a id="2733" href="Ledger.Dijkstra.Specification.Leios.Validity.html#1672" class="Generalizable">ls&#39;</a>
 </pre>
-
-<pre class="Agda"><a id="3516" class="Keyword">data</a>  <a id="_,_⊢_⇀⦇_,EB⦈_"></a><a id="3522" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3522" class="Datatype Operator">_,_⊢_⇀⦇_,EB⦈_</a> <a id="3536" class="Symbol">:</a> <a id="3538" href="Ledger.Dijkstra.Specification.Ledger.html#1396" class="Record">LedgerEnv</a> <a id="3548" class="Symbol">→</a> <a id="3550" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="3555" href="Ledger.Dijkstra.Specification.Transaction.html#10204" class="Function">TopLevelTx</a> <a id="3566" class="Symbol">→</a> <a id="3568" href="Ledger.Dijkstra.Specification.Ledger.html#2456" class="Record">LedgerState</a> <a id="3580" class="Symbol">→</a> <a id="3582" href="Ledger.Dijkstra.Specification.Leios.Types.html#972" class="Record">EndorserBlock</a> <a id="3596" class="Symbol">→</a> <a id="3598" href="Ledger.Dijkstra.Specification.Ledger.html#2456" class="Record">LedgerState</a> <a id="3610" class="Symbol">→</a> <a id="3612" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="3617" class="Keyword">where</a>
-  <a id="_,_⊢_⇀⦇_,EB⦈_.EB"></a><a id="3625" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3625" class="InductiveConstructor">EB</a> <a id="3628" class="Symbol">:</a>
-    <a id="3634" class="Keyword">let</a>
-      <a id="3644" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3644" class="Bound">pp</a> <a id="3647" class="Symbol">=</a> <a id="3649" href="Ledger.Dijkstra.Specification.PParams.html#8103" class="Field">PParamsOf</a> <a id="3659" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3177" class="Generalizable">Γ</a>
-    <a id="3665" class="Keyword">in</a>
-      <a id="3674" href="Prelude.InferenceRules.html#56075" class="Function Operator">∙</a> <a id="3676" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3324" class="Datatype">EBWellFormed</a> <a id="3689" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3220" class="Generalizable">eb</a>
-      <a id="3698" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a> <a id="3700" href="Ledger.Dijkstra.Specification.Leios.Types.html#1011" class="Field">ebTxRefs</a> <a id="3709" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3220" class="Generalizable">eb</a> <a id="3712" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="3714" href="Class.Functor.Core.html#272" class="Function">map</a> <a id="3718" class="Symbol">(λ</a> <a id="3721" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3721" class="Bound">tx</a> <a id="3724" class="Symbol">→</a> <a id="3726" href="Ledger.Dijkstra.Specification.Abstract.html#1499" class="Field">txRefHash</a> <a id="3736" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3721" class="Bound">tx</a> <a id="3739" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3741" href="Ledger.Dijkstra.Specification.Transaction.html#11668" class="Field">SizeOf</a> <a id="3748" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3721" class="Bound">tx</a><a id="3750" class="Symbol">)</a> <a id="3752" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3243" class="Generalizable">txs</a>
-      <a id="3762" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a> <a id="3764" href="Ledger.Dijkstra.Specification.Abstract.html#1548" class="Field">ebSize</a> <a id="3771" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3220" class="Generalizable">eb</a> <a id="3774" href="Class.HasOrder.Core.html#613" class="Field Operator">≤</a> <a id="3776" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3644" class="Bound">pp</a> <a id="3779" class="Symbol">.</a><a id="3780" href="Ledger.Dijkstra.Specification.PParams.html#3186" class="Field">leiosMaxEBSize</a>
-      <a id="3801" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a> <a id="3803" href="Axiom.Set.Sum.html#1759" class="Function">∑ˡ[</a> <a id="3807" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3807" class="Bound">tx</a> <a id="3810" href="Axiom.Set.Sum.html#1759" class="Function">←</a> <a id="3812" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3243" class="Generalizable">txs</a> <a id="3816" href="Axiom.Set.Sum.html#1759" class="Function">]</a> <a id="3818" href="Ledger.Dijkstra.Specification.Transaction.html#11668" class="Field">SizeOf</a> <a id="3825" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3807" class="Bound">tx</a> <a id="3828" href="Class.HasOrder.Core.html#613" class="Field Operator">≤</a> <a id="3830" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3644" class="Bound">pp</a> <a id="3833" class="Symbol">.</a><a id="3834" href="Ledger.Dijkstra.Specification.PParams.html#3224" class="Field">leiosMaxEBTxsSize</a>
-      <a id="3858" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Dijkstra.Specification.Leios.Validity.html#3177}{\htmlId{3862}{\htmlClass{Generalizable}{\text{Γ}}}}\, \\ \,\href{Ledger.Dijkstra.Specification.Leios.Validity.html#3644}{\htmlId{3866}{\htmlClass{Bound}{\text{pp}}}}\, \,\htmlId{3869}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Ledger.Dijkstra.Specification.PParams.html#3393}{\htmlId{3870}{\htmlClass{Field}{\text{leiosMaxRefScriptSizePerEB}}}}\, \\ \,\href{Ledger.Dijkstra.Specification.Leios.Validity.html#3644}{\htmlId{3899}{\htmlClass{Bound}{\text{pp}}}}\, \,\htmlId{3902}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Ledger.Dijkstra.Specification.PParams.html#3349}{\htmlId{3903}{\htmlClass{Field}{\text{leiosMaxEBExUnits}}}}\, \end{pmatrix}$</a> <a id="3923" href="Ledger.Dijkstra.Specification.Ledgers.html#2845" class="Function Operator">⊢</a> <a id="3925" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3195" class="Generalizable">ls</a> <a id="3928" href="Ledger.Dijkstra.Specification.Ledgers.html#2845" class="Function Operator">⇀⦇</a> <a id="3931" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3243" class="Generalizable">txs</a> <a id="3935" href="Ledger.Dijkstra.Specification.Ledgers.html#2845" class="Function Operator">,LEDGERS⦈</a> <a id="3945" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3198" class="Generalizable">ls&#39;</a>
-      <a id="3955" href="Prelude.InferenceRules.html#13694" class="Function Operator">────────────────────────────────</a>
-      <a id="3994" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3177" class="Generalizable">Γ</a> <a id="3996" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3522" class="Datatype Operator">,</a> <a id="3998" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3243" class="Generalizable">txs</a> <a id="4002" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3522" class="Datatype Operator">⊢</a> <a id="4004" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3195" class="Generalizable">ls</a> <a id="4007" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3522" class="Datatype Operator">⇀⦇</a> <a id="4010" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3220" class="Generalizable">eb</a> <a id="4013" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3522" class="Datatype Operator">,EB⦈</a> <a id="4018" href="Ledger.Dijkstra.Specification.Leios.Validity.html#3198" class="Generalizable">ls&#39;</a>
-</pre>
-<p>Of CIP-164's six vote-casting conditions (<a href="https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#step-3-committee-validation">Step 3</a>), the two that
-the ledger can check land here, namely,</p>
+<p>The <code class="AgdaDatatype">EB</code> enforces the size bounds of CIP-164's <a href="https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#protocol-parameters">Table
+3</a> on Endorser Blocks:</p>
 <ul>
-<li>the closure is a valid extension, through the same <code class="AgdaDatatype">LEDGERS</code>
-   relation the block rules use;</li>
-<li>the block is nonempty.</li>
+<li>the size of the EB itself is at most <code>S_EB</code> (<code class="AgdaField">leiosMaxEBSize</code>); (1)</li>
+<li>the total size of the referenced transactions is at most <code>S_EB-tx</code>
+   (<code class="AgdaField">leiosMaxEBTxsSize</code>).</li>
 </ul>
-<p>The other four (header arrival within the header diffusion period, equivocation
-detection, the validation deadline, chain position) are node-local checks, so
-they stay at the protocol level.</p>
-<p>Duplicate-freedom of the references is not a vote condition but an invariant of
-the EB structure itself: the CIP's reference list is an insertion-ordered map
-that admits no duplicate keys (<a href="https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#appendix-b-cddl">Appendix B</a>).  The list type here does
-not encode that invariant, so <code class="AgdaRecord">ValidEB</code> states it as
-<code class="AgdaField">uniqueRefsOK</code>.</p>
+<p>The table's remaining rows are enforced by <code class="AgdaDatatype">LEDGERS</code>:</p>
+<ul>
+<li>the execution units of Plutus scripts fits <code class="AgdaField">leiosMaxEBExUnits</code>, and</li>
+<li>the total size of the referenced transactions' reference scripts is
+  at most <code>S_EB-ref</code> (<code class="AgdaField">leiosMaxRefScriptSizePerEB</code>).</li>
+</ul>
 
 
 

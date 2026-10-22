@@ -7326,17 +7326,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#announcements" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Announcements
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -12066,17 +12055,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#announcements" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Announcements
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -12113,32 +12091,30 @@
   <h1>Types</h1>
 
 <h2 id="sec:leios-primitive-types">Leios Primitive Types<a class="headerlink" href="#sec:leios-primitive-types" title="Permanent link">&para;</a></h2>
-<p>Leios adds the following objects to the chain's traffic:</p>
-<ul>
-<li>an endorser block (EB);</li>
-<li>a header announcement that names the EB;</li>
-</ul>
+<p>Leios adds the endorser block (EB) to the chain's traffic; this module defines
+it and its identifier.  The announcement that names an EB is a header field,
+defined with the block in <code class="AgdaModule">BlockBody</code>.</p>
 <p>The hash carriers (<code class="AgdaField">TxRefHash</code>, <code class="AgdaField">EBHash</code>,
 <code class="AgdaField">hashEBRefs</code>) are fields of the era's
 <code class="AgdaRecord">LeiosCryptoStructure</code> record, which this module takes as a
 parameter.</p>
 <p>Declared byte sizes are represented as <code>ℕ</code>.</p>
-<pre class="Agda hidden-source"><a id="544" class="Symbol">{-#</a> <a id="548" class="Keyword">OPTIONS</a> <a id="556" class="Pragma">--safe</a> <a id="563" class="Symbol">#-}</a>
+<pre class="Agda hidden-source"><a id="623" class="Symbol">{-#</a> <a id="627" class="Keyword">OPTIONS</a> <a id="635" class="Pragma">--safe</a> <a id="642" class="Symbol">#-}</a>
 
-<a id="568" class="Keyword">open</a> <a id="573" class="Keyword">import</a> <a id="580" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
-<a id="595" class="Keyword">open</a> <a id="600" class="Keyword">import</a> <a id="607" href="Ledger.Core.Specification.Crypto.html" class="Module">Ledger.Core.Specification.Crypto</a> <a id="640" class="Keyword">using</a> <a id="646" class="Symbol">(</a><a id="647" href="Ledger.Core.Specification.Crypto.html#1589" class="Record">CryptoStructure</a><a id="662" class="Symbol">)</a>
-<a id="664" class="Keyword">open</a> <a id="669" class="Keyword">import</a> <a id="676" href="Ledger.Dijkstra.Specification.Crypto.html" class="Module">Ledger.Dijkstra.Specification.Crypto</a> <a id="713" class="Keyword">using</a> <a id="719" class="Symbol">(</a><a id="720" href="Ledger.Dijkstra.Specification.Crypto.html#1163" class="Record">LeiosCryptoStructure</a><a id="740" class="Symbol">)</a>
+<a id="647" class="Keyword">open</a> <a id="652" class="Keyword">import</a> <a id="659" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+<a id="674" class="Keyword">open</a> <a id="679" class="Keyword">import</a> <a id="686" href="Ledger.Core.Specification.Crypto.html" class="Module">Ledger.Core.Specification.Crypto</a> <a id="719" class="Keyword">using</a> <a id="725" class="Symbol">(</a><a id="726" href="Ledger.Core.Specification.Crypto.html#1589" class="Record">CryptoStructure</a><a id="741" class="Symbol">)</a>
+<a id="743" class="Keyword">open</a> <a id="748" class="Keyword">import</a> <a id="755" href="Ledger.Dijkstra.Specification.Crypto.html" class="Module">Ledger.Dijkstra.Specification.Crypto</a> <a id="792" class="Keyword">using</a> <a id="798" class="Symbol">(</a><a id="799" href="Ledger.Dijkstra.Specification.Crypto.html#1163" class="Record">LeiosCryptoStructure</a><a id="819" class="Symbol">)</a>
 
-<a id="743" class="Keyword">module</a> <a id="750" href="Ledger.Dijkstra.Specification.Leios.Types.html" class="Module">Ledger.Dijkstra.Specification.Leios.Types</a>
-  <a id="794" class="Symbol">(</a><a id="795" href="Ledger.Dijkstra.Specification.Leios.Types.html#795" class="Bound">cs</a> <a id="798" class="Symbol">:</a> <a id="800" href="Ledger.Core.Specification.Crypto.html#1589" class="Record">CryptoStructure</a><a id="815" class="Symbol">)</a> <a id="817" class="Symbol">(</a><a id="818" href="Ledger.Dijkstra.Specification.Leios.Types.html#818" class="Bound">lc</a> <a id="821" class="Symbol">:</a> <a id="823" href="Ledger.Dijkstra.Specification.Crypto.html#1163" class="Record">LeiosCryptoStructure</a> <a id="844" href="Ledger.Dijkstra.Specification.Leios.Types.html#795" class="Bound">cs</a><a id="846" class="Symbol">)</a>
-  <a id="850" class="Symbol">(</a><a id="851" class="Keyword">open</a> <a id="856" href="Ledger.Dijkstra.Specification.Crypto.html#1163" class="Module">LeiosCryptoStructure</a> <a id="877" href="Ledger.Dijkstra.Specification.Leios.Types.html#818" class="Bound">lc</a> <a id="880" class="Keyword">using</a> <a id="886" class="Symbol">(</a><a id="887" href="Ledger.Dijkstra.Specification.Crypto.html#3470" class="Field">TxRefHash</a><a id="896" class="Symbol">;</a> <a id="898" href="Ledger.Dijkstra.Specification.Crypto.html#3463" class="Field">EBHash</a><a id="904" class="Symbol">;</a> <a id="906" href="Ledger.Dijkstra.Specification.Crypto.html#3505" class="Field">hashEBRefs</a><a id="916" class="Symbol">))</a>
-  <a id="921" class="Keyword">where</a>
+<a id="822" class="Keyword">module</a> <a id="829" href="Ledger.Dijkstra.Specification.Leios.Types.html" class="Module">Ledger.Dijkstra.Specification.Leios.Types</a>
+  <a id="873" class="Symbol">(</a><a id="874" href="Ledger.Dijkstra.Specification.Leios.Types.html#874" class="Bound">cs</a> <a id="877" class="Symbol">:</a> <a id="879" href="Ledger.Core.Specification.Crypto.html#1589" class="Record">CryptoStructure</a><a id="894" class="Symbol">)</a> <a id="896" class="Symbol">(</a><a id="897" href="Ledger.Dijkstra.Specification.Leios.Types.html#897" class="Bound">lc</a> <a id="900" class="Symbol">:</a> <a id="902" href="Ledger.Dijkstra.Specification.Crypto.html#1163" class="Record">LeiosCryptoStructure</a> <a id="923" href="Ledger.Dijkstra.Specification.Leios.Types.html#874" class="Bound">cs</a><a id="925" class="Symbol">)</a>
+  <a id="929" class="Symbol">(</a><a id="930" class="Keyword">open</a> <a id="935" href="Ledger.Dijkstra.Specification.Crypto.html#1163" class="Module">LeiosCryptoStructure</a> <a id="956" href="Ledger.Dijkstra.Specification.Leios.Types.html#897" class="Bound">lc</a> <a id="959" class="Keyword">using</a> <a id="965" class="Symbol">(</a><a id="966" href="Ledger.Dijkstra.Specification.Crypto.html#3470" class="Field">TxRefHash</a><a id="975" class="Symbol">;</a> <a id="977" href="Ledger.Dijkstra.Specification.Crypto.html#3463" class="Field">EBHash</a><a id="983" class="Symbol">;</a> <a id="985" href="Ledger.Dijkstra.Specification.Crypto.html#3505" class="Field">hashEBRefs</a><a id="995" class="Symbol">))</a>
+  <a id="1000" class="Keyword">where</a>
 </pre>
 
 <h3 id="endorser-blocks">Endorser blocks<a class="headerlink" href="#endorser-blocks" title="Permanent link">&para;</a></h3>
-<pre class="Agda"><a id="965" class="Keyword">record</a> <a id="EndorserBlock"></a><a id="972" href="Ledger.Dijkstra.Specification.Leios.Types.html#972" class="Record">EndorserBlock</a> <a id="986" class="Symbol">:</a> <a id="988" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="993" class="Keyword">where</a>
-  <a id="1001" class="Keyword">field</a>
-    <a id="EndorserBlock.ebTxRefs"></a><a id="1011" href="Ledger.Dijkstra.Specification.Leios.Types.html#1011" class="Field">ebTxRefs</a> <a id="1020" class="Symbol">:</a> <a id="1022" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="1027" class="Symbol">(</a><a id="1028" href="Ledger.Dijkstra.Specification.Crypto.html#3470" class="Field">TxRefHash</a> <a id="1038" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="1040" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a><a id="1041" class="Symbol">)</a>
+<pre class="Agda"><a id="1044" class="Keyword">record</a> <a id="EndorserBlock"></a><a id="1051" href="Ledger.Dijkstra.Specification.Leios.Types.html#1051" class="Record">EndorserBlock</a> <a id="1065" class="Symbol">:</a> <a id="1067" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1072" class="Keyword">where</a>
+  <a id="1080" class="Keyword">field</a>
+    <a id="EndorserBlock.ebTxRefs"></a><a id="1090" href="Ledger.Dijkstra.Specification.Leios.Types.html#1090" class="Field">ebTxRefs</a> <a id="1099" class="Symbol">:</a> <a id="1101" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="1106" class="Symbol">(</a><a id="1107" href="Ledger.Dijkstra.Specification.Crypto.html#3470" class="Field">TxRefHash</a> <a id="1117" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="1119" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a><a id="1120" class="Symbol">)</a>
 </pre>
 <p>An <strong>endorser block</strong> (EB) is the ordered list of its transaction references, each
 the pair of a reference hash and a declared byte size.</p>
@@ -12157,8 +12133,8 @@ block, stated beside the nonemptiness and size conditions.</p>
      predicate of `Leios.Validity`). -->
 
 <h3 id="endorser-block-identifiers">Endorser block identifiers<a class="headerlink" href="#endorser-block-identifiers" title="Permanent link">&para;</a></h3>
-<pre class="Agda"><a id="hashEB"></a><a id="1950" href="Ledger.Dijkstra.Specification.Leios.Types.html#1950" class="Function">hashEB</a> <a id="1957" class="Symbol">:</a> <a id="1959" href="Ledger.Dijkstra.Specification.Leios.Types.html#972" class="Record">EndorserBlock</a> <a id="1973" class="Symbol">→</a> <a id="1975" href="Ledger.Dijkstra.Specification.Crypto.html#3463" class="Field">EBHash</a>
-<a id="1982" href="Ledger.Dijkstra.Specification.Leios.Types.html#1950" class="Function">hashEB</a> <a id="1989" href="Ledger.Dijkstra.Specification.Leios.Types.html#1989" class="Bound">eb</a> <a id="1992" class="Symbol">=</a> <a id="1994" href="Ledger.Dijkstra.Specification.Crypto.html#3505" class="Field">hashEBRefs</a> <a id="2005" class="Symbol">(</a><a id="2006" href="Ledger.Dijkstra.Specification.Leios.Types.html#1011" class="Field">EndorserBlock.ebTxRefs</a> <a id="2029" href="Ledger.Dijkstra.Specification.Leios.Types.html#1989" class="Bound">eb</a><a id="2031" class="Symbol">)</a>
+<pre class="Agda"><a id="hashEB"></a><a id="2029" href="Ledger.Dijkstra.Specification.Leios.Types.html#2029" class="Function">hashEB</a> <a id="2036" class="Symbol">:</a> <a id="2038" href="Ledger.Dijkstra.Specification.Leios.Types.html#1051" class="Record">EndorserBlock</a> <a id="2052" class="Symbol">→</a> <a id="2054" href="Ledger.Dijkstra.Specification.Crypto.html#3463" class="Field">EBHash</a>
+<a id="2061" href="Ledger.Dijkstra.Specification.Leios.Types.html#2029" class="Function">hashEB</a> <a id="2068" href="Ledger.Dijkstra.Specification.Leios.Types.html#2068" class="Bound">eb</a> <a id="2071" class="Symbol">=</a> <a id="2073" href="Ledger.Dijkstra.Specification.Crypto.html#3505" class="Field">hashEBRefs</a> <a id="2084" class="Symbol">(</a><a id="2085" href="Ledger.Dijkstra.Specification.Leios.Types.html#1090" class="Field">EndorserBlock.ebTxRefs</a> <a id="2108" href="Ledger.Dijkstra.Specification.Leios.Types.html#2068" class="Bound">eb</a><a id="2110" class="Symbol">)</a>
 </pre>
 <p><code class="AgdaFunction">hashEB</code> fixes the identity of an endorser block as the CIP does,
 "computed from the complete EB structure": the identifier is the hash of the
@@ -12167,18 +12143,7 @@ data arrives.</p>
 <p>What <code class="AgdaFunction">hashEB</code> deliberately does not fix is the preimage, since
 <code class="AgdaField">hashEBRefs</code> is abstract and no byte-exact serialization of the
 reference list is pinned.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
-<h3 id="announcements">Announcements<a class="headerlink" href="#announcements" title="Permanent link">&para;</a></h3>
-<pre class="Agda"><a id="Announcement"></a><a id="2504" href="Ledger.Dijkstra.Specification.Leios.Types.html#2504" class="Function">Announcement</a> <a id="2517" class="Symbol">:</a> <a id="2519" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="2524" href="Ledger.Dijkstra.Specification.Leios.Types.html#2504" class="Function">Announcement</a> <a id="2537" class="Symbol">=</a> <a id="2539" href="Ledger.Dijkstra.Specification.Crypto.html#3463" class="Field">EBHash</a> <a id="2546" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="2548" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
-</pre>
-<p>An <strong>announcement</strong> is the pair a ranking-block (RB) header may carry; it consists
-of the announced EB's identifier and declared byte size.</p>
-<p>A wrong declared size invalidates nothing (the CIP has honest nodes decline to
-vote instead), so size agreement belongs to the voters' checks, not to block
-validity.</p>
-<p>The header also flags whether its own body carries a certificate; the spec reads
-that off the body itself, so the flag has no counterpart here.</p>
-<pre class="Agda hidden-source"><a id="3021" class="Keyword">unquoteDecl</a> <a id="DecEq-EndorserBlock"></a><a id="3033" href="Ledger.Dijkstra.Specification.Leios.Types.html#3033" class="Function">DecEq-EndorserBlock</a> <a id="3053" class="Symbol">=</a> <a id="3055" href="Tactic.Derive.DecEq.html#5150" class="Function">derive-DecEq</a> <a id="3068" class="Symbol">((</a><a id="3070" class="Keyword">quote</a> <a id="3076" href="Ledger.Dijkstra.Specification.Leios.Types.html#972" class="Record">EndorserBlock</a> <a id="3090" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3092" href="Ledger.Dijkstra.Specification.Leios.Types.html#3033" class="Function">DecEq-EndorserBlock</a><a id="3111" class="Symbol">)</a> <a id="3113" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="3115" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a><a id="3117" class="Symbol">)</a>
+<pre class="Agda hidden-source"><a id="2569" class="Keyword">unquoteDecl</a> <a id="DecEq-EndorserBlock"></a><a id="2581" href="Ledger.Dijkstra.Specification.Leios.Types.html#2581" class="Function">DecEq-EndorserBlock</a> <a id="2601" class="Symbol">=</a> <a id="2603" href="Tactic.Derive.DecEq.html#5150" class="Function">derive-DecEq</a> <a id="2616" class="Symbol">((</a><a id="2618" class="Keyword">quote</a> <a id="2624" href="Ledger.Dijkstra.Specification.Leios.Types.html#1051" class="Record">EndorserBlock</a> <a id="2638" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2640" href="Ledger.Dijkstra.Specification.Leios.Types.html#2581" class="Function">DecEq-EndorserBlock</a><a id="2659" class="Symbol">)</a> <a id="2661" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="2663" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a><a id="2665" class="Symbol">)</a>
 </pre>
 
 <hr />
