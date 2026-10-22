@@ -464,7 +464,7 @@ d_Conv'45'Snapshot_130
                 -> coe
                      MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3066
                      (coe
-                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                         (coe
                            MAlonzo.Code.Axiom.Set.d_th_1516
                            (coe
@@ -513,7 +513,7 @@ d_Conv'45'Snapshot_130
                            (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
                               (coe v1))))
                      (coe
-                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                         (coe
                            MAlonzo.Code.Axiom.Set.d_th_1516
                            (coe
@@ -562,7 +562,7 @@ d_Conv'45'Snapshot_130
                            (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
                               (coe v2))))
                      (coe
-                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                         (coe
                            MAlonzo.Code.Axiom.Set.d_th_1516
                            (coe
@@ -821,7 +821,7 @@ d_Conv'45'Snapshots_134
                                      -> coe
                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3066
                                           (coe
-                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                              (coe
                                                 MAlonzo.Code.Axiom.Set.d_th_1516
                                                 (coe
@@ -872,7 +872,7 @@ d_Conv'45'Snapshots_134
                                                 (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
                                                    (coe v6))))
                                           (coe
-                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                              (coe
                                                 MAlonzo.Code.Axiom.Set.d_th_1516
                                                 (coe
@@ -923,7 +923,7 @@ d_Conv'45'Snapshots_134
                                                 (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
                                                    (coe v7))))
                                           (coe
-                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                              (coe
                                                 MAlonzo.Code.Axiom.Set.d_th_1516
                                                 (coe
@@ -1016,7 +1016,7 @@ d_Conv'45'Snapshots_134
                                      -> coe
                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3066
                                           (coe
-                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                              (coe
                                                 MAlonzo.Code.Axiom.Set.d_th_1516
                                                 (coe
@@ -1067,7 +1067,7 @@ d_Conv'45'Snapshots_134
                                                 (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
                                                    (coe v6))))
                                           (coe
-                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                              (coe
                                                 MAlonzo.Code.Axiom.Set.d_th_1516
                                                 (coe
@@ -1118,7 +1118,7 @@ d_Conv'45'Snapshots_134
                                                 (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
                                                    (coe v7))))
                                           (coe
-                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                              (coe
                                                 MAlonzo.Code.Axiom.Set.d_th_1516
                                                 (coe
@@ -1211,7 +1211,7 @@ d_Conv'45'Snapshots_134
                                      -> coe
                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3066
                                           (coe
-                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                              (coe
                                                 MAlonzo.Code.Axiom.Set.d_th_1516
                                                 (coe
@@ -1262,7 +1262,7 @@ d_Conv'45'Snapshots_134
                                                 (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
                                                    (coe v6))))
                                           (coe
-                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                              (coe
                                                 MAlonzo.Code.Axiom.Set.d_th_1516
                                                 (coe
@@ -1313,7 +1313,7 @@ d_Conv'45'Snapshots_134
                                                 (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
                                                    (coe v7))))
                                           (coe
-                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                              (coe
                                                 MAlonzo.Code.Axiom.Set.d_th_1516
                                                 (coe
@@ -1465,7 +1465,7 @@ d_HsRewardUpdate'8594'RewardUpdate_208 v0
                           (coe d_Δr_148 (coe v0)))
                        (coe d_Δf_150 (coe v0)))
                     (coe
-                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1446
+                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1468
                        (coe
                           MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_284
                           (coe
@@ -1491,7 +1491,7 @@ d_HsRewardUpdate'8594'RewardUpdate_208 v0
                              MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
                        (coe (\ v1 -> v1))
                        (coe
-                          MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                          MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                           (coe
                              MAlonzo.Code.Axiom.Set.d_th_1516
                              (coe
@@ -1584,7 +1584,7 @@ d_HsRewardUpdate'8594'RewardUpdate_208 v0
                                                                                  (d_Δr_148 (coe v0))
                                                                                  (d_Δf_150 (coe v0))
                                                                                  (coe
-                                                                                    MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                    MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                     (coe
                                                                                        MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                        (coe

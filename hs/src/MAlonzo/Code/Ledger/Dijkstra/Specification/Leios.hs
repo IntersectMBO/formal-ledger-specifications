@@ -884,7 +884,7 @@ du_totalStake_1618 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> Integer
 du_totalStake_1618 v0 v1
   = coe
-      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1446
+      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1468
       (coe
          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
          (coe
@@ -918,7 +918,7 @@ du_leiosSeatMap_1622 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_leiosSeatMap_1622 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Axiom.Set.Map.du_mapWithKey_1406
+      MAlonzo.Code.Axiom.Set.Map.du_mapWithKey_1416
       (coe
          MAlonzo.Code.Axiom.Set.d_th_1516
          (coe
@@ -931,7 +931,7 @@ du_leiosSeatMap_1622 v0 v1 v2 v3
                  MAlonzo.Code.Class.ToBool.du_if_then_else__38
                  (coe MAlonzo.Code.Class.ToBool.du_ToBool'45'Maybe_100)
                  (coe
-                    MAlonzo.Code.Axiom.Set.Map.du_lookup'7504''63'_2048
+                    MAlonzo.Code.Axiom.Set.Map.du_lookup'7504''63'_2058
                     (coe
                        MAlonzo.Code.Axiom.Set.d_th_1516
                        (coe
@@ -956,8 +956,8 @@ du_leiosSeatMap_1622 v0 v1 v2 v3
                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8) in
                         coe
                           (coe
-                             MAlonzo.Code.Axiom.Set.Rel.du_dom_354 v6
-                             (coe MAlonzo.Code.Axiom.Set.Map.du__'738'_570 (coe v2))))))
+                             MAlonzo.Code.Axiom.Set.Rel.du_dom_358 v6
+                             (coe MAlonzo.Code.Axiom.Set.Map.du__'738'_580 (coe v2))))))
                  (coe
                     MAlonzo.Code.Level.C_lift_20
                     (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
@@ -999,7 +999,7 @@ du_allLeiosSeats_1634 v0 v1 v2 v3
          MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
          (coe du_HasCast'45'LeiosSeat_1480))
       (coe
-         MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+         MAlonzo.Code.Axiom.Set.Map.du__'738'_580
          (coe du_leiosSeatMap_1622 (coe v0) (coe v1) (coe v2) (coe v3)))
 -- Ledger.Dijkstra.Specification.Leios._._._.sortedLeiosSeats
 d_sortedLeiosSeats_1644 ::
@@ -1190,8 +1190,8 @@ du_signersSeats_1662 v0 v1
               (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
               (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v2))
               (coe
-                 MAlonzo.Code.Class.IsSet.d_toSet_526
-                 (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Set_590) v1))
+                 MAlonzo.Code.Class.IsSet.d_toSet_528
+                 (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Set_592) v1))
          (coe
             MAlonzo.Code.Data.List.Base.du_zip_182
             (coe

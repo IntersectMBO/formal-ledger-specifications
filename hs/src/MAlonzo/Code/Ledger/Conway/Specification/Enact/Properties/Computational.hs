@@ -311,13 +311,13 @@ d_Computational'45'ENACT_1292 v0
                                                                               (coe v1)))))))
                                                           v10))
                                                   (coe
-                                                     MAlonzo.Code.Class.IsSet.du_range_588
+                                                     MAlonzo.Code.Class.IsSet.du_range_590
                                                      (coe
                                                         MAlonzo.Code.Axiom.Set.d_th_1516
                                                         (coe
                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                      (coe
-                                                        MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                                                        MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_596)
                                                      (coe v6))) in
                                      coe
                                        (case coe v10 of
@@ -362,7 +362,7 @@ d_Computational'45'ENACT_1292 v0
                                                                                                   v15))) in
                                                                                coe
                                                                                  (coe
-                                                                                    MAlonzo.Code.Axiom.Set.Map.du__'8739'_'7580'_1634
+                                                                                    MAlonzo.Code.Axiom.Set.Map.du__'8739'_'7580'_1644
                                                                                     (coe
                                                                                        MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                        (coe
@@ -396,7 +396,7 @@ d_Computational'45'ENACT_1292 v0
                                                                                                         v16))) in
                                                                                      coe
                                                                                        (coe
-                                                                                          MAlonzo.Code.Axiom.Set.Map.du__'8746''737'__1042
+                                                                                          MAlonzo.Code.Axiom.Set.Map.du__'8746''737'__1052
                                                                                           (coe
                                                                                              MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                              (coe
@@ -415,9 +415,9 @@ d_Computational'45'ENACT_1292 v0
                                                                                                      (coe
                                                                                                         v16)))
                                                                                              (coe
-                                                                                                MAlonzo.Code.Class.HasEmptySet.d_'8709'_332
+                                                                                                MAlonzo.Code.Class.HasEmptySet.d_'8709'_334
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Class.HasEmptySet.du_HasEmptySet'45'Map_348
+                                                                                                   MAlonzo.Code.Class.HasEmptySet.du_HasEmptySet'45'Map_350
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                       (coe
@@ -548,7 +548,7 @@ d_Computational'45'ENACT_1292 v0
                     -> let v6
                              = MAlonzo.Code.Data.Nat.Properties.d__'8804''63'__2920
                                  (coe
-                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1446
+                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1468
                                     (coe
                                        MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_340
                                        (coe
@@ -577,7 +577,7 @@ d_Computational'45'ENACT_1292 v0
                                           MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
                                     (coe (\ v6 -> v6))
                                     (coe
-                                       MAlonzo.Code.Axiom.Set.Map.Dec.du__'8746''8314'__582
+                                       MAlonzo.Code.Axiom.Set.Map.Dec.du__'8746''8314'__584
                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                        (coe
                                           MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
@@ -633,7 +633,7 @@ d_Computational'45'ENACT_1292 v0
                                                           MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pparams_1204
                                                           (coe v2))
                                                        (coe
-                                                          MAlonzo.Code.Axiom.Set.Map.Dec.du__'8746''8314'__582
+                                                          MAlonzo.Code.Axiom.Set.Map.Dec.du__'8746''8314'__584
                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                                           MAlonzo.Code.Ledger.Prelude.Instances.d_CommMonoid'45'ℕ'45''43'_6
                                                           (let v10

@@ -1370,7 +1370,7 @@ d_applyToRewards_3232 v0 v1 v2 v3
               (coe
                  (\ v6 ->
                     coe
-                      MAlonzo.Code.Axiom.Set.Map.du__'8746''737'__1042
+                      MAlonzo.Code.Axiom.Set.Map.du__'8746''737'__1052
                       (coe
                          MAlonzo.Code.Axiom.Set.d_th_1516
                          (coe
@@ -1394,9 +1394,9 @@ d_applyToRewards_3232 v0 v1 v2 v3
                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                   (coe v0)))))
                       (coe
-                         MAlonzo.Code.Class.HasSingleton.d_'10100'_'10101'_336
+                         MAlonzo.Code.Class.HasSingleton.d_'10100'_'10101'_338
                          (coe
-                            MAlonzo.Code.Class.HasSingleton.du_HasSingletonSet'45'Map_352
+                            MAlonzo.Code.Class.HasSingleton.du_HasSingletonSet'45'Map_354
                             (coe
                                MAlonzo.Code.Axiom.Set.d_th_1516
                                (coe
@@ -1410,7 +1410,7 @@ d_applyToRewards_3232 v0 v1 v2 v3
                       (coe v4)))
               (coe v4)
               (coe
-                 MAlonzo.Code.Axiom.Set.Map.du_lookup'7504''63'_2048
+                 MAlonzo.Code.Axiom.Set.Map.du_lookup'7504''63'_2058
                  (coe
                     MAlonzo.Code.Axiom.Set.d_th_1516
                     (coe
@@ -1448,9 +1448,9 @@ d_applyToRewards_3232 v0 v1 v2 v3
                                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8) in
                      coe
                        (coe
-                          MAlonzo.Code.Axiom.Set.Rel.du_dom_354 v6
-                          (coe MAlonzo.Code.Axiom.Set.Map.du__'738'_570 (coe v4))))))))
-      (coe v3) (coe MAlonzo.Code.Axiom.Set.Map.du__'738'_570 (coe v2))
+                          MAlonzo.Code.Axiom.Set.Rel.du_dom_358 v6
+                          (coe MAlonzo.Code.Axiom.Set.Map.du__'738'_580 (coe v4))))))))
+      (coe v3) (coe MAlonzo.Code.Axiom.Set.Map.du__'738'_580 (coe v2))
 -- Ledger.Dijkstra.Specification.Entities.applyDirectDeposits
 d_applyDirectDeposits_3250 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->

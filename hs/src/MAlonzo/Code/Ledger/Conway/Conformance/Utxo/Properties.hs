@@ -1080,7 +1080,7 @@ d_computeProofH_2960 v0 v1 v2 v3 v4 v5
                                      (coe
                                         MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
                                         (coe
-                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_DecEq'45'ℙ_1244
+                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_DecEq'45'ℙ_1266
                                            (coe
                                               MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4 ()
                                               erased () erased
@@ -1131,13 +1131,13 @@ d_computeProofH_2960 v0 v1 v2 v3 v4 v5
                                                              (coe v0)))
                                                        (coe v10)
                                                        (coe
-                                                          MAlonzo.Code.Class.IsSet.du_dom_586
+                                                          MAlonzo.Code.Class.IsSet.du_dom_588
                                                           (coe
                                                              MAlonzo.Code.Axiom.Set.d_th_1516
                                                              (coe
                                                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                           (coe
-                                                             MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                                                             MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_596)
                                                           (coe
                                                              MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2520
                                                              (coe v3)))))
@@ -1237,7 +1237,7 @@ d_computeProofH_2960 v0 v1 v2 v3 v4 v5
                                                                                 (coe
                                                                                    MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
                                                                                    (coe
-                                                                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_DecEq'45'ℙ_1244
+                                                                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_DecEq'45'ℙ_1266
                                                                                       (coe
                                                                                          MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4
                                                                                          () erased
@@ -1277,7 +1277,7 @@ d_computeProofH_2960 v0 v1 v2 v3 v4 v5
                                                                                                      (coe
                                                                                                         v0)))))))
                                                                                    (coe
-                                                                                      MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                                                                                      MAlonzo.Code.Axiom.Set.Map.du__'738'_580
                                                                                       (coe
                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txrdmrs_3640
                                                                                          (coe
@@ -1309,15 +1309,15 @@ d_computeProofH_2960 v0 v1 v2 v3 v4 v5
                                                                                                  (coe
                                                                                                     v16)))))
                                                                                    (coe
-                                                                                      MAlonzo.Code.Class.IsSet.du_range_588
+                                                                                      MAlonzo.Code.Class.IsSet.du_range_590
                                                                                       (coe
                                                                                          MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                          (coe
                                                                                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                       (coe
-                                                                                         MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                                                                                         MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_596)
                                                                                       (coe
-                                                                                         MAlonzo.Code.Axiom.Set.Map.du__'8739'__1626
+                                                                                         MAlonzo.Code.Axiom.Set.Map.du__'8739'__1636
                                                                                          (coe
                                                                                             MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                             (coe
@@ -1465,7 +1465,7 @@ d_computeProofH_2960 v0 v1 v2 v3 v4 v5
                                                                                          (coe
                                                                                             MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
                                                                                             (coe
-                                                                                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_DecEq'45'ℙ_1244
+                                                                                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_DecEq'45'ℙ_1266
                                                                                                (coe
                                                                                                   MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4
                                                                                                   ()
@@ -1649,7 +1649,7 @@ d_computeProofH_2960 v0 v1 v2 v3 v4 v5
                                                                                                                        (coe
                                                                                                                           MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                                           (coe
-                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_598
+                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_608
                                                                                                                              (coe
                                                                                                                                 MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                 (coe
@@ -1709,7 +1709,7 @@ d_computeProofH_2960 v0 v1 v2 v3 v4 v5
                                                                                                                                (coe
                                                                                                                                   MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                                                   (coe
-                                                                                                                                     MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_598
+                                                                                                                                     MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_608
                                                                                                                                      (coe
                                                                                                                                         MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                         (coe
@@ -1787,7 +1787,7 @@ d_computeProofH_2960 v0 v1 v2 v3 v4 v5
                                                                                                         v22 of
                                                                                                    MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v23
                                                                                                      -> coe
-                                                                                                          ("\172\n((z\n  : Axiom.Set.Map.\8709\7504 (.Axiom.Set.Theory\7496.th List-Model\7496) \8802\7504\n    .TransactionStructure.TxWitnesses.txrdmrs\n    (.TransactionStructure.Tx.wits tx)\n    \215\n    nothing \8802\n    .proj\8322\n    (.TransactionStructure.TxBody.txVldt\n     (.TransactionStructure.Tx.body tx))) \8594\n Functor.fmap Functor-Maybe\n (.AbstractFunctions.epochInfoSlotToUTCTime abs)\n (.proj\8322\n  (.TransactionStructure.TxBody.txVldt\n   (.TransactionStructure.Tx.body tx)))\n \8802 nothing)"
+                                                                                                          ("\172\n((z\n  : (.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Map.\8802\7504\n     Axiom.Set.Map.\8709\7504 (.Axiom.Set.Theory\7496.th List-Model\7496))\n    (.TransactionStructure.TxWitnesses.txrdmrs\n     (.TransactionStructure.Tx.wits tx))\n    \215\n    nothing \8802\n    .proj\8322\n    (.TransactionStructure.TxBody.txVldt\n     (.TransactionStructure.Tx.body tx))) \8594\n Functor.fmap Functor-Maybe\n (.AbstractFunctions.epochInfoSlotToUTCTime abs)\n (.proj\8322\n  (.TransactionStructure.TxBody.txVldt\n   (.TransactionStructure.Tx.body tx)))\n \8802 nothing)"
                                                                                                            ::
                                                                                                            Data.Text.Text)
                                                                                                    MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v23
@@ -1926,7 +1926,7 @@ d_computeProofH_2960 v0 v1 v2 v3 v4 v5
                                                                                                                                                       (coe
                                                                                                                                                          MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Instances.du_HasCast'45'A'8640'B'45'RelAB_12)
                                                                                                                                                       (coe
-                                                                                                                                                         MAlonzo.Code.Axiom.Set.Map.du_mapValues_976
+                                                                                                                                                         MAlonzo.Code.Axiom.Set.Map.du_mapValues_986
                                                                                                                                                          (coe
                                                                                                                                                             MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                                             (coe
@@ -1981,7 +1981,7 @@ d_computeProofH_2960 v0 v1 v2 v3 v4 v5
                                                                                                                                                                 (coe
                                                                                                                                                                    MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Instances.du_HasCast'45'A'8640'B'45'RelAB_12)
                                                                                                                                                                 (coe
-                                                                                                                                                                   MAlonzo.Code.Axiom.Set.Map.du_mapValues_976
+                                                                                                                                                                   MAlonzo.Code.Axiom.Set.Map.du_mapValues_986
                                                                                                                                                                    (coe
                                                                                                                                                                       MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                                                       (coe
@@ -2034,15 +2034,15 @@ d_computeProofH_2960 v0 v1 v2 v3 v4 v5
                                                                                                                                                                                   (coe
                                                                                                                                                                                      v34))))
                                                                                                                                                                        (coe
-                                                                                                                                                                          MAlonzo.Code.Class.IsSet.du_range_588
+                                                                                                                                                                          MAlonzo.Code.Class.IsSet.du_range_590
                                                                                                                                                                           (coe
                                                                                                                                                                              MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                                                              (coe
                                                                                                                                                                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                                                                                                           (coe
-                                                                                                                                                                             MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                                                                                                                                                                             MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_596)
                                                                                                                                                                           (coe
-                                                                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_mapValues_976
+                                                                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_mapValues_986
                                                                                                                                                                              (coe
                                                                                                                                                                                 MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                                                                 (coe
@@ -2097,15 +2097,15 @@ d_computeProofH_2960 v0 v1 v2 v3 v4 v5
                                                                                                                                                                                                (coe
                                                                                                                                                                                                   v0)))))
                                                                                                                                                                                  (coe
-                                                                                                                                                                                    MAlonzo.Code.Class.IsSet.du_range_588
+                                                                                                                                                                                    MAlonzo.Code.Class.IsSet.du_range_590
                                                                                                                                                                                     (coe
                                                                                                                                                                                        MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                                                                        (coe
                                                                                                                                                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                                                                                                                     (coe
-                                                                                                                                                                                       MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                                                                                                                                                                                       MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_596)
                                                                                                                                                                                     (coe
-                                                                                                                                                                                       MAlonzo.Code.Axiom.Set.Map.du_mapValues_976
+                                                                                                                                                                                       MAlonzo.Code.Axiom.Set.Map.du_mapValues_986
                                                                                                                                                                                        (coe
                                                                                                                                                                                           MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                                                                           (coe
@@ -2158,13 +2158,13 @@ d_computeProofH_2960 v0 v1 v2 v3 v4 v5
                                                                                                                                                                                                          (coe
                                                                                                                                                                                                             v0)))))
                                                                                                                                                                                            (coe
-                                                                                                                                                                                              MAlonzo.Code.Class.IsSet.du_dom_586
+                                                                                                                                                                                              MAlonzo.Code.Class.IsSet.du_dom_588
                                                                                                                                                                                               (coe
                                                                                                                                                                                                  MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                                                                                  (coe
                                                                                                                                                                                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                                                                                                                               (coe
-                                                                                                                                                                                                 MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                                                                                                                                                                                                 MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_596)
                                                                                                                                                                                               (coe
                                                                                                                                                                                                  MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txWithdrawals_3498
                                                                                                                                                                                                  (coe

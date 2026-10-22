@@ -150,7 +150,7 @@ d_BBODY'45'computeProof_2416 v0 v1 v2 v3 v4
                               MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_2068
                               (coe v0)))
                         (coe
-                           MAlonzo.Code.Axiom.Set.Sum.du_indexedSumL_932
+                           MAlonzo.Code.Axiom.Set.Sum.du_indexedSumL_938
                            (MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ExUnit'45'CommutativeMonoid_230
                               (coe
                                  MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ps_334
@@ -296,7 +296,7 @@ d_BBODY'45'computeProof_2416 v0 v1 v2 v3 v4
                                                    MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_2068
                                                    (coe v0))))
                                           (coe
-                                             MAlonzo.Code.Axiom.Set.Sum.du_indexedSumL_932
+                                             MAlonzo.Code.Axiom.Set.Sum.du_indexedSumL_938
                                              (MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ExUnit'45'CommutativeMonoid_230
                                                 (coe
                                                    MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ps_334
