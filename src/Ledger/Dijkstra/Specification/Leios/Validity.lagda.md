@@ -104,7 +104,7 @@ data  _,_⊢_⇀⦇_,EB⦈_ : LedgerEnv → List TopLevelTx → LedgerState → 
       pp = PParamsOf Γ
     in
       ∙ EBWellFormed eb
-      ∙ ebTxRefs eb ≡ map (λ tx → txRefHash tx , SizeOf tx) txs
+      ∙ ebTxRefs eb ≡ map refOf txs
       ∙ ebSize eb ≤ pp .leiosMaxEBSize
       ∙ ∑ˡ[ tx ← txs ] SizeOf tx ≤ pp .leiosMaxEBTxsSize
       ∙ ⟦ Γ , pp .leiosMaxRefScriptSizePerEB , pp .leiosMaxEBExUnits ⟧ ⊢ ls ⇀⦇ txs ,LEDGERS⦈ ls'

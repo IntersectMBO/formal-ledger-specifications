@@ -31,9 +31,8 @@ open import Ledger.Dijkstra.Specification.Enact govStructure
 open import Ledger.Dijkstra.Specification.Epoch txs abs
 open import Ledger.Dijkstra.Specification.Gov govStructure
 open import Ledger.Dijkstra.Specification.Ledger txs abs
-open import Ledger.Dijkstra.Specification.Ledgers txs abs
 open import Ledger.Dijkstra.Specification.Leios govStructure
-  using (EBCert; LeiosCommittee; ValidEBCert; certificationDelay)
+  using (EBCert; ValidEBCert; certificationDelay)
 open import Ledger.Dijkstra.Specification.Leios.Types cryptoStructure leiosCryptoStructure
   using (EndorserBlock; hashEB)
 open import Ledger.Dijkstra.Specification.Leios.Validity txs abs using (_,_⊢_⇀⦇_,EB⦈_)
@@ -110,153 +109,61 @@ private variable
 ```
 -->
 
-## The <span class="AgdaDatatype">CERTIFY</span> Transition System {#sec:the-certify-transition-system}
-
-The certificate branch judges a block's certificate, when the block carries
-one, in the world of the block that announced the EB.  That world is the chain
-state before the tick: its enact state and treasury are those the announcing
-block's own body ran under, and its committee is the announcing epoch's.  The
-branch's environment packs what it reads from there beside the certifying
-block's slot, and `certifyEnv`{.AgdaFunction} reads it off the chain state.
-
-```agda
-record CertifyEnv : Type where
-  field
-    slot         : Slot
-    lastApplied  : Maybe LastAppliedBlock
-    committee    : LeiosCommittee
-    enactState   : EnactState
-    treasury     : Treasury
-```
-
-<!--
-```agda
-instance
-  unquoteDecl HasCast-CertifyEnv = derive-HasCast
-    [ (quote CertifyEnv , HasCast-CertifyEnv) ]
-```
--->
-
-```agda
-certifyEnv : ChainState → Slot → CertifyEnv
-certifyEnv cs s = ⟦ s , lastApplied , leiosCommittee , EnactStateOf cs , TreasuryOf newEpochState ⟧
-  where
-    open ChainState cs
-    open NewEpochState newEpochState using (leiosCommittee)
-
-pendingEB : LastAppliedBlock → Maybe EBHash
-pendingEB la = proj₁ <$> LastAppliedBlock.announcedEB la
-```
-
-`pendingEB`{.AgdaFunction} is the hash of the EB the last applied block
-announced, if it announced one; the declared size beside it is no validity
-condition (see `BlockBody`{.AgdaModule}).
+## Resolved endorser blocks
 
 The block carries its certificate alone.  The EB it certifies and that EB's
 *closure*, its referenced transactions resolved and in reference order, reach
-the chain rule beside the block; the rules take the closure as an input and
-never ask whether data is available.
+the chain rule beside the block.  The rules take the closure as an input.
 
 ```agda
 record ResolvedEB : Type where
   field
     eb       : EndorserBlock
     closure  : List TopLevelTx
+
+pendingEB : LastAppliedBlock → Maybe EBHash
+pendingEB la = proj₁ <$> LastAppliedBlock.announcedEB la
+
+announcingEnv : ChainState → LastAppliedBlock → LedgerEnv
+announcingEnv cs la =
+  ⟦ LastAppliedBlock.slot la , ∣ constitution ∣ , PParamsOf cs , es , TreasuryOf (NewEpochStateOf cs) ⟧
+  where
+    es = EnactStateOf cs
+    open EnactState es using (constitution)
 ```
 
-Without a certificate, and with no resolved EB beside the block, the ledger
-state is unchanged.  With both, the block certifies the EB its predecessor
-announced, and the branch requires the following, all in the announcing
-block's world:
-
-+  the chain has a last applied block, and the EB it announced is the certified
-   one ([Step 5][cip-step5], rule 1);
-+  the certifying block's slot is at least `certificationDelay`{.AgdaFunction}
-   slots after the announcing block's ([Step 5][cip-step5], rule 3);
-+  the two blocks share an epoch, so an announcement does not survive an epoch
-   boundary and the first block of an epoch never certifies;
-+  the certificate is valid for the announcing block's header hash, against the
-   committee and the quorum threshold of the announcing epoch
-   (`ValidEBCert`{.AgdaRecord}; [Certificate Validation][cip-certval], whose
-   fifth check, that the message is the announcing header's hash taken from the
-   chain context, is met by the message supplied here);
-+  the EB steps by `EB`{.AgdaDatatype} from the ledger state the announcing
-   block left, in that block's environment, which is what the voters checked:
-   the EB is well formed and within its bounds, its references are its
-   closure's, and the closure applies through `LEDGERS`{.AgdaDatatype} within
-   the endorser block's limits on reference-script size and execution units;
-   the resulting state is the one the chain rule continues from
-   ([Ledger Management][cip-ledger]).
-
-A certificate without its resolved EB, or a resolved EB beside a block that
-carries no certificate, admits no transition.
-
-```agda
-data _⊢_⇀⦇_,CERTIFY⦈_ : CertifyEnv → LedgerState → Maybe EBCert × Maybe ResolvedEB → LedgerState → Type where
-
-  CERTIFY-None : ∀ {Γ : CertifyEnv} {ls : LedgerState} →
-      ────────────────────────────────
-      Γ ⊢ ls ⇀⦇ (nothing , nothing) ,CERTIFY⦈ ls
-
-  CERTIFY-EB : ∀ {Γ : CertifyEnv} {ls ls₁ : LedgerState} {cert : EBCert} {reb : ResolvedEB} {la : LastAppliedBlock}
-```
-
-<!--
-```agda
-    → let open CertifyEnv Γ; open ResolvedEB reb
-          open LastAppliedBlock la renaming (slot to announcingSlot)
-          open EnactState enactState using (constitution)
-          open PParams (PParamsOf enactState)
-            using (leiosQuorumStakeThreshold) in
-```
--->
-
-```agda
-    let  pp   = PParamsOf enactState
-         Γ'   = ⟦ announcingSlot , ∣ constitution ∣ , pp , enactState , treasury ⟧
-    in
-    ∙ lastApplied ≡ just la
-    ∙ pendingEB la ≡ just (hashEB eb)
-    ∙ announcingSlot + certificationDelay pp ≤ slot
-    ∙ epoch announcingSlot ≡ epoch slot
-    ∙ ValidEBCert committee leiosQuorumStakeThreshold (rbHeaderHashBytes headerHash) cert
-    ∙ Γ' , closure ⊢ ls ⇀⦇ eb ,EB⦈ ls₁
-      ────────────────────────────────
-      Γ ⊢ ls ⇀⦇ (just cert , just reb) ,CERTIFY⦈ ls₁
-```
-
-The epoch premise buys simplicity rather than safety.  An epoch boundary
-already concentrates a great deal of work, and an announcement that outlived it
-would be one more thing to carry across; across an era boundary, the
-announcement, the certificate, and the endorser block would further have to
-stay syntactically compatible with the very format change a new era exists to
-make.  Era transitions fall on epoch boundaries, so this one premise covers
-both, at a cost of at most one endorser block per boundary.
-
-It also makes the world the branch reads unambiguous.  A certificate proves what
-the voters checked, and the voters could check only the announcing block's
-world; with no epoch boundary between the two blocks, that world's committee,
-quorum threshold, and parameters are also the certifying block's.  The branch
-reads them from the chain state before the tick, where the committee is the
-announcing epoch's, which also sizes the certificate's signer bitfield.
-
-A certificate that fails a check admits no transition, like every other block
-fault; the `Computational`{.AgdaRecord} instance names the failed premise.
+`pendingEB`{.AgdaFunction} reads the announced hash; the declared size beside
+it is no validity condition (see `BlockBody`{.AgdaModule}).
+`announcingEnv`{.AgdaFunction} uses the announcing slot and the enact state,
+parameters, and treasury before the tick.
 
 ## The <span class="AgdaDatatype">CHAIN</span> Transition System {#sec:the-chain-transition-system}
 
-The chain rule's signal is the block together with the resolved EB it certifies,
-if it carries a certificate.  The rule applies a block in three steps.  The
-certificate branch takes the ledger state the last applied block left to
-`ls₁`{.AgdaBound}; the new-epoch state with that ledger state ticks to the
-block's slot; and the block's body runs on the ticked state.  A certifying block
-carries no transactions of its own, by `ValidLeiosBlock`{.AgdaFunction}, so its
-body contributes the bookkeeping alone.
+`CHAIN-None`{.AgdaInductiveConstructor} handles a block without a certificate
+or a resolved EB.  It ticks and runs `BBODY`{.AgdaDatatype}.
+`CHAIN-EB`{.AgdaInductiveConstructor} checks the certificate in the chain
+context, applies the EB at the announcing slot, and then ticks and runs the
+body.  Certificate checking is read-only; the `EB`{.AgdaDatatype} premise
+produces the ledger state the tick continues from.
+
+The contextual checks require the previous block to have announced the EB,
+the certification delay to have elapsed, the two blocks to share an epoch,
+and `ValidEBCert`{.AgdaRecord} to hold for the announcing header's hash and
+that epoch's committee and threshold ([Step 5][cip-step5];
+[Certificate Validation][cip-certval]).  The same-epoch premise also rules
+out certification across an era boundary, since era transitions occur at
+epoch boundaries.  It costs at most one EB per boundary.
+
+The `EB`{.AgdaDatatype} premise states full declarative validity and
+application (see `Leios.Validity`{.AgdaModule}).  An implementation may avoid
+repeating validation when reapplying a certified closure; agreement with this
+full-rule relation is a separate proof obligation.  A certifying block carries
+no transactions of its own, by `ValidLeiosBlock`{.AgdaFunction}.
 
 ```agda
 data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block × Maybe ResolvedEB → ChainState → Type where
 
-  CHAIN : ∀ {bcur'} {b : Block} {reb : Maybe ResolvedEB} {nes : NewEpochState} {cs : ChainState} {ls₁ : LedgerState}
+  CHAIN-None : ∀ {bcur'} {b : Block} {nes : NewEpochState} {cs : ChainState}
 ```
 
 <!--
@@ -268,21 +175,58 @@ data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block × Maybe ResolvedEB �
 -->
 
 ```agda
-    let  nes₁  = record newEpochState { epochState = record (EpochStateOf cs) {ls = ls₁} }
-         cs'   = record cs
-                   { newEpochState  = record nes { bcur = bcur'; epochState = record (EpochStateOf nes) {ls = ls'} }
-                   ; lastApplied    = just ⟦ slot , bHeaderHash , announcedEB ⟧
-                   }
+    let cs' = record cs
+                { newEpochState = record nes
+                    { bcur = bcur'; epochState = record (EpochStateOf nes) {ls = ls'} }
+                ; lastApplied = just ⟦ slot , bHeaderHash , announcedEB ⟧ }
     in
-    ∙ certifyEnv cs slot ⊢ LedgerStateOf cs ⇀⦇ (ebCert , reb) ,CERTIFY⦈ ls₁
+    ∙ ebCert ≡ nothing
+    ∙ tt ⊢ newEpochState ⇀⦇ slot ,TICK⦈ nes
+    ∙ (es , acnt) ⊢ (ls , bcur) ⇀⦇ b ,BBODY⦈ (ls' , bcur')
+      ────────────────────────────────
+      _ ⊢ cs ⇀⦇ (b , nothing) ,CHAIN⦈ cs'
+
+  CHAIN-EB : ∀ {bcur'} {b : Block} {reb : ResolvedEB} {cert : EBCert}
+               {la : LastAppliedBlock} {nes : NewEpochState} {cs : ChainState}
+               {ls₁ : LedgerState}
+```
+
+<!--
+```agda
+    → let open ChainState cs; open Block b; open BHeader bheader
+          open BHBody bhbody; open NewEpochState nes; open EpochState epochState
+          open LastAppliedBlock la using (headerHash) renaming (slot to announcingSlot)
+          open ResolvedEB reb
+      in
+```
+-->
+
+```agda
+    let pp    = PParamsOf cs
+        cmt   = NewEpochState.leiosCommittee newEpochState
+        nes₁  = record newEpochState { epochState = record (EpochStateOf cs) {ls = ls₁} }
+        cs'   = record cs
+                  { newEpochState = record nes
+                      { bcur = bcur'; epochState = record (EpochStateOf nes) {ls = ls'} }
+                  ; lastApplied = just ⟦ slot , bHeaderHash , announcedEB ⟧ }
+    in
+    ∙ ebCert ≡ just cert
+    ∙ lastApplied ≡ just la
+    ∙ pendingEB la ≡ just (hashEB eb)
+    ∙ announcingSlot + certificationDelay pp ≤ slot
+    ∙ epoch announcingSlot ≡ epoch slot
+    ∙ ValidEBCert cmt (PParams.leiosQuorumStakeThreshold pp) (rbHeaderHashBytes headerHash) cert
+    ∙ announcingEnv cs la , closure ⊢ LedgerStateOf cs ⇀⦇ eb ,EB⦈ ls₁
     ∙ tt ⊢ nes₁ ⇀⦇ slot ,TICK⦈ nes
     ∙ (es , acnt) ⊢ (ls , bcur) ⇀⦇ b ,BBODY⦈ (ls' , bcur')
       ────────────────────────────────
-      _ ⊢ cs ⇀⦇ (b , reb) ,CHAIN⦈ cs'
+      _ ⊢ cs ⇀⦇ (b , just reb) ,CHAIN⦈ cs'
 ```
 
-The resulting chain state records the block as the last applied block, with
-its announcement, if any, pending for its successor.
+A certificate without its resolved EB, or a resolved EB beside a block that
+carries no certificate, admits no transition.  Every successful block replaces
+`lastApplied`{.AgdaField}, retiring the previous announcement and recording its
+own announcement, if any, for its successor.
 
 [cip-step5]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#step-5-chain-inclusion
 [cip-certval]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#certificate-validation
