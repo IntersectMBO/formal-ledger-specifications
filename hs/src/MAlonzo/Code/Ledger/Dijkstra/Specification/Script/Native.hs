@@ -948,8 +948,8 @@ du_'46'extendedlambda0_462 v0 v1 v2 v3 v4 v5 v6 v7
                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220 (coe v0))))
                    (coe v8)
                    (coe
-                      MAlonzo.Code.Class.IsSet.d_toSet_526
-                      (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Set_590) v3)))
+                      MAlonzo.Code.Class.IsSet.d_toSet_528
+                      (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Set_592) v3)))
       C_RequireTimeStart_334 v8
         -> coe
              MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
@@ -1015,8 +1015,8 @@ du_'46'extendedlambda0_462 v0 v1 v2 v3 v4 v5 v6 v7
                                (coe v9) (coe v10)))))
                    (coe v8)
                    (coe
-                      MAlonzo.Code.Class.IsSet.d_toSet_526
-                      (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Set_590) v4)))
+                      MAlonzo.Code.Class.IsSet.d_toSet_528
+                      (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Set_592) v4)))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Specification.Script.Native..extendedlambda
 d_'46'extendedlambda_2739 ::

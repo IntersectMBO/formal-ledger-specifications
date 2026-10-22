@@ -730,7 +730,7 @@ du_costmdls_500 ::
   T_PParams_318 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_costmdls_500 v0 v1
   = coe
-      MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+      MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
       (coe
          MAlonzo.Code.Axiom.Set.d_th_1516
          (coe
@@ -17993,9 +17993,9 @@ du__'63''9552''8658'__1568 v0 v1 v2
       (coe
          (\ v3 ->
             coe
-              MAlonzo.Code.Class.HasSingleton.d_'10100'_'10101'_336
+              MAlonzo.Code.Class.HasSingleton.d_'10100'_'10101'_338
               (coe
-                 MAlonzo.Code.Class.HasSingleton.du_HasSingletonSet'45'Set_346
+                 MAlonzo.Code.Class.HasSingleton.du_HasSingletonSet'45'Set_348
                  (coe
                     MAlonzo.Code.Axiom.Set.d_th_1516
                     (coe
@@ -18003,9 +18003,9 @@ du__'63''9552''8658'__1568 v0 v1 v2
               v2))
       (coe
          (\ v3 ->
-            MAlonzo.Code.Class.HasEmptySet.d_'8709'_332
+            MAlonzo.Code.Class.HasEmptySet.d_'8709'_334
               (coe
-                 MAlonzo.Code.Class.HasEmptySet.du_HasEmptySet'45'Set_342
+                 MAlonzo.Code.Class.HasEmptySet.du_HasEmptySet'45'Set_344
                  (coe
                     MAlonzo.Code.Axiom.Set.d_th_1516
                     (coe
@@ -18104,9 +18104,9 @@ d__'8746''737''7580''7504'__1624 v0 v1 v2
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_mkLanguageCostModels_696
       (coe
-         MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+         MAlonzo.Code.Axiom.Set.Map.du__'738'_580
          (coe
-            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
             (coe
                MAlonzo.Code.Axiom.Set.d_th_1516
                (coe
@@ -18260,9 +18260,9 @@ du_applyPParamsUpdate_1630 v0 v1 v2
                coe
                  MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_mkLanguageCostModels_696
                  (coe
-                    MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                    MAlonzo.Code.Axiom.Set.Map.du__'738'_580
                     (coe
-                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                        (coe
                           MAlonzo.Code.Axiom.Set.d_th_1516
                           (coe

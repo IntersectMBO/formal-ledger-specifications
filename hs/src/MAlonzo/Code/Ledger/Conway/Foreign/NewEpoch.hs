@@ -1177,7 +1177,7 @@ d_Conv'45'NewEpochState_74
                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.C_constructor_4856
                      (coe v1)
                      (coe
-                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                         (coe
                            MAlonzo.Code.Axiom.Set.d_th_1516
                            (coe
@@ -1205,7 +1205,7 @@ d_Conv'45'NewEpochState_74
                            (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
                               (coe v2))))
                      (coe
-                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                         (coe
                            MAlonzo.Code.Axiom.Set.d_th_1516
                            (coe
@@ -2326,7 +2326,7 @@ d_Conv'45'NewEpochState_74
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3066
                                                                                     (coe
-                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                        (coe
                                                                                           MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                           (coe
@@ -2385,7 +2385,7 @@ d_Conv'45'NewEpochState_74
                                                                                              (coe
                                                                                                 v19))))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                        (coe
                                                                                           MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                           (coe
@@ -2444,7 +2444,7 @@ d_Conv'45'NewEpochState_74
                                                                                              (coe
                                                                                                 v20))))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                        (coe
                                                                                           MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                           (coe
@@ -2545,7 +2545,7 @@ d_Conv'45'NewEpochState_74
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3066
                                                                                     (coe
-                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                        (coe
                                                                                           MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                           (coe
@@ -2604,7 +2604,7 @@ d_Conv'45'NewEpochState_74
                                                                                              (coe
                                                                                                 v19))))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                        (coe
                                                                                           MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                           (coe
@@ -2663,7 +2663,7 @@ d_Conv'45'NewEpochState_74
                                                                                              (coe
                                                                                                 v20))))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                        (coe
                                                                                           MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                           (coe
@@ -2764,7 +2764,7 @@ d_Conv'45'NewEpochState_74
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3066
                                                                                     (coe
-                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                        (coe
                                                                                           MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                           (coe
@@ -2823,7 +2823,7 @@ d_Conv'45'NewEpochState_74
                                                                                              (coe
                                                                                                 v19))))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                        (coe
                                                                                           MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                           (coe
@@ -2882,7 +2882,7 @@ d_Conv'45'NewEpochState_74
                                                                                              (coe
                                                                                                 v20))))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                        (coe
                                                                                           MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                           (coe
@@ -3300,7 +3300,7 @@ d_Conv'45'NewEpochState_74
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2528
                                                                                     (coe
-                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                        (coe
                                                                                           MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                           (coe
@@ -3374,7 +3374,7 @@ d_Conv'45'NewEpochState_74
                                                                                                 v18))))
                                                                                     (coe v19)
                                                                                     (coe
-                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                        (coe
                                                                                           MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                           (coe
@@ -3713,7 +3713,7 @@ d_Conv'45'NewEpochState_74
                                                                                                     -> coe
                                                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1600
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                (coe
@@ -3774,7 +3774,7 @@ d_Conv'45'NewEpochState_74
                                                                                                                   (coe
                                                                                                                      v22))))
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                (coe
@@ -3835,7 +3835,7 @@ d_Conv'45'NewEpochState_74
                                                                                                                   (coe
                                                                                                                      v23))))
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                (coe
@@ -3896,7 +3896,7 @@ d_Conv'45'NewEpochState_74
                                                                                                                   (coe
                                                                                                                      v24))))
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                (coe
@@ -4010,7 +4010,7 @@ d_Conv'45'NewEpochState_74
                                                                                                     -> coe
                                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Certs.C_constructor_1452
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                (coe
@@ -4049,7 +4049,7 @@ d_Conv'45'NewEpochState_74
                                                                                                                   (coe
                                                                                                                      v22))))
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                (coe
@@ -4088,7 +4088,7 @@ d_Conv'45'NewEpochState_74
                                                                                                                   (coe
                                                                                                                      v23))))
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                (coe
@@ -4195,7 +4195,7 @@ d_Conv'45'NewEpochState_74
                                                                                                     -> coe
                                                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'10215''7515'_1616
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                (coe
@@ -4256,7 +4256,7 @@ d_Conv'45'NewEpochState_74
                                                                                                                   (coe
                                                                                                                      v22))))
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                (coe
@@ -4319,7 +4319,7 @@ d_Conv'45'NewEpochState_74
                                                                                                                   (coe
                                                                                                                      v23))))
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                            MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                (coe
@@ -4660,7 +4660,7 @@ d_Conv'45'NewEpochState_74
                                                                         MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                                      v17))
                                                                (coe
-                                                                  MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                  MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                   (coe
                                                                      MAlonzo.Code.Axiom.Set.d_th_1516
                                                                      (coe
@@ -5207,7 +5207,7 @@ d_Conv'45'NewEpochState_74
                                                                                              MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                                                           v21))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                       MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                        (coe
                                                                                           MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                           (coe
@@ -5309,7 +5309,7 @@ d_Conv'45'NewEpochState_74
                               MAlonzo.Code.Ledger.Conway.Foreign.Rewards.d_Conv'45'RewardUpdate_158))
                         v5)
                      (coe
-                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                         (coe
                            MAlonzo.Code.Axiom.Set.d_th_1516
                            (coe
@@ -6351,7 +6351,7 @@ du_newepoch'45'step_76 v0 v1
                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.C_constructor_4856
                                       (coe v3)
                                       (coe
-                                         MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                         MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                          (coe
                                             MAlonzo.Code.Axiom.Set.d_th_1516
                                             (coe
@@ -6382,7 +6382,7 @@ du_newepoch'45'step_76 v0 v1
                                             (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
                                                (coe v4))))
                                       (coe
-                                         MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                         MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                          (coe
                                             MAlonzo.Code.Axiom.Set.d_th_1516
                                             (coe
@@ -7533,7 +7533,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                 -> coe
                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3066
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                            (coe
@@ -7594,7 +7594,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                               (coe
                                                                                                                  v21))))
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                            (coe
@@ -7655,7 +7655,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                               (coe
                                                                                                                  v22))))
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                            (coe
@@ -7760,7 +7760,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                 -> coe
                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3066
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                            (coe
@@ -7821,7 +7821,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                               (coe
                                                                                                                  v21))))
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                            (coe
@@ -7882,7 +7882,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                               (coe
                                                                                                                  v22))))
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                            (coe
@@ -7987,7 +7987,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                 -> coe
                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3066
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                            (coe
@@ -8048,7 +8048,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                               (coe
                                                                                                                  v21))))
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                            (coe
@@ -8109,7 +8109,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                               (coe
                                                                                                                  v22))))
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                            (coe
@@ -8546,7 +8546,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                 -> coe
                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2528
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                            (coe
@@ -8625,7 +8625,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                      (coe
                                                                                                         v21)
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                            (coe
@@ -8970,7 +8970,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                                      -> coe
                                                                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1600
                                                                                                                           (coe
-                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                                              (coe
                                                                                                                                 MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                 (coe
@@ -9031,7 +9031,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                                                    (coe
                                                                                                                                       v24))))
                                                                                                                           (coe
-                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                                              (coe
                                                                                                                                 MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                 (coe
@@ -9092,7 +9092,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                                                    (coe
                                                                                                                                       v25))))
                                                                                                                           (coe
-                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                                              (coe
                                                                                                                                 MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                 (coe
@@ -9153,7 +9153,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                                                    (coe
                                                                                                                                       v26))))
                                                                                                                           (coe
-                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                                              (coe
                                                                                                                                 MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                 (coe
@@ -9267,7 +9267,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                                      -> coe
                                                                                                                           MAlonzo.Code.Ledger.Conway.Specification.Certs.C_constructor_1452
                                                                                                                           (coe
-                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                                              (coe
                                                                                                                                 MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                 (coe
@@ -9306,7 +9306,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                                                    (coe
                                                                                                                                       v24))))
                                                                                                                           (coe
-                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                                              (coe
                                                                                                                                 MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                 (coe
@@ -9345,7 +9345,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                                                    (coe
                                                                                                                                       v25))))
                                                                                                                           (coe
-                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                                              (coe
                                                                                                                                 MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                 (coe
@@ -9452,7 +9452,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                                      -> coe
                                                                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'10215''7515'_1616
                                                                                                                           (coe
-                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                                              (coe
                                                                                                                                 MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                 (coe
@@ -9513,7 +9513,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                                                    (coe
                                                                                                                                       v24))))
                                                                                                                           (coe
-                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                                              (coe
                                                                                                                                 MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                 (coe
@@ -9576,7 +9576,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                                                    (coe
                                                                                                                                       v25))))
                                                                                                                           (coe
-                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                                              (coe
                                                                                                                                 MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                                                 (coe
@@ -9926,7 +9926,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                          MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                                                       v19))
                                                                                 (coe
-                                                                                   MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                   MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                    (coe
                                                                                       MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                       (coe
@@ -10509,7 +10509,7 @@ du_newepoch'45'step_76 v0 v1
                                                                                                               MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                                                                            v23))
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                                                                                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Axiom.Set.d_th_1516
                                                                                                            (coe
@@ -10615,7 +10615,7 @@ du_newepoch'45'step_76 v0 v1
                                                MAlonzo.Code.Ledger.Conway.Foreign.Rewards.d_Conv'45'RewardUpdate_158))
                                          v7)
                                       (coe
-                                         MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                                         MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                          (coe
                                             MAlonzo.Code.Axiom.Set.d_th_1516
                                             (coe

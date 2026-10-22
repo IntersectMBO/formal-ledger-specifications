@@ -6456,9 +6456,9 @@ d__'8746''737''7580''7504'__2204 v0
             coe
               MAlonzo.Code.Ledger.Conway.Specification.Script.Base.C_mkLanguageCostModels_448
               (coe
-                 MAlonzo.Code.Axiom.Set.Map.du__'738'_570
+                 MAlonzo.Code.Axiom.Set.Map.du__'738'_580
                  (coe
-                    MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                    MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                     (coe
                        MAlonzo.Code.Axiom.Set.d_th_1516
                        (coe
@@ -9453,12 +9453,12 @@ d_HSAbstractFunctions_3160 v0
                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                           (coe du_rewardAddressToSOP_3166)
                           (coe
-                             MAlonzo.Code.Class.IsSet.du_dom_586
+                             MAlonzo.Code.Class.IsSet.du_dom_588
                              (coe
                                 MAlonzo.Code.Axiom.Set.d_th_1516
                                 (coe
                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                             (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594) (coe v2)))))))
+                             (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_596) (coe v2)))))))
          (coe
             (\ v1 v2 ->
                coe

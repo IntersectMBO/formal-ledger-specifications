@@ -251,9 +251,9 @@ d_RATIFY'45'total_2514 v0 v1 v2 v3
                                                                         MAlonzo.Code.Axiom.Set.d_th_1516
                                                                         (coe v15))
                                                                      (coe
-                                                                        MAlonzo.Code.Class.HasSingleton.d_'10100'_'10101'_336
+                                                                        MAlonzo.Code.Class.HasSingleton.d_'10100'_'10101'_338
                                                                         (coe
-                                                                           MAlonzo.Code.Class.HasSingleton.du_HasSingletonSet'45'Set_346
+                                                                           MAlonzo.Code.Class.HasSingleton.du_HasSingletonSet'45'Set_348
                                                                            (coe
                                                                               MAlonzo.Code.Axiom.Set.d_th_1516
                                                                               (coe
@@ -310,9 +310,9 @@ d_RATIFY'45'total_2514 v0 v1 v2 v3
                                                                     MAlonzo.Code.Axiom.Set.d_th_1516
                                                                     (coe v11))
                                                                  (coe
-                                                                    MAlonzo.Code.Class.HasSingleton.d_'10100'_'10101'_336
+                                                                    MAlonzo.Code.Class.HasSingleton.d_'10100'_'10101'_338
                                                                     (coe
-                                                                       MAlonzo.Code.Class.HasSingleton.du_HasSingletonSet'45'Set_346
+                                                                       MAlonzo.Code.Class.HasSingleton.du_HasSingletonSet'45'Set_348
                                                                        (coe
                                                                           MAlonzo.Code.Axiom.Set.d_th_1516
                                                                           (coe
