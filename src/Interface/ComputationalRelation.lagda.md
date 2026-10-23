@@ -270,6 +270,12 @@ instance
   Functor-ComputationResult ._<$>_ f (success x) = success $ f x
   Functor-ComputationResult ._<$>_ _ (failure x) = failure x
 
+  FunctorLaws-ComputationResult : ∀ {E : Type} → FunctorLaws (ComputationResult E)
+  FunctorLaws-ComputationResult .fmap-id (success _) = refl
+  FunctorLaws-ComputationResult .fmap-id (failure _) = refl
+  FunctorLaws-ComputationResult .fmap-∘ (success _) = refl
+  FunctorLaws-ComputationResult .fmap-∘ (failure _) = refl
+
   Applicative-ComputationResult : ∀ {E : Type} → Applicative (ComputationResult E)
   Applicative-ComputationResult .pure = success
   Applicative-ComputationResult ._<*>_ (success f) x = f <$> x
