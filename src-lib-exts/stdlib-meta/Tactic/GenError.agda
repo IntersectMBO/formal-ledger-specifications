@@ -20,6 +20,7 @@ open import Class.Show
 open import Relation.Nullary using (¬_)
 
 open import Reflection.Tactic
+open import Reflection.QuotedDefinitions using (`case_of_)
 open import Reflection.Utils
 open import Reflection.Utils.TCI
 import Reflection as R
@@ -52,12 +53,17 @@ genErrors' : ℕ → Term → ITactic
 genErrors' 0 _ = error1 "genErrors: out of fuel"
 genErrors' (suc fuel) t = inDebugPath "genErrors" $ flip catch
   (λ _ → genError') $ do
-    m1 ← newMeta unknown
-    m2 ← extendContext ("" , vArg m1) $ newMeta unknown
-    unifyWithGoal =<< caseMatch (quote dec-de-morgan ∙⟦ t ⟧) (matchExprM $
-        (([ ("" , vArg unknown) ] , vArg (quote inj₁ ◇⟦ ` 0 ⟧)) , finishMatch (withGoalHole genError'))
-      ∷ (([ ("" , vArg m1) ]      , vArg (quote inj₂ ◇⟦ ` 0 ⟧)) , finishMatch (return m2)) ∷ [])
-    extendContext ("" , vArg m1) $ runWithHole m2 (genErrors' fuel (♯ 0))
+    leftTy ← newMeta unknown
+    rightTy ← newMeta unknown
+    left ← extendContext ("" , vArg leftTy) $ newMeta (quoteTerm String)
+    right ← extendContext ("" , vArg rightTy) $ newMeta (quoteTerm String)
+    -- Check the case once, then fill the typed holes in its two branches.
+    unifyWithGoal (`case_of_ (quote dec-de-morgan ∙⟦ t ⟧)
+      (pat-lam
+        (clause [ ("" , vArg leftTy) ] [ vArg (quote inj₁ ◇⟦ ` 0 ⟧) ] left
+        ∷ clause [ ("" , vArg rightTy) ] [ vArg (quote inj₂ ◇⟦ ` 0 ⟧) ] right ∷ []) []))
+    extendContext ("" , vArg leftTy) $ runWithHole left genError'
+    extendContext ("" , vArg rightTy) $ runWithHole right (genErrors' fuel (♯ 0))
 
 module _ ⦃ _ : TCOptions ⦄ where
   macro
@@ -82,4 +88,16 @@ private
     test₃ x = genErrors x
 
     _ : test₃ {A = ⊤} {⊥} {⊤} (λ where (_ , () , _)) ≡ "¬ B"
+    _ = refl
+
+    _ : test₃ {A = ⊥} {⊤} {⊤} (λ where (() , _)) ≡ "¬ A"
+    _ = refl
+
+    _ : test₃ {A = ⊤} {⊤} {⊥} (λ where (_ , _ , ())) ≡ "¬ C"
+    _ = refl
+
+    test₄ : {A : Set} → ¬ A → String
+    test₄ x = genErrors x
+
+    _ : test₄ {⊥} (λ ()) ≡ "¬ A"
     _ = refl
