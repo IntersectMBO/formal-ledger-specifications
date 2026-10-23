@@ -21,11 +21,11 @@ open import Test.Lib valContext
 
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
 
-open TransactionStructure SVTransactionStructure
+open TransactionStructure SVTransactionStructure hiding (Datum; Redeemer)
 open Implementation
 
 -- TODO: Add error handling
-makeProposeTxOut : Label → (scriptIx : ℕ) → TxOut → (v tw d : ℕ) → List (ℕ × TxOut)
+makeProposeTxOut : Datum → (scriptIx : ℕ) → TxOut → (v tw d : ℕ) → List (ℕ × TxOut)
 makeProposeTxOut Holding ix (fst , txValue , snd) v tw d = (ix , (fst , txValue , (just (inj₁ (inj₁ (inj₁ (Collecting v tw d []))))) , nothing)) ∷ []
 makeProposeTxOut _ _ _ _ _ _ = []
 
@@ -57,7 +57,7 @@ makeProposeTx id state script@(sh , _) w v tw d =
                 txAD = nothing }
                 ))
             nothing
-            (getLabel scOut)})
+            (txOutToDatum scOut)})
           nothing
           (getScriptUTxO sh (UTxOState.utxo state))
 ```
