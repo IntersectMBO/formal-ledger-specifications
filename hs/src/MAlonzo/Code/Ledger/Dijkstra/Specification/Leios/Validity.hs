@@ -158,40 +158,14 @@ d_ebTxRefs_2894 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.Types.d_ebTxRefs_26
       (coe v0)
--- Ledger.Dijkstra.Specification.Leios.Validity._.TxRefHash
-d_TxRefHash_2898 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3276 ->
-  ()
-d_TxRefHash_2898 = erased
--- Ledger.Dijkstra.Specification.Leios.Validity.refOf
-d_refOf_2900 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3276 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3866 ->
-  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_refOf_2900 ~v0 v1 v2 = du_refOf_2900 v1 v2
-du_refOf_2900 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3276 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3866 ->
-  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_refOf_2900 v0 v1
-  = coe
-      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-      (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.d_txRefHash_3306
-         v0 v1)
-      (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txSize_3890
-         (coe v1))
 -- Ledger.Dijkstra.Specification.Leios.Validity.EBWellFormed
-d_EBWellFormed_2914 ::
+d_EBWellFormed_2910 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3276 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.Types.T_EndorserBlock_22 ->
   ()
-d_EBWellFormed_2914 = erased
+d_EBWellFormed_2910 = erased
 -- Ledger.Dijkstra.Specification.Leios.Validity._⊢_⇀⦇_,EB⦈_
-d__'8866'_'8640''10631'_'44'EB'10632'__2918 a0 a1 a2 a3 a4 a5 = ()
-newtype T__'8866'_'8640''10631'_'44'EB'10632'__2918
-  = C_EB_2926 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d__'8866'_'8640''10631'_'44'EB'10632'__2914 a0 a1 a2 a3 a4 a5 = ()
+newtype T__'8866'_'8640''10631'_'44'EB'10632'__2914
+  = C_EB_2922 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
