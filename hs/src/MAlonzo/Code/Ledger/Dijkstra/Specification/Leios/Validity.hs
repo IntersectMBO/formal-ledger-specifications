@@ -185,12 +185,13 @@ du_refOf_2900 v0 v1
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txSize_3890
          (coe v1))
 -- Ledger.Dijkstra.Specification.Leios.Validity.EBWellFormed
-d_EBWellFormed_2914 a0 a1 a2 = ()
-newtype T_EBWellFormed_2914
-  = C_ebWellFormed_2916 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
--- Ledger.Dijkstra.Specification.Leios.Validity._,_⊢_⇀⦇_,EB⦈_
-d__'44'_'8866'_'8640''10631'_'44'EB'10632'__2918 a0 a1 a2 a3 a4 a5
-                                                 a6
-  = ()
-newtype T__'44'_'8866'_'8640''10631'_'44'EB'10632'__2918
-  = C_EB_2924 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_EBWellFormed_2914 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3276 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.Types.T_EndorserBlock_22 ->
+  ()
+d_EBWellFormed_2914 = erased
+-- Ledger.Dijkstra.Specification.Leios.Validity._⊢_⇀⦇_,EB⦈_
+d__'8866'_'8640''10631'_'44'EB'10632'__2918 a0 a1 a2 a3 a4 a5 = ()
+newtype T__'8866'_'8640''10631'_'44'EB'10632'__2918
+  = C_EB_2926 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
