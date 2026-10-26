@@ -2029,7 +2029,7 @@ du_go_3098 v0 v1 v2
                MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_votes_1146
                (coe v2)))
          (coe
-            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_filterKeys_1432
+            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_filterKeys_1454
             (\ v3 ->
                coe
                  MAlonzo.Code.Class.Decidable.Core.du_'8263''178'__102
@@ -2053,12 +2053,12 @@ du_go_3098 v0 v1 v2
                              (coe v0)))))
                  (coe v3)
                  (coe
-                    MAlonzo.Code.Class.IsSet.du_dom_586
+                    MAlonzo.Code.Class.IsSet.du_dom_588
                     (coe
                        MAlonzo.Code.Axiom.Set.d_th_1516
                        (coe
                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                    (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_594)
+                    (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_596)
                     (coe
                        MAlonzo.Code.Ledger.Conway.Specification.Certs.d_dreps_1460
                        (coe
