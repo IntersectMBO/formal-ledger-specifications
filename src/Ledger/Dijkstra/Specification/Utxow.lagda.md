@@ -24,6 +24,7 @@ open import Ledger.Dijkstra.Specification.Script.Validation txs abs
 import Data.List.Relation.Unary.Any as L
 import Data.List.Relation.Unary.All as L
 import Data.Maybe.Relation.Unary.All as Maybe
+open import Data.Maybe.Relation.Binary.Pointwise renaming (dec to pointwise?)
 
 private variable
   ℓ     : TxLevel
@@ -247,6 +248,49 @@ instance
 ```
 -->
 
+## BLS-key update and pool owners signatures
+
+Pool (re)registration certificates require that the pool operator's
+and the pool owners' sign the transaction. This causes extra overhead
+for stake pools in Leios, since rotating BLS keys is done through pool
+registration certificates.
+
+To reduce friction, a transaction containining a pool registration
+certificate that only rotates the BLS key does not need to be signed
+by all pool owners, only by the stake pool operator.
+
+The logic to calculate the set of pool owners from which a signature is
+required by the transaction is implemented in the following function:
+
+```agda
+poolOwnersKeyHashes : PState → List DCert → List DCert → ℙ KeyHash
+poolOwnersKeyHashes pState dCerts =
+  proj₂ ∘ foldl go (pools₁ , ∅)
+  where
+    e : Epoch
+    e = ℕtoEpoch 0
+
+    pools₀ : Pools
+    pools₀ = mapValues (mkStakePoolState e) (FuturePoolsOf pState) ∪ˡ PoolsOf pState
+
+    pools₁ : Pools
+    pools₁ = foldl go pools₀ dCerts
+      where
+        go : Pools → DCert → Pools
+        go pools (regpool kh spp) = ❴ kh , mkStakePoolState e spp ❵ ∪ˡ pools
+        go acc   _                = acc
+
+    go : Pools × ℙ KeyHash → DCert → Pools × ℙ KeyHash
+    go acc@(pools , owners) (regpool kh spp) =
+      let pool   = lookupᵐ? pools kh
+          pool'  = mkStakePoolState e spp
+          pools' = ❴ kh , pool' ❵ ∪ˡ pools
+      in pools' , (if pointwise? ¿ onlyBlsKeyUpdated ¿² pool (just pool')
+                      then owners
+                      else owners ∪ pool' .StakePoolState.owners)
+    go acc@(pools , owners) _ = acc
+```
+
 ## The <span class="AgdaDatatype">SUBUTXOW</span> Transition System {#sec:the-subutxow-transition-system}
 
 1. All needed phase-2 scripts use Plutus language V4.
@@ -278,7 +322,7 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
 
       vKeyHashesNeeded : ℙ KeyHash
       vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
-                         ∪ concatMapˢ poolOwners (fromList txCerts)
+                         ∪ poolOwnersKeyHashes (PStateOf Γ) (DCertsOf Γ) txCerts
 
       scriptHashesNeeded : ℙ ScriptHash
       scriptHashesNeeded = mapPartial isScriptObj credentialsNeeded
@@ -382,7 +426,7 @@ attempting both.
 
       vKeyHashesNeeded : ℙ KeyHash
       vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
-                         ∪ concatMapˢ poolOwners (fromList txCerts)
+                         ∪ poolOwnersKeyHashes (PStateOf Γ) (concatMap DCertsOf (SubTransactionsOf txTop)) txCerts
 
       scriptHashesNeeded : ℙ ScriptHash
       scriptHashesNeeded = mapPartial isScriptObj credentialsNeeded
@@ -479,7 +523,7 @@ attempting both.
 
       vKeyHashesNeeded : ℙ KeyHash
       vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
-                         ∪ concatMapˢ poolOwners (fromList txCerts)
+                         ∪ poolOwnersKeyHashes (PStateOf Γ) (concatMap DCertsOf (SubTransactionsOf txTop)) txCerts
 
       scriptHashesNeeded : ℙ ScriptHash
       scriptHashesNeeded = mapPartial isScriptObj credentialsNeeded

@@ -82,7 +82,7 @@ record UTxOEnv : Type where
     pparams           : PParams
     treasury          : Treasury
     utxo₀             : UTxO
-    pools₀            : Pools
+    pState₀           : PState
     allScripts        : ℙ Script
     legacyMode        : Bool
 
@@ -92,6 +92,8 @@ record SubUTxOEnv : Type where
     pparams          : PParams
     treasury         : Treasury
     utxo₀            : UTxO
+    pState₀          : PState
+    prevDCerts       : List DCert
     allScripts       : ℙ Script
     isTopLevelValid  : Bool
 ```
@@ -177,6 +179,9 @@ instance
   HasLegacyMode-UTxOEnv : HasLegacyMode UTxOEnv
   HasLegacyMode-UTxOEnv .LegacyModeOf = UTxOEnv.legacyMode
 
+  HasPState-UTxOEnv : HasPState UTxOEnv
+  HasPState-UTxOEnv .PStateOf = UTxOEnv.pState₀
+
   HasSlot-SubUTxOEnv : HasSlot SubUTxOEnv
   HasSlot-SubUTxOEnv .SlotOf = SubUTxOEnv.slot
 
@@ -195,6 +200,12 @@ instance
   HasScriptPool-SubUTxOEnv : HasScriptPool SubUTxOEnv
   HasScriptPool-SubUTxOEnv .ScriptPoolOf = SubUTxOEnv.allScripts
 
+  HasPState-SubUTxOEnv : HasPState SubUTxOEnv
+  HasPState-SubUTxOEnv .PStateOf = SubUTxOEnv.pState₀
+
+  HasDCerts-SubUTxOEnv : HasDCerts SubUTxOEnv
+  HasDCerts-SubUTxOEnv .DCertsOf = SubUTxOEnv.prevDCerts
+
   HasUTxO-UTxOState : HasUTxO UTxOState
   HasUTxO-UTxOState .UTxOOf = UTxOState.utxo
 
@@ -203,9 +214,6 @@ instance
 
   HasDonations-UTxOState : HasDonations UTxOState
   HasDonations-UTxOState .DonationsOf = UTxOState.donations
-
-  HasPools-UTxOEnv : HasPools UTxOEnv
-  HasPools-UTxOEnv .PoolsOf = UTxOEnv.pools₀
 
   unquoteDecl HasCast-UTxOEnv
               HasCast-SubUTxOEnv
@@ -514,8 +522,8 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
     ∙ inInterval (SlotOf Γ) (ValidIntervalOf txTop)
     ∙ minfee (PParamsOf Γ) txTop (UTxOOf Γ) ≤ TxFeesOf txTop
     ∙ coin (MintedValueOf txTop) ≡ 0
-    ∙ consumedBatch (PParamsOf Γ) txTop (UTxOOf Γ) ≡ producedBatch (PParamsOf Γ) (PoolsOf Γ) txTop
-    ∙ (LegacyModeOf Γ ≡ true → consumedLegacy (PParamsOf Γ) txTop (UTxOOf Γ) ≡ producedLegacy (PParamsOf Γ) (PoolsOf Γ) txTop)  -- (4)
+    ∙ consumedBatch (PParamsOf Γ) txTop (UTxOOf Γ) ≡ producedBatch (PParamsOf Γ) (PoolsOf (PStateOf Γ)) txTop
+    ∙ (LegacyModeOf Γ ≡ true → consumedLegacy (PParamsOf Γ) txTop (UTxOOf Γ) ≡ producedLegacy (PParamsOf Γ) (PoolsOf (PStateOf Γ)) txTop)  -- (4)
     ∙ SizeOf txTop ≤ maxTxSize (PParamsOf Γ)
     ∙ totalRefScriptsSize (UTxOOf Γ) txTop ≤ (PParamsOf Γ) .maxRefScriptSizePerTx
     ∙ totalExUnits txTop ≤ᵉᵘ (PParamsOf Γ) .maxTxExUnits
