@@ -69,7 +69,16 @@ mkStakePoolState e spp =
     ; bls = bls >>= λ (blsKey , PoP) → just (blsKey , e)
     }
     where open StakePoolParams spp
+```
 
+<!--
+```agda
+open StakePoolParams renaming (bls to bls')
+open StakePoolState
+```
+-->
+
+```agda
 CCHotKeys : Type
 CCHotKeys = Credential ⇀ Maybe Credential
 
@@ -81,6 +90,23 @@ FPools = KeyHash ⇀ StakePoolParams
 
 Retiring : Type
 Retiring = KeyHash ⇀ Epoch
+
+applyFPools : Epoch → Pools → FPools → Pools
+applyFPools e pools fPools =
+  mapWithKey (λ kh spp → if ((_,_) <$> (lookupᵐ? pools kh >>= bls) <*> (proj₁ <$> spp .bls'))
+                            then (λ {((oldBls , oldEpoch) , newBls)} →
+                                    if oldBls == newBls
+                                       then mkStakePoolState oldEpoch spp
+                                       else mkStakePoolState e spp )
+                            else mkStakePoolState e spp) fPools ∪ˡ pools
+
+equalExceptBls : StakePoolState → StakePoolState → Type
+equalExceptBls sps₁ sps₂ = sps₁ .owners             ≡ᵉ sps₂ .owners
+                         × sps₁ .cost               ≡ sps₂ .cost
+                         × sps₁ .margin             ≡ sps₂ .margin
+                         × sps₁ .pledge             ≡ sps₂ .pledge
+                         × sps₁ .rewardAccount      ≡ sps₂ .rewardAccount
+                         × sps₁ .vrf                ≡ sps₂ .vrf
 ```
 
 In the Dijkstra era, the `Rewards`{.AgdaDatatype} map represents
