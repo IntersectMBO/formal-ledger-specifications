@@ -126,6 +126,10 @@
                   ];
                 });
 
+            formal-ledger-test = mkShell {
+              inputsFrom = [ pkgs'.formal-ledger-test ];
+            };
+
             fls-shake-agdaWithPackages = self'.devShells.fls-shake.overrideAttrs (_: {
               packages = [ fls-shake-agdaWithPackages ];
             });
