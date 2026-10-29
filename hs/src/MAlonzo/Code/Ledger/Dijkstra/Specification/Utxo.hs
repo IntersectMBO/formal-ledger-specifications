@@ -1095,7 +1095,7 @@ d_totalRefScriptsSize_3242 v0 v1 v2 v3
             MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
       (MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.d_scriptSize_3302
          (coe v1))
-      (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_allReferenceScripts_4774
+      (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_allReferenceScripts_4778
          (coe v0) (coe v3) (coe v2))
 -- Ledger.Dijkstra.Specification.Utxo.utxoEntrySizeWithoutVal
 d_utxoEntrySizeWithoutVal_3250 ::
@@ -2726,7 +2726,7 @@ du_consumed_3698 v0 v1 v2
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_refundCertDeposits_2166
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allDCerts_4844
+               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allDCerts_4848
                (coe v1))))
 -- Ledger.Dijkstra.Specification.Utxo._.consumedBatch
 d_consumedBatch_3704 ::
@@ -2950,7 +2950,7 @@ du_produced_3722 v0 v1 v2 v3
                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_596) (coe v2))
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allDCerts_4844
+               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allDCerts_4848
                (coe v3))))
 -- Ledger.Dijkstra.Specification.Utxo._.producedBatch
 d_producedBatch_3728 ::

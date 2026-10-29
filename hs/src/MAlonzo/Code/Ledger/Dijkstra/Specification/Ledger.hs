@@ -208,7 +208,7 @@ d_getAllScripts_1072 ::
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30]
 d_getAllScripts_1072 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_getAllScripts_4800
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_getAllScripts_4804
       (coe v0)
 -- _.GovActionState.action
 d_action_1356 ::
