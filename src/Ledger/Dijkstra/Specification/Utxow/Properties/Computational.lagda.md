@@ -39,11 +39,15 @@ instance
 
       module SUBUTXO = Computational Computational-SUBUTXO
 
+      lift-step : H → ∀ {s₁} → Γ ⊢ s₀ ⇀⦇ txSub ,SUBUTXO⦈ s₁
+           → Γ ⊢ s₀ ⇀⦇ txSub ,SUBUTXOW⦈ s₁
+      lift-step (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁) h =
+        SUBUTXOW {txSub = txSub} {Γ = Γ} (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , h)
+
       computeProof-aux : Dec H → ComputationResult String (∃[ s₁ ] (Γ ⊢ s₀ ⇀⦇ txSub ,SUBUTXOW⦈ s₁))
       computeProof-aux (no ¬p) = failure "SUBUTXOW"
-      computeProof-aux (yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁)) =
-          map (map₂′ (λ h → SUBUTXOW {txSub = txSub} {Γ = Γ} (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , h)))
-              (SUBUTXO.computeProof Γ s₀ txSub)
+      computeProof-aux (yes p) =
+        map (map₂′ (lift-step p)) (SUBUTXO.computeProof Γ s₀ txSub)
 
       computeProof : ComputationResult String (∃[ s₁ ] (Γ ⊢ s₀ ⇀⦇ txSub ,SUBUTXOW⦈ s₁))
       computeProof = computeProof-aux H?
@@ -53,9 +57,10 @@ instance
                        → map proj₁ (computeProof-aux d) ≡ success s₁
       completeness-aux (no ¬p) _ (SUBUTXOW-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ h) =
         ⊥-elim $ ¬p (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁)
-      completeness-aux (yes _) _ (SUBUTXOW-⋯ _ _ _ _ _ _ _ _ _ _ _ _ h)
-        with SUBUTXO.computeProof Γ s₀ txSub | SUBUTXO.completeness _ _ _ _ h
-      ... | success _ | refl = refl
+      completeness-aux (yes p) s₁ (SUBUTXOW-⋯ _ _ _ _ _ _ _ _ _ _ _ _ h) =
+        trans (sym (fmap-∘ {f = proj₁} {g = map₂′ (lift-step p)}
+                           (SUBUTXO.computeProof Γ s₀ txSub)))
+              (SUBUTXO.completeness Γ s₀ txSub s₁ h)
 
       completeness : ∀ s₁ → Γ ⊢ s₀ ⇀⦇ txSub ,SUBUTXOW⦈ s₁ → map proj₁ computeProof ≡ success s₁
       completeness = completeness-aux H?
@@ -69,14 +74,22 @@ instance
 
       module UTXO = Computational Computational-UTXO
 
+      lift-legacy : H-legacy → ∀ {s₁} → Γ ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ s₁
+                  → Γ ⊢ s₀ ⇀⦇ txTop ,UTXOW⦈ s₁
+      lift-legacy (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅) h =
+        UTXOW-legacy {txTop = txTop} {Γ = Γ} (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , h)
+
+      lift-normal : H-normal → ∀ {s₁} → Γ ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ s₁
+                  → Γ ⊢ s₀ ⇀⦇ txTop ,UTXOW⦈ s₁
+      lift-normal (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄) h =
+        UTXOW-normal {txTop = txTop} {Γ = Γ} (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , h)
+
       computeProof-aux : Dec H-legacy → Dec H-normal
                        → ComputationResult String (∃[ s₁ ] (Γ ⊢ s₀ ⇀⦇ txTop ,UTXOW⦈ s₁))
-      computeProof-aux (yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅)) _ =
-        map (map₂′ (λ h → UTXOW-legacy {txTop = txTop} {Γ = Γ} (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , h)))
-            (UTXO.computeProof Γ s₀ txTop)
-      computeProof-aux (no _) (yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄)) =
-        map (map₂′ (λ h → UTXOW-normal {txTop = txTop} {Γ = Γ} (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , h)))
-            (UTXO.computeProof Γ s₀ txTop)
+      computeProof-aux (yes p) _ =
+        map (map₂′ (lift-legacy p)) (UTXO.computeProof Γ s₀ txTop)
+      computeProof-aux (no _) (yes p) =
+        map (map₂′ (lift-normal p)) (UTXO.computeProof Γ s₀ txTop)
       computeProof-aux (no p) (no p') = failure "UTXOW"
       -- TODO: see https://github.com/IntersectMBO/formal-ledger-specifications/issues/1269
       -- computeProof-aux (no p) (no p') = failure $ genErrors p S.++ genErrors p'
@@ -90,16 +103,18 @@ instance
                        → map proj₁ (computeProof-aux dLeg dNorm) ≡ success s₁
       completeness-aux (yes (q₀ , _)) _ _ (UTXOW-normal-⋯ p₀ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _) =
         case trans (sym q₀) p₀ of λ ()
-      completeness-aux (yes _) _ _ (UTXOW-legacy-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ h)
-        with UTXO.computeProof Γ s₀ txTop | UTXO.completeness _ _ _ _ h
-      ... | success _ | refl = refl
+      completeness-aux (yes p) _ s₁ (UTXOW-legacy-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ h) =
+        trans (sym (fmap-∘ {f = proj₁} {g = map₂′ (lift-legacy p)}
+                           (UTXO.computeProof Γ s₀ txTop)))
+              (UTXO.completeness Γ s₀ txTop s₁ h)
       completeness-aux (no ¬p) _ _ (UTXOW-legacy-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ _) =
         ⊥-elim (¬p (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅))
       completeness-aux (no _) (no ¬p) _ (UTXOW-normal-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ _) =
         ⊥-elim (¬p (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ ))
-      completeness-aux (no _) (yes _) _ (UTXOW-normal-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ h)
-        with UTXO.computeProof Γ s₀ txTop | UTXO.completeness _ _ _ _ h
-      ... | success _ | refl = refl
+      completeness-aux (no _) (yes p) s₁ (UTXOW-normal-⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ h) =
+        trans (sym (fmap-∘ {f = proj₁} {g = map₂′ (lift-normal p)}
+                           (UTXO.computeProof Γ s₀ txTop)))
+              (UTXO.completeness Γ s₀ txTop s₁ h)
 
       completeness : ∀ s₁ → Γ ⊢ s₀ ⇀⦇ txTop ,UTXOW⦈ s₁ → map proj₁ computeProof ≡ success s₁
       completeness = completeness-aux H?-legacy H?-normal
