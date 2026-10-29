@@ -109,7 +109,7 @@ private variable
 ```
 -->
 
-## Resolved endorser blocks
+## Resolved endorser blocks {#sec:resolved-endorser-blocks}
 
 The block carries its certificate alone.  The EB it certifies and that EB's
 *closure*, its referenced transactions resolved and in reference order, reach
