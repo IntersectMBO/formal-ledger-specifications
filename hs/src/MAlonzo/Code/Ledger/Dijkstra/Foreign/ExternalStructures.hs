@@ -1615,7 +1615,7 @@ d_HSTransactionStructure_748 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58
 d_HSTransactionStructure_748 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_4848
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.C_constructor_4852
       MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.d_isHashableSet'45'ℕ_34
       MAlonzo.Code.Ledger.Core.Foreign.Epoch.d_HSGlobalConstants_8
       (MAlonzo.Code.Ledger.Core.Foreign.Crypto.Structure.d_HSCryptoStructure_36
@@ -5065,7 +5065,7 @@ du_allDCerts_1754 ::
   [MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_DCert_1468]
 du_allDCerts_1754
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allDCerts_4844
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allDCerts_4848
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.allMintedCoin
 d_allMintedCoin_1756 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -5073,7 +5073,7 @@ d_allMintedCoin_1756 ::
   Integer
 d_allMintedCoin_1756 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_allMintedCoin_4828
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_allMintedCoin_4832
       (coe d_HSTransactionStructure_748 (coe v0))
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.allReferenceInputs
 d_allReferenceInputs_1758 ::
@@ -5086,7 +5086,7 @@ du_allReferenceInputs_1758 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 du_allReferenceInputs_1758
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allReferenceInputs_4738
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allReferenceInputs_4734
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.allReferenceScripts
 d_allReferenceScripts_1760 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -5095,7 +5095,7 @@ d_allReferenceScripts_1760 ::
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30]
 d_allReferenceScripts_1760 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_allReferenceScripts_4774
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_allReferenceScripts_4778
       (coe d_HSTransactionStructure_748 (coe v0))
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.allSpendInputs
 d_allSpendInputs_1762 ::
@@ -5109,18 +5109,18 @@ du_allSpendInputs_1762 ::
 du_allSpendInputs_1762
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allSpendInputs_4726
--- Ledger.Dijkstra.Foreign.ExternalStructures._.allSpendInputsList
-d_allSpendInputsList_1764 ::
+-- Ledger.Dijkstra.Foreign.ExternalStructures._.allTxOuts
+d_allTxOuts_1764 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3866 ->
-  [[MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]]
-d_allSpendInputsList_1764 ~v0 = du_allSpendInputsList_1764
-du_allSpendInputsList_1764 ::
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+d_allTxOuts_1764 ~v0 = du_allTxOuts_1764
+du_allTxOuts_1764 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3866 ->
-  [[MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]]
-du_allSpendInputsList_1764
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+du_allTxOuts_1764
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allSpendInputsList_4734
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allTxOuts_4742
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.allWitnessScripts
 d_allWitnessScripts_1766 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -5132,7 +5132,7 @@ du_allWitnessScripts_1766 ::
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30]
 du_allWitnessScripts_1766
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allWitnessScripts_4786
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_allWitnessScripts_4790
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.applyUpdate
 d_applyUpdate_1768 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -5205,7 +5205,7 @@ du_dataOfTx_1782 ::
   [Integer]
 du_dataOfTx_1782 v0 v1
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_dataOfTx_4810
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_dataOfTx_4814
       v1
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.e<sucᵉ
 d_e'60'suc'7497'_1784 ::
@@ -5292,7 +5292,7 @@ d_getAllScripts_1814 ::
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30]
 d_getAllScripts_1814 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_getAllScripts_4800
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_getAllScripts_4804
       (coe d_HSTransactionStructure_748 (coe v0))
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.getScriptHash
 d_getScriptHash_1816 ::
@@ -5321,7 +5321,7 @@ du_getTxData_1818 ::
   [Integer]
 du_getTxData_1818 v0 v1
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_getTxData_4820
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_getTxData_4824
       v1
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.getTxScripts
 d_getTxScripts_1820 ::
@@ -5332,7 +5332,7 @@ d_getTxScripts_1820 ::
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30]
 d_getTxScripts_1820 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_getTxScripts_4794
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_getTxScripts_4798
       (coe d_HSTransactionStructure_748 (coe v0)) v2 v3
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.globalConstants
 d_globalConstants_1822 ::
@@ -5598,7 +5598,7 @@ d_lookupScriptHash_1880 ::
   Maybe MAlonzo.Code.Data.Sum.Base.T__'8846'__30
 d_lookupScriptHash_1880 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_lookupScriptHash_4836
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_lookupScriptHash_4840
       (coe d_HSTransactionStructure_748 (coe v0)) v2 v3 v4
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.monoid
 d_monoid_1886 ::
@@ -5805,7 +5805,7 @@ d_referenceData_1918 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> [Integer]
 d_referenceData_1918 v0 v1
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_referenceData_4816
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_referenceData_4820
       (coe d_HSTransactionStructure_748 (coe v0))
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.referenceScripts
 d_referenceScripts_1920 ::
@@ -5816,7 +5816,7 @@ d_referenceScripts_1920 ::
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30]
 d_referenceScripts_1920 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_referenceScripts_4768
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_referenceScripts_4772
       (coe d_HSTransactionStructure_748 (coe v0)) v2 v3
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.referencedTxOuts
 d_referencedTxOuts_1922 ::
@@ -5827,7 +5827,7 @@ d_referencedTxOuts_1922 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_referencedTxOuts_1922 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_referencedTxOuts_4756
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_referencedTxOuts_4760
       (coe d_HSTransactionStructure_748 (coe v0)) v2 v3
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.scriptStructure
 d_scriptStructure_1924 ::
@@ -5850,7 +5850,7 @@ du_scriptsOfTx_1926 ::
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30]
 du_scriptsOfTx_1926 v0 v1
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_scriptsOfTx_4764
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_scriptsOfTx_4768
       v1
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.scriptsOfUTxO
 d_scriptsOfUTxO_1928 ::
@@ -5863,7 +5863,7 @@ du_scriptsOfUTxO_1928 ::
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30]
 du_scriptsOfUTxO_1928
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_scriptsOfUTxO_4762
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_scriptsOfUTxO_4766
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.sign
 d_sign_1930 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -5911,7 +5911,7 @@ d_spendData_1936 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> [Integer]
 d_spendData_1936 v0 v1
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_spendData_4814
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_spendData_4818
       (coe d_HSTransactionStructure_748 (coe v0))
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.spendScripts
 d_spendScripts_1938 ::
@@ -5922,7 +5922,7 @@ d_spendScripts_1938 ::
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30]
 d_spendScripts_1938 v0 v1
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_spendScripts_4766
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_spendScripts_4770
       (coe d_HSTransactionStructure_748 (coe v0))
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.spendTxOuts
 d_spendTxOuts_1940 ::
@@ -5933,7 +5933,7 @@ d_spendTxOuts_1940 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_spendTxOuts_1940 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_spendTxOuts_4750
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_spendTxOuts_4754
       (coe d_HSTransactionStructure_748 (coe v0)) v2 v3
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.stakeCred
 d_stakeCred_1942 ::
@@ -6020,7 +6020,7 @@ du_txOutDataOfUTxO_1954 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> [Integer]
 du_txOutDataOfUTxO_1954
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_txOutDataOfUTxO_4812
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_txOutDataOfUTxO_4816
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.txOutToDatum
 d_txOutToDatum_1956 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -6116,7 +6116,7 @@ du_witnessData_1980 ::
   [Integer]
 du_witnessData_1980 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_witnessData_4818
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_witnessData_4822
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.witnessScripts
 d_witnessScripts_1982 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
@@ -6130,7 +6130,7 @@ du_witnessScripts_1982 ::
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30]
 du_witnessScripts_1982 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_witnessScripts_4784
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_witnessScripts_4788
 -- Ledger.Dijkstra.Foreign.ExternalStructures._.ε
 d_ε_1984 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
