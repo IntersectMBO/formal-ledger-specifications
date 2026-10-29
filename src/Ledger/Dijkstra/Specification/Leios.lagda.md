@@ -137,7 +137,7 @@ private
 <!--
 ```agda
 module _ (pp : PParams)
-         (let open PParams pp using ( leiosCommitteeSize
+         (let open PParams pp using ( leiosCommitteeSize; leiosQuorumStakeThreshold
                                     ; leiosHeaderPeriod; leiosVotingPeriod; leiosDiffusionPeriod )) where
 ```
 -->
@@ -180,6 +180,34 @@ parameters the function is applied to.
   certificationDelay =
     slotsFromDuration (3 * leiosHeaderPeriod + leiosVotingPeriod + leiosDiffusionPeriod)
 ```
+
+## Reachable Quorum
+
+Only keyed seats can sign, so the weight a certificate can gather is bounded
+by the keyed seats' summed weight, and a committee whose keyed seats hold less
+than the quorum threshold `τ` (`leiosQuorumStakeThreshold`{.AgdaField}) of the
+total active stake can certify nothing.  No constraint on the parameters rules
+this out: the seats' weights come from the stake distribution, and their keys
+from registrations that expire (`honouredBlsKey`{.AgdaFunction}).
+`certifiable`{.AgdaFunction} names the condition, which is what an operator
+watches when certificates stop appearing.
+It expresses quorum capacity; forming a certificate also requires enough
+members to vote and their votes to arrive in time.
+
+```agda
+  certifiable : LeiosCommittee → Type
+  certifiable cmt =
+    fromUnitInterval leiosQuorumStakeThreshold ℚ.≤ ∑ˡ[ s ← keyedSeats ] fromUnitInterval (s .weight)
+    where keyedSeats = filter (λ s → Is-just (s .key)) cmt
+```
+
+<!--
+```agda
+  instance
+    Dec-certifiable : ∀ {cmt} → certifiable cmt ⁇
+    Dec-certifiable = ⁇ (_ ℚ.≤? _)
+```
+-->
 
 ## Leios Certificates
 
