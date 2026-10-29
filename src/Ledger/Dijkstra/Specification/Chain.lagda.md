@@ -155,9 +155,7 @@ out certification across an era boundary, since era transitions occur at
 epoch boundaries.  It costs at most one EB per boundary.
 
 The `EB`{.AgdaDatatype} premise states full declarative validity and
-application (see `Leios.Validity`{.AgdaModule}).  An implementation may avoid
-repeating validation when reapplying a certified closure; agreement with this
-full-rule relation is a separate proof obligation.  A certifying block carries
+application (see `Leios.Validity`{.AgdaModule}).  A certifying block carries
 no transactions of its own, by `ValidLeiosBlock`{.AgdaFunction}.
 
 ```agda
