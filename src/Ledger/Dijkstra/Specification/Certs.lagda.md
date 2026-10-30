@@ -69,7 +69,16 @@ mkStakePoolState e spp =
     ; bls = bls >>= λ (blsKey , PoP) → just (blsKey , e)
     }
     where open StakePoolParams spp
+```
 
+<!--
+```agda
+open StakePoolParams renaming (bls to bls')
+open StakePoolState
+```
+-->
+
+```agda
 CCHotKeys : Type
 CCHotKeys = Credential ⇀ Maybe Credential
 
@@ -81,6 +90,24 @@ FPools = KeyHash ⇀ StakePoolParams
 
 Retiring : Type
 Retiring = KeyHash ⇀ Epoch
+
+applyFPools : Epoch → Pools → FPools → Pools
+applyFPools e pools fPools =
+  mapWithKey (λ kh spp → if ((_,_) <$> (lookupᵐ? pools kh >>= bls) <*> (proj₁ <$> spp .bls'))
+                            then (λ {((oldBls , oldEpoch) , newBls)} →
+                                    if oldBls == newBls
+                                       then mkStakePoolState oldEpoch spp
+                                       else mkStakePoolState e spp )
+                            else mkStakePoolState e spp) fPools ∪ˡ pools
+
+onlyBlsKeyUpdated : StakePoolState → StakePoolState → Type
+onlyBlsKeyUpdated spp₁ spp₂ = spp₁ .owners             ≡ spp₂ .owners
+                            × spp₁ .cost               ≡ spp₂ .cost
+                            × spp₁ .margin             ≡ spp₂ .margin
+                            × spp₁ .pledge             ≡ spp₂ .pledge
+                            × spp₁ .rewardAccount      ≡ spp₂ .rewardAccount
+                            × spp₁ .vrf                ≡ spp₂ .vrf
+                            × ¬ ((proj₁ <$> spp₁ .bls) ≡ (proj₁ <$> spp₂ .bls))
 ```
 
 In the Dijkstra era, the `Rewards`{.AgdaDatatype} map represents

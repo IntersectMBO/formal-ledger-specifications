@@ -66,8 +66,8 @@ private
     → SubLedgerEnv.isTopLevelValid Γ ≡ false
     → Γ ⊢ s ⇀⦇ stxs ,SUBLEDGERS⦈ s'
     → s' ≡ s
-  SUBLEDGERS-noop _   (BS-base Id-nop)   = refl
-  SUBLEDGERS-noop isI (BS-ind step rest) =
+  SUBLEDGERS-noop _   SUBLEDGERS-[]   = refl
+  SUBLEDGERS-noop isI (SUBLEDGERS-∷ step rest) =
     trans (SUBLEDGERS-noop isI rest) (SUBLEDGER-step-noop step isI)
 
 instance
@@ -110,8 +110,9 @@ instance
       (s   : LedgerState)  (let open LedgerState s)
       (stx : SubLevelTx)
       where
+
       subUtxoΓ : SubUTxOEnv
-      subUtxoΓ = ⟦ slot , pparams , treasury , utxo₀ , allScripts , isTopLevelValid ⟧
+      subUtxoΓ = ⟦ slot , pparams , treasury , utxo₀ , pState₀ , precedingDCerts , allScripts , isTopLevelValid ⟧
 
       subentitiesΓ : SubEntitiesEnv
       subentitiesΓ = ⟦ epoch slot , pparams , allColdCreds govSt enactState , rewards₀  ⟧
@@ -129,10 +130,10 @@ instance
 ```agda
       computeProof = case isTopLevelValid ≟ true of λ where
         (yes p) → do
-          (utxoSt' , utxoStep) ← computeSubutxow subUtxoΓ utxoSt stx
           (certSt' , certStep) ← computeSubentities subentitiesΓ certState stx
           (govSt'  , govStep)  ← computeGov (govΓ certSt') govSt (GovProposals+Votes stx)
-          success (_ , SUBLEDGER-V (p , utxoStep , certStep , govStep))
+          (utxoSt' , utxoStep) ← computeSubutxow subUtxoΓ utxoSt stx
+          success (_ , SUBLEDGER-V (p , certStep , govStep , utxoStep ))
         (no ¬p) → do
           (utxoSt' , utxoStep) ← computeSubutxow subUtxoΓ utxoSt stx
           let utxoStep' = subst (subUtxoΓ ⊢ utxoSt ⇀⦇ stx ,SUBUTXOW⦈_)
@@ -147,17 +148,17 @@ instance
 
 <!--
 ```agda
-      completeness sub' (SUBLEDGER-V (v , utxoStep , certStep , govStep))
+      completeness sub' (SUBLEDGER-V (v , certStep , govStep , utxoStep))
         with isTopLevelValid ≟ true
       ... | no ¬v = contradiction v ¬v
       ... | yes refl
-        with computeSubutxow subUtxoΓ utxoSt stx | completeSubutxow _ _ _ _ utxoStep
-      ... | success (utxoSt' , _) | refl
         with computeSubentities subentitiesΓ certState stx | completeSubentities _ _ _ _ certStep
       ... | success (certSt' , _) | refl
         with computeGov (govΓ certSt') govSt (GovProposals+Votes stx)
            | completeGov (govΓ certSt') _ _ _ govStep
-      ... | success (govSt' , _) | refl = refl
+      ... | success (govSt' , _) | refl
+        with computeSubutxow subUtxoΓ utxoSt stx | completeSubutxow _ _ _ _ utxoStep
+      ... | success (utxoSt' , _) | refl = refl
       completeness sub' (SUBLEDGER-I (i , utxoStep))
         with isTopLevelValid ≟ true
       ... | yes v = case trans (sym v) i of λ ()
@@ -165,8 +166,42 @@ instance
         with computeSubutxow subUtxoΓ utxoSt stx | completeSubutxow _ _ _ _ utxoStep
       ... | success (utxoSt' , _) | refl = refl
 
-Computational-SUBLEDGERS : Computational _⊢_⇀⦇_,SUBLEDGERS⦈_ String
-Computational-SUBLEDGERS = it
+instance
+```
+-->
+
+```agda
+  Computational-SUBLEDGERS : Computational _⊢_⇀⦇_,SUBLEDGERS⦈_ String
+```
+
+<!--
+```agda
+  Computational-SUBLEDGERS = record {go}
+    where
+      open Computational ⦃...⦄ renaming (computeProof to comp; completeness to complete)
+      opaque
+        computeSubLedger : ∀ Γ s x → ComputationResult String (∃ λ s' → Γ ⊢ s ⇀⦇ x ,SUBLEDGER⦈ s')
+        computeSubLedger = comp {STS = _⊢_⇀⦇_,SUBLEDGER⦈_}
+
+        completeSubLedger : ∀ Γ s x s' → Γ ⊢ s ⇀⦇ x ,SUBLEDGER⦈ s' → (proj₁ <$> computeSubLedger Γ s x) ≡ success s'
+        completeSubLedger = complete {STS = _⊢_⇀⦇_,SUBLEDGER⦈_}
+
+      module go
+        where
+        computeProof : ∀ (Γ   : SubLedgerEnv) (s : LedgerState) (stxs : List SubLevelTx) → ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ stxs ,SUBLEDGERS⦈ s')
+        computeProof Γ s [] = success (s , SUBLEDGERS-[])
+        computeProof Γ s (stx ∷ stxs) = do
+          (s'  , p) ← computeSubLedger Γ s stx
+          (s'' , q) ← computeProof (record Γ { precedingDCerts = SubLedgerEnv.precedingDCerts Γ ++ DCertsOf stx }) s' stxs
+          success (s'' , SUBLEDGERS-∷ p q)
+
+        completeness : ∀ (Γ : SubLedgerEnv) (s : LedgerState) (stxs : List SubLevelTx) (s' : LedgerState) → Γ ⊢ s ⇀⦇ stxs ,SUBLEDGERS⦈ s' → (proj₁ <$> computeProof Γ s stxs) ≡ success s'
+        completeness Γ s [] s' SUBLEDGERS-[] = refl
+        completeness Γ s (stx ∷ stxs) s' (SUBLEDGERS-∷ p q)
+          with computeSubLedger Γ s stx | completeSubLedger _ _ _ _ p
+        ... | success (s' , _) | refl
+          with computeProof (record Γ { precedingDCerts = SubLedgerEnv.precedingDCerts Γ ++ DCertsOf stx }) s' stxs | completeness _ _ _ _ q
+        ... | success (_ , _) | refl = refl
 
 instance
 ```
@@ -216,6 +251,9 @@ instance
       utxo₀ : UTxO
       utxo₀ = UTxOOf utxoSt
 
+      pState₀ : PState
+      pState₀ = PStateOf certState
+
       allScripts : ℙ Script
       allScripts = getAllScripts txTop utxo₀
 
@@ -223,7 +261,7 @@ instance
       legacyMode = isLegacyMode utxo₀ allScripts txTop
 
       subΓ : SubLedgerEnv
-      subΓ = ⟦ slot , ppolicy , pparams , enactState , treasury , utxo₀ , RewardsOf (CertStateOf s) , allScripts , IsValidFlagOf txTop ⟧
+      subΓ = ⟦ slot , ppolicy , pparams , enactState , treasury , utxo₀ , RewardsOf (CertStateOf s) , pState₀ , [] , allScripts , IsValidFlagOf txTop ⟧
 
       entitiesΓ : GovState → CertState → EntitiesEnv
       entitiesΓ govSt certSt = ⟦ epoch slot , pparams , allColdCreds govSt enactState , legacyMode , RewardsOf certSt ⟧
@@ -232,7 +270,7 @@ instance
       govΓ certSt = ⟦ TxIdOf txTop , epoch slot , pparams , ppolicy , enactState , certSt , dom (RewardsOf certSt) ⟧
 
       utxoΓ : UTxOEnv
-      utxoΓ = ⟦ slot , pparams , treasury , utxo₀ , PoolsOf (CertStateOf s) , allScripts , legacyMode ⟧
+      utxoΓ = ⟦ slot , pparams , treasury , utxo₀ , pState₀ , allScripts , legacyMode ⟧
 ```
 -->
 
