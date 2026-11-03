@@ -112,14 +112,19 @@ private variable
 ## Resolved endorser blocks {#sec:resolved-endorser-blocks}
 
 The block carries its certificate alone.  The EB it certifies and that EB's
-*closure*, its referenced transactions resolved and in reference order, reach
-the chain rule beside the block.  The rules take the closure as an input.
+*closure*, its referenced transactions resolved and in reference order, are not
+chain objects: the node resolves them, and the chain rule reads them from its
+environment.  The rules take the closure as an input.
 
 ```agda
 record ResolvedEB : Type where
   field
     eb       : EndorserBlock
     closure  : List TopLevelTx
+
+record ChainEnv : Type where
+  field
+    resolvedEB  : Maybe ResolvedEB
 
 pendingEB : LastAppliedBlock → Maybe EBHash
 pendingEB la = proj₁ <$> LastAppliedBlock.announcedEB la
@@ -132,6 +137,8 @@ announcingEnv cs la =
     open EnactState es using (constitution)
 ```
 
+`ChainEnv`{.AgdaRecord} carries the resolved EB, if the node has one for the
+pending announcement; a block that certifies nothing ignores it.
 `pendingEB`{.AgdaFunction} reads the announced hash; the declared size beside
 it is no validity condition (see `BlockBody`{.AgdaModule}).
 `announcingEnv`{.AgdaFunction} uses the announcing slot and the enact state,
@@ -139,12 +146,13 @@ parameters, and treasury before the tick.
 
 ## The <span class="AgdaDatatype">CHAIN</span> Transition System {#sec:the-chain-transition-system}
 
-`CHAIN-None`{.AgdaInductiveConstructor} handles a block without a certificate
-or a resolved EB.  It ticks and runs `BBODY`{.AgdaDatatype}.
-`CHAIN-EB`{.AgdaInductiveConstructor} checks the certificate in the chain
-context, applies the EB at the announcing slot, and then ticks and runs the
-body.  Certificate checking is read-only; the `EB`{.AgdaDatatype} premise
-produces the ledger state the tick continues from.
+`CHAIN-None`{.AgdaInductiveConstructor} handles a block without a certificate.
+It ticks and runs `BBODY`{.AgdaDatatype}, whatever the environment resolves.
+`CHAIN-EB`{.AgdaInductiveConstructor} takes the resolved EB from the
+environment, checks the certificate in the chain context, applies the EB at
+the announcing slot, and then ticks and runs the body.  Certificate checking
+is read-only; the `EB`{.AgdaDatatype} premise produces the ledger state the
+tick continues from.
 
 The contextual checks require the previous block to have announced the EB,
 the certification delay to have elapsed, the two blocks to share an epoch,
@@ -159,9 +167,9 @@ application (see `Leios.Validity`{.AgdaModule}).  A certifying block carries
 no transactions of its own, by `ValidLeiosBlock`{.AgdaFunction}.
 
 ```agda
-data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block × Maybe ResolvedEB → ChainState → Type where
+data _⊢_⇀⦇_,CHAIN⦈_ : ChainEnv → ChainState → Block → ChainState → Type where
 
-  CHAIN-None : ∀ {bcur'} {b : Block} {nes : NewEpochState} {cs : ChainState}
+  CHAIN-None : ∀ {bcur'} {Γ : ChainEnv} {b : Block} {nes : NewEpochState} {cs : ChainState}
 ```
 
 <!--
@@ -182,9 +190,9 @@ data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block × Maybe ResolvedEB �
     ∙ tt ⊢ newEpochState ⇀⦇ slot ,TICK⦈ nes
     ∙ (es , acnt) ⊢ (ls , bcur) ⇀⦇ b ,BBODY⦈ (ls' , bcur')
       ────────────────────────────────
-      _ ⊢ cs ⇀⦇ (b , nothing) ,CHAIN⦈ cs'
+      Γ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
 
-  CHAIN-EB : ∀ {bcur'} {b : Block} {reb : ResolvedEB} {cert : EBCert}
+  CHAIN-EB : ∀ {bcur'} {Γ : ChainEnv} {b : Block} {reb : ResolvedEB} {cert : EBCert}
                {la : LastAppliedBlock} {nes : NewEpochState} {cs : ChainState}
                {ls₁ : LedgerState}
 ```
@@ -194,7 +202,7 @@ data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block × Maybe ResolvedEB �
     → let open ChainState cs; open Block b; open BHeader bheader
           open BHBody bhbody; open NewEpochState nes; open EpochState epochState
           open LastAppliedBlock la using (headerHash) renaming (slot to announcingSlot)
-          open ResolvedEB reb
+          open ResolvedEB reb; open ChainEnv Γ
       in
 ```
 -->
@@ -209,6 +217,7 @@ data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block × Maybe ResolvedEB �
                   ; lastApplied = just ⟦ slot , bHeaderHash , announcedEB ⟧ }
     in
     ∙ ebCert ≡ just cert
+    ∙ resolvedEB ≡ just reb
     ∙ lastApplied ≡ just la
     ∙ pendingEB la ≡ just (hashEB eb)
     ∙ announcingSlot + certificationDelay pp ≤ slot
@@ -218,11 +227,11 @@ data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block × Maybe ResolvedEB �
     ∙ tt ⊢ nes₁ ⇀⦇ slot ,TICK⦈ nes
     ∙ (es , acnt) ⊢ (ls , bcur) ⇀⦇ b ,BBODY⦈ (ls' , bcur')
       ────────────────────────────────
-      _ ⊢ cs ⇀⦇ (b , just reb) ,CHAIN⦈ cs'
+      Γ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
 ```
 
-A certificate without its resolved EB, or a resolved EB beside a block that
-carries no certificate, admits no transition.  Every successful block replaces
+A certificate whose environment resolves no EB admits no transition; a resolved
+EB that no certificate claims is ignored.  Every successful block replaces
 `lastApplied`{.AgdaField}, retiring the previous announcement and recording its
 own announcement, if any, for its successor.
 

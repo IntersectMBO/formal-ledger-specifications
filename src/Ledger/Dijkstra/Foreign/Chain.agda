@@ -55,6 +55,10 @@ instance
                                             • fieldPrefix "reb"
   Conv-ResolvedEB = autoConvert ResolvedEB
 
+  HsTy-ChainEnv = autoHsType ChainEnv ⊣ withConstructor "MkChainEnv"
+                                        • fieldPrefix "ce"
+  Conv-ChainEnv = autoConvert ChainEnv
+
 record HSBlock : Type where
   field
     bheader      : BHeader
@@ -110,13 +114,15 @@ module _ (ext : ExternalFunctions) where
   open import Ledger.Dijkstra.Foreign.ExternalStructures ext hiding (TopLevelTx)
   open import Ledger.Dijkstra.Specification.Chain.Properties.Computational HSTransactionStructure HSAbstractFunctions
 
-  chain-step : HsType (⊤ → ChainState → Block × Maybe ResolvedEB → ComputationResult String ChainState)
-  chain-step = λ _ cs signal →
-    let cs' : ChainState
+  chain-step : HsType (ChainEnv → ChainState → Block → ComputationResult String ChainState)
+  chain-step = λ env cs b →
+    let env' : ChainEnv
+        env' = from env
+        cs' : ChainState
         cs' = from cs
-        signal' : Block × Maybe ResolvedEB
-        signal' = from signal
-    in to (coerce ⦃ TrustMe ⦄ $ compute Computational-CHAIN tt
-      (coerce ⦃ TrustMe ⦄ cs') (coerce ⦃ TrustMe ⦄ signal'))
+        b' : Block
+        b' = from b
+    in to (coerce ⦃ TrustMe ⦄ $ compute Computational-CHAIN (coerce ⦃ TrustMe ⦄ env')
+      (coerce ⦃ TrustMe ⦄ cs') (coerce ⦃ TrustMe ⦄ b'))
 
   {-# COMPILE GHC chain-step as chainStep #-}

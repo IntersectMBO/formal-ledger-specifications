@@ -77,15 +77,14 @@ instance
 
 <!--
 ```agda
-  Computational-CHAIN .computeProof _ cs (b , nothing) with Block.ebCert b in cert≡
-  ... | just _ = failure "the block carries an EB certificate but no resolved EB came beside it"
+  Computational-CHAIN .computeProof Γ cs b with Block.ebCert b in cert≡
   ... | nothing = do
     nes , tickStep ← map₁ ⊥-elim $ computeProof {STS = _⊢_⇀⦇_,TICK⦈_} _ _ _
     (_ , _) , bbStep ← computeProof _ (LedgerStateOf nes , nes .NewEpochState.bcur) b
     success (_ , CHAIN-None (cert≡ , tickStep , bbStep))
-  Computational-CHAIN .computeProof _ cs (b , just reb) with Block.ebCert b in cert≡
-  ... | nothing = failure "a resolved EB came beside a block that carries no EB certificate"
-  ... | just cert with pending? (ChainState.lastApplied cs)
+  ... | just cert with ChainEnv.resolvedEB Γ in reb≡
+  ... | nothing = failure "the block carries an EB certificate but the environment resolves no EB"
+  ... | just reb with pending? (ChainState.lastApplied cs)
   ... | no _ = failure "the chain has no last applied block, so no EB is pending"
   ... | yes (la , la≡) with pendingEB? cs b la cert reb
   ... | no _ = failure (pendingFailure la)
@@ -99,18 +98,20 @@ instance
     ls₁ , ebStep ← computeProof (announcingEnv cs la , ResolvedEB.closure reb) (LedgerStateOf cs) (ResolvedEB.eb reb)
     nes , tickStep ← map₁ ⊥-elim $ computeProof {STS = _⊢_⇀⦇_,TICK⦈_} _ _ _
     (_ , _) , bbStep ← computeProof _ (LedgerStateOf nes , nes .NewEpochState.bcur) b
-    success (_ , CHAIN-EB (cert≡ , la≡ , pend , d , e , vc , ebStep , tickStep , bbStep))
+    success (_ , CHAIN-EB (cert≡ , reb≡ , la≡ , pend , d , e , vc , ebStep , tickStep , bbStep))
 
-  Computational-CHAIN .completeness _ cs (record { ebCert = just _ } , nothing) _ (CHAIN-None (() , _))
-  Computational-CHAIN .completeness _ cs (b@(record { ebCert = nothing }) , nothing) _
+  Computational-CHAIN .completeness _ cs (record { ebCert = just _ }) _ (CHAIN-None (() , _))
+  Computational-CHAIN .completeness _ cs b@(record { ebCert = nothing }) _
     (CHAIN-None (cert≡ , tickStep , bbStep))
     with recomputeProof tickStep | completeness _ _ _ _ tickStep
   ... | success _ | refl
     with recomputeProof bbStep | completeness _ _ _ _ bbStep
   ... | success _ | refl = refl
-  Computational-CHAIN .completeness _ cs (record { ebCert = nothing } , just reb) _ (CHAIN-EB (() , _))
-  Computational-CHAIN .completeness _ cs (b@(record { ebCert = just cert }) , just reb) _ (CHAIN-EB {la = la}
-    (refl , la≡ , pend , d , e , vc , ebStep , tickStep , bbStep))
+  Computational-CHAIN .completeness _ cs (record { ebCert = nothing }) _ (CHAIN-EB (() , _))
+  Computational-CHAIN .completeness (record { resolvedEB = nothing }) cs (record { ebCert = just _ }) _
+    (CHAIN-EB (_ , () , _))
+  Computational-CHAIN .completeness (record { resolvedEB = just reb }) cs b@(record { ebCert = just cert }) _
+    (CHAIN-EB {la = la} (refl , refl , la≡ , pend , d , e , vc , ebStep , tickStep , bbStep))
     with pending? (ChainState.lastApplied cs)
   ... | no ¬pending = ⊥-elim (¬pending (la , la≡))
   ... | yes (la' , la≡') with trans (sym la≡') la≡
