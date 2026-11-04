@@ -277,6 +277,9 @@ nav:
     - Leios/:
       - Types: Ledger.Dijkstra.Specification.Leios.Types.md
       - Validity: Ledger.Dijkstra.Specification.Leios.Validity.md
+      - Validity/:
+        - Properties/:
+          - Computational: Ledger.Dijkstra.Specification.Leios.Validity.Properties.Computational.md
     - PoolReap: Ledger.Dijkstra.Specification.PoolReap.md
     - PoolReap/:
       - Properties: Ledger.Dijkstra.Specification.PoolReap.Properties.md

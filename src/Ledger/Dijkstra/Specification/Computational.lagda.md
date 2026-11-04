@@ -28,6 +28,10 @@ open import Interface.ComputationalRelation
 open import Ledger.Dijkstra.Specification.BlockBody txs abs using (_⊢_⇀⦇_,BBODY⦈_)
 open import Ledger.Dijkstra.Specification.BlockBody.Properties.Computational txs abs
 
+open import Ledger.Dijkstra.Specification.Chain txs abs
+  using (_⊢_⇀⦇_,CHAIN⦈_)
+open import Ledger.Dijkstra.Specification.Chain.Properties.Computational txs abs
+
 open import Ledger.Dijkstra.Specification.Certs govStructure
   using (_⊢_⇀⦇_,CERT⦈_ ; _⊢_⇀⦇_,CERTS⦈_ ; _⊢_⇀⦇_,DELEG⦈_ ; _⊢_⇀⦇_,GOVCERT⦈_)
 open import Ledger.Dijkstra.Specification.Certs.Properties.Computational govStructure
@@ -45,12 +49,15 @@ open import Ledger.Dijkstra.Specification.Gov govStructure
 open import Ledger.Dijkstra.Specification.Gov.Properties.Computational txs
 
 open import Ledger.Dijkstra.Specification.Ledger txs abs
-  using (_⊢_⇀⦇_,LEDGER⦈_ ; _⊢_⇀⦇_,SUBLEDGER⦈_ ; _⊢_⇀⦇_,SUBLEDGERS⦈_)
+  using (LedgerEnv; _⊢_⇀⦇_,LEDGER⦈_ ; _⊢_⇀⦇_,SUBLEDGER⦈_ ; _⊢_⇀⦇_,SUBLEDGERS⦈_)
 open import Ledger.Dijkstra.Specification.Ledger.Properties.Computational txs abs
 
 open import Ledger.Dijkstra.Specification.Ledgers txs abs
   using (_⊢_⇀⦇_,LEDGERS⦈_)
 open import Ledger.Dijkstra.Specification.Ledgers.Properties.Computational txs abs
+
+open import Ledger.Dijkstra.Specification.Leios.Validity txs abs using (_⊢_⇀⦇_,EB⦈_)
+open import Ledger.Dijkstra.Specification.Leios.Validity.Properties.Computational txs abs
 
 open import Ledger.Dijkstra.Specification.PoolReap txs
   using (_⊢_⇀⦇_,POOLREAP⦈_)
@@ -87,7 +94,9 @@ Adding a new rule requires adding an entry here.
 _ = Computational _⊢_⇀⦇_,BBODY⦈_       String  ∋ it
 _ = Computational _⊢_⇀⦇_,CERT⦈_        String  ∋ it
 _ = Computational _⊢_⇀⦇_,CERTS⦈_       String  ∋ it
+_ = Computational _⊢_⇀⦇_,CHAIN⦈_       String  ∋ it
 _ = Computational _⊢_⇀⦇_,DELEG⦈_       String  ∋ it
+_ = Computational _⊢_⇀⦇_,EB⦈_          String  ∋ it
 _ = Computational _⊢_⇀⦇_,ENACT⦈_       String  ∋ it
 _ = Computational _⊢_⇀⦇_,EPOCH⦈_       ⊥       ∋ it
 _ = Computational _⊢_⇀⦇_,GOV⦈_         String  ∋ it

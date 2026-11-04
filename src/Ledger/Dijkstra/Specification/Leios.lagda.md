@@ -246,5 +246,28 @@ third, that every signer is a committee member able to sign, is
 announcing header taken from the chain context, is supplied by the chain rule
 that applies the certificate, through `msg`{.AgdaBound}.
 
+<!--
+```agda
+instance
+  Dec-ValidEBCert : ∀ {cmt τ msg cert} → ValidEBCert cmt τ msg cert ⁇
+  Dec-ValidEBCert {cmt} {τ} {msg} {cert} = ⁇ map′ fromConjuncts toConjuncts ¿ Conjuncts ¿
+    where
+      seats = signersSeats cmt (cert .signers)
+
+      Conjuncts : Type
+      Conjuncts = cert .signers ⊆ fromList (upTo (length cmt))
+                × Allˡ (λ s → Is-just (s .key)) seats
+                × isSignedByAggregate (fromList (mapMaybe key seats)) msg (cert .sig)
+                × fromUnitInterval τ ℚ.≤ ∑ˡ[ s ← seats ] fromUnitInterval (s .weight)
+
+      fromConjuncts : Conjuncts → ValidEBCert cmt τ msg cert
+      fromConjuncts (a , k , s , q) =
+        record { signersSeated = a ; signersKeyed = k ; validSignature = s ; quorum = q }
+
+      toConjuncts : ValidEBCert cmt τ msg cert → Conjuncts
+      toConjuncts v = let open ValidEBCert v in signersSeated , signersKeyed , validSignature , quorum
+```
+-->
+
 [cip-step5]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#step-5-chain-inclusion
 [cip-certval]: https://github.com/cardano-foundation/CIPs/blob/master/CIP-0164/README.md#certificate-validation
