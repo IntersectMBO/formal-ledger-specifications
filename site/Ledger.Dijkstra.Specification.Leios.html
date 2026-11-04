@@ -7364,6 +7364,154 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2_25_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2_25_3" id="__nav_5_2_25_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validity/
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_2_25_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2_25_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Validity/
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2_25_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2_25_3_1" id="__nav_5_2_25_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Properties/
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_5_2_25_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2_25_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Properties/
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Dijkstra.Specification.Leios.Validity.Properties.Computational.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Computational
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -12276,6 +12424,25 @@ third, that every signer is a committee member able to sign, is
 <code class="AgdaField">quorum</code>; and the fifth, that the message is the hash of the
 announcing header taken from the chain context, is supplied by the chain rule
 that applies the certificate, through <code class="AgdaBound">msg</code>.</p>
+<pre class="Agda hidden-source"><a id="8483" class="Keyword">instance</a>
+  <a id="Dec-ValidEBCert"></a><a id="8494" href="Ledger.Dijkstra.Specification.Leios.html#8494" class="Function">Dec-ValidEBCert</a> <a id="8510" class="Symbol">:</a> <a id="8512" class="Symbol">∀</a> <a id="8514" class="Symbol">{</a><a id="8515" href="Ledger.Dijkstra.Specification.Leios.html#8515" class="Bound">cmt</a> <a id="8519" href="Ledger.Dijkstra.Specification.Leios.html#8519" class="Bound">τ</a> <a id="8521" href="Ledger.Dijkstra.Specification.Leios.html#8521" class="Bound">msg</a> <a id="8525" href="Ledger.Dijkstra.Specification.Leios.html#8525" class="Bound">cert</a><a id="8529" class="Symbol">}</a> <a id="8531" class="Symbol">→</a> <a id="8533" href="Ledger.Dijkstra.Specification.Leios.html#7433" class="Record">ValidEBCert</a> <a id="8545" href="Ledger.Dijkstra.Specification.Leios.html#8515" class="Bound">cmt</a> <a id="8549" href="Ledger.Dijkstra.Specification.Leios.html#8519" class="Bound">τ</a> <a id="8551" href="Ledger.Dijkstra.Specification.Leios.html#8521" class="Bound">msg</a> <a id="8555" href="Ledger.Dijkstra.Specification.Leios.html#8525" class="Bound">cert</a> <a id="8560" href="Class.Decidable.Core.html#217" class="Record Operator">⁇</a>
+  <a id="8564" href="Ledger.Dijkstra.Specification.Leios.html#8494" class="Function">Dec-ValidEBCert</a> <a id="8580" class="Symbol">{</a><a id="8581" href="Ledger.Dijkstra.Specification.Leios.html#8581" class="Bound">cmt</a><a id="8584" class="Symbol">}</a> <a id="8586" class="Symbol">{</a><a id="8587" href="Ledger.Dijkstra.Specification.Leios.html#8587" class="Bound">τ</a><a id="8588" class="Symbol">}</a> <a id="8590" class="Symbol">{</a><a id="8591" href="Ledger.Dijkstra.Specification.Leios.html#8591" class="Bound">msg</a><a id="8594" class="Symbol">}</a> <a id="8596" class="Symbol">{</a><a id="8597" href="Ledger.Dijkstra.Specification.Leios.html#8597" class="Bound">cert</a><a id="8601" class="Symbol">}</a> <a id="8603" class="Symbol">=</a> <a id="8605" href="Class.Decidable.Core.html#262" class="InductiveConstructor Operator">⁇</a> <a id="8607" href="Relation.Nullary.Decidable.Core.html#6309" class="Function">map′</a> <a id="8612" href="Ledger.Dijkstra.Specification.Leios.html#9029" class="Function">fromConjuncts</a> <a id="8626" href="Ledger.Dijkstra.Specification.Leios.html#9219" class="Function">toConjuncts</a> <a id="8638" href="Class.Decidable.Core.html#470" class="Function Operator">¿</a> <a id="8640" href="Ledger.Dijkstra.Specification.Leios.html#8716" class="Function">Conjuncts</a> <a id="8650" href="Class.Decidable.Core.html#470" class="Function Operator">¿</a>
+    <a id="8656" class="Keyword">where</a>
+      <a id="8668" href="Ledger.Dijkstra.Specification.Leios.html#8668" class="Function">seats</a> <a id="8674" class="Symbol">=</a> <a id="8676" href="Ledger.Dijkstra.Specification.Leios.html#6812" class="Function">signersSeats</a> <a id="8689" href="Ledger.Dijkstra.Specification.Leios.html#8581" class="Bound">cmt</a> <a id="8693" class="Symbol">(</a><a id="8694" href="Ledger.Dijkstra.Specification.Leios.html#8597" class="Bound">cert</a> <a id="8699" class="Symbol">.</a><a id="8700" href="Ledger.Dijkstra.Specification.Leios.html#6355" class="Field">signers</a><a id="8707" class="Symbol">)</a>
+
+      <a id="8716" href="Ledger.Dijkstra.Specification.Leios.html#8716" class="Function">Conjuncts</a> <a id="8726" class="Symbol">:</a> <a id="8728" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+      <a id="8739" href="Ledger.Dijkstra.Specification.Leios.html#8716" class="Function">Conjuncts</a> <a id="8749" class="Symbol">=</a> <a id="8751" href="Ledger.Dijkstra.Specification.Leios.html#8597" class="Bound">cert</a> <a id="8756" class="Symbol">.</a><a id="8757" href="Ledger.Dijkstra.Specification.Leios.html#6355" class="Field">signers</a> <a id="8765" href="Interface.TypeClasses.HasSubset.html#288" class="Field Operator">⊆</a> <a id="8767" href="Axiom.Set.html#5903" class="Function">fromList</a> <a id="8776" class="Symbol">(</a><a id="8777" href="Data.List.Base.html#6391" class="Function">upTo</a> <a id="8782" class="Symbol">(</a><a id="8783" href="Data.List.Base.html#4746" class="Function">length</a> <a id="8790" href="Ledger.Dijkstra.Specification.Leios.html#8581" class="Bound">cmt</a><a id="8793" class="Symbol">))</a>
+                <a id="8812" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="8814" href="Ledger.Dijkstra.Specification.Leios.html#972" class="Datatype">Allˡ</a> <a id="8819" class="Symbol">(λ</a> <a id="8822" href="Ledger.Dijkstra.Specification.Leios.html#8822" class="Bound">s</a> <a id="8824" class="Symbol">→</a> <a id="8826" href="Data.Maybe.html#845" class="Function">Is-just</a> <a id="8834" class="Symbol">(</a><a id="8835" href="Ledger.Dijkstra.Specification.Leios.html#8822" class="Bound">s</a> <a id="8837" class="Symbol">.</a><a id="8838" href="Ledger.Dijkstra.Specification.Leios.html#1830" class="Field">key</a><a id="8841" class="Symbol">))</a> <a id="8844" href="Ledger.Dijkstra.Specification.Leios.html#8668" class="Function">seats</a>
+                <a id="8866" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="8868" href="Ledger.Dijkstra.Specification.Crypto.html#1347" class="Function">isSignedByAggregate</a> <a id="8888" class="Symbol">(</a><a id="8889" href="Axiom.Set.html#5903" class="Function">fromList</a> <a id="8898" class="Symbol">(</a><a id="8899" href="Data.List.Base.html#4606" class="Function">mapMaybe</a> <a id="8908" href="Ledger.Dijkstra.Specification.Leios.html#1830" class="Field">key</a> <a id="8912" href="Ledger.Dijkstra.Specification.Leios.html#8668" class="Function">seats</a><a id="8917" class="Symbol">))</a> <a id="8920" href="Ledger.Dijkstra.Specification.Leios.html#8591" class="Bound">msg</a> <a id="8924" class="Symbol">(</a><a id="8925" href="Ledger.Dijkstra.Specification.Leios.html#8597" class="Bound">cert</a> <a id="8930" class="Symbol">.</a><a id="8931" href="Ledger.Dijkstra.Specification.Leios.html#6374" class="Field">sig</a><a id="8934" class="Symbol">)</a>
+                <a id="8952" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="8954" href="Ledger.Prelude.Numeric.UnitInterval.html#2245" class="Function">fromUnitInterval</a> <a id="8971" href="Ledger.Dijkstra.Specification.Leios.html#8587" class="Bound">τ</a> <a id="8973" href="Data.Rational.Base.html#2544" class="Datatype Operator">ℚ.≤</a> <a id="8977" href="Axiom.Set.Sum.html#1759" class="Function">∑ˡ[</a> <a id="8981" href="Ledger.Dijkstra.Specification.Leios.html#8981" class="Bound">s</a> <a id="8983" href="Axiom.Set.Sum.html#1759" class="Function">←</a> <a id="8985" href="Ledger.Dijkstra.Specification.Leios.html#8668" class="Function">seats</a> <a id="8991" href="Axiom.Set.Sum.html#1759" class="Function">]</a> <a id="8993" href="Ledger.Prelude.Numeric.UnitInterval.html#2245" class="Function">fromUnitInterval</a> <a id="9010" class="Symbol">(</a><a id="9011" href="Ledger.Dijkstra.Specification.Leios.html#8981" class="Bound">s</a> <a id="9013" class="Symbol">.</a><a id="9014" href="Ledger.Dijkstra.Specification.Leios.html#1803" class="Field">weight</a><a id="9020" class="Symbol">)</a>
+
+      <a id="9029" href="Ledger.Dijkstra.Specification.Leios.html#9029" class="Function">fromConjuncts</a> <a id="9043" class="Symbol">:</a> <a id="9045" href="Ledger.Dijkstra.Specification.Leios.html#8716" class="Function">Conjuncts</a> <a id="9055" class="Symbol">→</a> <a id="9057" href="Ledger.Dijkstra.Specification.Leios.html#7433" class="Record">ValidEBCert</a> <a id="9069" href="Ledger.Dijkstra.Specification.Leios.html#8581" class="Bound">cmt</a> <a id="9073" href="Ledger.Dijkstra.Specification.Leios.html#8587" class="Bound">τ</a> <a id="9075" href="Ledger.Dijkstra.Specification.Leios.html#8591" class="Bound">msg</a> <a id="9079" href="Ledger.Dijkstra.Specification.Leios.html#8597" class="Bound">cert</a>
+      <a id="9090" href="Ledger.Dijkstra.Specification.Leios.html#9029" class="Function">fromConjuncts</a> <a id="9104" class="Symbol">(</a><a id="9105" href="Ledger.Dijkstra.Specification.Leios.html#9105" class="Bound">a</a> <a id="9107" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="9109" href="Ledger.Dijkstra.Specification.Leios.html#9109" class="Bound">k</a> <a id="9111" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="9113" href="Ledger.Dijkstra.Specification.Leios.html#9113" class="Bound">s</a> <a id="9115" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="9117" href="Ledger.Dijkstra.Specification.Leios.html#9117" class="Bound">q</a><a id="9118" class="Symbol">)</a> <a id="9120" class="Symbol">=</a>
+        <a id="9130" class="Keyword">record</a> <a id="9137" class="Symbol">{</a> <a id="9139" href="Ledger.Dijkstra.Specification.Leios.html#7600" class="Field">signersSeated</a> <a id="9153" class="Symbol">=</a> <a id="9155" href="Ledger.Dijkstra.Specification.Leios.html#9105" class="Bound">a</a> <a id="9157" class="Symbol">;</a> <a id="9159" href="Ledger.Dijkstra.Specification.Leios.html#7667" class="Field">signersKeyed</a> <a id="9172" class="Symbol">=</a> <a id="9174" href="Ledger.Dijkstra.Specification.Leios.html#9109" class="Bound">k</a> <a id="9176" class="Symbol">;</a> <a id="9178" href="Ledger.Dijkstra.Specification.Leios.html#7725" class="Field">validSignature</a> <a id="9193" class="Symbol">=</a> <a id="9195" href="Ledger.Dijkstra.Specification.Leios.html#9113" class="Bound">s</a> <a id="9197" class="Symbol">;</a> <a id="9199" href="Ledger.Dijkstra.Specification.Leios.html#7815" class="Field">quorum</a> <a id="9206" class="Symbol">=</a> <a id="9208" href="Ledger.Dijkstra.Specification.Leios.html#9117" class="Bound">q</a> <a id="9210" class="Symbol">}</a>
+
+      <a id="9219" href="Ledger.Dijkstra.Specification.Leios.html#9219" class="Function">toConjuncts</a> <a id="9231" class="Symbol">:</a> <a id="9233" href="Ledger.Dijkstra.Specification.Leios.html#7433" class="Record">ValidEBCert</a> <a id="9245" href="Ledger.Dijkstra.Specification.Leios.html#8581" class="Bound">cmt</a> <a id="9249" href="Ledger.Dijkstra.Specification.Leios.html#8587" class="Bound">τ</a> <a id="9251" href="Ledger.Dijkstra.Specification.Leios.html#8591" class="Bound">msg</a> <a id="9255" href="Ledger.Dijkstra.Specification.Leios.html#8597" class="Bound">cert</a> <a id="9260" class="Symbol">→</a> <a id="9262" href="Ledger.Dijkstra.Specification.Leios.html#8716" class="Function">Conjuncts</a>
+      <a id="9278" href="Ledger.Dijkstra.Specification.Leios.html#9219" class="Function">toConjuncts</a> <a id="9290" href="Ledger.Dijkstra.Specification.Leios.html#9290" class="Bound">v</a> <a id="9292" class="Symbol">=</a> <a id="9294" class="Keyword">let</a> <a id="9298" class="Keyword">open</a> <a id="9303" href="Ledger.Dijkstra.Specification.Leios.html#7433" class="Module">ValidEBCert</a> <a id="9315" href="Ledger.Dijkstra.Specification.Leios.html#9290" class="Bound">v</a> <a id="9317" class="Keyword">in</a> <a id="9320" href="Ledger.Dijkstra.Specification.Leios.html#7600" class="Field">signersSeated</a> <a id="9334" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="9336" href="Ledger.Dijkstra.Specification.Leios.html#7667" class="Field">signersKeyed</a> <a id="9349" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="9351" href="Ledger.Dijkstra.Specification.Leios.html#7725" class="Field">validSignature</a> <a id="9366" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="9368" href="Ledger.Dijkstra.Specification.Leios.html#7815" class="Field">quorum</a>
+</pre>
 
 
 
