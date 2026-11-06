@@ -159,19 +159,19 @@ d__'8866'_'8640''10631'_'44'LEDGERS'10632'__2934 = erased
 d_EBCert_2976 a0 a1 = ()
 -- Ledger.Dijkstra.Specification.BlockBody._.EBCert.sig
 d_sig_2982 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1652 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1672 ->
   AgdaAny
 d_sig_2982 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_sig_1660
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_sig_1680
       (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody._.EBCert.signers
 d_signers_2984 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1652 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1672 ->
   [Integer]
 d_signers_2984 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_signers_1658
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_signers_1678
       (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody._.BlocksMade
 d_BlocksMade_2990 ::
@@ -260,7 +260,7 @@ data T_Block_3146
   = C_constructor_3180 T_BHeader_3134 AgdaAny
                        [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3870]
                        (Maybe
-                          MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1652)
+                          MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1672)
                        Integer AgdaAny
 -- Ledger.Dijkstra.Specification.BlockBody.Block.bheader
 d_bheader_3164 :: T_Block_3146 -> T_BHeader_3134
@@ -286,7 +286,7 @@ d_ts_3168 v0
 d_ebCert_3170 ::
   T_Block_3146 ->
   Maybe
-    MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1652
+    MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1672
 d_ebCert_3170 v0
   = case coe v0 of
       C_constructor_3180 v1 v2 v3 v4 v5 v6 -> coe v4
@@ -380,7 +380,7 @@ d_bheader_3208 v0 = coe d_bheader_3164 (coe v0)
 d_ebCert_3210 ::
   T_Block_3146 ->
   Maybe
-    MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1652
+    MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1672
 d_ebCert_3210 v0 = coe d_ebCert_3170 (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody._._.ts
 d_ts_3212 ::

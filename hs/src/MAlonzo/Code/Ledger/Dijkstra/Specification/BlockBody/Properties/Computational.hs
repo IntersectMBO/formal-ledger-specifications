@@ -102,7 +102,7 @@ d_bheader_2748 v0
 d_ebCert_2750 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3146 ->
   Maybe
-    MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1652
+    MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1672
 d_ebCert_2750 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_ebCert_3170
@@ -129,19 +129,19 @@ d_'8801''45'bBodySize_2756 = erased
 d_EBCert_2864 a0 a1 = ()
 -- Ledger.Dijkstra.Specification.BlockBody.Properties.Computational._.EBCert.sig
 d_sig_2870 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1652 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1672 ->
   AgdaAny
 d_sig_2870 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_sig_1660
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_sig_1680
       (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody.Properties.Computational._.EBCert.signers
 d_signers_2872 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1652 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1672 ->
   [Integer]
 d_signers_2872 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_signers_1658
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_signers_1678
       (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody.Properties.Computational._.completeness
 d_completeness_3134 ::
@@ -194,13 +194,13 @@ d_go_3160 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3146 ->
   Bool ->
   Maybe
-    MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1652 ->
+    MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1672 ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
 d_go_3160 ~v0 ~v1 ~v2 v3 v4 = du_go_3160 v3 v4
 du_go_3160 ::
   Bool ->
   Maybe
-    MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1652 ->
+    MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.T_EBCert_1672 ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
 du_go_3160 v0 v1
   = case coe v1 of
