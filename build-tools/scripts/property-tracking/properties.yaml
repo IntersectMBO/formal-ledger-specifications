@@ -466,24 +466,28 @@ properties:
     notes: "Covers both thm:CERT-PoV and thm:CERTS-PoV."
 
   - id: dijkstra-utxo-pov
-    title: "UTXO preserves value"
+    title: "UTXO value accounting for LEDGER-pov"
     era: dijkstra
     sts: UTXO
     module: Ledger.Dijkstra.Specification.Utxo.Properties.PoV
     anchor: sec:utxo-pov
     defs: [UTXO-pov-invalid,UTXO-V-mechanical,UTXO-batch-balance-coin]
     issues: [1186]
-    notes: ""
+    notes: >
+      Ingredients of LEDGER-pov, not a standalone theorem: in Dijkstra, value is
+      preserved across a whole batch, not by each UTXO step (#1186).
 
   - id: dijkstra-utxow-pov
-    title: "UTXOW preserves value"
+    title: "UTXOW value accounting for LEDGER-pov"
     era: dijkstra
     sts: UTXOW
     module: Ledger.Dijkstra.Specification.Utxow.Properties.PoV
     anchor: sec:utxow-pov
     defs: [utxow-pov-invalid, UTXOW-V-mechanical, UTXOW-batch-balance-coin, subutxow-step-coin]
     issues: [1186]
-    notes: ""
+    notes: >
+      Ingredients of LEDGER-pov, not a standalone theorem: in Dijkstra, value is
+      preserved across a whole batch, not by each UTXOW step (#1186).
 
   - id: dijkstra-ledger-pov
     title: "LEDGER preserves value"
