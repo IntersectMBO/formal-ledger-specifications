@@ -1,32 +1,31 @@
 ---
 source_branch: master
-source_path: src/Test/Examples/MultiSigV2/OffChain/Cleanup.lagda.md
+source_path: src/Test/Examples/DEx/OffChain/Stop.lagda.md
 ---
 ```agda
 {-# OPTIONS --safe #-}
 
-module Test.Examples.MultiSigV2.OffChain.Cleanup where
+module Test.Examples.DEx.OffChain.Stop where
 
 open import Ledger.Prelude
 open import Ledger.Conway.Specification.Transaction
 
-open import Test.Examples.MultiSigV2.Datum
-open import Test.Examples.MultiSigV2.OffChain.Lib
-open import Test.Examples.MultiSigV2.Validator
-open import Test.Prelude MultiSigData
-open import Test.SymbolicData MultiSigData
+open import Test.Examples.DEx.Datum
+open import Test.Examples.DEx.Validator
+open import Test.Examples.DEx.OffChain.Lib
+open import Test.Prelude DExData
+open import Test.SymbolicData DExData
 open import Test.LedgerImplementation SData SData
 open import Test.AbstractImplementation valContext
 open import Test.Lib valContext
 
-open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
 
 open TransactionStructure SVTransactionStructure
 open Implementation
 
-makeCleanupTx : (id : ℕ) → UTxOState → PlutusScript → (w : ℕ) → Maybe Tx
-makeCleanupTx id state script@(sh , _) w = 
+makeStopTx : (id : ℕ) → UTxOState → PlutusScript → (w : ℕ) → Maybe Tx
+makeStopTx id state script@(sh , _) w =
   let
     wutxo = getWalletUTxO w (UTxOState.utxo state)
   in
@@ -37,13 +36,13 @@ makeCleanupTx id state script@(sh , _) w =
                          ; txOuts = fromListIx (makeFeeUnPaymentTxOut wutxo txValue)
                          ; txId = id
                          ; collateralInputs = Ledger.Prelude.fromList (map proj₁ wutxo)
-                         ; reqSignerHashes = Ledger.Prelude.fromList (w ∷ [])
+                         ; reqSignerHashes = Ledger.Prelude.fromList (w ∷ []) 
                          } ;
-                wits = record { vkSigs = fromListᵐ ((w , (_+_ {{addNat}} (getTxId wutxo) w) ) ∷ []) ; 
+                wits = record { vkSigs = fromListᵐ ((w , (_+_ {{addNat}} (getTxId wutxo) w) ) ∷ []) ;
                                 scripts = Ledger.Prelude.fromList ((inj₂ script) ∷ []) ;
-                                txdats = ∅ ;
+                                txdats = ∅ ; 
                                 txrdmrs = fromListᵐ (((Spend , (proj₂ scIn)) ,
-                                                      inj₁ (inj₂ Cleanup) , 
+                                                      inj₁ (inj₂ Stop) , 
                                                       ((getTxId wutxo) , w)) ∷ []) } ;
                 txsize = 10 ;
                 isValid = true ;
