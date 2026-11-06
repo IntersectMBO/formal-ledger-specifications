@@ -32,10 +32,10 @@ import qualified MAlonzo.Code.Ledger.Prelude.Foreign.Util
 
 type ScriptHash = Integer
 -- Ledger.Core.Foreign.Crypto.Structure.HSPKKScheme
-d_HSPKKScheme_18 ::
+d_HSPKKScheme_20 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
   MAlonzo.Code.Ledger.Core.Specification.Crypto.T_PKKScheme_60
-d_HSPKKScheme_18 v0
+d_HSPKKScheme_20 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Crypto.C_constructor_138
       (\ v1 v2 -> 0 :: Integer)
@@ -46,7 +46,7 @@ d_HSPKKScheme_18 v0
               MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
               (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'Bool_16))
            (coe
-              MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_extIsSigned_14
+              MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_extIsSigned_16
               v0
               (MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.d_hvkVKey_16
                  (coe v1))
@@ -58,13 +58,13 @@ d_HSPKKScheme_18 v0
       MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
       MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
 -- Ledger.Core.Foreign.Crypto.Structure.HSCryptoStructure
-d_HSCryptoStructure_34 ::
+d_HSCryptoStructure_36 ::
   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
   MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_140
-d_HSCryptoStructure_34 v0
+d_HSCryptoStructure_36 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Crypto.C_constructor_242
-      (d_HSPKKScheme_18 (coe v0))
+      (d_HSPKKScheme_20 (coe v0))
       (coe
          MAlonzo.Code.Ledger.Core.Specification.Crypto.C_mkIsHashableSet_34
          (coe
