@@ -36,7 +36,7 @@ d_Computational'45'CERT_10
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.Properties.Computational.d_Computational'45'CERT_2584
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2880
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2896
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
             (coe
@@ -48,7 +48,7 @@ d_Computational'45'CERTS_12
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.Properties.Computational.d_Computational'45'CERTS_2808
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2880
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2896
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
             (coe
@@ -89,7 +89,7 @@ d_cert'45'step_14 v0
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.Properties.Computational.d_Computational'45'CERT_2584
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2880
+               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2896
                (coe
                   MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
                   (coe
@@ -138,7 +138,7 @@ d_certs'45'step_16 v0
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.Properties.Computational.d_Computational'45'CERTS_2808
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2880
+               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2896
                (coe
                   MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
                   (coe

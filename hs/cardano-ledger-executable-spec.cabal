@@ -598,8 +598,12 @@ library
       MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational
       MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger
       MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.Properties.Computational
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledgers
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Ledgers.Properties.Computational
       MAlonzo.Code.Ledger.Dijkstra.Specification.Leios
       MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.Types
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.Validity
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.Validity.Properties.Computational
       MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap
       MAlonzo.Code.Ledger.Dijkstra.Specification.PoolReap.Properties.Computational
       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams

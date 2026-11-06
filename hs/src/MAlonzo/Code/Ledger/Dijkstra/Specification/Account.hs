@@ -31,9 +31,9 @@ import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
 
 -- _.Credential
-d_Credential_54 a0 a1 a2 a3 = ()
+d_Credential_56 a0 a1 a2 a3 = ()
 -- _.RewardAddress
-d_RewardAddress_322 a0 a1 a2 a3 = ()
+d_RewardAddress_326 a0 a1 a2 a3 = ()
 -- _.RewardAddress.net
 d_net_932 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_116 ->

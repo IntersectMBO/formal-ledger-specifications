@@ -284,7 +284,7 @@ d_Conv'45'GovVotes_40
                               (coe
                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                  (coe
-                                    MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
+                                    MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218)
                                  (coe d_Conv'45'Vote_36)))
                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v1))))
                      (coe
@@ -296,7 +296,7 @@ d_Conv'45'GovVotes_40
                               (coe
                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                  (coe
-                                    MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)
+                                    MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218)
                                  (coe d_Conv'45'Vote_36)))
                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v2))))
                      (coe
@@ -318,7 +318,7 @@ d_Conv'45'GovVotes_40
                 -> coe
                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_constructor_1054
                      (coe
-                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                         (coe
                            MAlonzo.Code.Axiom.Set.d_th_1516
                            (coe
@@ -331,18 +331,18 @@ d_Conv'45'GovVotes_40
                                       (coe v4) in
                             coe
                               (coe
-                                 MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                 MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_284
                                  (coe
                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                     (coe
                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1416
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                           (coe v5))))
                                  (coe
                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1416
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                        (coe v5))))))
                         (coe
                            MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -354,7 +354,7 @@ d_Conv'45'GovVotes_40
                                 (coe
                                    MAlonzo.Code.Class.Convertible.Core.d_from_22
                                    (coe
-                                      MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222))
+                                      MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218))
                                 (coe
                                    (\ v5 ->
                                       MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -366,7 +366,7 @@ d_Conv'45'GovVotes_40
                            (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
                               (coe v1))))
                      (coe
-                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                         (coe
                            MAlonzo.Code.Axiom.Set.d_th_1516
                            (coe
@@ -379,18 +379,18 @@ d_Conv'45'GovVotes_40
                                       (coe v4) in
                             coe
                               (coe
-                                 MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_292
+                                 MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_284
                                  (coe
                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                     (coe
                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1416
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                           (coe v5))))
                                  (coe
                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1416
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
                                        (coe v5))))))
                         (coe
                            MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -402,7 +402,7 @@ d_Conv'45'GovVotes_40
                                 (coe
                                    MAlonzo.Code.Class.Convertible.Core.d_from_22
                                    (coe
-                                      MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222))
+                                      MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218))
                                 (coe
                                    (\ v5 ->
                                       MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -414,7 +414,7 @@ d_Conv'45'GovVotes_40
                            (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
                               (coe v2))))
                      (coe
-                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_602
+                        MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                         (coe
                            MAlonzo.Code.Axiom.Set.d_th_1516
                            (coe
@@ -690,7 +690,7 @@ d_Conv'45'GovVote''_116
                               (\ v5 ->
                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                    (coe
-                                      MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)))
+                                      MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218)))
                            (coe v2)))
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -755,7 +755,7 @@ d_Conv'45'GovVote''_116
                            (\ v5 ->
                               MAlonzo.Code.Class.Convertible.Core.d_from_22
                                 (coe
-                                   MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_222)))
+                                   MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218)))
                         (coe
                            MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
                            (coe MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40) v2))
