@@ -120,7 +120,7 @@ the `noMintSubTx`{.AgdaBound} module parameter for the sub-transactions).
        ≡  cbalance (outs tx) + TxFeesOf tx + DonationsOf tx + getCoin (DirectDepositsOf tx)
           + sum (map  (λ stx → cbalance (outs stx) + DonationsOf stx + getCoin (DirectDepositsOf stx))
                       (SubTransactionsOf tx))
-          + newCertDeposits (PParamsOf Γ') (dom (PoolsOf Γ')) (allDCerts tx)
+          + newCertDeposits (PParamsOf Γ') (dom (PoolsOf (PStateOf Γ'))) (allDCerts tx)
           + (  govProposalsDeposits (PParamsOf Γ') (ListOfGovProposalsOf tx)
                + sum (map  (λ stx → govProposalsDeposits (PParamsOf Γ') (ListOfGovProposalsOf stx))
                            (SubTransactionsOf tx)) )

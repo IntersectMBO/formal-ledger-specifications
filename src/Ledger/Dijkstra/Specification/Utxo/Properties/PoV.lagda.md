@@ -41,7 +41,7 @@ statement below more readable.
     balance premise with respect to `UTxOOf Γ`, the pre-batch snapshot carried by
     the environment.  Its coin projection therefore contains no state variables at
     all; every summand is computed from the environment (`UTxOOf Γ`, `PParamsOf Γ`,
-    the pre-batch pool set `PoolsOf Γ`) and the transaction alone.  Where a step
+    the pre-batch pool set `PoolsOf (PStateOf Γ)`) and the transaction alone.  Where a step
     derivation appears as a hypothesis (`UTXO-batch-balance-coin`{.AgdaFunction}), it
     is there only so that premises 7 and 8 can be extracted from it.
 
@@ -513,7 +513,7 @@ alone.  Given the premises, the proof is pure substitution — apply
           + sum (map  (λ stx →  cbalance (outs stx) + DonationsOf stx
                                 + getCoin (DirectDepositsOf stx))
                       (SubTransactionsOf tx))
-          + newCertDeposits (PParamsOf Γ) (dom (PoolsOf Γ)) (allDCerts tx)
+          + newCertDeposits (PParamsOf Γ) (dom (PoolsOf (PStateOf Γ))) (allDCerts tx)
           + (  govProposalsDeposits (PParamsOf Γ) (ListOfGovProposalsOf tx)
                + sum (map  (λ stx → govProposalsDeposits  (PParamsOf Γ)
                                                           (ListOfGovProposalsOf stx))
@@ -527,13 +527,13 @@ alone.  Given the premises, the proof is pure substitution — apply
       ≡˘⟨ coin-consumedBatch pp tx u noMintTop noMintSubTx ⟩
     coin (consumedBatch pp tx u)
       ≡⟨ cong coin batchBal ⟩
-    coin (producedBatch pp (PoolsOf Γ) tx)
-      ≡⟨ coin-producedBatch pp (PoolsOf Γ) tx ⟩
+    coin (producedBatch pp (PoolsOf (PStateOf Γ)) tx)
+      ≡⟨ coin-producedBatch pp (PoolsOf (PStateOf Γ)) tx ⟩
     cbalance (outs tx) + TxFeesOf tx + DonationsOf tx + getCoin (DirectDepositsOf tx)
       + sum (map  (λ stx →  cbalance (outs stx) + DonationsOf stx
                             + getCoin (DirectDepositsOf stx))
                   (SubTransactionsOf tx))
-      + newCertDeposits pp (dom (PoolsOf Γ)) (allDCerts tx)
+      + newCertDeposits pp (dom (PoolsOf (PStateOf Γ))) (allDCerts tx)
       + ( govProposalsDeposits pp (ListOfGovProposalsOf tx)
         + sum (map  (λ stx → govProposalsDeposits pp (ListOfGovProposalsOf stx))
                     (SubTransactionsOf tx)) )
