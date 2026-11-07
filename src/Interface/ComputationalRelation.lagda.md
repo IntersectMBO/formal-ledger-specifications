@@ -238,7 +238,7 @@ private variable
 ## A Computation Result Type
 
 ```agda
-data ComputationResult {a : Level} (Err : Type) (R : Type a) : Type a where
+data ComputationResult {e a : Level} (Err : Type e) (R : Type a) : Type (e ⊔ˡ a) where
   success : R   → ComputationResult Err R
   failure : Err → ComputationResult Err R
 
@@ -262,7 +262,7 @@ module _ {a b} {E : Type} {A : Type a} {B : Type b} where
   caseCR-failure (_ , refl) = refl
 
 instance
-  Bifunctor-ComputationResult : ∀ {a : Level} → Bifunctor {_} {a} ComputationResult
+  Bifunctor-ComputationResult : Bifunctor ComputationResult
   Bifunctor-ComputationResult .bimap _ f (success x) = success $ f x
   Bifunctor-ComputationResult .bimap f _ (failure x) = failure $ f x
 
