@@ -270,6 +270,12 @@ instance
   Functor-ComputationResult ._<$>_ f (success x) = success $ f x
   Functor-ComputationResult ._<$>_ _ (failure x) = failure x
 
+  FunctorLaws-ComputationResult : ∀ {E : Type} → FunctorLaws (ComputationResult E)
+  FunctorLaws-ComputationResult .fmap-id (success _) = refl
+  FunctorLaws-ComputationResult .fmap-id (failure _) = refl
+  FunctorLaws-ComputationResult .fmap-∘ (success _) = refl
+  FunctorLaws-ComputationResult .fmap-∘ (failure _) = refl
+
   Applicative-ComputationResult : ∀ {E : Type} → Applicative (ComputationResult E)
   Applicative-ComputationResult .pure = success
   Applicative-ComputationResult ._<*>_ (success f) x = f <$> x
@@ -282,6 +288,15 @@ instance
 
 map-failure : ∀ {A B C : Type} {f : A → B} {x : C} {ma} → ma ≡ failure x → map f ma ≡ failure x
 map-failure refl = refl
+
+-- Completeness through one step of a computation: if the first computation succeeds
+-- with state a, the bind's result is the continuation's at a, whatever the proof.
+bind-complete : ∀ {E A B C : Type} {P : A → Type}
+  (m : ComputationResult E (Σ A P)) {k : Σ A P → ComputationResult E B} {h : B → C} {a : A} {c : C}
+  → (proj₁ <$> m) ≡ success a
+  → (∀ p → (h <$> k (a , p)) ≡ success c)
+  → (h <$> (m >>= k)) ≡ success c
+bind-complete (success (_ , p)) refl hk = hk p
 
 success-maybe : ∀ {R : Type} → ComputationResult Err R → Maybe R
 success-maybe (success x) = just x
