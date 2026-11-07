@@ -35,9 +35,8 @@ record LState : Type where
     govSt      : GovState
     certState  : CertState
 
-instance
-  unquoteDecl HasCast-LState = derive-HasCast
-    [ (quote LState , HasCast-LState) ]
+unquoteDecl HasCast-LState = derive-HasCast
+  [ (quote LState , HasCast-LState) ]
 
 private variable
   Γ : LEnv

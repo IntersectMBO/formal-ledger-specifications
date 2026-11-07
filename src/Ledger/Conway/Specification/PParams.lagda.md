@@ -282,21 +282,20 @@ paramsWF-elim pp pwf (suc n) x = z<s
 paramsWF-elim pp pwf 0 0∈ = ⊥-elim (pwf (to ∈-fromList 0∈))
   where open Equivalence
 
-instance
-  unquoteDecl DecEq-DrepThresholds = derive-DecEq
-    ((quote DrepThresholds , DecEq-DrepThresholds) ∷ [])
-  unquoteDecl DecEq-PoolThresholds = derive-DecEq
-    ((quote PoolThresholds , DecEq-PoolThresholds) ∷ [])
-  unquoteDecl DecEq-PParams        = derive-DecEq
-    ((quote PParams , DecEq-PParams) ∷ [])
-  unquoteDecl DecEq-PParamGroup    = derive-DecEq
-    ((quote PParamGroup , DecEq-PParamGroup) ∷ [])
-  unquoteDecl Show-DrepThresholds = derive-Show
-    ((quote DrepThresholds , Show-DrepThresholds) ∷ [])
-  unquoteDecl Show-PoolThresholds = derive-Show
-    ((quote PoolThresholds , Show-PoolThresholds) ∷ [])
-  unquoteDecl Show-PParams        = derive-Show
-    ((quote PParams , Show-PParams) ∷ [])
+unquoteDecl DecEq-DrepThresholds = derive-DecEq
+  ((quote DrepThresholds , DecEq-DrepThresholds) ∷ [])
+unquoteDecl DecEq-PoolThresholds = derive-DecEq
+  ((quote PoolThresholds , DecEq-PoolThresholds) ∷ [])
+unquoteDecl DecEq-PParams        = derive-DecEq
+  ((quote PParams , DecEq-PParams) ∷ [])
+unquoteDecl DecEq-PParamGroup    = derive-DecEq
+  ((quote PParamGroup , DecEq-PParamGroup) ∷ [])
+unquoteDecl Show-DrepThresholds = derive-Show
+  ((quote DrepThresholds , Show-DrepThresholds) ∷ [])
+unquoteDecl Show-PoolThresholds = derive-Show
+  ((quote PoolThresholds , Show-PoolThresholds) ∷ [])
+unquoteDecl Show-PParams        = derive-Show
+  ((quote PParams , Show-PParams) ∷ [])
 
 module PParamsUpdate where
   record PParamsUpdate : Type where
@@ -486,9 +485,8 @@ module PParamsUpdate where
       open module P = PParams pp
       open module U = PParamsUpdate ppu
 
-  instance
-    unquoteDecl DecEq-PParamsUpdate  = derive-DecEq
-      ((quote PParamsUpdate , DecEq-PParamsUpdate) ∷ [])
+  unquoteDecl DecEq-PParamsUpdate  = derive-DecEq
+    ((quote PParamsUpdate , DecEq-PParamsUpdate) ∷ [])
 ```
 -->
 

@@ -15,6 +15,5 @@ instance
   HsType-HSLanguage = autoHsType HSLanguage
   Convert-HSLanguage = autoConvert HSLanguage
 
-instance
-  unquoteDecl DecEq-HSLanguage = derive-DecEq ((quote HSLanguage , DecEq-HSLanguage) ∷ [])
-  unquoteDecl Show-HSLanguage = derive-Show ((quote HSLanguage , Show-HSLanguage) ∷ [])
+unquoteDecl DecEq-HSLanguage = derive-DecEq ((quote HSLanguage , DecEq-HSLanguage) ∷ [])
+unquoteDecl Show-HSLanguage = derive-Show ((quote HSLanguage , Show-HSLanguage) ∷ [])

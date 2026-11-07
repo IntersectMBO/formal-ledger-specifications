@@ -215,7 +215,7 @@ _ = isScriptRewardAddress ⁇¹ ∋ it
 getScriptHash : ∀ a → isScriptAddr a → ScriptHash
 getScriptHash (inj₁ _) (SHisScript sh) = sh
 
-instance abstract
+abstract
   unquoteDecl DecEq-BaseAddr DecEq-BootstrapAddr DecEq-RewardAddress = derive-DecEq
     ( (quote BaseAddr       , DecEq-BaseAddr)
     ∷ (quote BootstrapAddr  , DecEq-BootstrapAddr)

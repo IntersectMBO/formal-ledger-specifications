@@ -32,25 +32,22 @@ SKeyHash = ℕ
 data SCredential : Type where
   KeyHashObj : ℕ → SCredential
   ScriptObj  : ℕ → SCredential
-instance
-  unquoteDecl DecEq-SCredential = derive-DecEq
-    ((quote SCredential , DecEq-SCredential) ∷ [])
+unquoteDecl DecEq-SCredential = derive-DecEq
+  ((quote SCredential , DecEq-SCredential) ∷ [])
 
 record SBaseAddr : Set where
   field net    : SNetwork
         pay    : SCredential
         stake  : Maybe SCredential
-instance
-  unquoteDecl DecEq-SBaseAddr = derive-DecEq
-    ((quote SBaseAddr , DecEq-SBaseAddr) ∷ [])
+unquoteDecl DecEq-SBaseAddr = derive-DecEq
+  ((quote SBaseAddr , DecEq-SBaseAddr) ∷ [])
 
 record SBootstrapAddr : Set where
   field net        : SNetwork
         pay        : SCredential
         attrsSize  : ℕ
-instance
-  unquoteDecl DecEq-SBootstrapAddr = derive-DecEq
-    ((quote SBootstrapAddr , DecEq-SBootstrapAddr) ∷ [])
+unquoteDecl DecEq-SBootstrapAddr = derive-DecEq
+  ((quote SBootstrapAddr , DecEq-SBootstrapAddr) ∷ [])
 
 SAddr = SBaseAddr ⊎ SBootstrapAddr
 
@@ -61,9 +58,8 @@ SUTxO  = List (STxIn × STxOut)
 record SRewardAddress : Set where
   field net    : SNetwork
         stake  : SCredential
-instance
-  unquoteDecl DecEq-SRewardAddress = derive-DecEq
-    ((quote SRewardAddress , DecEq-SRewardAddress) ∷ [])
+unquoteDecl DecEq-SRewardAddress = derive-DecEq
+  ((quote SRewardAddress , DecEq-SRewardAddress) ∷ [])
 
 data SScriptPurpose : Set where
   -- network is tt so we can ignore it here
@@ -71,9 +67,8 @@ data SScriptPurpose : Set where
   Mint     : SValue → SScriptPurpose
   Spend    : STxIn → SScriptPurpose
   Empty    : SScriptPurpose
-instance
-  unquoteDecl DecEq-SScriptPurpose = derive-DecEq
-    ((quote SScriptPurpose , DecEq-SScriptPurpose) ∷ [])
+unquoteDecl DecEq-SScriptPurpose = derive-DecEq
+  ((quote SScriptPurpose , DecEq-SScriptPurpose) ∷ [])
 
 
 record STxInfo : Set where
@@ -90,9 +85,8 @@ record STxInfo : Set where
 ```
 <!--
 ```agda
-instance
-  unquoteDecl DecEq-STxInfo = derive-DecEq
-    ((quote STxInfo , DecEq-STxInfo) ∷ [])
+unquoteDecl DecEq-STxInfo = derive-DecEq
+  ((quote STxInfo , DecEq-STxInfo) ∷ [])
 
 -- open import ScriptVerification.LedgerImplementation SScriptPurpose SScriptPurpose
 ```

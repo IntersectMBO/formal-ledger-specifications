@@ -100,5 +100,4 @@ private
       field a : ℕ
             b c : Bool
 
-    instance
-      unquoteDecl HasCast-R'' = derive-HasCast ⦃ defaultTCOptions ⦄ ((quote R'' , HasCast-R'') ∷  [])
+    unquoteDecl HasCast-R'' = derive-HasCast ⦃ defaultTCOptions ⦄ ((quote R'' , HasCast-R'') ∷  [])
