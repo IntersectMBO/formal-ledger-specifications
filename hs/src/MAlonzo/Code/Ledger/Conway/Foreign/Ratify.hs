@@ -1722,7 +1722,7 @@ d_stakeDistrVDeleg_450 v0
       (coe v0)
 -- Ledger.Conway.Foreign.Ratify._.Computational-RATIFIES
 d_Computational'45'RATIFIES_454 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'RATIFIES_454
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Ratify.Properties.Computational.d_Computational'45'RATIFIES_2598
@@ -1732,7 +1732,7 @@ d_Computational'45'RATIFIES_454
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
 -- Ledger.Conway.Foreign.Ratify._.Computational-RATIFY
 d_Computational'45'RATIFY_456 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'RATIFY_456
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Ratify.Properties.Computational.d_Computational'45'RATIFY_2596
@@ -2927,7 +2927,7 @@ d_ratify'45'step_482 v0
                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45''8869'_18)
                (coe d_Conv'45'RatifyState_480))))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_compute_278
+         MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
          (coe
             MAlonzo.Code.Ledger.Conway.Specification.Ratify.Properties.Computational.d_Computational'45'RATIFIES_2598
             (coe

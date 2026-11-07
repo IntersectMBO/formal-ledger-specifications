@@ -193,10 +193,10 @@ du_Dec'45'inInterval_2598 v0
 d_Computational'45'UTXOS_2788 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'UTXOS_2788 v0 v1
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_416
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
       (d_computeProof_2880 (coe v0) (coe v1))
 -- Ledger.Conway.Conformance.Utxo.Properties._.go.computeProof
 d_computeProof_2880 ::
@@ -886,10 +886,10 @@ d_completeness_2890 = erased
 d_Computational'45'UTXO_2920 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'UTXO_2920 v0 v1
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_416
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
       (d_computeProof_3002 (coe v0) (coe v1))
 -- Ledger.Conway.Conformance.Utxo.Properties._.Go.computeProofH
 d_computeProofH_2960 ::
@@ -2277,7 +2277,7 @@ d_UTXO'45'step_3222 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
 d_UTXO'45'step_3222 v0 v1
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.du_compute_278
+      MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
       (coe d_Computational'45'UTXO_2920 (coe v0) (coe v1))
 -- Ledger.Conway.Conformance.Utxo.Properties.UTXO-step-computes-UTXO
 d_UTXO'45'step'45'computes'45'UTXO_3224 ::
@@ -2290,6 +2290,6 @@ d_UTXO'45'step'45'computes'45'UTXO_3224 ::
   MAlonzo.Code.Function.Bundles.T_Equivalence_1858
 d_UTXO'45'step'45'computes'45'UTXO_3224 v0 v1 v2 v3 v4 v5
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.du_'8801''45'success'8660'STS_304
+      MAlonzo.Code.Interface.ComputationalRelation.du_'8801''45'success'8660'STS_332
       (coe d_Computational'45'UTXO_2920 (coe v0) (coe v1)) (coe v2)
       (coe v3) (coe v4) (coe v5)

@@ -203,7 +203,7 @@ d_dreps_66 v0
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1610 (coe v0)
 -- Ledger.Conway.Foreign.Certs._.Computational-POOL
 d_Computational'45'POOL_70 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'POOL_70
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Certs.Properties.Computational.d_Computational'45'POOL_1896
@@ -215,7 +215,7 @@ d_Computational'45'POOL_70
                MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)))
 -- Ledger.Conway.Foreign.Certs._.Computational-DELEG
 d_Computational'45'DELEG_74 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'DELEG_74
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties.d_Computational'45'DELEG_1654
@@ -227,7 +227,7 @@ d_Computational'45'DELEG_74
                MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)))
 -- Ledger.Conway.Foreign.Certs._.Computational-GOVCERT
 d_Computational'45'GOVCERT_76 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'GOVCERT_76
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties.d_Computational'45'GOVCERT_1856
@@ -8361,7 +8361,7 @@ d_deleg'45'step_202 v0
                (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvString_12)
                (coe d_Conv'45'DState_160))))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_compute_278
+         MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
          (coe
             MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties.d_Computational'45'DELEG_1654
             (coe
@@ -8401,7 +8401,7 @@ d_pool'45'step_204 v0
                (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvString_12)
                (coe d_Conv'45'PState_92))))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_compute_278
+         MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
          (coe
             MAlonzo.Code.Ledger.Conway.Specification.Certs.Properties.Computational.d_Computational'45'POOL_1896
             (coe
@@ -8442,7 +8442,7 @@ d_govcert'45'step_206 v0
                (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvString_12)
                (coe d_Conv'45'CertState_172))))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_compute_278
+         MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
          (coe
             MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties.d_Computational'45'GOVCERT_1856
             (coe

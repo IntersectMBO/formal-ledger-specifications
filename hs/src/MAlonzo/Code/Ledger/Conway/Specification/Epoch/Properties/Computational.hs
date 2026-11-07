@@ -428,7 +428,7 @@ d_set_3236 v0
       (coe v0)
 -- Ledger.Conway.Specification.Epoch.Properties.Computational._.completeness
 d_completeness_3250 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
@@ -437,14 +437,14 @@ d_completeness_3250 ::
 d_completeness_3250 = erased
 -- Ledger.Conway.Specification.Epoch.Properties.Computational._.computeProof
 d_computeProof_3256 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
 d_computeProof_3256 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_276
+      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_304
       (coe v0)
 -- Ledger.Conway.Specification.Epoch.Properties.Computational._.EPOCH-total
 d_EPOCH'45'total_3278 ::
@@ -10735,15 +10735,15 @@ d_EPOCH'45'complete''_3414 = erased
 d_Computational'45'EPOCH_3416 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'EPOCH_3416 v0 ~v1
   = du_Computational'45'EPOCH_3416 v0
 du_Computational'45'EPOCH_3416 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 du_Computational'45'EPOCH_3416 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_416
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
       (\ v1 v2 v3 ->
          coe
            MAlonzo.Code.Interface.ComputationalRelation.C_success_42
@@ -11726,15 +11726,15 @@ d_NEWEPOCH'45'complete_3470 = erased
 d_Computational'45'NEWEPOCH_3566 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'NEWEPOCH_3566 v0 ~v1
   = du_Computational'45'NEWEPOCH_3566 v0
 du_Computational'45'NEWEPOCH_3566 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 du_Computational'45'NEWEPOCH_3566 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_416
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
       (\ v1 v2 v3 ->
          coe
            MAlonzo.Code.Interface.ComputationalRelation.C_success_42

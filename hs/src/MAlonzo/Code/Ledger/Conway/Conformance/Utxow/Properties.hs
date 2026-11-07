@@ -91,10 +91,10 @@ du_Dec'45'HasInlineDatum_2146
 d_Computational'45'UTXOW_2148 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'UTXOW_2148 v0 v1
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_416
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
       (d_computeProof_2224 (coe v0) (coe v1))
 -- Ledger.Conway.Conformance.Utxow.Properties._.Go.lift-step
 d_lift'45'step_2188 ::

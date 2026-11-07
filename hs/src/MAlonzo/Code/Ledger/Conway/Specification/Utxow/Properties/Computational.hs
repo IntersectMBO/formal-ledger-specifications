@@ -89,10 +89,10 @@ d__'8866'_'8640''10631'_'44'UTXO'10632'__2120 a0 a1 a2 a3 a4 a5
 d_Computational'45'UTXOW_2320 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'UTXOW_2320 v0 v1
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_416
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
       (d_computeProof_2396 (coe v0) (coe v1))
 -- Ledger.Conway.Specification.Utxow.Properties.Computational._.Go.lift-step
 d_lift'45'step_2360 ::
@@ -223,7 +223,7 @@ d_computeProofH_2388 v0 v1 v2 v3 v4 v5
                               (coe MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45'Σ_74)
                               (\ v9 -> coe du_lift'45'step_2360 (coe v8)))
                            (coe
-                              MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_276
+                              MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_304
                               (MAlonzo.Code.Ledger.Conway.Specification.Utxo.Properties.Computational.d_Computational'45'UTXO_3090
                                  (coe v0) (coe v1))
                               v2 v3 v4)

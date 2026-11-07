@@ -204,7 +204,7 @@ d_newEpochState_62 v0
       (coe v0)
 -- Ledger.Conway.Foreign.Chain._.Computational-CHAIN
 d_Computational'45'CHAIN_66 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'CHAIN_66
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Chain.Properties.Computational.d_Computational'45'CHAIN_2610
@@ -7236,7 +7236,7 @@ d_chain'45'step'8320'_202 v0 v1 v2
                 MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_86
                 (coe d_ChainStateToConf_168))
              (coe
-                MAlonzo.Code.Interface.ComputationalRelation.du_compute_278
+                MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
                 (coe
                    MAlonzo.Code.Ledger.Conway.Specification.Chain.Properties.Computational.d_Computational'45'CHAIN_2610
                    (coe

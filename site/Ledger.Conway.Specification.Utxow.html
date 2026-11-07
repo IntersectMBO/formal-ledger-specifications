@@ -7375,6 +7375,154 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2_25_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2_25_3" id="__nav_5_2_25_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validity/
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_2_25_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2_25_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Validity/
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2_25_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2_25_3_1" id="__nav_5_2_25_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Properties/
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_5_2_25_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2_25_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Properties/
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Dijkstra.Specification.Leios.Validity.Properties.Computational.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Computational
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -12254,7 +12402,7 @@ helps checking that the same datums and redeemers are provided every time
 a transaction is validated. See Section 2.2, Propery C.8 and the proof of
 Lemma C.10 in <a href="#alonzo-ledger-spec">VK21,</a> for the details.</p>
 <pre class="Agda"><a id="hashScriptIntegrity"></a><a id="6154" href="Ledger.Conway.Specification.Utxow.html#6154" class="Function">hashScriptIntegrity</a>
-  <a id="6176" class="Symbol">:</a> <a id="6178" href="Ledger.Conway.Specification.PParams.html#5296" class="Record">PParams</a>
+  <a id="6176" class="Symbol">:</a> <a id="6178" href="Ledger.Conway.Specification.PParams.html#5373" class="Record">PParams</a>
   <a id="6188" class="Symbol">→</a> <a id="6190" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="6192" href="Ledger.Conway.Specification.Script.Base.html#1122" class="Function">Language</a>
   <a id="6203" class="Symbol">→</a> <a id="6205" href="Ledger.Conway.Specification.Transaction.html#4485" class="Function">RdmrPtr</a> <a id="6213" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="6215" class="Symbol">(</a><a id="6216" href="Ledger.Conway.Specification.Script.Base.html#2036" class="Function">Redeemer</a> <a id="6225" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="6227" href="Ledger.Conway.Specification.Script.Base.html#1173" class="Function">ExUnits</a><a id="6234" class="Symbol">)</a>
   <a id="6238" class="Symbol">→</a> <a id="6240" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="6242" href="Ledger.Conway.Specification.Script.Base.html#2018" class="Function">Datum</a>
@@ -12327,13 +12475,13 @@ inline datum or datahash is missing (see
     <a id="9436" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a>  <a id="9439" href="Ledger.Conway.Specification.Utxow.html#8357" class="Bound">txdatsHashes</a> <a id="9452" href="Interface.TypeClasses.HasSubset.html#288" class="Field Operator">⊆</a> <a id="9454" href="Ledger.Conway.Specification.Utxow.html#8405" class="Bound">inputsDataHashes</a> <a id="9471" href="Axiom.Set.html#9137" class="Function Operator">∪</a> <a id="9473" href="Ledger.Conway.Specification.Utxow.html#8749" class="Bound">outputsDataHashes</a> <a id="9491" href="Axiom.Set.html#9137" class="Function Operator">∪</a> <a id="9493" href="Ledger.Conway.Specification.Utxow.html#8664" class="Bound">refInputsDataHashes</a>
     <a id="9517" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a>  <a id="9520" href="Class.IsSet.html#916" class="Function">dom</a> <a id="9524" href="Ledger.Conway.Specification.Transaction.html#6500" class="Function">txrdmrs</a> <a id="9532" href="Axiom.Set.html#2772" class="Function Operator">≡ᵉ</a> <a id="9535" href="Ledger.Conway.Specification.Utxow.html#8895" class="Bound">scriptRdrptrs</a>
     <a id="9553" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a>  <a id="9556" href="Ledger.Conway.Specification.Utxow.html#4005" class="Function">languages</a> <a id="9566" href="Ledger.Conway.Specification.Utxow.html#7699" class="Generalizable">tx</a> <a id="9569" href="Ledger.Conway.Specification.Utxow.html#7928" class="Bound">utxo</a> <a id="9574" href="Ledger.Conway.Specification.Utxow.html#8132" class="Bound">neededScriptHashes</a> <a id="9593" href="Interface.TypeClasses.HasSubset.html#288" class="Field Operator">⊆</a>
-         <a id="9604" href="Class.IsSet.html#916" class="Function">dom</a> <a id="9608" class="Symbol">(</a><a id="9609" href="Ledger.Conway.Specification.PParams.html#7225" class="Function">PParams.costmdls</a> <a id="9626" class="Symbol">(</a><a id="9627" href="Ledger.Conway.Specification.PParams.html#7680" class="Field">PParamsOf</a> <a id="9637" href="Ledger.Conway.Specification.Utxow.html#7661" class="Generalizable">Γ</a><a id="9638" class="Symbol">))</a> <a id="9641" href="Axiom.Set.html#9477" class="Function Operator">∩</a> <a id="9643" href="Ledger.Conway.Specification.Utxow.html#5025" class="Function">allowedLanguages</a> <a id="9660" href="Ledger.Conway.Specification.Utxow.html#7699" class="Generalizable">tx</a> <a id="9663" href="Ledger.Conway.Specification.Utxow.html#7928" class="Bound">utxo</a>
+         <a id="9604" href="Class.IsSet.html#916" class="Function">dom</a> <a id="9608" class="Symbol">(</a><a id="9609" href="Ledger.Conway.Specification.PParams.html#7302" class="Function">PParams.costmdls</a> <a id="9626" class="Symbol">(</a><a id="9627" href="Ledger.Conway.Specification.PParams.html#7757" class="Field">PParamsOf</a> <a id="9637" href="Ledger.Conway.Specification.Utxow.html#7661" class="Generalizable">Γ</a><a id="9638" class="Symbol">))</a> <a id="9641" href="Axiom.Set.html#9477" class="Function Operator">∩</a> <a id="9643" href="Ledger.Conway.Specification.Utxow.html#5025" class="Function">allowedLanguages</a> <a id="9660" href="Ledger.Conway.Specification.Utxow.html#7699" class="Generalizable">tx</a> <a id="9663" href="Ledger.Conway.Specification.Utxow.html#7928" class="Bound">utxo</a>
     <a id="9672" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a>  <a id="9675" href="Class.IsSet.html#576" class="Function">∀[</a> <a id="9678" href="Ledger.Conway.Specification.Utxow.html#9678" class="Bound">txOut</a> <a id="9684" href="Class.IsSet.html#576" class="Function">∈</a> <a id="9686" href="Class.IsSet.html#959" class="Function">range</a> <a id="9692" class="Symbol">(</a><a id="9693" href="Ledger.Conway.Specification.Utxow.html#7928" class="Bound">utxo</a> <a id="9698" href="Axiom.Set.Map.html#13601" class="Function Operator">∣</a> <a id="9700" href="Ledger.Conway.Specification.Transaction.html#4816" class="Function">txIns</a><a id="9705" class="Symbol">)</a> <a id="9707" href="Class.IsSet.html#576" class="Function">]</a> <a id="9709" href="Ledger.Conway.Specification.Utxow.html#7118" class="Function">TxOutSpendable-PlutusV1</a> <a id="9733" href="Ledger.Conway.Specification.Utxow.html#7928" class="Bound">utxo</a> <a id="9738" href="Ledger.Conway.Specification.Utxow.html#7699" class="Generalizable">tx</a> <a id="9741" href="Ledger.Conway.Specification.Utxow.html#9678" class="Bound">txOut</a>
     <a id="9751" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a>  <a id="9754" href="Class.IsSet.html#576" class="Function">∀[</a> <a id="9757" href="Ledger.Conway.Specification.Utxow.html#9757" class="Bound">txOut</a> <a id="9763" href="Class.IsSet.html#576" class="Function">∈</a> <a id="9765" href="Class.IsSet.html#959" class="Function">range</a> <a id="9771" class="Symbol">(</a><a id="9772" href="Ledger.Conway.Specification.Utxow.html#7928" class="Bound">utxo</a> <a id="9777" href="Axiom.Set.Map.html#13601" class="Function Operator">∣</a> <a id="9779" href="Ledger.Conway.Specification.Transaction.html#4816" class="Function">txIns</a><a id="9784" class="Symbol">)</a> <a id="9786" href="Class.IsSet.html#576" class="Function">]</a> <a id="9788" href="Ledger.Conway.Specification.Utxow.html#7302" class="Function">TxOutSpendable-PlutusV2</a> <a id="9812" href="Ledger.Conway.Specification.Utxow.html#7928" class="Bound">utxo</a> <a id="9817" href="Ledger.Conway.Specification.Utxow.html#7699" class="Generalizable">tx</a> <a id="9820" href="Ledger.Conway.Specification.Utxow.html#9757" class="Bound">txOut</a>
     <a id="9830" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a>  <a id="9833" href="Ledger.Conway.Specification.Transaction.html#5166" class="Function">txADhash</a> <a id="9842" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="9844" href="Class.Functor.Core.html#272" class="Function">map</a> <a id="9848" href="Interface.TypeClasses.Hashable.html#334" class="Field">hash</a> <a id="9853" href="Ledger.Conway.Specification.Transaction.html#6751" class="Function">txAD</a>
     <a id="9862" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a>  <a id="9865" href="Ledger.Conway.Specification.Transaction.html#5496" class="Function">scriptIntegrityHash</a> <a id="9885" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a>
           <a id="9897" href="Ledger.Conway.Specification.Utxow.html#6154" class="Function">hashScriptIntegrity</a>
-            <a id="9929" class="Symbol">(</a><a id="9930" href="Ledger.Conway.Specification.PParams.html#7680" class="Field">PParamsOf</a> <a id="9940" href="Ledger.Conway.Specification.Utxow.html#7661" class="Generalizable">Γ</a><a id="9941" class="Symbol">)</a>
+            <a id="9929" class="Symbol">(</a><a id="9930" href="Ledger.Conway.Specification.PParams.html#7757" class="Field">PParamsOf</a> <a id="9940" href="Ledger.Conway.Specification.Utxow.html#7661" class="Generalizable">Γ</a><a id="9941" class="Symbol">)</a>
             <a id="9955" class="Symbol">(</a><a id="9956" href="Ledger.Conway.Specification.Utxow.html#4005" class="Function">languages</a> <a id="9966" href="Ledger.Conway.Specification.Utxow.html#7699" class="Generalizable">tx</a> <a id="9969" href="Ledger.Conway.Specification.Utxow.html#7928" class="Bound">utxo</a> <a id="9974" href="Ledger.Conway.Specification.Utxow.html#8132" class="Bound">neededScriptHashes</a><a id="9992" class="Symbol">)</a>
             <a id="10006" href="Ledger.Conway.Specification.Transaction.html#6500" class="Function">txrdmrs</a>
             <a id="10026" href="Ledger.Conway.Specification.Transaction.html#6475" class="Function">txdats</a>

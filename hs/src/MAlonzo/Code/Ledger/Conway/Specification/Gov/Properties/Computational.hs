@@ -1725,10 +1725,10 @@ d_isRegistered'63'_1816 v0 v1 v2
 -- Ledger.Conway.Specification.Gov.Properties.Computational.Computational-GOV
 d_Computational'45'GOV_1818 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'GOV_1818 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_416
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
       (d_computeProof_2208 (coe v0))
 -- Ledger.Conway.Specification.Gov.Properties.Computational._.Go.GoVote.computeProof
 d_computeProof_1862 ::
@@ -2759,17 +2759,17 @@ d_completeness_2218 = erased
 -- Ledger.Conway.Specification.Gov.Properties.Computational.Computational-GOVS
 d_Computational'45'GOVS_2224 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'GOVS_2224 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'ReflexiveTransitiveClosure'7522''7495'_1106
+      MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'ReflexiveTransitiveClosure'7522''7495'_1134
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'Id_744)
+         MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'Id_772)
       (coe d_Computational'45'GOV_1818 (coe v0))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_732)
+         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_760)
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45'Id_736)
+         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45'Id_764)
 -- Ledger.Conway.Specification.Gov.Properties.Computational.allEnactable-singleton
 d_allEnactable'45'singleton_2232 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->

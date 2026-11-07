@@ -7459,6 +7459,154 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2_25_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2_25_3" id="__nav_5_2_25_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validity/
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_2_25_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2_25_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Validity/
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2_25_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2_25_3_1" id="__nav_5_2_25_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Properties/
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_5_2_25_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2_25_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Properties/
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Dijkstra.Specification.Leios.Validity.Properties.Computational.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Computational
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -12321,7 +12469,7 @@ reward calculation.</p>
 <pre class="Agda hidden-source">  <a id="2269" class="Keyword">constructor</a> <a id="⟦_,_,_,_,_⟧ᵉ&#39;"></a><a id="2281" href="Ledger.Conway.Specification.Epoch.html#2281" class="InductiveConstructor Operator">⟦_,_,_,_,_⟧ᵉ&#39;</a>
 </pre>
 <pre class="Agda">  <a id="2313" class="Keyword">field</a>
-    <a id="EpochState.acnt"></a><a id="2323" href="Ledger.Conway.Specification.Epoch.html#2323" class="Field">acnt</a>       <a id="2334" class="Symbol">:</a> <a id="2336" href="Ledger.Conway.Specification.PParams.html#3094" class="Record">Acnt</a>
+    <a id="EpochState.acnt"></a><a id="2323" href="Ledger.Conway.Specification.Epoch.html#2323" class="Field">acnt</a>       <a id="2334" class="Symbol">:</a> <a id="2336" href="Ledger.Conway.Specification.PParams.html#3171" class="Record">Acnt</a>
     <a id="EpochState.ss"></a><a id="2345" href="Ledger.Conway.Specification.Epoch.html#2345" class="Field">ss</a>         <a id="2356" class="Symbol">:</a> <a id="2358" href="Ledger.Conway.Specification.Rewards.html#28899" class="Record">Snapshots</a>
     <a id="EpochState.ls"></a><a id="2372" href="Ledger.Conway.Specification.Epoch.html#2372" class="Field">ls</a>         <a id="2383" class="Symbol">:</a> <a id="2385" href="Ledger.Conway.Specification.Ledger.html#1329" class="Record">LState</a>
     <a id="EpochState.es"></a><a id="2396" href="Ledger.Conway.Specification.Epoch.html#2396" class="Field">es</a>         <a id="2407" class="Symbol">:</a> <a id="2409" href="Ledger.Conway.Specification.Enact.html#1688" class="Record">EnactState</a>
@@ -12357,13 +12505,13 @@ can keep track of the total assets that remain in treasury and reserves.</p>
   <a id="3544" href="Ledger.Conway.Specification.Epoch.html#3496" class="Function">HasRewards-EpochState</a> <a id="3566" class="Symbol">.</a><a id="3567" href="Ledger.Conway.Specification.Certs.html#2034" class="Field">RewardsOf</a> <a id="3577" class="Symbol">=</a> <a id="3579" href="Ledger.Conway.Specification.Certs.html#2034" class="Field">RewardsOf</a> <a id="3589" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="3591" href="Ledger.Conway.Specification.Certs.html#5523" class="Field">CertStateOf</a> <a id="3603" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="3605" href="Ledger.Conway.Specification.Ledger.html#1567" class="Field">LStateOf</a>
 
   <a id="HasTreasury-EpochState"></a><a id="3617" href="Ledger.Conway.Specification.Epoch.html#3617" class="Function">HasTreasury-EpochState</a> <a id="3640" class="Symbol">:</a> <a id="3642" href="Ledger.Prelude.Base.html#1211" class="Record">HasTreasury</a> <a id="3654" href="Ledger.Conway.Specification.Epoch.html#2226" class="Record">EpochState</a>
-  <a id="3667" href="Ledger.Conway.Specification.Epoch.html#3617" class="Function">HasTreasury-EpochState</a> <a id="3690" class="Symbol">.</a><a id="3691" href="Ledger.Prelude.Base.html#1263" class="Field">TreasuryOf</a> <a id="3702" class="Symbol">=</a> <a id="3704" href="Ledger.Conway.Specification.PParams.html#3178" class="Field">Acnt.treasury</a> <a id="3718" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="3720" href="Ledger.Conway.Specification.Epoch.html#2323" class="Field">EpochState.acnt</a>
+  <a id="3667" href="Ledger.Conway.Specification.Epoch.html#3617" class="Function">HasTreasury-EpochState</a> <a id="3690" class="Symbol">.</a><a id="3691" href="Ledger.Prelude.Base.html#1263" class="Field">TreasuryOf</a> <a id="3702" class="Symbol">=</a> <a id="3704" href="Ledger.Conway.Specification.PParams.html#3255" class="Field">Acnt.treasury</a> <a id="3718" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="3720" href="Ledger.Conway.Specification.Epoch.html#2323" class="Field">EpochState.acnt</a>
 
   <a id="HasReserves-EpochState"></a><a id="3739" href="Ledger.Conway.Specification.Epoch.html#3739" class="Function">HasReserves-EpochState</a> <a id="3762" class="Symbol">:</a> <a id="3764" href="Ledger.Prelude.Base.html#1095" class="Record">HasReserves</a> <a id="3776" href="Ledger.Conway.Specification.Epoch.html#2226" class="Record">EpochState</a>
-  <a id="3789" href="Ledger.Conway.Specification.Epoch.html#3739" class="Function">HasReserves-EpochState</a> <a id="3812" class="Symbol">.</a><a id="3813" href="Ledger.Prelude.Base.html#1147" class="Field">ReservesOf</a> <a id="3824" class="Symbol">=</a> <a id="3826" href="Ledger.Conway.Specification.PParams.html#3187" class="Field">Acnt.reserves</a> <a id="3840" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="3842" href="Ledger.Conway.Specification.Epoch.html#2323" class="Field">EpochState.acnt</a>
+  <a id="3789" href="Ledger.Conway.Specification.Epoch.html#3739" class="Function">HasReserves-EpochState</a> <a id="3812" class="Symbol">.</a><a id="3813" href="Ledger.Prelude.Base.html#1147" class="Field">ReservesOf</a> <a id="3824" class="Symbol">=</a> <a id="3826" href="Ledger.Conway.Specification.PParams.html#3264" class="Field">Acnt.reserves</a> <a id="3840" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="3842" href="Ledger.Conway.Specification.Epoch.html#2323" class="Field">EpochState.acnt</a>
 
-  <a id="HasPParams-EpochState"></a><a id="3861" href="Ledger.Conway.Specification.Epoch.html#3861" class="Function">HasPParams-EpochState</a> <a id="3883" class="Symbol">:</a> <a id="3885" href="Ledger.Conway.Specification.PParams.html#7629" class="Record">HasPParams</a> <a id="3896" href="Ledger.Conway.Specification.Epoch.html#2226" class="Record">EpochState</a>
-  <a id="3909" href="Ledger.Conway.Specification.Epoch.html#3861" class="Function">HasPParams-EpochState</a> <a id="3931" class="Symbol">.</a><a id="3932" href="Ledger.Conway.Specification.PParams.html#7680" class="Field">PParamsOf</a> <a id="3942" class="Symbol">=</a> <a id="3944" href="Ledger.Conway.Specification.PParams.html#7680" class="Field">PParamsOf</a> <a id="3954" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="3956" href="Ledger.Conway.Specification.Enact.html#2047" class="Field">EnactStateOf</a>
+  <a id="HasPParams-EpochState"></a><a id="3861" href="Ledger.Conway.Specification.Epoch.html#3861" class="Function">HasPParams-EpochState</a> <a id="3883" class="Symbol">:</a> <a id="3885" href="Ledger.Conway.Specification.PParams.html#7706" class="Record">HasPParams</a> <a id="3896" href="Ledger.Conway.Specification.Epoch.html#2226" class="Record">EpochState</a>
+  <a id="3909" href="Ledger.Conway.Specification.Epoch.html#3861" class="Function">HasPParams-EpochState</a> <a id="3931" class="Symbol">.</a><a id="3932" href="Ledger.Conway.Specification.PParams.html#7757" class="Field">PParamsOf</a> <a id="3942" class="Symbol">=</a> <a id="3944" href="Ledger.Conway.Specification.PParams.html#7757" class="Field">PParamsOf</a> <a id="3954" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="3956" href="Ledger.Conway.Specification.Enact.html#2047" class="Field">EnactStateOf</a>
 
   <a id="HasRatifyState-EpochState"></a><a id="3972" href="Ledger.Conway.Specification.Epoch.html#3972" class="Function">HasRatifyState-EpochState</a> <a id="3998" class="Symbol">:</a> <a id="4000" href="Ledger.Conway.Specification.Ratify.html#8251" class="Record">HasRatifyState</a> <a id="4015" href="Ledger.Conway.Specification.Epoch.html#2226" class="Record">EpochState</a>
   <a id="4028" href="Ledger.Conway.Specification.Epoch.html#3972" class="Function">HasRatifyState-EpochState</a> <a id="4054" class="Symbol">.</a><a id="4055" href="Ledger.Conway.Specification.Ratify.html#8306" class="Field">RatifyStateOf</a> <a id="4069" class="Symbol">=</a> <a id="4071" href="Ledger.Conway.Specification.Epoch.html#2424" class="Field">EpochState.fut</a>
@@ -12434,8 +12582,8 @@ the moment.</p>
   <a id="HasRewards-NewEpochState"></a><a id="6497" href="Ledger.Conway.Specification.Epoch.html#6497" class="Function">HasRewards-NewEpochState</a> <a id="6522" class="Symbol">:</a> <a id="6524" href="Ledger.Conway.Specification.Certs.html#1983" class="Record">HasRewards</a> <a id="6535" href="Ledger.Conway.Specification.Epoch.html#4401" class="Record">NewEpochState</a>
   <a id="6551" href="Ledger.Conway.Specification.Epoch.html#6497" class="Function">HasRewards-NewEpochState</a> <a id="6576" class="Symbol">.</a><a id="6577" href="Ledger.Conway.Specification.Certs.html#2034" class="Field">RewardsOf</a> <a id="6587" class="Symbol">=</a> <a id="6589" href="Ledger.Conway.Specification.Certs.html#2034" class="Field">RewardsOf</a> <a id="6599" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="6601" href="Ledger.Conway.Specification.Certs.html#5523" class="Field">CertStateOf</a>
 
-  <a id="HasPParams-NewEpochState"></a><a id="6616" href="Ledger.Conway.Specification.Epoch.html#6616" class="Function">HasPParams-NewEpochState</a> <a id="6641" class="Symbol">:</a> <a id="6643" href="Ledger.Conway.Specification.PParams.html#7629" class="Record">HasPParams</a> <a id="6654" href="Ledger.Conway.Specification.Epoch.html#4401" class="Record">NewEpochState</a>
-  <a id="6670" href="Ledger.Conway.Specification.Epoch.html#6616" class="Function">HasPParams-NewEpochState</a> <a id="6695" class="Symbol">.</a><a id="6696" href="Ledger.Conway.Specification.PParams.html#7680" class="Field">PParamsOf</a> <a id="6706" class="Symbol">=</a> <a id="6708" href="Ledger.Conway.Specification.PParams.html#7680" class="Field">PParamsOf</a> <a id="6718" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="6720" href="Ledger.Conway.Specification.Epoch.html#2771" class="Field">EpochStateOf</a>
+  <a id="HasPParams-NewEpochState"></a><a id="6616" href="Ledger.Conway.Specification.Epoch.html#6616" class="Function">HasPParams-NewEpochState</a> <a id="6641" class="Symbol">:</a> <a id="6643" href="Ledger.Conway.Specification.PParams.html#7706" class="Record">HasPParams</a> <a id="6654" href="Ledger.Conway.Specification.Epoch.html#4401" class="Record">NewEpochState</a>
+  <a id="6670" href="Ledger.Conway.Specification.Epoch.html#6616" class="Function">HasPParams-NewEpochState</a> <a id="6695" class="Symbol">.</a><a id="6696" href="Ledger.Conway.Specification.PParams.html#7757" class="Field">PParamsOf</a> <a id="6706" class="Symbol">=</a> <a id="6708" href="Ledger.Conway.Specification.PParams.html#7757" class="Field">PParamsOf</a> <a id="6718" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="6720" href="Ledger.Conway.Specification.Epoch.html#2771" class="Field">EpochStateOf</a>
 
   <a id="6736" class="Keyword">unquoteDecl</a> <a id="HasCast-EpochState"></a><a id="6748" href="Ledger.Conway.Specification.Epoch.html#6748" class="Function">HasCast-EpochState</a> <a id="HasCast-NewEpochState"></a><a id="6767" href="Ledger.Conway.Specification.Epoch.html#6767" class="Function">HasCast-NewEpochState</a> <a id="6789" class="Symbol">=</a> <a id="6791" href="stdlib-classes.Class.HasCast.Derive.html#2690" class="Function">derive-HasCast</a>
     <a id="6810" class="Symbol">(</a> <a id="6812" class="Symbol">(</a><a id="6813" class="Keyword">quote</a> <a id="6819" href="Ledger.Conway.Specification.Epoch.html#2226" class="Record">EpochState</a>     <a id="6834" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="6836" href="Ledger.Conway.Specification.Epoch.html#6748" class="Function">HasCast-EpochState</a><a id="6854" class="Symbol">)</a>
@@ -12470,8 +12618,8 @@ after an epoch:</p>
 </pre>
 <pre class="Agda">            <a id="7816" class="Symbol">}</a>
     <a id="7822" class="Keyword">where</a>
-      <a id="7834" href="Ledger.Conway.Specification.Epoch.html#7834" class="Function">prevPp</a> <a id="7841" class="Symbol">:</a> <a id="7843" href="Ledger.Conway.Specification.PParams.html#5296" class="Record">PParams</a>
-      <a id="7857" href="Ledger.Conway.Specification.Epoch.html#7834" class="Function">prevPp</a> <a id="7864" class="Symbol">=</a> <a id="7866" href="Ledger.Conway.Specification.PParams.html#7680" class="Field">PParamsOf</a> <a id="7876" href="Ledger.Conway.Specification.Epoch.html#7517" class="Bound">es</a>
+      <a id="7834" href="Ledger.Conway.Specification.Epoch.html#7834" class="Function">prevPp</a> <a id="7841" class="Symbol">:</a> <a id="7843" href="Ledger.Conway.Specification.PParams.html#5373" class="Record">PParams</a>
+      <a id="7857" href="Ledger.Conway.Specification.Epoch.html#7834" class="Function">prevPp</a> <a id="7864" class="Symbol">=</a> <a id="7866" href="Ledger.Conway.Specification.PParams.html#7757" class="Field">PParamsOf</a> <a id="7876" href="Ledger.Conway.Specification.Epoch.html#7517" class="Bound">es</a>
 
       <a id="7886" href="Ledger.Conway.Specification.Epoch.html#7886" class="Function">reserves</a> <a id="7895" class="Symbol">:</a> <a id="7897" href="Ledger.Prelude.Base.html#549" class="Function">Reserves</a>
       <a id="7912" href="Ledger.Conway.Specification.Epoch.html#7886" class="Function">reserves</a> <a id="7921" class="Symbol">=</a> <a id="7923" href="Ledger.Prelude.Base.html#1147" class="Field">ReservesOf</a> <a id="7934" href="Ledger.Conway.Specification.Epoch.html#7517" class="Bound">es</a>
@@ -12495,9 +12643,9 @@ after an epoch:</p>
       <a id="8278" href="Ledger.Conway.Specification.Epoch.html#8257" class="Function">blocksMade</a> <a id="8289" class="Symbol">=</a> <a id="8291" href="abstract-set-theory.FiniteSetTheory.html#4373" class="Function">∑[</a> <a id="8294" href="Ledger.Conway.Specification.Epoch.html#8294" class="Bound">m</a> <a id="8296" href="abstract-set-theory.FiniteSetTheory.html#4373" class="Function">←</a> <a id="8298" href="Ledger.Conway.Specification.Epoch.html#7515" class="Bound">b</a> <a id="8300" href="abstract-set-theory.FiniteSetTheory.html#4373" class="Function">]</a> <a id="8302" href="Ledger.Conway.Specification.Epoch.html#8294" class="Bound">m</a>
 
       <a id="8311" href="Ledger.Conway.Specification.Epoch.html#8311" class="Function">ρ</a> <a id="8313" href="Ledger.Conway.Specification.Epoch.html#8313" class="Function">η</a> <a id="8315" href="Ledger.Conway.Specification.Epoch.html#8315" class="Function">τ</a> <a id="8317" class="Symbol">:</a> <a id="8319" href="Data.Rational.Base.html#1421" class="Record">ℚ</a>
-      <a id="8327" href="Ledger.Conway.Specification.Epoch.html#8311" class="Function">ρ</a> <a id="8329" class="Symbol">=</a> <a id="8331" href="Ledger.Prelude.Numeric.UnitInterval.html#2245" class="Function">fromUnitInterval</a> <a id="8348" class="Symbol">(</a><a id="8349" href="Ledger.Conway.Specification.Epoch.html#7834" class="Function">prevPp</a> <a id="8356" class="Symbol">.</a><a id="8357" href="Ledger.Conway.Specification.PParams.html#5967" class="Field">PParams.monetaryExpansion</a><a id="8382" class="Symbol">)</a>
+      <a id="8327" href="Ledger.Conway.Specification.Epoch.html#8311" class="Function">ρ</a> <a id="8329" class="Symbol">=</a> <a id="8331" href="Ledger.Prelude.Numeric.UnitInterval.html#2245" class="Function">fromUnitInterval</a> <a id="8348" class="Symbol">(</a><a id="8349" href="Ledger.Conway.Specification.Epoch.html#7834" class="Function">prevPp</a> <a id="8356" class="Symbol">.</a><a id="8357" href="Ledger.Conway.Specification.PParams.html#6044" class="Field">PParams.monetaryExpansion</a><a id="8382" class="Symbol">)</a>
       <a id="8390" href="Ledger.Conway.Specification.Epoch.html#8313" class="Function">η</a> <a id="8392" class="Symbol">=</a> <a id="8394" href="Ledger.Conway.Specification.Epoch.html#2079" class="Function">fromℕ</a> <a id="8400" href="Ledger.Conway.Specification.Epoch.html#8257" class="Function">blocksMade</a> <a id="8411" href="Ledger.Prelude.html#2129" class="Function Operator">÷₀</a> <a id="8414" class="Symbol">(</a><a id="8415" href="Ledger.Conway.Specification.Epoch.html#2079" class="Function">fromℕ</a> <a id="8421" href="Ledger.Conway.Specification.Epoch.html#7501" class="Bound">slotsPerEpoch</a> <a id="8435" href="Data.Rational.Base.html#6394" class="Function Operator">*</a> <a id="8437" href="Ledger.Core.Specification.Epoch.html#2701" class="Function">ActiveSlotCoeff</a><a id="8452" class="Symbol">)</a>
-      <a id="8460" href="Ledger.Conway.Specification.Epoch.html#8315" class="Function">τ</a> <a id="8462" class="Symbol">=</a> <a id="8464" href="Ledger.Prelude.Numeric.UnitInterval.html#2245" class="Function">fromUnitInterval</a> <a id="8481" class="Symbol">(</a><a id="8482" href="Ledger.Conway.Specification.Epoch.html#7834" class="Function">prevPp</a> <a id="8489" class="Symbol">.</a><a id="8490" href="Ledger.Conway.Specification.PParams.html#6037" class="Field">PParams.treasuryCut</a><a id="8509" class="Symbol">)</a>
+      <a id="8460" href="Ledger.Conway.Specification.Epoch.html#8315" class="Function">τ</a> <a id="8462" class="Symbol">=</a> <a id="8464" href="Ledger.Prelude.Numeric.UnitInterval.html#2245" class="Function">fromUnitInterval</a> <a id="8481" class="Symbol">(</a><a id="8482" href="Ledger.Conway.Specification.Epoch.html#7834" class="Function">prevPp</a> <a id="8489" class="Symbol">.</a><a id="8490" href="Ledger.Conway.Specification.PParams.html#6114" class="Field">PParams.treasuryCut</a><a id="8509" class="Symbol">)</a>
 
       <a id="8518" href="Ledger.Conway.Specification.Epoch.html#8518" class="Function">Δr₁</a> <a id="8522" href="Ledger.Conway.Specification.Epoch.html#8522" class="Function">rewardPot</a> <a id="8532" href="Ledger.Conway.Specification.Epoch.html#8532" class="Function">Δt₁</a> <a id="8536" href="Ledger.Conway.Specification.Epoch.html#8536" class="Function">R</a> <a id="8538" class="Symbol">:</a> <a id="8540" href="Agda.Builtin.Int.html#245" class="Datatype">ℤ</a>
       <a id="8548" href="Ledger.Conway.Specification.Epoch.html#8518" class="Function">Δr₁</a> <a id="8552" class="Symbol">=</a> <a id="8554" href="Data.Rational.Base.html#7195" class="Function">floor</a> <a id="8560" class="Symbol">(</a><a id="8561" class="Number">1</a> <a id="8563" href="Data.Rational.Base.html#6933" class="Function Operator">⊓</a> <a id="8565" href="Ledger.Conway.Specification.Epoch.html#8313" class="Function">η</a> <a id="8567" href="Data.Rational.Base.html#6394" class="Function Operator">*</a> <a id="8569" href="Ledger.Conway.Specification.Epoch.html#8311" class="Function">ρ</a> <a id="8571" href="Data.Rational.Base.html#6394" class="Function Operator">*</a> <a id="8573" href="Ledger.Conway.Specification.Epoch.html#2079" class="Function">fromℕ</a> <a id="8579" href="Ledger.Conway.Specification.Epoch.html#7886" class="Function">reserves</a><a id="8587" class="Symbol">)</a>
@@ -12545,7 +12693,7 @@ after an epoch:</p>
       <a id="9962" href="Ledger.Conway.Specification.Epoch.html#9962" class="Function">Δr₁-nonneg</a> <a id="9973" class="Symbol">:</a> <a id="9975" class="Number">0</a> <a id="9977" href="Class.HasOrder.Core.html#613" class="Field Operator">≤</a> <a id="9979" href="Ledger.Conway.Specification.Epoch.html#8518" class="Function">Δr₁</a>
       <a id="9989" href="Ledger.Conway.Specification.Epoch.html#9962" class="Function">Δr₁-nonneg</a> <a id="10000" class="Symbol">=</a> <a id="10002" href="stdlib.Data.Rational.Properties.html#1631" class="Function">0≤⇒0≤floor</a> <a id="10013" class="Symbol">_</a>
         <a id="10023" class="Symbol">(</a><a id="10024" href="stdlib.Data.Rational.Properties.html#2409" class="Function">*-0≤⇒0≤</a> <a id="10032" class="Symbol">(</a><a id="10033" class="Number">1</a> <a id="10035" href="Data.Rational.Base.html#6933" class="Function Operator">⊓</a> <a id="10037" href="Ledger.Conway.Specification.Epoch.html#8313" class="Function">η</a> <a id="10039" href="Data.Rational.Base.html#6394" class="Function Operator">*</a> <a id="10041" href="Ledger.Conway.Specification.Epoch.html#8311" class="Function">ρ</a><a id="10042" class="Symbol">)</a> <a id="10044" class="Symbol">(</a><a id="10045" href="Ledger.Conway.Specification.Epoch.html#2079" class="Function">fromℕ</a> <a id="10051" href="Ledger.Conway.Specification.Epoch.html#7886" class="Function">reserves</a><a id="10059" class="Symbol">)</a>
-          <a id="10071" class="Symbol">(</a><a id="10072" href="Ledger.Prelude.Numeric.UnitInterval.html#3636" class="Function">UnitInterval-*-0≤</a> <a id="10090" class="Symbol">(</a><a id="10091" class="Number">1</a> <a id="10093" href="Data.Rational.Base.html#6933" class="Function Operator">⊓</a> <a id="10095" href="Ledger.Conway.Specification.Epoch.html#8313" class="Function">η</a><a id="10096" class="Symbol">)</a> <a id="10098" class="Symbol">(</a><a id="10099" href="Ledger.Conway.Specification.Epoch.html#7834" class="Function">prevPp</a> <a id="10106" class="Symbol">.</a><a id="10107" href="Ledger.Conway.Specification.PParams.html#5967" class="Field">PParams.monetaryExpansion</a><a id="10132" class="Symbol">)</a> <a id="10134" href="Ledger.Conway.Specification.Epoch.html#9876" class="Function">min1η-nonneg</a><a id="10146" class="Symbol">)</a>
+          <a id="10071" class="Symbol">(</a><a id="10072" href="Ledger.Prelude.Numeric.UnitInterval.html#3636" class="Function">UnitInterval-*-0≤</a> <a id="10090" class="Symbol">(</a><a id="10091" class="Number">1</a> <a id="10093" href="Data.Rational.Base.html#6933" class="Function Operator">⊓</a> <a id="10095" href="Ledger.Conway.Specification.Epoch.html#8313" class="Function">η</a><a id="10096" class="Symbol">)</a> <a id="10098" class="Symbol">(</a><a id="10099" href="Ledger.Conway.Specification.Epoch.html#7834" class="Function">prevPp</a> <a id="10106" class="Symbol">.</a><a id="10107" href="Ledger.Conway.Specification.PParams.html#6044" class="Field">PParams.monetaryExpansion</a><a id="10132" class="Symbol">)</a> <a id="10134" href="Ledger.Conway.Specification.Epoch.html#9876" class="Function">min1η-nonneg</a><a id="10146" class="Symbol">)</a>
           <a id="10158" class="Symbol">(</a><a id="10159" href="stdlib.Data.Rational.Properties.html#2275" class="Function">fromℕ-0≤</a> <a id="10168" href="Ledger.Conway.Specification.Epoch.html#7886" class="Function">reserves</a><a id="10176" class="Symbol">))</a>
 
       <a id="10186" href="Ledger.Conway.Specification.Epoch.html#10186" class="Function">rewardPot-nonneg</a> <a id="10203" class="Symbol">:</a> <a id="10205" class="Number">0</a> <a id="10207" href="Class.HasOrder.Core.html#613" class="Field Operator">≤</a> <a id="10209" href="Ledger.Conway.Specification.Epoch.html#8522" class="Function">rewardPot</a>
@@ -12553,7 +12701,7 @@ after an epoch:</p>
 
       <a id="10300" href="Ledger.Conway.Specification.Epoch.html#10300" class="Function">Δt-nonneg</a> <a id="10310" class="Symbol">:</a> <a id="10312" class="Number">0</a> <a id="10314" href="Class.HasOrder.Core.html#613" class="Field Operator">≤</a> <a id="10316" href="Ledger.Conway.Specification.Epoch.html#8532" class="Function">Δt₁</a>
       <a id="10326" href="Ledger.Conway.Specification.Epoch.html#10300" class="Function">Δt-nonneg</a> <a id="10336" class="Symbol">=</a> <a id="10338" href="stdlib.Data.Rational.Properties.html#1631" class="Function">0≤⇒0≤floor</a> <a id="10349" class="Symbol">_</a>
-        <a id="10359" class="Symbol">(</a><a id="10360" href="Ledger.Prelude.Numeric.UnitInterval.html#3636" class="Function">UnitInterval-*-0≤</a> <a id="10378" class="Symbol">(</a><a id="10379" href="Data.Rational.Literals.html#613" class="Function">fromℤ</a> <a id="10385" href="Ledger.Conway.Specification.Epoch.html#8522" class="Function">rewardPot</a><a id="10394" class="Symbol">)</a> <a id="10396" class="Symbol">(</a><a id="10397" href="Ledger.Conway.Specification.Epoch.html#7834" class="Function">prevPp</a> <a id="10404" class="Symbol">.</a><a id="10405" href="Ledger.Conway.Specification.PParams.html#6037" class="Field">PParams.treasuryCut</a><a id="10424" class="Symbol">)</a>
+        <a id="10359" class="Symbol">(</a><a id="10360" href="Ledger.Prelude.Numeric.UnitInterval.html#3636" class="Function">UnitInterval-*-0≤</a> <a id="10378" class="Symbol">(</a><a id="10379" href="Data.Rational.Literals.html#613" class="Function">fromℤ</a> <a id="10385" href="Ledger.Conway.Specification.Epoch.html#8522" class="Function">rewardPot</a><a id="10394" class="Symbol">)</a> <a id="10396" class="Symbol">(</a><a id="10397" href="Ledger.Conway.Specification.Epoch.html#7834" class="Function">prevPp</a> <a id="10404" class="Symbol">.</a><a id="10405" href="Ledger.Conway.Specification.PParams.html#6114" class="Field">PParams.treasuryCut</a><a id="10424" class="Symbol">)</a>
           <a id="10436" class="Symbol">(</a><a id="10437" href="stdlib.Data.Rational.Properties.html#2013" class="Function">fromℤ-0≤</a> <a id="10446" href="Ledger.Conway.Specification.Epoch.html#8522" class="Function">rewardPot</a> <a id="10456" href="Ledger.Conway.Specification.Epoch.html#10186" class="Function">rewardPot-nonneg</a><a id="10472" class="Symbol">))</a>
 
       <a id="10482" href="Ledger.Conway.Specification.Epoch.html#10482" class="Function">Δf-nonpos</a> <a id="10492" class="Symbol">:</a> <a id="10494" class="Symbol">(</a><a id="10495" class="Number">0</a> <a id="10497" href="Interface.TypeClasses.HasSubtract.html#341" class="Field Operator">-</a> <a id="10499" href="Ledger.Conway.Specification.Epoch.html#656" class="InductiveConstructor">pos</a> <a id="10503" href="Ledger.Conway.Specification.Epoch.html#8019" class="Function">feeSS</a><a id="10508" class="Symbol">)</a> <a id="10510" href="Class.HasOrder.Core.html#613" class="Field Operator">≤</a> <a id="10512" class="Number">0</a>
@@ -12786,7 +12934,7 @@ count deposits on governance actions towards the stake of
   <a id="18842" href="Ledger.Conway.Specification.Epoch.html#18842" class="Generalizable">lstate</a> <a id="18849" class="Symbol">:</a> <a id="18851" href="Ledger.Conway.Specification.Ledger.html#1329" class="Record">LState</a>
   <a id="18860" href="Ledger.Conway.Specification.Epoch.html#18860" class="Generalizable">pState&#39;&#39;</a> <a id="18869" class="Symbol">:</a> <a id="18871" href="Ledger.Conway.Specification.Certs.html#4572" class="Record">PState</a>
   <a id="18880" href="Ledger.Conway.Specification.Epoch.html#18880" class="Generalizable">dState&#39;</a> <a id="18888" class="Symbol">:</a> <a id="18890" href="Ledger.Conway.Specification.Certs.html#4390" class="Record">DState</a>
-  <a id="18899" href="Ledger.Conway.Specification.Epoch.html#18899" class="Generalizable">acnt</a> <a id="18904" href="Ledger.Conway.Specification.Epoch.html#18904" class="Generalizable">acnt&#39;</a> <a id="18910" class="Symbol">:</a> <a id="18912" href="Ledger.Conway.Specification.PParams.html#3094" class="Record">Acnt</a>
+  <a id="18899" href="Ledger.Conway.Specification.Epoch.html#18899" class="Generalizable">acnt</a> <a id="18904" href="Ledger.Conway.Specification.Epoch.html#18904" class="Generalizable">acnt&#39;</a> <a id="18910" class="Symbol">:</a> <a id="18912" href="Ledger.Conway.Specification.PParams.html#3171" class="Record">Acnt</a>
   <a id="18919" href="Ledger.Conway.Specification.Epoch.html#18919" class="Generalizable">utxoSt&#39;&#39;</a> <a id="18928" class="Symbol">:</a> <a id="18930" href="Ledger.Conway.Specification.Utxo.html#2991" class="Record">UTxOState</a>
   <a id="18942" href="Ledger.Conway.Specification.Epoch.html#18942" class="Generalizable">ss</a> <a id="18945" href="Ledger.Conway.Specification.Epoch.html#18945" class="Generalizable">ss&#39;</a> <a id="18949" class="Symbol">:</a> <a id="18951" href="Ledger.Conway.Specification.Rewards.html#28899" class="Record">Snapshots</a>
   <a id="18963" href="Ledger.Conway.Specification.Epoch.html#18963" class="Generalizable">ru</a> <a id="18966" class="Symbol">:</a> <a id="18968" href="Ledger.Conway.Specification.Rewards.html#18058" class="Record">RewardUpdate</a>
@@ -12905,12 +13053,12 @@ proofs about properties of the <code class="AgdaDatatype">EPOCH</code> transitio
   <a id="22660" class="Keyword">constructor</a> <a id="Post-POOLREAPUpdate"></a><a id="22672" href="Ledger.Conway.Specification.Epoch.html#22672" class="InductiveConstructor">Post-POOLREAPUpdate</a>
   <a id="22694" class="Keyword">field</a>
     <a id="Post-POOLREAP-Update.dState&#39;&#39;"></a><a id="22704" href="Ledger.Conway.Specification.Epoch.html#22704" class="Field">dState&#39;&#39;</a>       <a id="22719" class="Symbol">:</a> <a id="22721" href="Ledger.Conway.Specification.Certs.html#4390" class="Record">DState</a>
-    <a id="Post-POOLREAP-Update.acnt&#39;&#39;"></a><a id="22732" href="Ledger.Conway.Specification.Epoch.html#22732" class="Field">acnt&#39;&#39;</a>         <a id="22747" class="Symbol">:</a> <a id="22749" href="Ledger.Conway.Specification.PParams.html#3094" class="Record">Acnt</a>
+    <a id="Post-POOLREAP-Update.acnt&#39;&#39;"></a><a id="22732" href="Ledger.Conway.Specification.Epoch.html#22732" class="Field">acnt&#39;&#39;</a>         <a id="22747" class="Symbol">:</a> <a id="22749" href="Ledger.Conway.Specification.PParams.html#3171" class="Record">Acnt</a>
 
 <a id="22755" class="Keyword">module</a> <a id="Post-POOLREAPUpdate"></a><a id="22762" href="Ledger.Conway.Specification.Epoch.html#22762" class="Module">Post-POOLREAPUpdate</a> <a id="22782" class="Symbol">(</a><a id="22783" href="Ledger.Conway.Specification.Epoch.html#22783" class="Bound">es</a> <a id="22786" class="Symbol">:</a> <a id="22788" href="Ledger.Conway.Specification.Enact.html#1688" class="Record">EnactState</a><a id="22798" class="Symbol">)</a>
                            <a id="22827" class="Symbol">(</a><a id="22828" href="Ledger.Conway.Specification.Epoch.html#22828" class="Bound">ls</a> <a id="22831" class="Symbol">:</a> <a id="22833" href="Ledger.Conway.Specification.Ledger.html#1329" class="Record">LState</a><a id="22839" class="Symbol">)</a>
                            <a id="22868" class="Symbol">(</a><a id="22869" href="Ledger.Conway.Specification.Epoch.html#22869" class="Bound">dState&#39;</a> <a id="22877" class="Symbol">:</a> <a id="22879" href="Ledger.Conway.Specification.Certs.html#4390" class="Record">DState</a><a id="22885" class="Symbol">)</a>
-                           <a id="22914" class="Symbol">(</a><a id="22915" href="Ledger.Conway.Specification.Epoch.html#22915" class="Bound">acnt&#39;</a> <a id="22921" class="Symbol">:</a> <a id="22923" href="Ledger.Conway.Specification.PParams.html#3094" class="Record">Acnt</a><a id="22927" class="Symbol">)</a>
+                           <a id="22914" class="Symbol">(</a><a id="22915" href="Ledger.Conway.Specification.Epoch.html#22915" class="Bound">acnt&#39;</a> <a id="22921" class="Symbol">:</a> <a id="22923" href="Ledger.Conway.Specification.PParams.html#3171" class="Record">Acnt</a><a id="22927" class="Symbol">)</a>
                            <a id="22956" class="Symbol">(</a><a id="22957" href="Ledger.Conway.Specification.Epoch.html#22957" class="Bound">govUpd</a> <a id="22964" class="Symbol">:</a> <a id="22966" href="Ledger.Conway.Specification.Epoch.html#20638" class="Record">Governance-Update</a><a id="22983" class="Symbol">)</a>
                            <a id="23012" class="Keyword">where</a>
 </pre>
@@ -12938,7 +13086,7 @@ proofs about properties of the <code class="AgdaDatatype">EPOCH</code> transitio
   <a id="Post-POOLREAPUpdate.totWithdrawals"></a><a id="23628" href="Ledger.Conway.Specification.Epoch.html#23628" class="Function">totWithdrawals</a> <a id="23643" class="Symbol">:</a> <a id="23645" href="Ledger.Prelude.Base.html#274" class="Function">Coin</a>
   <a id="23652" href="Ledger.Conway.Specification.Epoch.html#23628" class="Function">totWithdrawals</a> <a id="23667" class="Symbol">=</a> <a id="23669" href="abstract-set-theory.FiniteSetTheory.html#4373" class="Function">∑[</a> <a id="23672" href="Ledger.Conway.Specification.Epoch.html#23672" class="Bound">x</a> <a id="23674" href="abstract-set-theory.FiniteSetTheory.html#4373" class="Function">←</a> <a id="23676" href="Ledger.Core.Specification.Address.html#3220" class="Field">WithdrawalsOf</a> <a id="23690" href="Ledger.Conway.Specification.Epoch.html#22783" class="Bound">es</a> <a id="23693" href="abstract-set-theory.FiniteSetTheory.html#4373" class="Function">]</a> <a id="23695" href="Ledger.Conway.Specification.Epoch.html#23672" class="Bound">x</a>
 
-  <a id="Post-POOLREAPUpdate.acnt&#39;&#39;"></a><a id="23700" href="Ledger.Conway.Specification.Epoch.html#23700" class="Function">acnt&#39;&#39;</a> <a id="23707" class="Symbol">:</a> <a id="23709" href="Ledger.Conway.Specification.PParams.html#3094" class="Record">Acnt</a>
+  <a id="Post-POOLREAPUpdate.acnt&#39;&#39;"></a><a id="23700" href="Ledger.Conway.Specification.Epoch.html#23700" class="Function">acnt&#39;&#39;</a> <a id="23707" class="Symbol">:</a> <a id="23709" href="Ledger.Conway.Specification.PParams.html#3171" class="Record">Acnt</a>
   <a id="23716" href="Ledger.Conway.Specification.Epoch.html#23700" class="Function">acnt&#39;&#39;</a> <a id="23723" class="Symbol">=</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Prelude.Base.html#1263}{\htmlId{23727}{\htmlClass{Field}{\text{TreasuryOf}}}}\, \,\href{Ledger.Conway.Specification.Epoch.html#22915}{\htmlId{23738}{\htmlClass{Bound}{\text{acnt&#39;}}}}\, \,\href{Data.Nat.Base.html#4462}{\htmlId{23744}{\htmlClass{Primitive Operator}{\text{∸}}}}\, \,\href{Ledger.Conway.Specification.Epoch.html#23628}{\htmlId{23746}{\htmlClass{Function}{\text{totWithdrawals}}}}\, \,\href{Class.HasAdd.Core.html#162}{\htmlId{23761}{\htmlClass{Field Operator}{\text{+}}}}\, \,\href{Ledger.Prelude.Base.html#928}{\htmlId{23763}{\htmlClass{Field}{\text{DonationsOf}}}}\, \,\href{Ledger.Conway.Specification.Epoch.html#22828}{\htmlId{23775}{\htmlClass{Bound}{\text{ls}}}}\, \,\href{Class.HasAdd.Core.html#162}{\htmlId{23778}{\htmlClass{Field Operator}{\text{+}}}}\, \,\href{Ledger.Conway.Specification.Epoch.html#23561}{\htmlId{23780}{\htmlClass{Function}{\text{unclaimed}}}}\, \\ \,\href{Ledger.Prelude.Base.html#1147}{\htmlId{23792}{\htmlClass{Field}{\text{ReservesOf}}}}\, \,\href{Ledger.Conway.Specification.Epoch.html#22915}{\htmlId{23803}{\htmlClass{Bound}{\text{acnt&#39;}}}}\, \end{pmatrix}$</a>
 
   <a id="Post-POOLREAPUpdate.updates"></a><a id="23814" href="Ledger.Conway.Specification.Epoch.html#23814" class="Function">updates</a> <a id="23822" class="Symbol">:</a> <a id="23824" href="Ledger.Conway.Specification.Epoch.html#22612" class="Record">Post-POOLREAP-Update</a>

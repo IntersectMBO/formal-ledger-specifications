@@ -1004,7 +1004,7 @@ d_stakePerCredential_312 v0 v1 v2 v3 v4 v5
       v1 v2 v4 v5
 -- Ledger.Conway.Foreign.Epoch.EpochSpec._.Computational-EPOCH
 d_Computational'45'EPOCH_316 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'EPOCH_316
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_Computational'45'EPOCH_3416
@@ -1014,7 +1014,7 @@ d_Computational'45'EPOCH_316
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
 -- Ledger.Conway.Foreign.Epoch.EpochSpec._.Computational-NEWEPOCH
 d_Computational'45'NEWEPOCH_318 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'NEWEPOCH_318
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_Computational'45'NEWEPOCH_3566

@@ -7342,6 +7342,154 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2_25_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2_25_3" id="__nav_5_2_25_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validity/
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_2_25_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2_25_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Validity/
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2_25_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2_25_3_1" id="__nav_5_2_25_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Properties/
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_5_2_25_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2_25_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Properties/
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Dijkstra.Specification.Leios.Validity.Properties.Computational.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Computational
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -12106,7 +12254,7 @@ Formally, the <code class="AgdaFunction">govDepsMatch</code> predicate is define
 <a id="3102" class="Keyword">module</a> <a id="LEDGER-PROPS"></a><a id="3109" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#3109" class="Module">LEDGER-PROPS</a> <a id="3122" class="Symbol">(</a><a id="3123" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#3123" class="Bound">tx</a> <a id="3126" class="Symbol">:</a> <a id="3128" href="Ledger.Conway.Specification.Transaction.html#6625" class="Record">Tx</a><a id="3130" class="Symbol">)</a> <a id="3132" class="Symbol">(</a><a id="3133" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#3133" class="Bound">Γ</a> <a id="3135" class="Symbol">:</a> <a id="3137" href="Ledger.Conway.Specification.Ledger.html#1034" class="Record">LEnv</a><a id="3141" class="Symbol">)</a> <a id="3143" class="Symbol">(</a><a id="3144" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#3144" class="Bound">s</a> <a id="3146" class="Symbol">:</a> <a id="3148" href="Ledger.Conway.Specification.Ledger.html#1329" class="Record">LState</a><a id="3154" class="Symbol">)</a> <a id="3156" class="Keyword">where</a>
   <a id="3164" class="Keyword">open</a> <a id="3169" href="Ledger.Conway.Specification.Transaction.html#6625" class="Module">Tx</a> <a id="3172" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#3123" class="Bound">tx</a> <a id="3175" class="Keyword">renaming</a> <a id="3184" class="Symbol">(</a><a id="3185" href="Ledger.Conway.Specification.Transaction.html#6657" class="Field">body</a> <a id="3190" class="Symbol">to</a> <a id="3193" class="Field">txb</a><a id="3196" class="Symbol">);</a> <a id="3199" class="Keyword">open</a> <a id="3204" href="Ledger.Conway.Specification.Transaction.html#4780" class="Module">TxBody</a> <a id="3211" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#3193" class="Function">txb</a>
   <a id="3217" class="Keyword">open</a> <a id="3222" href="Ledger.Conway.Specification.Ledger.html#1034" class="Module">LEnv</a> <a id="3227" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#3133" class="Bound">Γ</a> <a id="3229" class="Keyword">renaming</a> <a id="3238" class="Symbol">(</a><a id="3239" href="Ledger.Conway.Specification.Ledger.html#1122" class="Field">pparams</a> <a id="3247" class="Symbol">to</a> <a id="3250" class="Field">pp</a><a id="3252" class="Symbol">)</a>
-  <a id="3256" class="Keyword">open</a> <a id="3261" href="Ledger.Conway.Specification.PParams.html#5296" class="Module">PParams</a> <a id="3269" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#3250" class="Function">pp</a> <a id="3272" class="Keyword">using</a> <a id="3278" class="Symbol">(</a><a id="3279" href="Ledger.Conway.Specification.PParams.html#7094" class="Field">govActionDeposit</a><a id="3295" class="Symbol">;</a> <a id="3297" href="Ledger.Conway.Specification.PParams.html#7052" class="Field">govActionLifetime</a><a id="3314" class="Symbol">)</a>
+  <a id="3256" class="Keyword">open</a> <a id="3261" href="Ledger.Conway.Specification.PParams.html#5373" class="Module">PParams</a> <a id="3269" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#3250" class="Function">pp</a> <a id="3272" class="Keyword">using</a> <a id="3278" class="Symbol">(</a><a id="3279" href="Ledger.Conway.Specification.PParams.html#7171" class="Field">govActionDeposit</a><a id="3295" class="Symbol">;</a> <a id="3297" href="Ledger.Conway.Specification.PParams.html#7129" class="Field">govActionLifetime</a><a id="3314" class="Symbol">)</a>
   <a id="3318" class="Keyword">open</a> <a id="3323" href="Ledger.Conway.Specification.Ledger.html#1329" class="Module">LState</a> <a id="3330" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#3144" class="Bound">s</a>
   <a id="3334" class="Keyword">open</a> <a id="3339" href="Ledger.Conway.Specification.Certs.html#4846" class="Module">CertState</a> <a id="3349" href="Ledger.Conway.Specification.Ledger.html#1470" class="Field">certState</a>
   <a id="3361" class="Keyword">open</a> <a id="3366" href="Ledger.Conway.Specification.Certs.html#4390" class="Module">DState</a> <a id="3373" href="Ledger.Conway.Specification.Certs.html#4940" class="Function">dState</a>
@@ -12119,7 +12267,7 @@ Formally, the <code class="AgdaFunction">govDepsMatch</code> predicate is define
   <a id="LEDGER-PROPS.mkAction"></a><a id="3499" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#3499" class="Function">mkAction</a> <a id="3508" class="Symbol">:</a> <a id="3510" href="Ledger.Conway.Specification.Gov.Actions.html#12027" class="Record">GovProposal</a> <a id="3522" class="Symbol">→</a> <a id="3524" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="3526" class="Symbol">→</a> <a id="3528" href="Ledger.Conway.Specification.Gov.Actions.html#6388" class="Function">GovActionID</a> <a id="3540" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="3542" href="Ledger.Conway.Specification.Gov.Actions.html#12534" class="Record">GovActionState</a>
   <a id="3559" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#3499" class="Function">mkAction</a> <a id="3568" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#3568" class="Bound">p</a> <a id="3570" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#3570" class="Bound">n</a> <a id="3572" class="Symbol">=</a> <a id="3574" class="Keyword">let</a> <a id="3578" class="Keyword">open</a> <a id="3583" href="Ledger.Conway.Specification.Gov.Actions.html#12027" class="Module">GovProposal</a> <a id="3595" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#3568" class="Bound">p</a> <a id="3597" class="Keyword">in</a>
     <a id="3604" href="Ledger.Conway.Specification.Gov.html#7421" class="Function">mkGovStatePair</a>
-      <a id="3625" class="Symbol">(</a><a id="3626" href="Ledger.Conway.Specification.PParams.html#7052" class="Function">govActionLifetime</a> <a id="3644" href="Ledger.Core.Specification.Epoch.html#1319" class="Function Operator">+ᵉ</a> <a id="3647" href="Ledger.Core.Specification.Epoch.html#954" class="Function">epoch</a> <a id="3653" href="Ledger.Conway.Specification.Ledger.html#1064" class="Function">slot</a><a id="3657" class="Symbol">)</a>
+      <a id="3625" class="Symbol">(</a><a id="3626" href="Ledger.Conway.Specification.PParams.html#7129" class="Function">govActionLifetime</a> <a id="3644" href="Ledger.Core.Specification.Epoch.html#1319" class="Function Operator">+ᵉ</a> <a id="3647" href="Ledger.Core.Specification.Epoch.html#954" class="Function">epoch</a> <a id="3653" href="Ledger.Conway.Specification.Ledger.html#1064" class="Function">slot</a><a id="3657" class="Symbol">)</a>
       <a id="3665" class="Symbol">(</a><a id="3666" href="Ledger.Conway.Specification.Transaction.html#4964" class="Function">txId</a> <a id="3671" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3673" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#3570" class="Bound">n</a><a id="3674" class="Symbol">)</a> <a id="3676" href="Ledger.Conway.Specification.Gov.Actions.html#12184" class="Function">returnAddr</a> <a id="3687" href="Ledger.Conway.Specification.Gov.Actions.html#12064" class="Function">action</a> <a id="3694" href="Ledger.Conway.Specification.Gov.Actions.html#12092" class="Function">prevAction</a>
 
   <a id="3708" class="Comment">-- update GovState with a proposal</a>

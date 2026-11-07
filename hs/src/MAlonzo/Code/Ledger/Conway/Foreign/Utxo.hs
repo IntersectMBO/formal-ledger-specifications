@@ -3383,7 +3383,7 @@ d_utxo'45'step_4720 v0 v1
          MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
          (coe MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
          (coe
-            MAlonzo.Code.Interface.ComputationalRelation.du_compute_278
+            MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
             (coe
                MAlonzo.Code.Ledger.Conway.Conformance.Utxo.Properties.d_Computational'45'UTXO_2920
                (coe
@@ -3429,7 +3429,7 @@ d_utxow'45'step_4722 v0 v1
          MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
          (coe MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
          (coe
-            MAlonzo.Code.Interface.ComputationalRelation.du_compute_278
+            MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
             (coe
                MAlonzo.Code.Ledger.Conway.Conformance.Utxow.Properties.d_Computational'45'UTXOW_2148
                (coe

@@ -192,10 +192,10 @@ d_utxo_2204 v0
 d_Computational'45'UTXOS_2676 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'UTXOS_2676 v0 v1
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_416
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
       (d_computeProof_2772 (coe v0) (coe v1))
 -- Ledger.Conway.Specification.Utxo.Properties.Computational._._.go.computeProof
 d_computeProof_2772 ::
@@ -922,10 +922,10 @@ d_completeness_2782 = erased
 d_Computational'45'UTXO''_2812 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'UTXO''_2812 v0 v1
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_416
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
       (d_computeProof_2894 (coe v0) (coe v1))
 -- Ledger.Conway.Specification.Utxo.Properties.Computational._.Go.computeProofH
 d_computeProofH_2852 ::
@@ -2307,7 +2307,7 @@ d_completeness_2898 = erased
 d_Computational'45'UTXO_3090 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'UTXO_3090 v0 v1
   = coe d_Computational'45'UTXO''_2812 (coe v0) (coe v1)
 -- Ledger.Conway.Specification.Utxo.Properties.Computational.UTXO-step
@@ -2320,7 +2320,7 @@ d_UTXO'45'step_3100 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
 d_UTXO'45'step_3100 v0 v1
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.du_compute_278
+      MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
       (coe d_Computational'45'UTXO_3090 (coe v0) (coe v1))
 -- Ledger.Conway.Specification.Utxo.Properties.Computational.UTXO-step-computes-UTXO
 d_UTXO'45'step'45'computes'45'UTXO_3102 ::
@@ -2333,6 +2333,6 @@ d_UTXO'45'step'45'computes'45'UTXO_3102 ::
   MAlonzo.Code.Function.Bundles.T_Equivalence_1858
 d_UTXO'45'step'45'computes'45'UTXO_3102 v0 v1 v2 v3 v4 v5
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.du_'8801''45'success'8660'STS_304
+      MAlonzo.Code.Interface.ComputationalRelation.du_'8801''45'success'8660'STS_332
       (coe d_Computational'45'UTXO_3090 (coe v0) (coe v1)) (coe v2)
       (coe v3) (coe v4) (coe v5)

@@ -105,14 +105,14 @@ d_'8801''45'bBodySize_2102 = erased
 d_Computational'45'LEDGER_2192 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'LEDGER_2192 v0 v1
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Ledger.Properties.Computational.d_Computational'45'LEDGER_2992
       (coe v0) (coe v1)
 -- Ledger.Conway.Specification.BlockBody.Properties.Computational._.completeness
 d_completeness_2390 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
@@ -121,14 +121,14 @@ d_completeness_2390 ::
 d_completeness_2390 = erased
 -- Ledger.Conway.Specification.BlockBody.Properties.Computational._.computeProof
 d_computeProof_2396 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
 d_computeProof_2396 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_276
+      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_304
       (coe v0)
 -- Ledger.Conway.Specification.BlockBody.Properties.Computational.BBODY-computeProof
 d_BBODY'45'computeProof_2416 ::
@@ -180,18 +180,18 @@ d_BBODY'45'computeProof_2416 v0 v1 v2 v3 v4
                                         MAlonzo.Code.Interface.ComputationalRelation.du_Monad'45'ComputationResult_162)
                                      () erased () erased
                                      (coe
-                                        MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_276
+                                        MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_304
                                         (coe
-                                           MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'ReflexiveTransitiveClosure'7495'_780
+                                           MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'ReflexiveTransitiveClosure'7495'_808
                                            (coe
-                                              MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'Id_744)
+                                              MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'Id_772)
                                            (coe
                                               MAlonzo.Code.Ledger.Conway.Specification.Ledger.Properties.Computational.d_Computational'45'LEDGER_2992
                                               (coe v0) (coe v1))
                                            (coe
-                                              MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_732)
+                                              MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_760)
                                            (coe
-                                              MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45'Id_736))
+                                              MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45'Id_764))
                                         (coe
                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
                                            (coe
@@ -347,8 +347,8 @@ d_BBODY'45'completeness_2460 = erased
 d_Computational'45'BBODY_2518 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'BBODY_2518 v0 v1
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_416
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
       (d_BBODY'45'computeProof_2416 (coe v0) (coe v1))

@@ -110,7 +110,7 @@ d__'8866'_'8640''10631'_'44'PRE'45'CERT'10632'__1182 a0 a1 a2 a3 a4
   = ()
 -- Ledger.Conway.Specification.Certs.Properties.Computational._.completeness
 d_completeness_1772 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
@@ -119,22 +119,22 @@ d_completeness_1772 ::
 d_completeness_1772 = erased
 -- Ledger.Conway.Specification.Certs.Properties.Computational._.computeProof
 d_computeProof_1778 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
 d_computeProof_1778 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_276
+      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_304
       (coe v0)
 -- Ledger.Conway.Specification.Certs.Properties.Computational.Computational-DELEG
 d_Computational'45'DELEG_1790 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'DELEG_1790 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_416
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
       (\ v1 v2 v3 ->
          let v4
                = coe
@@ -1066,10 +1066,10 @@ d_Computational'45'DELEG_1790 v0
 -- Ledger.Conway.Specification.Certs.Properties.Computational.Computational-POOL
 d_Computational'45'POOL_1896 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'POOL_1896 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_416
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
       (\ v1 v2 v3 ->
          let v4
                = coe
@@ -1263,10 +1263,10 @@ d_Computational'45'POOL_1896 v0
 -- Ledger.Conway.Specification.Certs.Properties.Computational.Computational-GOVCERT
 d_Computational'45'GOVCERT_1910 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'GOVCERT_1910 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_416
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
       (\ v1 v2 v3 ->
          let v4
                = coe
@@ -1934,14 +1934,14 @@ d_Computational'45'GOVCERT_1910 v0
 -- Ledger.Conway.Specification.Certs.Properties.Computational.Computational-CERT
 d_Computational'45'CERT_2168 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'CERT_2168 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_416
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
       (\ v1 v2 v3 ->
          let v4
                = coe
-                   MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_276
+                   MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_304
                    (d_Computational'45'POOL_1896 (coe v0))
                    (MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pp_1412 (coe v1))
                    (MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pState_1476
@@ -1950,7 +1950,7 @@ d_Computational'45'CERT_2168 v0
          coe
            (let v5
                   = coe
-                      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_276
+                      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_304
                       (d_Computational'45'GOVCERT_1910 (coe v0)) v1 v2 v3 in
             coe
               (let v6
@@ -3868,10 +3868,10 @@ d_Computational'45'CERT_2168 v0
 -- Ledger.Conway.Specification.Certs.Properties.Computational.Computational-PRE-CERT
 d_Computational'45'PRE'45'CERT_2506 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'PRE'45'CERT_2506 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_416
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
       (\ v1 v2 v3 ->
          let v4
                = coe
@@ -4292,13 +4292,13 @@ d_Computational'45'PRE'45'CERT_2506 v0
 -- Ledger.Conway.Specification.Certs.Properties.Computational.Computational-CERTS
 d_Computational'45'CERTS_2644 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_236
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'CERTS_2644 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'RunTraceAfter_1518
+      MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'RunTraceAfter_1546
       (coe d_Computational'45'PRE'45'CERT_2506 (coe v0))
       (coe d_Computational'45'CERT_2168 (coe v0))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45'Id_736)
+         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45'Id_764)
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45'Id_736)
+         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45'Id_764)
