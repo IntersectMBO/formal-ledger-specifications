@@ -31,7 +31,7 @@ inUnitInterval x = (0 ≤ x) × (x ≤ 1)
 
 -- Decide whether a rational number is in the unit interval.
 isInUnitInterval : (x : ℚ) → Dec (inUnitInterval x)
-isInUnitInterval x = (0 ≤? x) ×-dec (x ≤? 1)
+isInUnitInterval x = (0 ≤? x) ×? (x ≤? 1)
 
 -- Multiplying with a number from the unit interval only decreases.
 inUnitInterval-*-≤y : ∀ (x y : ℚ) → inUnitInterval x → 0 ≤ y → x * y ≤ y
