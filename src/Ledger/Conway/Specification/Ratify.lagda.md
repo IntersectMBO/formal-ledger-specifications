@@ -234,11 +234,10 @@ must be *deliberately* designed to do so.
 
 <!--
 ```agda
-instance
-  unquoteDecl HasCast-StakeDistrs HasCast-RatifyEnv HasCast-RatifyState = derive-HasCast
-    (   (quote StakeDistrs , HasCast-StakeDistrs)
-    ∷   (quote RatifyEnv , HasCast-RatifyEnv)
-    ∷ [ (quote RatifyState , HasCast-RatifyState) ])
+unquoteDecl HasCast-StakeDistrs HasCast-RatifyEnv HasCast-RatifyState = derive-HasCast
+  (   (quote StakeDistrs , HasCast-StakeDistrs)
+  ∷   (quote RatifyEnv , HasCast-RatifyEnv)
+  ∷ [ (quote RatifyState , HasCast-RatifyState) ])
 ```
 -->
 
@@ -667,7 +666,7 @@ opaque
 
       d : Dec acbCC.accepted
       d with acbCC.mT
-      ... | just t =  _ ≤? acbCC.sizeActiveCC ×-dec t ≤?  _
+      ... | just t =  _ ≤? acbCC.sizeActiveCC ×? t ≤?  _
       ... | nothing = yes tt
 
   acceptedByDRep? : ∀ Γ es st → Dec (acceptedByDRep Γ es st)
@@ -677,7 +676,7 @@ opaque
   acceptedBySPO? _ _ _ = _ ℚ.≤? _
 
   accepted? : ∀ Γ es st → Dec (accepted Γ es st)
-  accepted? Γ es st = acceptedByCC? Γ es st ×-dec acceptedByDRep? Γ es st ×-dec acceptedBySPO? Γ es st
+  accepted? Γ es st = acceptedByCC? Γ es st ×? acceptedByDRep? Γ es st ×? acceptedBySPO? Γ es st
 
   expired? : ∀ e st → Dec (expired e st)
   expired? e st = ¿ expired e st ¿

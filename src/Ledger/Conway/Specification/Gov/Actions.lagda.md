@@ -41,8 +41,7 @@ data GovRole : Type where
 ```
 <!--
 ```agda
-instance
-  unquoteDecl Show-GovRole = derive-Show [ (quote GovRole , Show-GovRole) ]
+unquoteDecl Show-GovRole = derive-Show [ (quote GovRole , Show-GovRole) ]
 ```
 -->
 

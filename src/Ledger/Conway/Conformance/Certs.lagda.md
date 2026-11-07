@@ -44,11 +44,10 @@ record CertState : Type where
     pState : PState
     gState : GState
 
-instance
-  unquoteDecl HasCast-DState HasCast-GState HasCast-CertState = derive-HasCast
-    (   (quote DState , HasCast-DState)
-    ∷   (quote GState , HasCast-GState)
-    ∷ [ (quote CertState , HasCast-CertState) ])
+unquoteDecl HasCast-DState HasCast-GState HasCast-CertState = derive-HasCast
+  (   (quote DState , HasCast-DState)
+  ∷   (quote GState , HasCast-GState)
+  ∷ [ (quote CertState , HasCast-CertState) ])
 
 certDeposit : DCert → PParams → Deposits
 certDeposit (delegate c _ _ v) _   = ❴ CredentialDeposit c , v ❵

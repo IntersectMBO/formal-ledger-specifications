@@ -31,7 +31,7 @@ open import Data.List.Relation.Unary.Unique.DecPropositional using (unique?)
 open Computational ⦃...⦄
 
 wellFormed? : ∀ eb → Dec (EBWellFormed eb)
-wellFormed? eb = nonempty? refs ×-dec unique? _≟_ (map proj₁ refs)
+wellFormed? eb = nonempty? refs ×? unique? _≟_ (map proj₁ refs)
   where
     refs = EndorserBlock.ebTxRefs eb
     nonempty? : ∀ {A : Type} (xs : List A) → Dec (xs ≢ [])
@@ -45,7 +45,7 @@ module _ (Γ : LedgerEnv) (closure : List TopLevelTx) (eb : EndorserBlock) where
                 × EndorserBlock.ebTxRefs eb ≡ map (λ tx → txRefHash tx , SizeOf tx) closure
                 × ebSize eb ≤ leiosMaxEBSize
                 × ∑ˡ[ tx ← closure ] SizeOf tx ≤ leiosMaxEBTxsSize )
-  checks? = wellFormed? eb ×-dec ¿ _ ¿
+  checks? = wellFormed? eb ×? ¿ _ ¿
 
 instance
 ```

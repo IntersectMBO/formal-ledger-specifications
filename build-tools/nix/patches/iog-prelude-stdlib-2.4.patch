@@ -1,0 +1,73 @@
+diff --git a/iog-prelude.agda-lib b/iog-prelude.agda-lib
+index 112ac3d..0a2810d 100644
+--- a/iog-prelude.agda-lib
++++ b/iog-prelude.agda-lib
+@@ -1,6 +1,6 @@
+ name: iog-prelude
+ depend:
+-  standard-library-2.3
++  standard-library
+   standard-library-classes
+   standard-library-meta
+ include: src
+diff --git a/src/Class/Computational.agda b/src/Class/Computational.agda
+index 6fea52a..81eb77e 100644
+--- a/src/Class/Computational.agda
++++ b/src/Class/Computational.agda
+@@ -18,20 +18,20 @@ open import Function
+ open import Relation.Binary.PropositionalEquality
+ 
+ private variable
+-  a : Level
++  a b : Level
+   I O : Type
+   i : I
+   o o' : O
+-  Err Err₁ Err₂ : Type
++  Err Err₁ Err₂ : Type a
+ 
+-data ComputationResult {a : Level} (Err : Type) (R : Type a) : Type a where
++data ComputationResult (Err : Type a) (R : Type b) : Type (a ⊔ b) where
+   success : R → ComputationResult Err R
+   failure : Err → ComputationResult Err R
+ 
+-isFailure : ∀ {A : Type a} → ComputationResult Err A → Type a
++isFailure : ∀ {A : Type a} → ComputationResult Err A → Type _
+ isFailure x = ∃[ e ] x ≡ failure e
+ 
+-module _ {a b} {E : Type} {A : Type a} {B : Type b} where
++module _ {E : Type ℓ} {A : Type a} {B : Type b} where
+   caseCR_∣_∣_ : (ma : ComputationResult E A) → (∀ {a} → ma ≡ success a → B) → (isFailure ma → B) → B
+   caseCR ma ∣ f ∣ g with ma
+   ... | success _ = f refl
+@@ -48,25 +48,25 @@ module _ {a b} {E : Type} {A : Type a} {B : Type b} where
+   caseCR-failure (_ , refl) = refl
+ 
+ instance
+-  Bifunctor-ComputationResult : ∀ {a : Level} → Bifunctor {_} {a} ComputationResult
++  Bifunctor-ComputationResult : Bifunctor ComputationResult
+   Bifunctor-ComputationResult .bimap _ f (success x) = success $ f x
+   Bifunctor-ComputationResult .bimap f _ (failure x) = failure $ f x
+ 
+-  Functor-ComputationResult : ∀ {E : Type} → Functor (ComputationResult E)
++  Functor-ComputationResult : Functor (ComputationResult Err)
+   Functor-ComputationResult ._<$>_ f (success x) = success $ f x
+   Functor-ComputationResult ._<$>_ _ (failure x) = failure x
+ 
+-  Applicative-ComputationResult : ∀ {E : Type} → Applicative (ComputationResult E)
++  Applicative-ComputationResult : Applicative (ComputationResult Err)
+   Applicative-ComputationResult .pure = success
+   Applicative-ComputationResult ._<*>_ (success f) x = f <$> x
+   Applicative-ComputationResult ._<*>_ (failure e) _ = failure e
+ 
+-  Monad-ComputationResult : ∀ {E : Type} → Monad (ComputationResult E)
++  Monad-ComputationResult : Monad (ComputationResult Err)
+   Monad-ComputationResult .return = success
+   Monad-ComputationResult ._>>=_ (success a) m = m a
+   Monad-ComputationResult ._>>=_ (failure e) _ = failure e
+ 
+-  Show-ComputationResult : ∀ {l} {E : Type} {A : Type l} → ⦃ Show E ⦄ → ⦃ Show A ⦄ → Show (ComputationResult E A)
++  Show-ComputationResult : {A : Type a} → ⦃ Show Err ⦄ → ⦃ Show A ⦄ → Show (ComputationResult Err A)
+   Show-ComputationResult .show (success x) = "success " ◇ show x
+   Show-ComputationResult .show (failure e) = "failure " ◇ show e
+ 

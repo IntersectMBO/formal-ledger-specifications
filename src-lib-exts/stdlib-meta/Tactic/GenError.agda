@@ -14,6 +14,7 @@ open import Class.Decidable
 open import Class.Functor
 open import Class.Monad
 open import Class.MonadError.Instances
+open import Class.MonadReader using (Functor-ReaderT)
 open import Class.MonadReader.Instances
 open import Class.MonadTC.Instances
 open import Class.Show
@@ -33,7 +34,7 @@ private
 
 instance
   _ = MonadTC-TCI
-  _ = Functor-M
+  _ = Functor-ReaderT
   _ = ContextMonad-MonadTC
 
 open ClauseExprM

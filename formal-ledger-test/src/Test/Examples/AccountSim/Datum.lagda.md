@@ -17,9 +17,8 @@ import Data.Vec.Relation.Binary.Pointwise.Inductive as Vec
 
 data Label : Set where
   Always : List (ℕ × ℕ) -> Label
-instance
-  unquoteDecl DecEq-Label = derive-DecEq
-    ((quote Label , DecEq-Label) ∷ [])
+unquoteDecl DecEq-Label = derive-DecEq
+  ((quote Label , DecEq-Label) ∷ [])
 
 data Input : Set where
   Open     : ℕ -> Input
@@ -28,9 +27,8 @@ data Input : Set where
   Deposit  : ℕ -> ℕ -> Input
   Transfer : ℕ -> ℕ -> ℕ -> Input
   Cleanup  : Input
-instance
-  unquoteDecl DecEq-Input = derive-DecEq
-    ((quote Input , DecEq-Input) ∷ [])
+unquoteDecl DecEq-Input = derive-DecEq
+  ((quote Input , DecEq-Input) ∷ [])
 
 AccountSimData = Label ⊎ Input
 ```

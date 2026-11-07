@@ -20,17 +20,15 @@ open import Data.Rational.Base
 data Label : Set where
  -- Holding : Label
   Always : ℚ -> ℕ -> Label 
-instance
-  unquoteDecl DecEq-Label = derive-DecEq
-    ((quote Label , DecEq-Label) ∷ [])
+unquoteDecl DecEq-Label = derive-DecEq
+  ((quote Label , DecEq-Label) ∷ [])
 
 data Input : Set where
   Update   : ℕ -> ℚ -> Input
   Exchange : ℕ -> ℕ -> Input
   Close    : Input
-instance
-  unquoteDecl DecEq-Input = derive-DecEq
-    ((quote Input , DecEq-Input) ∷ [])
+unquoteDecl DecEq-Input = derive-DecEq
+  ((quote Input , DecEq-Input) ∷ [])
 
 DExData = Label ⊎ Input
 ```

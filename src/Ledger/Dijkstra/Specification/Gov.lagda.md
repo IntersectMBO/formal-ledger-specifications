@@ -299,7 +299,7 @@ hasParentE? e aid gaTy with getHashES e gaTy
 hasParent? : ∀ e s a aid → Dec (hasParent e s a aid)
 hasParent? e s gaTy aid with getHash aid
 ... | just aid' = hasParentE? e aid' gaTy
-                  ⊎-dec any? (λ (gid , gas) → gid ≟ aid' ×-dec Overlap? (GovActionTypeOf gas) gaTy) s
+                  ⊎? any? (λ (gid , gas) → gid ≟ aid' ×? Overlap? (GovActionTypeOf gas) gaTy) s
 ... | nothing = yes _
 
 -- newtype to make the instance resolution work
@@ -314,10 +314,10 @@ instance
 [ [] connects aidNew to aidOld ?] = aidNew ≟ aidOld
 
 [ (aid , aidPrev) ∷ s connects aidNew to aidOld ?] =
-  ((aid ≟ aidNew) ×-dec [ s connects aidPrev to aidOld ?]) ⊎-dec [ s connects aidNew to aidOld ?]
+  ((aid ≟ aidNew) ×? [ s connects aidPrev to aidOld ?]) ⊎? [ s connects aidNew to aidOld ?]
 
 any?-connecting-subperm : ∀ {u} {v} → ∀ L → Dec (Any(λ l → Unique l × l connects u to v) (subpermutations L))
-any?-connecting-subperm {u} {v} L = any? (λ l → unique? _≟_ l ×-dec [ l connects u to v ?]) (subpermutations L)
+any?-connecting-subperm {u} {v} L = any? (λ l → unique? _≟_ l ×? [ l connects u to v ?]) (subpermutations L)
 
 ∃?-connecting-subperm : ∀ {u} {v} → ∀ L → Dec (∃[ l ] l ∈ˡ subpermutations L × Unique l × l connects u to v)
 ∃?-connecting-subperm L = map-Dec (sym-Equiv (↔⇒ Any↔)) (any?-connecting-subperm L)

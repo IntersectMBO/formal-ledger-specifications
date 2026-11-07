@@ -47,9 +47,8 @@ votedValue pup pparams quorum =
 
 <!--
 ```agda
-instance
-  unquoteDecl HasCast-NewPParamState = derive-HasCast
-    [ (quote NewPParamState , HasCast-NewPParamState) ]
+unquoteDecl HasCast-NewPParamState = derive-HasCast
+  [ (quote NewPParamState , HasCast-NewPParamState) ]
 
 private variable
   Γ : NewPParamEnv

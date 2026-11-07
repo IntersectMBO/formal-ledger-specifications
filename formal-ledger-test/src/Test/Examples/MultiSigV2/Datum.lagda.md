@@ -14,9 +14,8 @@ open import Tactic.Derive.DecEq
 data Label : Set where
   Holding : Label
   Collecting : ℕ -> ℕ -> ℕ -> List ℕ -> Label
-instance
-  unquoteDecl DecEq-Label = derive-DecEq
-    ((quote Label , DecEq-Label) ∷ [])
+unquoteDecl DecEq-Label = derive-DecEq
+  ((quote Label , DecEq-Label) ∷ [])
 
 data Input : Set where
   Propose : ℕ -> ℕ -> ℕ -> Input
@@ -24,9 +23,8 @@ data Input : Set where
   Pay     : Input
   Cancel  : Input
   Cleanup : Input
-instance
-  unquoteDecl DecEq-Input = derive-DecEq
-    ((quote Input , DecEq-Input) ∷ [])
+unquoteDecl DecEq-Input = derive-DecEq
+  ((quote Input , DecEq-Input) ∷ [])
 
 MultiSigData = Label ⊎ Input
 ```

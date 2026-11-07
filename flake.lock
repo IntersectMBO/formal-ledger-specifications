@@ -41,6 +41,23 @@
         "type": "github"
       }
     },
+    "agda-stdlib": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780406156,
+        "narHash": "sha256-cnYKW/KRKVsTBupQo1DNnH5Cx7sh6W+NEsZPHRWIBjE=",
+        "owner": "agda",
+        "repo": "agda-stdlib",
+        "rev": "2a5a0dec0a3cb5c87468ce101388a513d39dbf10",
+        "type": "github"
+      },
+      "original": {
+        "owner": "agda",
+        "ref": "v2.4",
+        "repo": "agda-stdlib",
+        "type": "github"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": "nixpkgs-lib"
@@ -126,6 +143,7 @@
     "root": {
       "inputs": {
         "agda-nix": "agda-nix",
+        "agda-stdlib": "agda-stdlib",
         "flake-parts": "flake-parts",
         "nixpkgs": "nixpkgs"
       }
@@ -133,15 +151,16 @@
     "standard-library-classes": {
       "flake": false,
       "locked": {
-        "lastModified": 1754406591,
-        "narHash": "sha256-tuXuZcwu6XNFP979oSZg0yfFY9eMyqpkUNddk+QchVc=",
+        "lastModified": 1793783939,
+        "narHash": "sha256-Wzeg5d527TXFgbInht4GdC2B24GLSEHuEt+23tM6dA8=",
         "owner": "agda",
         "repo": "agda-stdlib-classes",
-        "rev": "e732956fb01eb616bb3429f290d9434f4ab59b6a",
+        "rev": "a21d7b5ed8326cbe2f10ac13bd3c6cbee12d2caf",
         "type": "github"
       },
       "original": {
         "owner": "agda",
+        "ref": "v2.4",
         "repo": "agda-stdlib-classes",
         "type": "github"
       }
@@ -149,15 +168,16 @@
     "standard-library-meta": {
       "flake": false,
       "locked": {
-        "lastModified": 1754406588,
-        "narHash": "sha256-YH8OqGsQ2DKhKqhSUWBDTimQSZsNCnqwZqNqQwnnVS0=",
+        "lastModified": 1793815774,
+        "narHash": "sha256-glzhBrOMHHxHrulNyW+5Tnz4MJNkYjvTJhGF/XYoTR8=",
         "owner": "agda",
         "repo": "agda-stdlib-meta",
-        "rev": "ba0159a198c99185bda86541362f8e0a4a82538a",
+        "rev": "7729b31c2decf0b4b46ac58a6c6ae28d3e711d2c",
         "type": "github"
       },
       "original": {
         "owner": "agda",
+        "ref": "v2.4",
         "repo": "agda-stdlib-meta",
         "type": "github"
       }
