@@ -45,7 +45,7 @@ instance
         SUBUTXOW {txSub = txSub} {Γ = Γ} (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , h)
 
       computeProof-aux : Dec H → ComputationResult String (∃[ s₁ ] (Γ ⊢ s₀ ⇀⦇ txSub ,SUBUTXOW⦈ s₁))
-      computeProof-aux (no ¬p) = failure "SUBUTXOW"
+      computeProof-aux (no ¬p) = failure (genErrors ¬p)
       computeProof-aux (yes p) =
         map (map₂′ (lift-step p)) (SUBUTXO.computeProof Γ s₀ txSub)
 
@@ -90,9 +90,7 @@ instance
         map (map₂′ (lift-legacy p)) (UTXO.computeProof Γ s₀ txTop)
       computeProof-aux (no _) (yes p) =
         map (map₂′ (lift-normal p)) (UTXO.computeProof Γ s₀ txTop)
-      computeProof-aux (no p) (no p') = failure "UTXOW"
-      -- TODO: see https://github.com/IntersectMBO/formal-ledger-specifications/issues/1269
-      -- computeProof-aux (no p) (no p') = failure $ genErrors p S.++ genErrors p'
+      computeProof-aux (no p) (no p') = failure $ genErrors p S.++ "\n" S.++ genErrors p'
 
       computeProof : ComputationResult String (∃[ s₁ ] (Γ ⊢ s₀ ⇀⦇ txTop ,UTXOW⦈ s₁))
       computeProof = computeProof-aux H?-legacy H?-normal
