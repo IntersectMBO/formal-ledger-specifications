@@ -9,9 +9,17 @@
       url = "github:hercules-ci/flake-parts";
     };
 
+    # agda-stdlib 2.4; nixpkgs still packages 2.3 (see build-tools/README.md).
+    agda-stdlib = {
+      url = "github:agda/agda-stdlib/v2.4";
+      flake = false;
+    };
+
     agda-nix = {
       url = "github:input-output-hk/agda.nix";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.standard-library-classes.url = "github:agda/agda-stdlib-classes/v2.4";
+      inputs.standard-library-meta.url = "github:agda/agda-stdlib-meta/v2.4";
     };
   };
 
@@ -103,6 +111,22 @@
                 });
               })
               inputs.agda-nix.overlays.default
+              (final: prev: {
+                agdaPackages = prev.agdaPackages.overrideScope (
+                  afinal: aprev: {
+                    standard-library = aprev.standard-library.overrideAttrs (_: {
+                      version = "2.4";
+                      src = inputs.agda-stdlib;
+                    });
+                    # Until iog-agda-prelude has a release for stdlib 2.4: depend on
+                    # `standard-library` (not `standard-library-2.3`), and the
+                    # level-polymorphic ComputationResult stdlib-classes v2.4 needs.
+                    iog-prelude = aprev.iog-prelude.overrideAttrs (old: {
+                      patches = (old.patches or [ ]) ++ [ ./build-tools/nix/patches/iog-prelude-stdlib-2.4.patch ];
+                    });
+                  }
+                );
+              })
             ];
           };
 
