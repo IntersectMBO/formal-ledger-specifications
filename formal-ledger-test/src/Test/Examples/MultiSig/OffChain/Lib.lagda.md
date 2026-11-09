@@ -15,11 +15,13 @@ open import Test.Examples.MultiSig.Validator
 open import Test.Prelude MultiSigData
 open import Test.SymbolicData MultiSigData
 open import Test.LedgerImplementation SData SData
+open import Test.AbstractImplementation valContext
+open import Test.Lib valContext
 
 open TransactionStructure SVTransactionStructure hiding (Datum; Redeemer)
 open Implementation
+
 open import Data.List using (filter)
-open import Relation.Nullary
 
 defaultTxBody : TxBody
 defaultTxBody = record
@@ -82,6 +84,14 @@ txOutToDatum (fst , fst₁ , nothing , snd) = nothing
 makeFeeTxOut : List (TxIn × TxOut) → List (ℕ × TxOut)
 makeFeeTxOut [] = []
 makeFeeTxOut ((txin , (fst , txValue , snd)) ∷ utxos) = (proj₂ txin , fst , txValue - 10000000000 , snd) ∷ []
+
+makeFeeUnPaymentTxOut : List (TxIn × TxOut) → Value → List (ℕ × TxOut)
+makeFeeUnPaymentTxOut [] v = []
+makeFeeUnPaymentTxOut ((txin , (fst , txValue , snd)) ∷ utxos) v = (proj₂ txin , fst , _+_ {{addValue}} (txValue - feeValue) v , snd) ∷ []
+
+makeFeePaymentTxOut : List (TxIn × TxOut) → Value → List (ℕ × TxOut)
+makeFeePaymentTxOut [] v = []
+makeFeePaymentTxOut ((txin , (fst , txValue , snd)) ∷ utxos) v = (proj₂ txin , fst , (txValue - feeValue ) - v , snd) ∷ []
 
 -- return id of 0 if no txins
 getTxId : List (TxIn × TxOut) → ℕ

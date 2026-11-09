@@ -19,12 +19,11 @@ instance
     ((quote Datum , DecEq-Datum) ∷ [])
 
 data Redeemer : Set where
-  -- Propose: Ada amount, Target Wallet, Slot Deadline
   Propose : ℕ -> ℕ -> ℕ -> Redeemer
-  --  Add: Wallet signature to add
   Add     : ℕ -> Redeemer
   Pay     : Redeemer
   Cancel  : Redeemer
+  Stop    : Redeemer
 instance
   unquoteDecl DecEq-Redeemer = derive-DecEq
     ((quote Redeemer , DecEq-Redeemer) ∷ [])

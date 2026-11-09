@@ -8,10 +8,10 @@ source_path: src/Test/Examples/MultiSig/Test/Trace.lagda.md
 module Test.Examples.MultiSig.Test.Trace where
 
 open import Ledger.Prelude
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
+open import Ledger.Conway.Specification.Transaction
 
 open import Test.Examples.MultiSig.Datum
-open import Test.Examples.MultiSig.OffChain.OffChain
+open import Test.Examples.MultiSig.OffChain.Lib
 open import Test.Examples.MultiSig.Validator
 open import Test.Prelude MultiSigData
 open import Test.SymbolicData MultiSigData
@@ -27,8 +27,11 @@ open import Ledger.Conway.Specification.Utxow.Properties.Computational SVTransac
 open TransactionStructure SVTransactionStructure
 open Implementation
 
-impMultiSig : MultiSig
-impMultiSig = record { signatories = 3 ∷ 2 ∷ 5 ∷ [] ; minNumSignatures = 2 }
+
+open import Test.Examples.MultiSig.OffChain.OffChain
+
+impMultiSig : Params
+impMultiSig = record { authSigs = 3 ∷ 2 ∷ 5 ∷ [] ; minNumSignatures = 2 ; maxWait = 10 }
 
 multiSigScript : PlutusScript
 multiSigScript = 777 , applyScriptWithContext (multiSigValidator impMultiSig)
@@ -53,16 +56,20 @@ initState' = fromList' (createInitUtxoState 5 1000000000000)
 
 -- Hack to have partial Transactions
 data Tx' : Set where
-    openContract : ℕ → ℕ → ℕ → ℕ → Tx'
+    start        : ℕ → ℕ → ℕ → ℕ → Tx'
     addSig       : ℕ → ℕ → Tx'
     pay          : ℕ → ℕ → Tx'
     propose      : ℕ → ℕ → ℕ → ℕ → ℕ → Tx'
+    cancel       : ℕ → ℕ → Tx'
+    stop         : ℕ → ℕ → Tx'
 
 makeTx : UTxOState → PlutusScript → Tx' → Maybe Tx
-makeTx s script (openContract id w v tw) = just (openTx id w v tw script)
+makeTx s script (start id w v tw) = just (startTx id w v tw script)
 makeTx s script (addSig id w) = makeAddSigTx id s script w
 makeTx s script (pay id w) = makePayTx id s script w
 makeTx s script (propose id w v tw d) = makeProposeTx id s script w v tw d
+makeTx s script (cancel id w) = makeCancelTx id s script w
+makeTx s script (stop id w) = makeStopTx id s script w
 
 evalTransanctions : UTxOEnv → ComputationResult String UTxOState → List Tx' → ComputationResult String UTxOState
 evalTransanctions env s [] = s
@@ -90,16 +97,16 @@ evalTransanctionsW env (success s) (tx' ∷ txs') =
 
 -- Add Sig trace
 addSigTrace : List Tx'
-addSigTrace = openContract 6 5 800000000000 6
+addSigTrace = start 6 5 800000000000 6
               ∷ propose 7 5 100000000000 2 4
               ∷ addSig 8 5
               ∷ addSig 9 2
-              ∷ pay 10 2 
+              ∷ pay 10 4 
               ∷ []
 
 failingTrace : List Tx'
 failingTrace =
-   openContract 6 2 800000000000 5
+   start 6 2 800000000000 5
    ∷ propose 7 1 500000000000 5 13
    ∷ addSig 8 2
    ∷ addSig 9 3
@@ -108,11 +115,35 @@ failingTrace =
    ∷ []
 
 utxowTrace : List Tx'
-utxowTrace = openContract 6 5 800000000000 6
+utxowTrace = start 6 5 800000000000 6
              ∷ propose 7 5 100000000000 2 3
              ∷ addSig 8 5
              ∷ addSig 9 2
              ∷ pay 10 5
+             ∷ []
+             
+utxowTrace2 : List Tx'
+utxowTrace2 = start 6 5 800000000000 6
+             ∷ propose 7 5 100000000000 2 0
+             ∷ addSig 8 5
+             ∷ addSig 9 2           
+             ∷ addSig 10 5
+             ∷ addSig 11 2         
+             ∷ addSig 12 5
+             ∷ addSig 13 2           
+             ∷ addSig 14 5
+             ∷ addSig 15 2           
+             ∷ cancel 16 1
+             ∷ []
+
+
+utxowTrace3 : List Tx'
+utxowTrace3 = start 6 5 800000000000 6
+             ∷ propose 7 5 799999999900 2 5
+             ∷ addSig 8 5
+             ∷ addSig 9 2    
+             ∷ pay 10 5
+             ∷ stop 11 1
              ∷ []
               
 opaque
@@ -125,7 +156,7 @@ opaque
   t0 = evalTransanctions initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) addSigTrace
 
   _ : isSuccess t0 ≡ true
-  _ = refl
+  _ = refl 
 
   t1 : ComputationResult String UTxOState
   t1 = evalTransanctions initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) failingTrace
@@ -138,4 +169,18 @@ opaque
 
   _ : isSuccess t2 ≡ true
   _ = refl
+
+  t3 : ComputationResult String UTxOState
+  t3 = evalTransanctionsW initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) utxowTrace2
+
+  _ : isSuccess t3 ≡ true
+  _ = refl
+  
+  t4 : ComputationResult String UTxOState
+  t4 = evalTransanctionsW initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) utxowTrace3
+
+  _ : isSuccess t4 ≡ true
+  _ = refl
+
+
 ```

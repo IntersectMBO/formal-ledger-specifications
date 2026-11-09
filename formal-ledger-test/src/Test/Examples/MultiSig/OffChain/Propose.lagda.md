@@ -11,8 +11,8 @@ open import Ledger.Prelude
 open import Ledger.Conway.Specification.Transaction
 
 open import Test.Examples.MultiSig.Datum
-open import Test.Examples.MultiSig.Validator
 open import Test.Examples.MultiSig.OffChain.Lib
+open import Test.Examples.MultiSig.Validator
 open import Test.Prelude MultiSigData
 open import Test.SymbolicData MultiSigData
 open import Test.LedgerImplementation SData SData
@@ -23,6 +23,7 @@ open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFu
 
 open TransactionStructure SVTransactionStructure hiding (Datum; Redeemer)
 open Implementation
+
 
 -- TODO: Add error handling
 makeProposeTxOut : Datum → (scriptIx : ℕ) → TxOut → (v tw d : ℕ) → List (ℕ × TxOut)
@@ -41,16 +42,15 @@ makeProposeTx id state script@(sh , _) w v tw d =
                          ; txOuts = fromListIx (makeFeeTxOut wutxo ++ makeProposeTxOut label (proj₂ scIn) scOut v tw d )
                          ; txId = id
                          ; collateralInputs = Ledger.Prelude.fromList (map proj₁ wutxo)
+                         ; txVldt = just 0 , just 10
                          } ;
                 wits = record { vkSigs = fromListᵐ ((w , (_+_ {{addValue}} (getTxId wutxo) w)) ∷ []) ;
-                                -- signature now is first number + txId ≡ second number
-                                -- first number is needs to be the id for the script
                                 scripts = Ledger.Prelude.fromList ((inj₂ script) ∷ []) ;
-                                txdats = ∅ ; -- fromListᵐ ((inj₁ (inj₁ Holding) , inj₁ (inj₁ Holding)) ∷ []) ;
+                                txdats = ∅ ; 
                                 txrdmrs = fromListᵐ (((Spend , (proj₂ scIn)) ,
-                                                      inj₁ (inj₂ (Propose v -- amount
-                                                                          tw -- wallet pkh
-                                                                          d)) , -- End Slot
+                                                      inj₁ (inj₂ (Propose v 
+                                                                          tw 
+                                                                          d)) , 
                                                       ((getTxId wutxo) , w)) ∷ []) } ;
                 txsize = 10 ;
                 isValid = true ;

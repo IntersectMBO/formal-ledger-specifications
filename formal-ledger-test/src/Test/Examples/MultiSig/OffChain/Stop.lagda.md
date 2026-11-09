@@ -1,18 +1,18 @@
 ---
 source_branch: master
-source_path: src/Test/Examples/MultiSigV2/OffChain/Stop.lagda.md
+source_path: src/Test/Examples/MultiSig/OffChain/Stop.lagda.md
 ---
 ```agda
 {-# OPTIONS --safe #-}
 
-module Test.Examples.MultiSigV2.OffChain.Stop where
+module Test.Examples.MultiSig.OffChain.Stop where
 
 open import Ledger.Prelude
 open import Ledger.Conway.Specification.Transaction
 
-open import Test.Examples.MultiSigV2.Datum
-open import Test.Examples.MultiSigV2.OffChain.Lib
-open import Test.Examples.MultiSigV2.Validator
+open import Test.Examples.MultiSig.Datum
+open import Test.Examples.MultiSig.OffChain.Lib
+open import Test.Examples.MultiSig.Validator
 open import Test.Prelude MultiSigData
 open import Test.SymbolicData MultiSigData
 open import Test.LedgerImplementation SData SData
