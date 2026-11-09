@@ -1,18 +1,18 @@
 ---
 source_branch: master
-source_path: src/Test/Examples/MultiSigV2/OffChain/Open.lagda.md
+source_path: src/Test/Examples/MultiSig/OffChain/Start.lagda.md
 ---
 ```agda
 {-# OPTIONS --safe #-}
 
-module Test.Examples.MultiSigV2.OffChain.Open where
+module Test.Examples.MultiSig.OffChain.Start where
 
 open import Ledger.Prelude
 open import Ledger.Conway.Specification.Transaction
 
-open import Test.Examples.MultiSigV2.Datum
-open import Test.Examples.MultiSigV2.OffChain.Lib
-open import Test.Examples.MultiSigV2.Validator
+open import Test.Examples.MultiSig.Datum
+open import Test.Examples.MultiSig.OffChain.Lib
+open import Test.Examples.MultiSig.Validator
 open import Test.Prelude MultiSigData
 open import Test.SymbolicData MultiSigData
 open import Test.LedgerImplementation SData SData
@@ -25,18 +25,18 @@ open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFu
 open TransactionStructure SVTransactionStructure
 open Implementation
 
-openTxOut : Value → PlutusScript → TxOut
-openTxOut v script = inj₁ (record { net = 0 ;
+startTxOut : Value → PlutusScript → TxOut
+startTxOut v script = inj₁ (record { net = 0 ;
                            pay = ScriptObj (proj₁ script) ;
                            stake = just (ScriptObj (proj₁ script)) })
                            , v
                            , just (inj₁ (inj₁ (inj₁ Holding))) , nothing
 
 -- txid, wallet, value at script, script index
-openTx : (id w v tw : ℕ) → PlutusScript → Tx
-openTx id w v tw script = record { body = record defaultTxBody
+startTx : (id w v tw : ℕ) → PlutusScript → Tx
+startTx id w v tw script = record { body = record defaultTxBody
                          { txIns = Ledger.Prelude.fromList ((w , w) ∷ [])
-                         ; txOuts = fromListIx ((tw , openTxOut v script)
+                         ; txOuts = fromListIx ((tw , startTxOut v script)
                                                ∷ (w
                                                  , ((inj₁ (record { net = 0 ;
                                                                     pay = KeyHashObj w ;
