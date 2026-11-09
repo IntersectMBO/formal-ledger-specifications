@@ -75,16 +75,16 @@ instance
           renaming (computeProof to computeProof'; completeness to completeness')
 
         computeProofH : Dec H → ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s')
-        computeProofH (yes (x , y , e , k , l , m , c , d , v , j , n , o , p , q , r , t , u)) =
-            map₂′ (UTXO-inductive⋯ _ _ _ x y e k l m c d v j n o p q r t u) <$> computeProof' Γ s tx
+        computeProofH (yes (x , y , e , k , l , m , c , d , v , j , n , o , p , q , r , t , u , a)) =
+            map₂′ (UTXO-inductive⋯ _ _ _ x y e k l m c d v j n o p q r t u a) <$> computeProof' Γ s tx
         computeProofH (no ¬p) = failure $ genErrors ¬p
 
         computeProof : ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s')
         computeProof = computeProofH H?
 
         completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s' → map proj₁ computeProof ≡ success s'
-        completeness s' (UTXO-inductive⋯ _ _ _ x y w k l m c d v j n o p q r t u h) with H?
-        ... | no ¬p = ⊥-elim $ ¬p (x , y , w , k , l , m , c , d , v , j , n , o , p , q , r , t , u)
+        completeness s' (UTXO-inductive⋯ _ _ _ x y w k l m c d v j n o p q r t u a h) with H?
+        ... | no ¬p = ⊥-elim $ ¬p (x , y , w , k , l , m , c , d , v , j , n , o , p , q , r , t , u , a)
         ... | yes _ with computeProof' Γ s tx | completeness' _ _ _ _ h
         ... | success _ | refl = refl
 

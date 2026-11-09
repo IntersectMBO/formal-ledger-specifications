@@ -22,6 +22,7 @@ open import Ledger.Dijkstra.Foreign.Gov
 open import Ledger.Dijkstra.Foreign.Utxo
 open import Ledger.Dijkstra.Foreign.Transaction
 open import Ledger.Dijkstra.Specification.Ledger it DummyAbstractFunctions
+open import Ledger.Dijkstra.Specification.Ledgers it DummyAbstractFunctions
 
 open Computational
 
@@ -38,10 +39,15 @@ instance
                                               • fieldPrefix "ls"
   Conv-LedgerState = autoConvert LedgerState
 
+  HsTy-LedgersEnv = autoHsType LedgersEnv ⊣ withConstructor "MkLedgersEnv"
+                                            • fieldPrefix "lse"
+  Conv-LedgersEnv = autoConvert LedgersEnv
+
 module _ (ext : ExternalFunctions) where
 
   open import Ledger.Dijkstra.Foreign.ExternalStructures ext hiding (TopLevelTx)
   open import Ledger.Dijkstra.Specification.Ledger.Properties.Computational HSTransactionStructure HSAbstractFunctions
+  open import Ledger.Dijkstra.Specification.Ledgers.Properties.Computational HSTransactionStructure HSAbstractFunctions
 
   ledger-step : HsType (LedgerEnv → LedgerState → TopLevelTx → ComputationResult String LedgerState)
   ledger-step = λ lenv lst tx → to (coerce ⦃ TrustMe ⦄ $ compute Computational-LEDGER
@@ -51,9 +57,9 @@ module _ (ext : ExternalFunctions) where
 
   {-# COMPILE GHC ledger-step as ledgerStep #-}
 
-  ledgers-step : HsType (LedgerEnv → LedgerState → List TopLevelTx → ComputationResult String LedgerState)
+  ledgers-step : HsType (LedgersEnv → LedgerState → List TopLevelTx → ComputationResult String LedgerState)
   ledgers-step = λ lenv lst txs → to (coerce ⦃ TrustMe ⦄ $ compute Computational-LEDGERS
-    (coerce ⦃ TrustMe ⦄ (from ⦃ Conv-LedgerEnv ⦄ lenv))
+    (coerce ⦃ TrustMe ⦄ (from ⦃ Conv-LedgersEnv ⦄ lenv))
     (coerce ⦃ TrustMe ⦄ (from ⦃ Conv-LedgerState ⦄ lst))
     (coerce ⦃ TrustMe ⦄ (map (from ⦃ Conv-Tx-TxLevelTop ⦄) txs)))
 

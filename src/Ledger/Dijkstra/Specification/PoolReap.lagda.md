@@ -41,7 +41,8 @@ instance
 private variable
   e : Epoch
   treasury reserves : Coin
-  pools fPools : Pools
+  pools : Pools
+  fPools : FPools
   retiring : KeyHash ⇀ Epoch
   depositsᵖ : KeyHash ⇀ Coin
   voteDelegs : VoteDelegs
@@ -49,7 +50,7 @@ private variable
   rewards : Rewards
   depositsᵈ : Credential ⇀ Coin
 
-open StakePoolParams using (rewardAccount)
+open StakePoolState using (rewardAccount)
 ```
 -->
 

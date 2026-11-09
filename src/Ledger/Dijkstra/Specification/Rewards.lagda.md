@@ -85,27 +85,27 @@ mkApparentPerformance stake poolBlocks totalBlocks = ratioBlocks ÷₀ (fromUnit
     ratioBlocks : .⦃ _ : NonZero (1 ⊔ totalBlocks) ⦄ → ℚ
     ratioBlocks = (pos poolBlocks) / (1 ⊔ totalBlocks)
 
-rewardOwners : Coin → StakePoolParams → UnitInterval → UnitInterval → Coin
+rewardOwners : Coin → StakePoolState → UnitInterval → UnitInterval → Coin
 rewardOwners rewards poolParams ownerStake stake = if rewards ≤ cost
   then rewards
   else cost + posPart (floor (
         (fromℕ rewards - fromℕ cost) * (margin + (1 - margin) * ratioStake)))
   where
     ratioStake  = fromUnitInterval ownerStake ÷₀ fromUnitInterval stake
-    cost        = poolParams .StakePoolParams.cost
-    margin      = fromUnitInterval (poolParams .StakePoolParams.margin)
+    cost        = poolParams .StakePoolState.cost
+    margin      = fromUnitInterval (poolParams .StakePoolState.margin)
 
-rewardMember : Coin → StakePoolParams → UnitInterval → UnitInterval → Coin
+rewardMember : Coin → StakePoolState → UnitInterval → UnitInterval → Coin
 rewardMember rewards poolParams memberStake stake = if rewards ≤ cost
   then 0
   else posPart (floor (
          (fromℕ rewards - fromℕ cost) * ((1 - margin) * ratioStake)))
   where
     ratioStake  = fromUnitInterval memberStake ÷₀ fromUnitInterval stake
-    cost        = poolParams .StakePoolParams.cost
-    margin      = fromUnitInterval (poolParams .StakePoolParams.margin)
+    cost        = poolParams .StakePoolState.cost
+    margin      = fromUnitInterval (poolParams .StakePoolState.margin)
 
-rewardOnePool :  PParams → Coin → ℕ → ℕ → StakePoolParams
+rewardOnePool :  PParams → Coin → ℕ → ℕ → StakePoolState
                  → Stake → UnitInterval → UnitInterval → Coin → Stake
 
 rewardOnePool pp rewardPot n N poolParams stakeDistr σ σa tot = memberRewards ∪⁺ ownersRewards
@@ -114,17 +114,17 @@ rewardOnePool pp rewardPot n N poolParams stakeDistr σ σa tot = memberRewards 
   mkRelativeStake = λ coin → clamp (coin /₀ tot)
 
   owners : ℙ Credential
-  owners = mapˢ KeyHashObj (poolParams .StakePoolParams.owners)
+  owners = mapˢ KeyHashObj (poolParams .StakePoolState.owners)
 
   ownerStake pledge maxP poolReward : Coin
   ownerStake  = ∑[ c ← stakeDistr ∣ owners ] c
-  pledge      = poolParams .StakePoolParams.pledge
+  pledge      = poolParams .StakePoolState.pledge
   maxP        =  if pledge ≤ ownerStake
                  then maxPool pp rewardPot σ (mkRelativeStake pledge)
                  else 0
   poolReward  = posPart $ floor $ (mkApparentPerformance σa n N) * fromℕ maxP
 
-  stakeMap[_] :  (Coin → StakePoolParams → UnitInterval → UnitInterval → Coin)
+  stakeMap[_] :  (Coin → StakePoolState → UnitInterval → UnitInterval → Coin)
                  → Coin → UnitInterval → Coin
   stakeMap[ f ] = (f poolReward poolParams) ∘ mkRelativeStake
 
@@ -133,7 +133,7 @@ rewardOnePool pp rewardPot n N poolParams stakeDistr σ σa tot = memberRewards 
                             (stakeDistr ∣ owners ᶜ)
 
   ownersRewards : Stake
-  ownersRewards =  ❴ CredentialOf (poolParams .StakePoolParams.rewardAccount)
+  ownersRewards =  ❴ CredentialOf (poolParams .StakePoolState.rewardAccount)
                    , stakeMap[ rewardOwners ] ownerStake σ ❵ᵐ
 
 poolStake  : KeyHash → StakeDelegs → Stake → Stake
@@ -167,7 +167,7 @@ reward pp blocks rewardPot pools stake delegs total = rewards
                                 (lookupᵐ? blocks hk)
     pdata       = mapMaybeWithKeyᵐ mkPoolData pools
 
-    f : ℕ × StakePoolParams × Stake → Stake
+    f : ℕ × StakePoolState × Stake → Stake
     f = (λ (n , p , s) → rewardOnePool pp rewardPot n N p s (Σ s /total) (Σ s /active) total)
 
     results : (KeyHash × Credential) ⇀ Coin

@@ -24,6 +24,10 @@ instance
   HsTy-StakePoolParams = autoHsType StakePoolParams
   Conv-StakePoolParams = autoConvert StakePoolParams
 
+  HsTy-StakePoolState = autoHsType StakePoolState
+    ⊣ fieldPrefix "sps"
+  Conv-StakePoolState = autoConvert StakePoolState
+
   HsTy-DCert = autoHsType DCert
   Conv-DCert = autoConvert DCert
 

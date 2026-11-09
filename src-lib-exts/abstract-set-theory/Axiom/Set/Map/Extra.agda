@@ -46,14 +46,6 @@ instance
   HasSubset-⇀ {A} {B} ._⊆_ m₁ m₂ = {k : A} {v : B} → (k , v) ∈ (m₁ ˢ) → (k , v) ∈ (m₂ ˢ)
 
 
--- Map Inequality -----------------------------------------------------------------
-
-infix 4 _≢ᵐ_
-
-_≢ᵐ_ : {A B : Type} → (A ⇀ B) → (A ⇀ B) → Type
-a ≢ᵐ b = ¬ a ≡ᵐ b
-
-
 -- Properties of `_∪⁺_` -----------------------------------------------------------
 
 -- This section was previously `Ledger.Conway.Conformance.Equivalence.Map` and
@@ -83,25 +75,6 @@ module _  {A B : Type}
   open Equivalence
 
   -- Properties of domains of maps of type m₁ ∪⁺ m₂ ---------------------
-
-  -- 1. If `k ∈ dom m₁ ∪ dom m₂` (for m₁, m₂ maps), then `(k , v) ∈ m₁ ∪⁺ m₂` for some `v`.
-  dom∪-∃∪⁺ : {m₁ m₂ : A ⇀ B} → k ∈ dom m₁ ∪ dom m₂ → Σ B (λ • → (k , •) ∈ m₁ ∪⁺ m₂)
-  dom∪-∃∪⁺ k∈ = from dom∈ (∪dom⊆dom∪⁺ k∈)
-
-  -- 2. If `(k , v) ∈ m₁ ∪⁺ m₂`, then `k ∈ dom m₁ ∪ dom m₂`.
-  ∪⁺-dom∪ : {m₁ m₂ : A ⇀ B}{k : A} {v : B} → (k , v) ∈ m₁ ∪⁺ m₂ → k ∈ dom m₁ ∪ dom m₂
-  ∪⁺-dom∪ {v = v} kv∈ = dom∪⁺⊆∪dom (to dom∈ (v , kv∈))
-
-  -- 3. The image of a key `k ∈ dom m₁ ∪ dom m₂` under the map `m₁ ∪⁺ m₂` is
-  --    `fold id id _◇_ (unionThese m₁ m₂ k p)`.
-  ∥_∪⁺_∥ : (m₁ m₂ : A ⇀ B) → k ∈ dom m₁ ∪ dom m₂ → B
-  ∥_∪⁺_∥ {k} m₁ m₂ p = fold id id _◇_ (unionThese m₁ m₂ k p)
-
-  -- 4. F[ m₁ , m₂ ] takes a key `k` and a proof of `k ∈ dom m₁ ∪ dom m₂` and returns
-  --    the pair `(k , v)` where `v` is the unique image of `k` under `m₁ ∪⁺ m₂`.
-  --    i.e., `(k , v) ∈ m₁ ∪⁺ m₂`.
-  F[_,_] : (m₁ m₂ : A ⇀ B) → Σ A (_∈ dom m₁ ∪ dom m₂) → A × B
-  F[ m₁ , m₂ ] (x , x∈) = x , ∥ m₁ ∪⁺ m₂ ∥ x∈
 
   -- 5. A simpler version of `lookupᵐ`; it doesn't require tactics.
   lookupᵐ∈ : (m : A ⇀ B) → k ∈ dom m → B
@@ -701,6 +674,41 @@ module _  {A B : Type}
 
       lem-del-excluded : ∀ m → ¬ P k → filterᵐ P′ (m ∣ ❴ k ❵ ᶜ) ≡ᵐ filterᵐ P′ m
       lem-del-excluded m ¬p = filterᵐ-restrict m ⟨≈⟩ restrict-singleton-filterᵐ-false m ¬p
+
+
+-- Corestriction
+
+-- Corestricting a map away from a set `X` of values: `(m ∣^ X ᶜ) ˢ` is `m ˢ` filtered
+-- by `(_∉ X) ∘ proj₂`, so every surviving pair is a pair of `m` whose value avoids `X`.
+-- The map `m` is an explicit argument because it cannot be recovered by unification:
+-- `_∣^_ᶜ` goes through `⊆-map`, which mentions `m` only as `m ˢ` (i.e., `proj₁ m`).
+coex-∈⁻ : {A B : Type} ⦃ _ : DecEq B ⦄ (m : A ⇀ B) {X : ℙ B} {a : A} {b : B}
+  → (a , b) ∈ (m ∣^ X ᶜ) ˢ → b ∉ X × (a , b) ∈ (m ˢ)
+coex-∈⁻ m = from ∈-filter
+
+
+-- A left-biased union never drops a key of its right operand.  A key that `m` also
+-- binds is taken from `m`; a key that `m` does not bind survives the filter that
+-- `_∪ˡ_` applies to `m'`.  Either way the key stays in the domain.
+dom-∪ˡ-⊇ʳ : {A B : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ B) → dom m' ⊆ dom (m ∪ˡ m')
+dom-∪ˡ-⊇ʳ m m' {a} a∈dom' with a ∈? dom m
+... | yes a∈dom =
+  to dom∈  ( from dom∈ a∈dom .proj₁
+           , Properties.∈-∪⁺ (inj₁ (from dom∈ a∈dom .proj₂)))
+... | no a∉dom =
+  to dom∈  ( from dom∈ a∈dom' .proj₁
+           , Properties.∈-∪⁺ (inj₂ (to ∈-filter (a∉dom , from dom∈ a∈dom' .proj₂))))
+
+-- Two consequences, phrased so that the map whose keys are preserved is the explicit
+-- argument: it is the one a caller can name, whereas the overriding map generally is
+-- not (it sits under `proj₁`, so unification cannot recover it from the goal).
+dom-insert-⊇ : {A B : Type} ⦃ _ : DecEq A ⦄ (m : A ⇀ B) {k : A} {v : B}
+  → dom m ⊆ dom (insert m k v)
+dom-insert-⊇ m {k} {v} = dom-∪ˡ-⊇ʳ ❴ k , v ❵ m
+
+dom-mapValueRestricted-⊇ : {A B : Type} ⦃ _ : DecEq A ⦄ (m : A ⇀ B)
+  {f : B → B} {X : ℙ A} → dom m ⊆ dom (mapValueRestricted f m X)
+dom-mapValueRestricted-⊇ m {f} {X} = dom-∪ˡ-⊇ʳ (mapValues f (m ∣ X)) m
 
 
 -- Map lemmas: lookup after insert

@@ -24,6 +24,7 @@ open import Ledger.Dijkstra.Specification.Script.Validation txs abs
 import Data.List.Relation.Unary.Any as L
 import Data.List.Relation.Unary.All as L
 import Data.Maybe.Relation.Unary.All as Maybe
+open import Data.Maybe.Relation.Binary.Pointwise using () renaming (dec to pointwise?)
 
 private variable
   ℓ     : TxLevel
@@ -247,6 +248,48 @@ instance
 ```
 -->
 
+## Pool Owners Witnesses {#sec:pool-owner-witnesses}
+
+Pool (re)registration certificates require that the pool's operator
+and the pool owners sign the transaction. This causes extra overhead
+for stake pools in Leios, since rotating BLS keys is done through pool
+registration certificates.
+
+To reduce friction, a transaction containing a pool registration
+certificate that only rotates the BLS key does not need to be signed
+by all pool owners, only by the stake pool operator.
+
+The logic to calculate the set of pool owners from which a signature is
+required by the transaction is implemented in the following function:
+
+```agda
+poolOwnersKeyHashes : PState → List DCert → List DCert → ℙ KeyHash
+poolOwnersKeyHashes pState precedingDCerts = foldl go ∅
+  where
+    e : Epoch
+    e = ℕtoEpoch 0
+
+    pools₀ : Pools
+    pools₀ = mapValues (mkStakePoolState e) (FuturePoolsOf pState) ∪ˡ PoolsOf pState
+
+    pools₁ : Pools
+    pools₁ = foldl go pools₀ precedingDCerts
+      where
+        go : Pools → DCert → Pools
+        go pools (regpool kh spp) = ❴ kh , mkStakePoolState e spp ❵ ∪ˡ pools
+        go acc   _                = acc
+
+    go : ℙ KeyHash → DCert → ℙ KeyHash
+    go owners (regpool kh spp) =
+      let pool    = lookupᵐ? pools₁ kh
+          pool'   = mkStakePoolState e spp
+      in
+        if pointwise? ¿ equalExceptBls ¿² pool (just pool')
+          then owners
+          else owners ∪ pool' .StakePoolState.owners
+    go acc _ = acc
+```
+
 ## The <span class="AgdaDatatype">SUBUTXOW</span> Transition System {#sec:the-subutxow-transition-system}
 
 1. All needed phase-2 scripts use Plutus language V4.
@@ -276,9 +319,14 @@ data _⊢_⇀⦇_,SUBUTXOW⦈_ : SubUTxOEnv → UTxOState → SubLevelTx → UTx
       credentialsNeeded : ℙ Credential
       credentialsNeeded = mapˢ proj₂ (credsNeeded utxo₀ txSub)
 
+      vKeyHashesPoolOwners : ℙ KeyHash
+      vKeyHashesPoolOwners = if IsTopLevelValidFlagOf Γ
+                               then poolOwnersKeyHashes (PStateOf Γ) (DCertsOf Γ) txCerts
+                               else ∅
+
       vKeyHashesNeeded : ℙ KeyHash
       vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
-                         ∪ concatMapˢ poolOwners (fromList txCerts)
+                         ∪ vKeyHashesPoolOwners
 
       scriptHashesNeeded : ℙ ScriptHash
       scriptHashesNeeded = mapPartial isScriptObj credentialsNeeded
@@ -347,6 +395,10 @@ The mode itself is not decided here: it is decided once, in the
 field, so a computation can pick the applicable mode up front rather than
 attempting both.
 
+In contrast to previous eras, in Dijkstra pool owner witnesses for
+certificates are not needed when the transaction is phase-2 invalid,
+since no certificate in the batch is applied.
+
 ### Normal Mode
 
 1. All needed phase-2 scripts use Plutus language V4.
@@ -355,6 +407,9 @@ attempting both.
    subtransactions must appear in the top-level guard set.
 
 3. Required top-level guards are well-formed.
+
+4. The top-level transaction may provide supplemental datums for reference
+   inputs and transaction outputs of subtransactions.
 
 ```agda
   UTXOW-normal :
@@ -377,9 +432,14 @@ attempting both.
       vKeyHashesProvided : ℙ KeyHash
       vKeyHashesProvided = mapˢ hash (dom vKeySigs)
 
+      vKeyHashesPoolOwners : ℙ KeyHash
+      vKeyHashesPoolOwners = if IsValidFlagOf txTop
+                               then poolOwnersKeyHashes (PStateOf Γ) (concatMap DCertsOf (SubTransactionsOf txTop)) txCerts
+                               else ∅
+
       vKeyHashesNeeded : ℙ KeyHash
       vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
-                         ∪ concatMapˢ poolOwners (fromList txCerts)
+                         ∪ vKeyHashesPoolOwners
 
       scriptHashesNeeded : ℙ ScriptHash
       scriptHashesNeeded = mapPartial isScriptObj credentialsNeeded
@@ -401,11 +461,11 @@ attempting both.
                       x  ← d
                       isInj₂ x) (range (utxo₀ ∣ txIns))
 
-      dataHashesOutputs : ℙ DataHash
-      dataHashesOutputs = mapPartial txOutToDataHash (range txOuts)
+      allDataHashesOutputs : ℙ DataHash
+      allDataHashesOutputs = mapPartial txOutToDataHash (allTxOuts txTop)
 
-      dataHashesReferenceInputs : ℙ DataHash
-      dataHashesReferenceInputs = mapPartial txOutToDataHash (range (utxo₀ ∣ referenceInputs))
+      allDataHashesReferenceInputs : ℙ DataHash
+      allDataHashesReferenceInputs = mapPartial txOutToDataHash (range (utxo₀ ∣ allReferenceInputs txTop))
 
       allReferenceScriptHashes : ℙ ScriptHash
       allReferenceScriptHashes = mapˢ hash (allReferenceScripts txTop utxo₀)
@@ -433,7 +493,7 @@ attempting both.
     ∙ allScriptHashesNeeded - allReferenceScriptHashes ≡ᵉ allWitnessScriptHashes
     ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
     ∙ dataHashesNeededSpendInputs ⊆ dataHashesProvided
-    ∙ dataHashesProvided ⊆ dataHashesNeededSpendInputs ∪ dataHashesOutputs ∪ dataHashesReferenceInputs
+    ∙ dataHashesProvided ⊆ dataHashesNeededSpendInputs ∪ allDataHashesOutputs ∪ allDataHashesReferenceInputs -- (4)
     ∙ dom txRedeemers ≡ᵉ scriptRedeemerPtrs
     ∙ languages p2ScriptsNeeded ⊆ dom (PParams.costmdls (PParamsOf Γ)) ∩ allowedLanguages txTop utxo₀
     ∙ txADhash ≡ map hash txAuxData
@@ -474,9 +534,14 @@ attempting both.
       vKeyHashesProvided : ℙ KeyHash
       vKeyHashesProvided = mapˢ hash (dom vKeySigs)
 
+      vKeyHashesPoolOwners : ℙ KeyHash
+      vKeyHashesPoolOwners = if IsValidFlagOf txTop
+                               then poolOwnersKeyHashes (PStateOf Γ) (concatMap DCertsOf (SubTransactionsOf txTop)) txCerts
+                               else ∅
+
       vKeyHashesNeeded : ℙ KeyHash
       vKeyHashesNeeded = mapPartial isKeyHashObj credentialsNeeded
-                         ∪ concatMapˢ poolOwners (fromList txCerts)
+                         ∪ vKeyHashesPoolOwners
 
       scriptHashesNeeded : ℙ ScriptHash
       scriptHashesNeeded = mapPartial isScriptObj credentialsNeeded

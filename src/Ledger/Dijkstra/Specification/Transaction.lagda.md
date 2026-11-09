@@ -23,6 +23,7 @@ import Data.Maybe.Base as M
 open import Ledger.Prelude renaming (filterᵐ to filter)
 
 open import Ledger.Core.Specification.Crypto
+open import Ledger.Dijkstra.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
 open import Ledger.Dijkstra.Specification.Gov.Base
 
@@ -106,6 +107,7 @@ record TransactionStructure : Type₁ where
     adHashingScheme        : isHashableSet AuxiliaryData
     globalConstants        : GlobalConstants
     cryptoStructure        : CryptoStructure
+    leiosCryptoStructure   : LeiosCryptoStructure cryptoStructure
     epochStructure         : EpochStructure
 ```
 <!--
@@ -158,6 +160,7 @@ record TransactionStructure : Type₁ where
     -- TODO: figure out what to do with the hash
     { TxId = TxId; DocHash = ADHash
     ; cryptoStructure = cryptoStructure
+    ; leiosCryptoStructure = leiosCryptoStructure
     ; epochStructure = epochStructure
     ; scriptStructure = scriptStructure
     ; govParams = govParams
@@ -613,14 +616,18 @@ allowed to inspect utxo for its inputs.
   allSpendInputs txTop = foldl  (λ acc txSub → acc ∪ SpendInputsOf txSub)
                                 (SpendInputsOf txTop)
                                 (SubTransactionsOf txTop)
-  allSpendInputsList : TopLevelTx → List (ℙ TxIn)
-  allSpendInputsList t = SpendInputsOf t ∷ map SpendInputsOf (SubTransactionsOf t)
 
   --| Reference inputs
   allReferenceInputs : TopLevelTx → ℙ TxIn
   allReferenceInputs txTop = foldl  (λ acc txSub → acc ∪ ReferenceInputsOf txSub)
                                     (ReferenceInputsOf txTop)
                                     (SubTransactionsOf txTop)
+
+  --| Outputs
+  allTxOuts : TopLevelTx → ℙ TxOut
+  allTxOuts txTop = foldl (λ acc txSub → acc ∪ (range (TxOutsOf txSub)))
+                          (range (TxOutsOf txTop))
+                          (SubTransactionsOf txTop)
 
   --| Set of TxOuts from a UTxO
   _ : UTxO → ℙ TxOut

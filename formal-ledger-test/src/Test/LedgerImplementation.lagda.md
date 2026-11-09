@@ -47,6 +47,9 @@ module Implementation where
   MaxLovelaceSupplyᶜ = 1000000000000000000
   Quorum           = 1
   NetworkId        = 0
+  MaxKESEvoᶜ       = 10
+  SlotsPerKESPeriodᶜ = 20  -- derives a key age of 4 epochs at 100 slots per epoch
+  SlotLengthᶜ      = 1000  -- one second per slot
 
   SKey = ℕ
   VKey = ℕ
@@ -66,8 +69,11 @@ module Implementation where
   ExUnits      = ℕ × ℕ
   ExUnit-CommutativeMonoid =
     Conversion.fromBundle (commutativeMonoid +-0-commutativeMonoid +-0-commutativeMonoid)
-  ≥ᵉ-Dec = _≡_ {A = ExUnits} ⁇² ∋ it
-  _≥ᵉ_ = _≡_
+  _≤ᵉᵘ_ : ExUnits → ExUnits → Type
+  _≤ᵉᵘ_ = λ (m , s) (m' , s') → m ≤ m' × s ≤ s'
+  ≤ᵉᵘ-Dec : _≤ᵉᵘ_ ⁇²
+  ≤ᵉᵘ-Dec = it -- Dec-× ⦃ _≤_ {A = ℕ} ⁇² ∋ it ⦄ ⦃ _≤_ {A = ℕ} ⁇² ∋ it ⦄
+
   instance
     Show-ExUnits : Show ExUnits
     Show-ExUnits = Show-×

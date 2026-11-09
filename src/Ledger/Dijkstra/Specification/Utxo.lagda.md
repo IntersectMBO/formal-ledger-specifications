@@ -49,8 +49,15 @@ import Data.Sum.Relation.Unary.All as Sum
 
 open RewardAddress
 
-totExUnits : ∀{ℓ} → Tx ℓ → ExUnits
-totExUnits tx = ∑[ (_ , eu) ← RedeemersOf tx ] eu
+totalExUnits : TopLevelTx → ExUnits
+totalExUnits txTop =
+  foldl (λ acc tx → acc + (∑[ (_ , eu) ← RedeemersOf tx ] eu))
+        (∑[ (_ , eu) ← RedeemersOf txTop ] eu)
+        (SubTransactionsOf txTop)
+
+totalRefScriptsSize : UTxO → TopLevelTx → ℕ
+totalRefScriptsSize utxo txTop =
+  ∑ˡ[ x ← setToList (allReferenceScripts txTop utxo) ] scriptSize x
 
 -- utxoEntrySizeWithoutVal = 27 words (8 bytes)
 utxoEntrySizeWithoutVal : MemoryEstimate
@@ -75,7 +82,7 @@ record UTxOEnv : Type where
     pparams           : PParams
     treasury          : Treasury
     utxo₀             : UTxO
-    pools₀            : Pools
+    pState₀           : PState
     allScripts        : ℙ Script
     legacyMode        : Bool
 
@@ -85,6 +92,8 @@ record SubUTxOEnv : Type where
     pparams          : PParams
     treasury         : Treasury
     utxo₀            : UTxO
+    pState₀          : PState
+    prevDCerts       : List DCert
     allScripts       : ℙ Script
     isTopLevelValid  : Bool
 ```
@@ -170,6 +179,9 @@ instance
   HasLegacyMode-UTxOEnv : HasLegacyMode UTxOEnv
   HasLegacyMode-UTxOEnv .LegacyModeOf = UTxOEnv.legacyMode
 
+  HasPState-UTxOEnv : HasPState UTxOEnv
+  HasPState-UTxOEnv .PStateOf = UTxOEnv.pState₀
+
   HasSlot-SubUTxOEnv : HasSlot SubUTxOEnv
   HasSlot-SubUTxOEnv .SlotOf = SubUTxOEnv.slot
 
@@ -188,6 +200,12 @@ instance
   HasScriptPool-SubUTxOEnv : HasScriptPool SubUTxOEnv
   HasScriptPool-SubUTxOEnv .ScriptPoolOf = SubUTxOEnv.allScripts
 
+  HasPState-SubUTxOEnv : HasPState SubUTxOEnv
+  HasPState-SubUTxOEnv .PStateOf = SubUTxOEnv.pState₀
+
+  HasDCerts-SubUTxOEnv : HasDCerts SubUTxOEnv
+  HasDCerts-SubUTxOEnv .DCertsOf = SubUTxOEnv.prevDCerts
+
   HasUTxO-UTxOState : HasUTxO UTxOState
   HasUTxO-UTxOState .UTxOOf = UTxOState.utxo
 
@@ -196,9 +214,6 @@ instance
 
   HasDonations-UTxOState : HasDonations UTxOState
   HasDonations-UTxOState .DonationsOf = UTxOState.donations
-
-  HasPools-UTxOEnv : HasPools UTxOEnv
-  HasPools-UTxOEnv .PoolsOf = UTxOEnv.pools₀
 
   unquoteDecl HasCast-UTxOEnv
               HasCast-SubUTxOEnv
@@ -228,14 +243,10 @@ balance utxo = ∑[ x ← mapValues txOutToValue utxo ] x
 cbalance : UTxO → Coin
 cbalance utxo = coin (balance utxo)
 
-refScriptsSize : Tx ℓ → UTxO → ℕ
-refScriptsSize tx utxo =
- ∑ˡ[ x ← setToList (referenceScripts tx utxo) ] scriptSize x
-
 minfee : PParams → TopLevelTx → UTxO → Coin
 minfee pp txTop utxo = pp .a * (SizeOf txTop) + pp .b
-                       + txScriptFee (pp .prices) (totExUnits txTop)
-                       + scriptsCost pp (refScriptsSize txTop utxo)
+                       + txScriptFee (pp .prices) (totalExUnits txTop)
+                       + scriptsCost pp (totalRefScriptsSize utxo txTop)
 ```
 
 <!--
@@ -511,10 +522,11 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
     ∙ inInterval (SlotOf Γ) (ValidIntervalOf txTop)
     ∙ minfee (PParamsOf Γ) txTop (UTxOOf Γ) ≤ TxFeesOf txTop
     ∙ coin (MintedValueOf txTop) ≡ 0
-    ∙ consumedBatch (PParamsOf Γ) txTop (UTxOOf Γ) ≡ producedBatch (PParamsOf Γ) (PoolsOf Γ) txTop
-    ∙ (LegacyModeOf Γ ≡ true → consumedLegacy (PParamsOf Γ) txTop (UTxOOf Γ) ≡ producedLegacy (PParamsOf Γ) (PoolsOf Γ) txTop)  -- (4)
+    ∙ consumedBatch (PParamsOf Γ) txTop (UTxOOf Γ) ≡ producedBatch (PParamsOf Γ) (PoolsOf (PStateOf Γ)) txTop
+    ∙ (LegacyModeOf Γ ≡ true → consumedLegacy (PParamsOf Γ) txTop (UTxOOf Γ) ≡ producedLegacy (PParamsOf Γ) (PoolsOf (PStateOf Γ)) txTop)  -- (4)
     ∙ SizeOf txTop ≤ maxTxSize (PParamsOf Γ)
-    ∙ ∑ˡ[ x ← setToList (allReferenceScripts txTop (UTxOOf Γ)) ] scriptSize x ≤ (PParamsOf Γ) .maxRefScriptSizePerTx
+    ∙ totalRefScriptsSize (UTxOOf Γ) txTop ≤ (PParamsOf Γ) .maxRefScriptSizePerTx
+    ∙ totalExUnits txTop ≤ᵉᵘ (PParamsOf Γ) .maxTxExUnits
     ∙ ((RedeemersOf txTop ˢ ≢ ∅) ⊎ (List.Any (λ txSub → RedeemersOf txSub ˢ ≢ ∅) (SubTransactionsOf txTop))
         → collateralCheck (PParamsOf Γ) txTop (UTxOOf Γ))
     ∙ ∀[ (_ , o) ∈ ∣ TxOutsOf txTop ∣ ]
@@ -536,8 +548,8 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → TopLevelTx → UTxOState 
 <!--
 ```agda
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO)
-pattern UTXO-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ p₁₆ p₁₇ h
-  = UTXO (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , h)
+pattern UTXO-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ p₁₆ p₁₇ p₁₈ h
+  = UTXO (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , h)
 ```
 -->
 

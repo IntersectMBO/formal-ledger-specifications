@@ -50,7 +50,7 @@ lemInvalidDepositsL : ∀ {Γ utxoSt utxoSt' tx}
                     → Γ L.⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
                     → L.UTxOState.deposits utxoSt ≡ L.UTxOState.deposits utxoSt'
 lemInvalidDepositsL refl (L.UTXOW⇒UTXO
-                          (L.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+                          (L.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
                             (L.Scripts-No _))) = refl
 
 lemInvalidDepositsC : ∀ {Γ utxoSt utxoSt' tx}
@@ -58,7 +58,7 @@ lemInvalidDepositsC : ∀ {Γ utxoSt utxoSt' tx}
                     → (h : Γ C.⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt')
                     → utxowDeposits h ≡ L.UTxOState.deposits utxoSt'
 lemInvalidDepositsC refl (C.UTXOW⇒UTXO
-                          (C.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+                          (C.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
                             (C.Scripts-No _))) = refl
 
 -- The UTXOW rule doesn't change the deposits in Conformance
@@ -66,10 +66,10 @@ lemDepositsC : ∀ {Γ utxoSt utxoSt' tx}
              → (h : Γ C.⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt')
              → L.UTxOState.deposits utxoSt ≡ L.UTxOState.deposits utxoSt'
 lemDepositsC (C.UTXOW⇒UTXO
-               (C.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+               (C.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
                  (C.Scripts-Yes _))) = refl
 lemDepositsC (C.UTXOW⇒UTXO
-               (C.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+               (C.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
                  (C.Scripts-No _))) = refl
 
 lemUpdateDeposits : ∀ {Γ s tx s'} (open L.UTxOEnv Γ)
@@ -78,7 +78,7 @@ lemUpdateDeposits : ∀ {Γ s tx s'} (open L.UTxOEnv Γ)
                   → L.updateDeposits pparams (body tx) (L.UTxOState.deposits s) ≡ L.UTxOState.deposits s'
 lemUpdateDeposits refl
   (L.UTXOW⇒UTXO
-    (L.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    (L.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
       (L.Scripts-Yes _))) = refl
 
 getValidCertDeposits : ∀ {Γ s tx s'}
@@ -90,7 +90,7 @@ getValidCertDeposits : ∀ {Γ s tx s'}
                      → L.ValidCertDeposits pparams deposits txCerts
 getValidCertDeposits refl
   (L.UTXOW⇒UTXO
-    (L.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    (L.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
       (L.Scripts-Yes (v , _)))) = v
 
 makeCertDeps* : ∀ {Γ s tx s'}
@@ -231,7 +231,7 @@ lemUtxowDeposits : ∀ {Γ s s' tx}
                   → (r : Γ C.⊢ s ⇀⦇ tx ,UTXOW⦈ s')
                   → utxowDeposits r ≡ L.updateDeposits pparams (body tx) (C.UTxOState.deposits s')
 lemUtxowDeposits refl (C.UTXOW⇒UTXO
-                        (C.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+                        (C.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
                           (C.Scripts-Yes _))) = refl
 
 instance

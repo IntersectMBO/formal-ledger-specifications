@@ -73,7 +73,7 @@ module _ {eps : EpochState} {e : Epoch} where
 
          govSt' = Governance-Update.govSt' govUpd
 
-         module pPRUpd =  Pre-POOLREAP-Update (Pre-POOLREAPUpdate.updates ls es govUpd)
+         module pPRUpd =  Pre-POOLREAP-Update (Pre-POOLREAPUpdate.updates e ls es govUpd)
 
          pPRUpd₁ = Post-POOLREAPUpdate.updates es ls dState'₁ acnt'₁ govUpd
          module pPRUpd₁ = Post-POOLREAP-Update pPRUpd₁

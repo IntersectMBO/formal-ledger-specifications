@@ -46,8 +46,8 @@ record PlutusStructure : Type₁ where
         ⦃ Show-Language            ⦄ : Show Language
         ⦃ Show-CostModel           ⦄ : Show CostModel
 
-  field  _≥ᵉ_              : ExUnits → ExUnits → Type
-         ⦃ ≥ᵉ-Dec ⦄        : _≥ᵉ_ ⁇²
+  field  _≤ᵉᵘ_              : ExUnits → ExUnits → Type
+         ⦃ ≤ᵉᵘ-Dec ⦄        : _≤ᵉᵘ_ ⁇²
          ⦃ DecEq-ExUnits ⦄ : DecEq ExUnits
          ⦃ DecEQ-Prices  ⦄ : DecEq Prices
          ⦃ Show-ExUnits  ⦄ : Show ExUnits
