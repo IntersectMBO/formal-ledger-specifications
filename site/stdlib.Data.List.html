@@ -1,0 +1,11 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>stdlib.Data.List</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"><link rel="stylesheet" href="Agda.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script><script src="AgdaKaTeX.js" defer=""></script></head><body><pre class="Agda"><a id="1" class="Symbol">{-#</a> <a id="5" class="Keyword">OPTIONS</a> <a id="13" class="Pragma">--safe</a> <a id="20" class="Pragma">--without-K</a> <a id="32" class="Symbol">#-}</a>
+<a id="36" class="Keyword">module</a> <a id="43" href="stdlib.Data.List.html" class="Module">stdlib.Data.List</a> <a id="60" class="Keyword">where</a>
+
+<a id="67" class="Keyword">open</a> <a id="72" class="Keyword">import</a> <a id="79" href="Data.List.html" class="Module">Data.List</a>
+<a id="89" class="Keyword">open</a> <a id="94" class="Keyword">import</a> <a id="101" href="Data.List.Relation.Unary.All.html" class="Module">Data.List.Relation.Unary.All</a>
+<a id="130" class="Keyword">open</a> <a id="135" class="Keyword">import</a> <a id="142" href="Data.Empty.html" class="Module">Data.Empty</a>
+
+<a id="Is-[]"></a><a id="154" href="stdlib.Data.List.html#154" class="Function">Is-[]</a> <a id="160" class="Symbol">:</a> <a id="162" class="Symbol">∀</a> <a id="164" class="Symbol">{</a><a id="165" href="stdlib.Data.List.html#165" class="Bound">A</a> <a id="167" class="Symbol">:</a> <a id="169" href="Agda.Primitive.html#388" class="Primitive">Set</a><a id="172" class="Symbol">}</a> <a id="174" class="Symbol">→</a> <a id="176" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="181" href="stdlib.Data.List.html#165" class="Bound">A</a> <a id="183" class="Symbol">→</a> <a id="185" href="Agda.Primitive.html#388" class="Primitive">Set</a>
+<a id="189" href="stdlib.Data.List.html#154" class="Function">Is-[]</a> <a id="195" class="Symbol">=</a> <a id="197" href="Data.List.Relation.Unary.All.html#1638" class="Datatype">All</a> <a id="201" class="Symbol">(λ</a> <a id="204" href="stdlib.Data.List.html#204" class="Bound">_</a> <a id="206" class="Symbol">→</a> <a id="208" href="Data.Empty.html#914" class="Function">⊥</a><a id="209" class="Symbol">)</a>
+</pre></body></html>
