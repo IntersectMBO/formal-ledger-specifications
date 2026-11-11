@@ -160,6 +160,12 @@ allowedLanguages tx utxo =
     usesV2Features = ∃[ o ∈ os ] HasInlineDatum o
 ```
 
+```agda
+poolOwners : DCert → ℙ KeyHash
+poolOwners (regpool _ spp) = StakePoolParams.owners spp
+poolOwners _               = ∅
+```
+
 ## Checking the script integrity hash
 
 The script integrity hash helps determining that the cost model for execution
@@ -232,6 +238,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
          neededScriptHashes  = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo txb)
          neededVKeyHashes    = mapPartial (isKeyHashObj ∘ proj₂) (credsNeeded utxo txb)
                                ∪ reqSignerHashes
+                               ∪ concatMapˢ poolOwners (fromList txCerts)
          txdatsHashes        = mapˢ hash txdats
          inputsDataHashes    = mapPartial (λ txout →  if txOutToP2Script utxo tx txout
                                                       then txOutToDataHash txout
