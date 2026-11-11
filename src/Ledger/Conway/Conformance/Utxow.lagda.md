@@ -43,6 +43,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
         neededScriptHashes  = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo txb)
         neededVKeyHashes    = mapPartial (isKeyHashObj ∘ proj₂) (credsNeeded utxo txb)
                               ∪ reqSignerHashes
+                              ∪ concatMapˢ L.poolOwners (fromList txCerts)
         txdatsHashes        = mapˢ hash txdats
         inputsDataHashes    = mapPartial (λ txout → if txOutToP2Script utxo tx txout
                                                      then txOutToDataHash txout
