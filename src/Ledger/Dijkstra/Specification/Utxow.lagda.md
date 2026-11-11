@@ -462,7 +462,7 @@ since no certificate in the batch is applied.
                       isInj₂ x) (range (utxo₀ ∣ txIns))
 
       allDataHashesOutputs : ℙ DataHash
-      allDataHashesOutputs = mapPartial txOutToDataHash (allTxOuts txTop)
+      allDataHashesOutputs = mapPartial txOutToDataHash (allOutputs txTop)
 
       allDataHashesReferenceInputs : ℙ DataHash
       allDataHashesReferenceInputs = mapPartial txOutToDataHash (range (utxo₀ ∣ allReferenceInputs txTop))
@@ -475,6 +475,9 @@ since no certificate in the batch is applied.
 
       allWitnessScriptHashes : ℙ ScriptHash
       allWitnessScriptHashes = mapˢ hash (allWitnessScripts txTop)
+
+      allOutputScriptHashes : ℙ ScriptHash
+      allOutputScriptHashes = mapˢ hash (allOutputScripts txTop)
 
       scriptRedeemerPtrs : ℙ RedeemerPtr
       scriptRedeemerPtrs = mapPartial (λ (sp , c) → if credentialToP2Script c scriptsNeeded
@@ -490,7 +493,7 @@ since no certificate in the batch is applied.
     ∙ ∀[ (vk , σ) ∈ TxWitnesses.vKeySigs (Tx.txWitnesses txTop) ] isSigned vk (txidBytes (TxIdOf txTop)) σ
     ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (GuardsOf txTop) txVldt s
     ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
-    ∙ allScriptHashesNeeded - allReferenceScriptHashes ≡ᵉ allWitnessScriptHashes
+    ∙ allScriptHashesNeeded - (allReferenceScriptHashes ∪ allOutputScriptHashes) ≡ᵉ allWitnessScriptHashes
     ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
     ∙ dataHashesNeededSpendInputs ⊆ dataHashesProvided
     ∙ dataHashesProvided ⊆ dataHashesNeededSpendInputs ∪ allDataHashesOutputs ∪ allDataHashesReferenceInputs -- (4)
@@ -578,6 +581,9 @@ since no certificate in the batch is applied.
       allWitnessScriptHashes : ℙ ScriptHash
       allWitnessScriptHashes = mapˢ hash (allWitnessScripts txTop)
 
+      allOutputScriptHashes : ℙ ScriptHash
+      allOutputScriptHashes = mapˢ hash (allOutputScripts txTop)
+
       scriptRedeemerPtrs : ℙ RedeemerPtr
       scriptRedeemerPtrs = mapPartial (λ (sp , c) → if credentialToP2Script c scriptsNeeded
                                                        then rdptr txTop sp
@@ -592,7 +598,7 @@ since no certificate in the batch is applied.
     ∙ ∀[ (vk , σ) ∈ vKeySigs ] isSigned vk (txidBytes (TxIdOf txTop)) σ
     ∙ ∀[ s ∈ p1ScriptsNeeded ] validP1Script vKeyHashesProvided (GuardsOf txTop) txVldt s
     ∙ vKeyHashesNeeded ⊆ vKeyHashesProvided
-    ∙ allScriptHashesNeeded - allReferenceScriptHashes ≡ᵉ allWitnessScriptHashes
+    ∙ allScriptHashesNeeded - (allReferenceScriptHashes ∪ allOutputScriptHashes) ≡ᵉ allWitnessScriptHashes
     ∙ scriptHashesNeeded ⊆ mapˢ hash scriptsProvided
     ∙ dataHashesNeededSpendInputs ⊆ dataHashesProvided
     ∙ dataHashesProvided ⊆ dataHashesNeededSpendInputs ∪ dataHashesOutputs ∪ dataHashesReferenceInputs
