@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="img/Cardano-RGB_Logo-Icon-White.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -33,7 +33,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
@@ -12431,7 +12431,7 @@ transform the ledger state.</p>
 
 <a id="allColdCreds"></a><a id="5214" href="Ledger.Dijkstra.Specification.Ledger.html#5214" class="Function">allColdCreds</a> <a id="5227" class="Symbol">:</a> <a id="5229" href="Ledger.Dijkstra.Specification.Gov.html#1776" class="Function">GovState</a> <a id="5238" class="Symbol">→</a> <a id="5240" href="Ledger.Dijkstra.Specification.Enact.html#821" class="Record">EnactState</a> <a id="5251" class="Symbol">→</a> <a id="5253" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="5255" href="Ledger.Core.Specification.Address.html#1214" class="Datatype">Credential</a>
 <a id="5266" href="Ledger.Dijkstra.Specification.Ledger.html#5214" class="Function">allColdCreds</a> <a id="5279" href="Ledger.Dijkstra.Specification.Ledger.html#5279" class="Bound">govSt</a> <a id="5285" href="Ledger.Dijkstra.Specification.Ledger.html#5285" class="Bound">es</a> <a id="5288" class="Symbol">=</a>
-  <a id="5292" href="Ledger.Dijkstra.Specification.Enact.html#1770" class="Function">ccCreds</a> <a id="5300" class="Symbol">(</a><a id="5301" href="Ledger.Dijkstra.Specification.Ledger.html#5285" class="Bound">es</a> <a id="5304" class="Symbol">.</a><a id="5305" href="Ledger.Dijkstra.Specification.Enact.html#857" class="Field">cc</a><a id="5307" class="Symbol">)</a> <a id="5309" href="Axiom.Set.html#9137" class="Function Operator">∪</a> <a id="5311" href="Axiom.Set.html#7207" class="Function">concatMapˢ</a> <a id="5322" class="Symbol">(λ</a> <a id="5325" class="Symbol">(_</a> <a id="5328" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="5330" href="Ledger.Dijkstra.Specification.Ledger.html#5330" class="Bound">st</a><a id="5332" class="Symbol">)</a> <a id="5334" class="Symbol">→</a> <a id="5336" href="Ledger.Dijkstra.Specification.Gov.Actions.html#4415" class="Function">proposedCC</a> <a id="5347" class="Symbol">(</a><a id="5348" href="Ledger.Dijkstra.Specification.Gov.Actions.html#4888" class="Field">GovActionOf</a> <a id="5360" href="Ledger.Dijkstra.Specification.Ledger.html#5330" class="Bound">st</a><a id="5362" class="Symbol">))</a> <a id="5365" class="Symbol">(</a><a id="5366" href="Axiom.Set.html#5903" class="Function">fromList</a> <a id="5375" href="Ledger.Dijkstra.Specification.Ledger.html#5279" class="Bound">govSt</a><a id="5380" class="Symbol">)</a>
+  <a id="5292" href="Ledger.Dijkstra.Specification.Enact.html#1770" class="Function">ccCreds</a> <a id="5300" class="Symbol">(</a><a id="5301" href="Ledger.Dijkstra.Specification.Ledger.html#5285" class="Bound">es</a> <a id="5304" class="Symbol">.</a><a id="5305" href="Ledger.Dijkstra.Specification.Enact.html#857" class="Field">cc</a><a id="5307" class="Symbol">)</a> <a id="5309" href="Axiom.Set.html#9134" class="Function Operator">∪</a> <a id="5311" href="Axiom.Set.html#7204" class="Function">concatMapˢ</a> <a id="5322" class="Symbol">(λ</a> <a id="5325" class="Symbol">(_</a> <a id="5328" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="5330" href="Ledger.Dijkstra.Specification.Ledger.html#5330" class="Bound">st</a><a id="5332" class="Symbol">)</a> <a id="5334" class="Symbol">→</a> <a id="5336" href="Ledger.Dijkstra.Specification.Gov.Actions.html#4415" class="Function">proposedCC</a> <a id="5347" class="Symbol">(</a><a id="5348" href="Ledger.Dijkstra.Specification.Gov.Actions.html#4888" class="Field">GovActionOf</a> <a id="5360" href="Ledger.Dijkstra.Specification.Ledger.html#5330" class="Bound">st</a><a id="5362" class="Symbol">))</a> <a id="5365" class="Symbol">(</a><a id="5366" href="Axiom.Set.html#5900" class="Function">fromList</a> <a id="5375" href="Ledger.Dijkstra.Specification.Ledger.html#5279" class="Bound">govSt</a><a id="5380" class="Symbol">)</a>
 </pre>
 <p><code class="AgdaRecord">LedgerState</code> holds four coin-bearing components:</p>
 <ol>
@@ -12748,10 +12748,10 @@ top-level in the <code class="AgdaDatatype">LEDGER</code> rule. This is threaded
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
       

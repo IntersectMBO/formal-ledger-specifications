@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="img/Cardano-RGB_Logo-Icon-White.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -33,7 +33,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
@@ -13101,7 +13101,7 @@ Relevant quantities are the following:</p>
     <a id="16075" href="Ledger.Conway.Specification.Rewards.html#16043" class="Function">lookup&#39;</a> <a id="16083" class="Symbol">(</a><a id="16084" href="Ledger.Conway.Specification.Rewards.html#16084" class="Bound">a</a> <a id="16086" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="16088" href="Ledger.Conway.Specification.Rewards.html#16088" class="Bound">b</a><a id="16089" class="Symbol">)</a> <a id="16091" class="Symbol">=</a> <a id="16093" href="Axiom.Set.Map.html#17234" class="Function">lookupᵐ?</a> <a id="16102" href="Ledger.Conway.Specification.Rewards.html#15991" class="Bound">abc</a> <a id="16106" href="Ledger.Conway.Specification.Rewards.html#16084" class="Bound">a</a> <a id="16108" href="Class.Monad.Core.html#372" class="Field Operator">&gt;&gt;=</a> <a id="16112" class="Symbol">(λ</a> <a id="16115" href="Ledger.Conway.Specification.Rewards.html#16115" class="Bound">bc</a> <a id="16118" class="Symbol">→</a> <a id="16120" href="Axiom.Set.Map.html#17234" class="Function">lookupᵐ?</a> <a id="16129" href="Ledger.Conway.Specification.Rewards.html#16115" class="Bound">bc</a> <a id="16132" href="Ledger.Conway.Specification.Rewards.html#16088" class="Bound">b</a><a id="16133" class="Symbol">)</a>
 
     <a id="16140" href="Ledger.Conway.Specification.Rewards.html#16140" class="Function">joinˢ</a> <a id="16146" class="Symbol">:</a> <a id="16148" class="Symbol">∀</a> <a id="16150" class="Symbol">{</a><a id="16151" href="Ledger.Conway.Specification.Rewards.html#16151" class="Bound">X</a><a id="16152" class="Symbol">}</a> <a id="16154" class="Symbol">→</a> <a id="16156" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="16158" class="Symbol">(</a><a id="16159" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="16161" href="Ledger.Conway.Specification.Rewards.html#16151" class="Bound">X</a><a id="16162" class="Symbol">)</a> <a id="16164" class="Symbol">→</a> <a id="16166" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="16168" href="Ledger.Conway.Specification.Rewards.html#16151" class="Bound">X</a>
-    <a id="16174" href="Ledger.Conway.Specification.Rewards.html#16140" class="Function">joinˢ</a> <a id="16180" class="Symbol">=</a> <a id="16182" href="Axiom.Set.html#7207" class="Function">concatMapˢ</a> <a id="16193" href="Function.Base.html#704" class="Function">id</a>
+    <a id="16174" href="Ledger.Conway.Specification.Rewards.html#16140" class="Function">joinˢ</a> <a id="16180" class="Symbol">=</a> <a id="16182" href="Axiom.Set.html#7204" class="Function">concatMapˢ</a> <a id="16193" href="Function.Base.html#704" class="Function">id</a>
 
     <a id="16201" href="Ledger.Conway.Specification.Rewards.html#16201" class="Function">domain&#39;</a> <a id="16209" class="Symbol">:</a> <a id="16211" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="16213" class="Symbol">(</a><a id="16214" href="Ledger.Conway.Specification.Rewards.html#15980" class="Bound">A</a> <a id="16216" href="Data.Product.Base.html#1752" class="Function Operator">×</a> <a id="16218" href="Ledger.Conway.Specification.Rewards.html#15984" class="Bound">B</a><a id="16219" class="Symbol">)</a>
     <a id="16225" href="Ledger.Conway.Specification.Rewards.html#16201" class="Function">domain&#39;</a> <a id="16233" class="Symbol">=</a> <a id="16235" href="Ledger.Conway.Specification.Rewards.html#16140" class="Function">joinˢ</a> <a id="16241" class="Symbol">(</a><a id="16242" href="Class.IsSet.html#959" class="Function">range</a> <a id="16248" class="Symbol">(</a><a id="16249" href="Axiom.Set.Map.html#11629" class="Function">mapWithKey</a> <a id="16260" class="Symbol">(λ</a> <a id="16263" href="Ledger.Conway.Specification.Rewards.html#16263" class="Bound">a</a> <a id="16265" href="Ledger.Conway.Specification.Rewards.html#16265" class="Bound">bc</a> <a id="16268" class="Symbol">→</a> <a id="16270" href="Class.IsSet.html#959" class="Function">range</a> <a id="16276" class="Symbol">(</a><a id="16277" href="Axiom.Set.Map.html#11629" class="Function">mapWithKey</a> <a id="16288" class="Symbol">(λ</a> <a id="16291" href="Ledger.Conway.Specification.Rewards.html#16291" class="Bound">b</a> <a id="16293" href="Ledger.Conway.Specification.Rewards.html#16293" class="Bound">_</a> <a id="16295" class="Symbol">→</a> <a id="16297" class="Symbol">(</a><a id="16298" href="Ledger.Conway.Specification.Rewards.html#16263" class="Bound">a</a> <a id="16300" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="16302" href="Ledger.Conway.Specification.Rewards.html#16291" class="Bound">b</a><a id="16303" class="Symbol">))</a> <a id="16306" href="Ledger.Conway.Specification.Rewards.html#16265" class="Bound">bc</a><a id="16308" class="Symbol">))</a> <a id="16311" href="Ledger.Conway.Specification.Rewards.html#15991" class="Bound">abc</a><a id="16314" class="Symbol">))</a>
@@ -13564,10 +13564,10 @@ Deliverable SL-D1</em>. 2018.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
       

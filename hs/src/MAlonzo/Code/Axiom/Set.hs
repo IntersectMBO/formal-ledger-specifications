@@ -125,8 +125,8 @@ d_Dec'45'SpecProperty_102
            (coe v2 v3))
       (\ v0 v1 v2 v3 v4 v5 ->
          coe
-           MAlonzo.Code.Relation.Nullary.Decidable.Core.d__'215''45'dec__230
-           () erased () erased (coe v3 v5) (coe v4 v5))
+           MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
+           (coe v3 v5) (coe v4 v5))
 -- Axiom.Set.Theory
 d_Theory_118 a0 = ()
 data T_Theory_118

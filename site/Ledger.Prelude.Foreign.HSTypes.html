@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="img/Cardano-RGB_Logo-Icon-White.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -33,7 +33,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
@@ -12209,7 +12209,7 @@
              <a id="2292" class="Symbol">→</a> <a id="2294" href="Class.Convertible.Instances.html#228" class="Function">HsConvertible</a> <a id="2308" class="Symbol">(</a><a id="2309" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="2311" href="Ledger.Prelude.Foreign.HSTypes.html#2221" class="Bound">A</a><a id="2312" class="Symbol">)</a>
   <a id="2316" href="Ledger.Prelude.Foreign.HSTypes.html#2205" class="Function">Conv-HSSet</a> <a id="2327" class="Symbol">=</a> <a id="2329" class="Symbol">λ</a> <a id="2331" class="Keyword">where</a>
     <a id="2341" class="Symbol">.</a><a id="2342" href="Class.Convertible.Core.html#228" class="Field">to</a> <a id="2345" class="Symbol">→</a> <a id="2347" href="Ledger.Prelude.Foreign.HSTypes.html#1789" class="InductiveConstructor">MkHSSet</a> <a id="2355" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="2357" href="Class.Convertible.Core.html#228" class="Field">to</a> <a id="2360" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="2362" href="abstract-set-theory.FiniteSetTheory.html#2617" class="Function">setToList</a>
-    <a id="2376" class="Symbol">.</a><a id="2377" href="Class.Convertible.Core.html#249" class="Field">from</a> <a id="2382" class="Symbol">→</a> <a id="2384" href="Axiom.Set.html#5903" class="Function">fromList</a> <a id="2393" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="2395" href="Class.Convertible.Core.html#249" class="Field">from</a> <a id="2400" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="2402" href="Ledger.Prelude.Foreign.HSTypes.html#1805" class="Field">HSSet.elems</a>
+    <a id="2376" class="Symbol">.</a><a id="2377" href="Class.Convertible.Core.html#249" class="Field">from</a> <a id="2382" class="Symbol">→</a> <a id="2384" href="Axiom.Set.html#5900" class="Function">fromList</a> <a id="2393" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="2395" href="Class.Convertible.Core.html#249" class="Field">from</a> <a id="2400" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="2402" href="Ledger.Prelude.Foreign.HSTypes.html#1805" class="Field">HSSet.elems</a>
 
   <a id="HsTy-Map"></a><a id="2417" href="Ledger.Prelude.Foreign.HSTypes.html#2417" class="Function">HsTy-Map</a> <a id="2426" class="Symbol">:</a> <a id="2428" class="Symbol">∀</a> <a id="2430" class="Symbol">{</a><a id="2431" href="Ledger.Prelude.Foreign.HSTypes.html#2431" class="Bound">A</a> <a id="2433" href="Ledger.Prelude.Foreign.HSTypes.html#2433" class="Bound">B</a><a id="2434" class="Symbol">}</a> <a id="2436" class="Symbol">→</a> <a id="2438" class="Symbol">⦃</a> <a id="2440" href="Class.HasHsType.Core.html#104" class="Record">HasHsType</a> <a id="2450" href="Ledger.Prelude.Foreign.HSTypes.html#2431" class="Bound">A</a> <a id="2452" class="Symbol">⦄</a> <a id="2454" class="Symbol">→</a> <a id="2456" class="Symbol">⦃</a> <a id="2458" href="Class.HasHsType.Core.html#104" class="Record">HasHsType</a> <a id="2468" href="Ledger.Prelude.Foreign.HSTypes.html#2433" class="Bound">B</a> <a id="2470" class="Symbol">⦄</a> <a id="2472" class="Symbol">→</a> <a id="2474" href="Class.HasHsType.Core.html#104" class="Record">HasHsType</a> <a id="2484" class="Symbol">(</a><a id="2485" href="Ledger.Prelude.Foreign.HSTypes.html#2431" class="Bound">A</a> <a id="2487" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="2489" href="Ledger.Prelude.Foreign.HSTypes.html#2433" class="Bound">B</a><a id="2490" class="Symbol">)</a>
   <a id="2494" href="Ledger.Prelude.Foreign.HSTypes.html#2417" class="Function">HsTy-Map</a> <a id="2503" class="Symbol">{</a><a id="2504" href="Ledger.Prelude.Foreign.HSTypes.html#2504" class="Bound">A</a><a id="2505" class="Symbol">}</a> <a id="2507" class="Symbol">{</a><a id="2508" href="Ledger.Prelude.Foreign.HSTypes.html#2508" class="Bound">B</a><a id="2509" class="Symbol">}</a> <a id="2511" class="Symbol">=</a> <a id="2513" href="Class.HasHsType.Core.html#190" class="Function">mkHsType</a> <a id="2522" class="Symbol">_</a> <a id="2524" class="Symbol">(</a><a id="2525" href="Ledger.Prelude.Foreign.HSTypes.html#1665" class="Record">HSMap</a> <a id="2531" class="Symbol">(</a><a id="2532" href="Class.HasHsType.Core.html#298" class="Function">HsType</a> <a id="2539" href="Ledger.Prelude.Foreign.HSTypes.html#2504" class="Bound">A</a><a id="2540" class="Symbol">)</a> <a id="2542" class="Symbol">(</a><a id="2543" href="Class.HasHsType.Core.html#298" class="Function">HsType</a> <a id="2550" href="Ledger.Prelude.Foreign.HSTypes.html#2508" class="Bound">B</a><a id="2551" class="Symbol">))</a>
@@ -12377,10 +12377,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
       

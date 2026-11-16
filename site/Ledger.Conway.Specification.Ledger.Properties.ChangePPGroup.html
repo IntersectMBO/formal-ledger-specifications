@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="img/Cardano-RGB_Logo-Icon-White.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -33,7 +33,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
@@ -12203,7 +12203,7 @@
 
 <a id="871" class="Keyword">instance</a>
   <a id="882" href="Ledger.Conway.Specification.Ledger.Properties.ChangePPGroup.html#882" class="Function">_</a> <a id="884" class="Symbol">:</a> <a id="886" href="Class.IsSet.html#375" class="Record">IsSet</a> <a id="892" href="Ledger.Conway.Specification.Transaction.html#4780" class="Record">TxBody</a> <a id="899" href="Ledger.Conway.Specification.Gov.Actions.html#12016" class="Record">GovProposal</a>
-  <a id="913" class="Symbol">_</a> <a id="915" class="Symbol">=</a> <a id="917" class="Keyword">record</a> <a id="924" class="Symbol">{</a> <a id="926" href="Class.IsSet.html#419" class="Field">toSet</a> <a id="932" class="Symbol">=</a> <a id="934" href="Axiom.Set.html#5903" class="Function">fromList</a> <a id="943" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="945" href="Ledger.Conway.Specification.Transaction.html#5289" class="Field">TxBody.txGovProposals</a> <a id="967" class="Symbol">}</a>
+  <a id="913" class="Symbol">_</a> <a id="915" class="Symbol">=</a> <a id="917" class="Keyword">record</a> <a id="924" class="Symbol">{</a> <a id="926" href="Class.IsSet.html#419" class="Field">toSet</a> <a id="932" class="Symbol">=</a> <a id="934" href="Axiom.Set.html#5900" class="Function">fromList</a> <a id="943" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="945" href="Ledger.Conway.Specification.Transaction.html#5289" class="Field">TxBody.txGovProposals</a> <a id="967" class="Symbol">}</a>
 </pre>
 
 <p><em>Informally</em>.</p>
@@ -12238,7 +12238,7 @@ the governance state.)</p>
 and <code class="AgdaFunction">GOVS-ChangePPHasGroup</code> applies.</p>
 <pre class="Agda"><a id="2261" href="Ledger.Conway.Specification.Ledger.Properties.ChangePPGroup.html#1698" class="Function">LEDGER-ChangePPHasGroup</a> <a id="2285" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="2290" class="Symbol">(</a><a id="2291" href="Ledger.Conway.Specification.Ledger.html#6059" class="InductiveConstructor">LEDGER-V⋯</a> <a id="2301" class="Symbol">_</a> <a id="2303" class="Symbol">_</a> <a id="2305" class="Symbol">_</a> <a id="2307" href="Ledger.Conway.Specification.Ledger.Properties.ChangePPGroup.html#2307" class="Bound">govs</a><a id="2311" class="Symbol">)</a> <a id="2313" href="Ledger.Conway.Specification.Ledger.Properties.ChangePPGroup.html#2313" class="Bound">p∈</a> <a id="2316" href="Ledger.Conway.Specification.Ledger.Properties.ChangePPGroup.html#2316" class="Bound">eq</a> <a id="2319" class="Symbol">=</a>
   <a id="2323" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html#3025" class="Function">GOVS-ChangePPHasGroup</a> <a id="2345" href="Ledger.Conway.Specification.Ledger.Properties.ChangePPGroup.html#2307" class="Bound">govs</a>
-    <a id="2354" class="Symbol">(</a><a id="2355" href="Data.List.Membership.Propositional.Properties.html#4618" class="Function">∈-++⁺ˡ</a> <a id="2362" class="Symbol">(</a><a id="2363" href="Data.List.Membership.Propositional.Properties.html#4067" class="Function">∈-map⁺</a> <a id="2370" href="Data.Sum.Base.html#700" class="InductiveConstructor">inj₂</a> <a id="2375" class="Symbol">(</a><a id="2376" href="Function.Bundles.html#4832" class="Field">Equivalence.from</a> <a id="2393" href="Axiom.Set.html#5961" class="Function">∈-fromList</a> <a id="2404" href="Ledger.Conway.Specification.Ledger.Properties.ChangePPGroup.html#2313" class="Bound">p∈</a><a id="2406" class="Symbol">)))</a> <a id="2410" href="Ledger.Conway.Specification.Ledger.Properties.ChangePPGroup.html#2316" class="Bound">eq</a>
+    <a id="2354" class="Symbol">(</a><a id="2355" href="Data.List.Membership.Propositional.Properties.html#4618" class="Function">∈-++⁺ˡ</a> <a id="2362" class="Symbol">(</a><a id="2363" href="Data.List.Membership.Propositional.Properties.html#4067" class="Function">∈-map⁺</a> <a id="2370" href="Data.Sum.Base.html#700" class="InductiveConstructor">inj₂</a> <a id="2375" class="Symbol">(</a><a id="2376" href="Function.Bundles.html#4832" class="Field">Equivalence.from</a> <a id="2393" href="Axiom.Set.html#5958" class="Function">∈-fromList</a> <a id="2404" href="Ledger.Conway.Specification.Ledger.Properties.ChangePPGroup.html#2313" class="Bound">p∈</a><a id="2406" class="Symbol">)))</a> <a id="2410" href="Ledger.Conway.Specification.Ledger.Properties.ChangePPGroup.html#2316" class="Bound">eq</a>
 <a id="2413" href="Ledger.Conway.Specification.Ledger.Properties.ChangePPGroup.html#1698" class="Function">LEDGER-ChangePPHasGroup</a> <a id="2437" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="2442" class="Symbol">(</a><a id="2443" href="Ledger.Conway.Specification.Ledger.html#6112" class="InductiveConstructor">LEDGER-I⋯</a> <a id="2453" class="Symbol">()</a> <a id="2456" class="Symbol">_)</a> <a id="2459" class="Symbol">_</a> <a id="2461" class="Symbol">_</a>
 </pre>
 
@@ -12333,10 +12333,10 @@ and <code class="AgdaFunction">GOVS-ChangePPHasGroup</code> applies.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
       
