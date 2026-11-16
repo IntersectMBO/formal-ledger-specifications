@@ -10,7 +10,7 @@
     };
 
     agda-nix = {
-      url = "github:input-output-hk/agda.nix";
+      url = "github:carlostome/agda.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
