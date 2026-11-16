@@ -23,6 +23,7 @@ open import Ledger.Dijkstra.Specification.Utxo txs abs
 open import Ledger.Dijkstra.Specification.Script.Validation txs abs
 open import Relation.Binary.PropositionalEquality
 import Data.Sum.Relation.Unary.All as Sum
+import Data.String as S
 
 open PParams
 
