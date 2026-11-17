@@ -2259,7 +2259,7 @@ d_computeProof'45'aux_3326 v0 v1 v2 v3 v4 v5 v6
                               MAlonzo.Code.Class.Bifunctor.du_map'8322''8242'_54
                               (coe MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45'Σ_74)
                               (\ v10 v11 -> coe du_lift'45'legacy_3252 (coe v9) v11))
-                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.Properties.Computational.d_computeProof_3188
+                           (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.Properties.Computational.d_computeProof_3190
                               (coe v0) (coe v1) (coe v2) (coe v3) (coe v4))
                     _ -> MAlonzo.RTE.mazUnreachableError
              else coe
@@ -2280,7 +2280,7 @@ d_computeProof'45'aux_3326 v0 v1 v2 v3 v4 v5 v6
                                                   MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45'Σ_74)
                                                (\ v12 v13 ->
                                                   coe du_lift'45'normal_3290 (coe v11) v13))
-                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.Properties.Computational.d_computeProof_3188
+                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.Properties.Computational.d_computeProof_3190
                                                (coe v0) (coe v1) (coe v2) (coe v3) (coe v4))
                                      _ -> MAlonzo.RTE.mazUnreachableError
                               else coe

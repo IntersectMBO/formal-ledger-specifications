@@ -224,7 +224,7 @@ d_computeProofH_2216 v0 v1 v2 v3 v4 v5
                               MAlonzo.Code.Class.Bifunctor.du_map'8322''8242'_54
                               (coe MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45'Σ_74)
                               (\ v9 -> coe du_lift'45'step_2188 (coe v8)))
-                           (MAlonzo.Code.Ledger.Conway.Conformance.Utxo.Properties.d_computeProof_3002
+                           (MAlonzo.Code.Ledger.Conway.Conformance.Utxo.Properties.d_computeProof_3004
                               (coe v0) (coe v1) (coe v2) (coe v3) (coe v4))
                     _ -> MAlonzo.RTE.mazUnreachableError
              else coe
