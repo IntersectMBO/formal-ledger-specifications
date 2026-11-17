@@ -91,7 +91,10 @@ module _ {eps : EpochState} {e : Epoch} where
          prs'≡prs'' = POOLREAP-deterministic-≡ refl refl p₂ p₂'
 
          pPRUpd₁≡pPRUpd₂ : pPRUpd₁ ≡ pPRUpd₂
-         pPRUpd₁≡pPRUpd₂ rewrite (cong PoolReapState.dState prs'≡prs'') | (cong PoolReapState.acnt prs'≡prs'') = refl
+         pPRUpd₁≡pPRUpd₂ =
+           cong₂ (λ ds acnt → Post-POOLREAPUpdate.updates es ls ds acnt govUpd)
+                 (cong PoolReapState.dState prs'≡prs'')
+                 (cong PoolReapState.acnt prs'≡prs'')
 
          stakeDistrs₁≡stakeDistrs₂ : mkStakeDistrs (Snapshots.mark ss'₁) e pPRUpd.utxoSt' govSt' (GStateOf ls) (DStateOf ls)
                                      ≡ mkStakeDistrs (Snapshots.mark ss'₂) e pPRUpd.utxoSt' govSt' (GStateOf ls) (DStateOf ls)
@@ -104,13 +107,18 @@ module _ {eps : EpochState} {e : Epoch} where
          fut'≡fut'' = RATIFIES-deterministic-≡ Γ≡Γ' refl refl p₃ p₃'
 
          eps'≡eps'' : eps' ≡ eps''
-         eps'≡eps''
-           rewrite ss'₁≡ss'₂
-             | cong PoolReapState.utxoSt prs'≡prs''
-             | cong PoolReapState.pState prs'≡prs''
-             | cong Post-POOLREAP-Update.acnt'' pPRUpd₁≡pPRUpd₂
-             | cong Post-POOLREAP-Update.dState'' pPRUpd₁≡pPRUpd₂
-             | fut'≡fut'' = refl
+         eps'≡eps'' =
+           trans (cong₂ (λ ss prs → mkEpochState ss prs pPRUpd₁ (RatifyStateOf eps'))
+                        ss'₁≡ss'₂ prs'≡prs'')
+                 (cong₂ (mkEpochState ss'₂ ⟦ utxoSt''₂ , acnt'₂ , dState'₂ , pState'₂ ⟧ᵖ)
+                        pPRUpd₁≡pPRUpd₂ fut'≡fut'')
+           where
+             mkEpochState : Snapshots → PoolReapState → Post-POOLREAP-Update → RatifyState → EpochState
+             mkEpochState ss prs upd fut =
+               ⟦ Post-POOLREAP-Update.acnt'' upd , ss
+               , ⟦ PoolReapState.utxoSt prs , govSt'
+                 , ⟦ Post-POOLREAP-Update.dState'' upd , PoolReapState.pState prs , pPRUpd.gState' ⟧ᶜˢ ⟧
+               , record es { withdrawals = ∅ } , fut ⟧
 
   EPOCH-complete : ∀ eps' → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps' → proj₁ EPOCH-total ≡ eps'
   EPOCH-complete eps' p = EPOCH-deterministic (proj₁ EPOCH-total) eps' (proj₂ EPOCH-total) p
