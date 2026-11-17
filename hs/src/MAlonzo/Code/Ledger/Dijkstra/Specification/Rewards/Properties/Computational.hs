@@ -95,7 +95,7 @@ d_set_2950 v0
       (coe v0)
 -- Ledger.Dijkstra.Specification.Rewards.Properties.Computational._.completeness
 d_completeness_2954 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
@@ -104,14 +104,14 @@ d_completeness_2954 ::
 d_completeness_2954 = erased
 -- Ledger.Dijkstra.Specification.Rewards.Properties.Computational._.computeProof
 d_computeProof_2960 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
 d_computeProof_2960 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_272
+      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_304
       (coe v0)
 -- Ledger.Dijkstra.Specification.Rewards.Properties.Computational._._.SNAP-total
 d_SNAP'45'total_2986 ::
@@ -198,15 +198,15 @@ d_SNAP'45'deterministic'45''8801'_3002 = erased
 d_Computational'45'SNAP_3004 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3280 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'SNAP_3004 v0 ~v1
   = du_Computational'45'SNAP_3004 v0
 du_Computational'45'SNAP_3004 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 du_Computational'45'SNAP_3004 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
       (\ v1 v2 v3 ->
          coe
            MAlonzo.Code.Interface.ComputationalRelation.C_success_42

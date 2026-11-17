@@ -1004,20 +1004,20 @@ d_stakePerCredential_312 v0 v1 v2 v3 v4 v5
       v1 v2 v4 v5
 -- Ledger.Conway.Foreign.Epoch.EpochSpec._.Computational-EPOCH
 d_Computational'45'EPOCH_316 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'EPOCH_316
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_Computational'45'EPOCH_3426
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_Computational'45'EPOCH_3416
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_690
          (coe
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
 -- Ledger.Conway.Foreign.Epoch.EpochSpec._.Computational-NEWEPOCH
 d_Computational'45'NEWEPOCH_318 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'NEWEPOCH_318
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_Computational'45'NEWEPOCH_3576
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_Computational'45'NEWEPOCH_3566
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_690
          (coe
@@ -1065,7 +1065,7 @@ d_EPOCH'45'total''_328 ::
   Integer -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_EPOCH'45'total''_328
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_EPOCH'45'total''_3420
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_EPOCH'45'total''_3410
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_690
          (coe
@@ -1085,7 +1085,7 @@ d_NEWEPOCH'45'total_332 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_NEWEPOCH'45'total_332
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_NEWEPOCH'45'total_3454
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_NEWEPOCH'45'total_3444
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_690
          (coe
@@ -5049,7 +5049,7 @@ du_epoch'45'step_352 ::
 du_epoch'45'step_352 v0 v1
   = let v2
           = coe
-              MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_EPOCH'45'total''_3420
+              MAlonzo.Code.Ledger.Conway.Specification.Epoch.Properties.Computational.du_EPOCH'45'total''_3410
               (coe
                  MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_690
                  (coe

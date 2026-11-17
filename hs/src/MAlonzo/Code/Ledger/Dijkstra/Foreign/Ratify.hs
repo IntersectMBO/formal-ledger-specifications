@@ -821,7 +821,7 @@ d_removed_178 v0
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Ratify._.Computational-RATIFIES
 d_Computational'45'RATIFIES_182 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'RATIFIES_182
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.Properties.Computational.d_Computational'45'RATIFIES_3252
@@ -831,7 +831,7 @@ d_Computational'45'RATIFIES_182
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
 -- Ledger.Dijkstra.Foreign.Ratify._.Computational-RATIFY
 d_Computational'45'RATIFY_184 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'RATIFY_184
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.Properties.Computational.d_Computational'45'RATIFY_3250
@@ -1844,7 +1844,7 @@ d_ratify'45'step_206 v0
                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45''8869'_18)
                (coe d_Conv'45'RatifyState_204))))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
+         MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.Properties.Computational.d_Computational'45'RATIFY_3250
             (coe
@@ -1903,7 +1903,7 @@ d_ratifies'45'step_208 v0
                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45''8869'_18)
                (coe d_Conv'45'RatifyState_204))))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
+         MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.Properties.Computational.d_Computational'45'RATIFIES_3252
             (coe

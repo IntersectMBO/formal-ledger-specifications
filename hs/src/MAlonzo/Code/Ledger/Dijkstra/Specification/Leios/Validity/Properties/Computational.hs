@@ -140,7 +140,7 @@ d_EBWellFormed_2888 ::
 d_EBWellFormed_2888 = erased
 -- Ledger.Dijkstra.Specification.Leios.Validity.Properties.Computational._.completeness
 d_completeness_2896 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
@@ -149,14 +149,14 @@ d_completeness_2896 ::
 d_completeness_2896 = erased
 -- Ledger.Dijkstra.Specification.Leios.Validity.Properties.Computational._.computeProof
 d_computeProof_2902 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
 d_computeProof_2902 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_272
+      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_304
       (coe v0)
 -- Ledger.Dijkstra.Specification.Leios.Validity.Properties.Computational.wellFormed?
 d_wellFormed'63'_2916 ::
@@ -354,10 +354,10 @@ d_checks'63'_3042 v0 v1 v2 v3 v4
 d_Computational'45'EB_3044 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3280 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'EB_3044 v0 v1
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
       (\ v2 ->
          case coe v2 of
            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v3 v4
@@ -452,7 +452,7 @@ d_Computational'45'EB_3044 v0 v1
                                                                -> coe
                                                                     MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
                                                                     (coe
-                                                                       MAlonzo.Code.Interface.ComputationalRelation.du_Monad'45'ComputationResult_158)
+                                                                       MAlonzo.Code.Interface.ComputationalRelation.du_Monad'45'ComputationResult_162)
                                                                     () erased () erased
                                                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.Ledgers.Properties.Computational.d_LEDGERS'45'computeProof_3542
                                                                        (coe v0) (coe v1)

@@ -145,7 +145,7 @@ d_signers_2872 v0
       (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody.Properties.Computational._.completeness
 d_completeness_3134 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
@@ -154,14 +154,14 @@ d_completeness_3134 ::
 d_completeness_3134 = erased
 -- Ledger.Dijkstra.Specification.BlockBody.Properties.Computational._.computeProof
 d_computeProof_3140 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
 d_computeProof_3140 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_272
+      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_304
       (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody.Properties.Computational.validLeiosBlockFailure
 d_validLeiosBlockFailure_3152 ::
@@ -304,7 +304,7 @@ d_BBODY'45'computeProof_3170 v0 v1 v2 v3 v4
                                 -> coe
                                      MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
                                      (coe
-                                        MAlonzo.Code.Interface.ComputationalRelation.du_Monad'45'ComputationResult_158)
+                                        MAlonzo.Code.Interface.ComputationalRelation.du_Monad'45'ComputationResult_162)
                                      () erased () erased
                                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Ledgers.Properties.Computational.d_LEDGERS'45'computeProof_3542
                                         (coe v0) (coe v1)
@@ -907,8 +907,8 @@ d_BBODY'45'completeness_3208 = erased
 d_Computational'45'BBODY_3260 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3280 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'BBODY_3260 v0 v1
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
       (d_BBODY'45'computeProof_3170 (coe v0) (coe v1))

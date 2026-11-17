@@ -7909,7 +7909,7 @@ d_chain'45'step_6324 v0 v1 v2 v3
          MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
          (coe MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
          (coe
-            MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
+            MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
             (coe
                MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.Properties.Computational.d_Computational'45'CHAIN_3416
                (coe

@@ -783,7 +783,7 @@ d_utxo_254 v0
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Utxo._.Computational-SUBUTXOW
 d_Computational'45'SUBUTXOW_268 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'SUBUTXOW_268
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.Properties.Computational.d_Computational'45'SUBUTXOW_3084
@@ -797,10 +797,10 @@ d_Computational'45'SUBUTXOW_268
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
 -- Ledger.Dijkstra.Foreign.Utxo._.Computational-UTXOW
 d_Computational'45'UTXOW_270 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'UTXOW_270
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.Properties.Computational.d_Computational'45'UTXOW_3204
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.Properties.Computational.d_Computational'45'UTXOW_3208
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
          (coe
@@ -811,7 +811,7 @@ d_Computational'45'UTXOW_270
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
 -- Ledger.Dijkstra.Foreign.Utxo._.Computational-SUBUTXO
 d_Computational'45'SUBUTXO_274 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'SUBUTXO_274
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.Properties.Computational.d_Computational'45'SUBUTXO_2974
@@ -825,7 +825,7 @@ d_Computational'45'SUBUTXO_274
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
 -- Ledger.Dijkstra.Foreign.Utxo._.Computational-UTXO
 d_Computational'45'UTXO_276 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'UTXO_276
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.Properties.Computational.d_Computational'45'UTXO_3092
@@ -839,7 +839,7 @@ d_Computational'45'UTXO_276
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
 -- Ledger.Dijkstra.Foreign.Utxo._.Computational-UTXOS
 d_Computational'45'UTXOS_278 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'UTXOS_278
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.Properties.Computational.d_Computational'45'UTXOS_3048
@@ -7442,7 +7442,7 @@ d_utxo'45'step_296 v0
                (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvString_12)
                (coe d_Conv'45'UTxOState_294))))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
+         MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.Properties.Computational.d_Computational'45'UTXO_3092
             (coe
@@ -7485,9 +7485,9 @@ d_utxow'45'step_298 v0
                (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvString_12)
                (coe d_Conv'45'UTxOState_294))))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
+         MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.Properties.Computational.d_Computational'45'UTXOW_3204
+            MAlonzo.Code.Ledger.Dijkstra.Specification.Utxow.Properties.Computational.d_Computational'45'UTXOW_3208
             (coe
                MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
                (coe

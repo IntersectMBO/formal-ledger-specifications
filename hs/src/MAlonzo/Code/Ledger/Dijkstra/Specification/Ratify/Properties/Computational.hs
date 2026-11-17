@@ -175,7 +175,7 @@ du_acceptConds'63'_3164 v0 v1 v2 v3
                (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
                (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)))
          (coe
-            MAlonzo.Code.Interface.ComputationalRelation.du_Computational'8658'Dec''_696
+            MAlonzo.Code.Interface.ComputationalRelation.du_Computational'8658'Dec''_728
             (coe
                MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
                (coe
@@ -396,25 +396,25 @@ d_completeness_3248 = erased
 -- Ledger.Dijkstra.Specification.Ratify.Properties.Computational.Computational-RATIFY
 d_Computational'45'RATIFY_3250 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'RATIFY_3250 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
       (d_computeProof_3186 (coe v0))
 -- Ledger.Dijkstra.Specification.Ratify.Properties.Computational.Computational-RATIFIES
 d_Computational'45'RATIFIES_3252 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'RATIFIES_3252 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'ReflexiveTransitiveClosure'7495'_776
+      MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'ReflexiveTransitiveClosure'7495'_808
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'Id_740)
+         MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'Id_772)
       (coe d_Computational'45'RATIFY_3250 (coe v0))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_728)
+         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_760)
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_728)
+         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_760)
 -- Ledger.Dijkstra.Specification.Ratify.Properties.Computational.RATIFIES-total
 d_RATIFIES'45'total_3262 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->

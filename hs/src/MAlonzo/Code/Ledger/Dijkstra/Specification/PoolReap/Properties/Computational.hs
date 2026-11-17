@@ -82,7 +82,7 @@ d_pState_2690 v0
       (coe v0)
 -- Ledger.Dijkstra.Specification.PoolReap.Properties.Computational._.completeness
 d_completeness_2694 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
@@ -91,14 +91,14 @@ d_completeness_2694 ::
 d_completeness_2694 = erased
 -- Ledger.Dijkstra.Specification.PoolReap.Properties.Computational._.computeProof
 d_computeProof_2700 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
 d_computeProof_2700 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_272
+      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_304
       (coe v0)
 -- Ledger.Dijkstra.Specification.PoolReap.Properties.Computational._.POOLREAP-total
 d_POOLREAP'45'total_2722 ::
@@ -852,10 +852,10 @@ d_POOLREAP'45'deterministic'45''8801'_2748 = erased
 -- Ledger.Dijkstra.Specification.PoolReap.Properties.Computational.Computational-POOLREAP
 d_Computational'45'POOLREAP_2750 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'POOLREAP_2750 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
       (\ v1 v2 v3 ->
          coe
            MAlonzo.Code.Interface.ComputationalRelation.C_success_42

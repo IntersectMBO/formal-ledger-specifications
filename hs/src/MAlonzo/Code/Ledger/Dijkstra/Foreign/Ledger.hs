@@ -13912,9 +13912,9 @@ d_ledger'45'step_6262 v0 v1 v2 v3
          MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
          (coe MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
          (coe
-            MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
+            MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.Properties.Computational.d_Computational'45'LEDGER_4510
+               MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.Properties.Computational.d_Computational'45'LEDGER_4390
                (coe
                   MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
                   (coe v0))
@@ -13996,7 +13996,7 @@ d_ledgers'45'step_6270 v0 v1 v2 v3
          MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
          (coe MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
          (coe
-            MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
+            MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
             (coe
                MAlonzo.Code.Ledger.Dijkstra.Specification.Ledgers.Properties.Computational.d_Computational'45'LEDGERS_3614
                (coe
