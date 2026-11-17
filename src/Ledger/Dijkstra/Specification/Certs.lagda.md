@@ -562,7 +562,6 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
     ∙ IsBLSUnique (proj₁ <$> poolParams .bls) pools fPools
     ∙ IsValidBLSPoP (poolParams .bls)
     ∙ NetworkIdOf (poolParams .rewardAccount) ≡ NetworkId
-    ∙ pp .minPoolCost ≤ poolParams .cost
     ────────────────────────────────
     ⟦ e , pp ⟧ ⊢ ⟦ pools
                  , fPools
@@ -581,7 +580,6 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
     ∙ IsBLSUnique (proj₁ <$> poolParams .bls) (pools ∣ ❴ kh ❵ ᶜ) (fPools ∣ ❴ kh ❵ ᶜ)
     ∙ IsValidBLSPoP (poolParams .bls)
     ∙ NetworkIdOf (poolParams .rewardAccount) ≡ NetworkId
-    ∙ pp .minPoolCost ≤ poolParams .cost
     ────────────────────────────────
     ⟦ e , pp ⟧ ⊢ ⟦ pools
                  , fPools
