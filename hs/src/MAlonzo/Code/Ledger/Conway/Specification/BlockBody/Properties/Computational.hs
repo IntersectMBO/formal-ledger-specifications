@@ -108,7 +108,7 @@ d_Computational'45'LEDGER_2192 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'LEDGER_2192 v0 v1
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ledger.Properties.Computational.d_Computational'45'LEDGER_2992
+      MAlonzo.Code.Ledger.Conway.Specification.Ledger.Properties.Computational.d_Computational'45'LEDGER_2994
       (coe v0) (coe v1)
 -- Ledger.Conway.Specification.BlockBody.Properties.Computational._.completeness
 d_completeness_2390 ::
@@ -186,7 +186,7 @@ d_BBODY'45'computeProof_2416 v0 v1 v2 v3 v4
                                            (coe
                                               MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'Id_772)
                                            (coe
-                                              MAlonzo.Code.Ledger.Conway.Specification.Ledger.Properties.Computational.d_Computational'45'LEDGER_2992
+                                              MAlonzo.Code.Ledger.Conway.Specification.Ledger.Properties.Computational.d_Computational'45'LEDGER_2994
                                               (coe v0) (coe v1))
                                            (coe
                                               MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_760)
@@ -195,7 +195,7 @@ d_BBODY'45'computeProof_2416 v0 v1 v2 v3 v4
                                         (coe
                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
                                            (coe
-                                              MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_HasCast'45'LEnv_3034)
+                                              MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_HasCast'45'LEnv_3036)
                                            (coe
                                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                               (coe
