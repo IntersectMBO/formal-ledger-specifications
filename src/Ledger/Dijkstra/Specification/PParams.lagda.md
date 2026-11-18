@@ -12,6 +12,7 @@ This section defines the adjustable protocol parameters of the Cardano ledger.
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
+open import stdlib-meta.Tactic.Derive.DecEqRecord using (derive-DecEqRecord)
 open import Ledger.Core.Specification.Crypto using (CryptoStructure)
 open import Ledger.Core.Specification.Epoch using (EpochStructure)
 open import Ledger.Core.Specification.ProtocolVersion
@@ -241,7 +242,7 @@ unquoteDecl DecEq-DrepThresholds = derive-DecEq
   ((quote DrepThresholds , DecEq-DrepThresholds) ∷ [])
 unquoteDecl DecEq-PoolThresholds = derive-DecEq
   ((quote PoolThresholds , DecEq-PoolThresholds) ∷ [])
-unquoteDecl DecEq-PParams        = derive-DecEq
+unquoteDecl DecEq-PParams        = derive-DecEqRecord
   ((quote PParams , DecEq-PParams) ∷ [])
 unquoteDecl DecEq-PParamGroup    = derive-DecEq
   ((quote PParamGroup , DecEq-PParamGroup) ∷ [])
@@ -491,7 +492,7 @@ module PParamsUpdate where
       open module P = PParams pp
       open module U = PParamsUpdate ppu
 
-  unquoteDecl DecEq-PParamsUpdate  = derive-DecEq
+  unquoteDecl DecEq-PParamsUpdate  = derive-DecEqRecord
     ((quote PParamsUpdate , DecEq-PParamsUpdate) ∷ [])
 ```
 -->
