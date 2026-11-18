@@ -709,7 +709,10 @@ prefer not to use Nix.
 ### Building fls-shake Without Nix
 
 The build system `fls-shake` can be compiled manually by following the steps
-described in this subsection.
+below.  The artifact targets also need the `fls-agda` backend: build it with
+Cabal in `build-tools/agda/` and put its `agda` executable on `PATH`, with the
+library configuration above.  Install hpack too; the `hs` target uses it to
+generate the Haskell package description.
 
 1.  **Install GHC and Cabal**.
 
