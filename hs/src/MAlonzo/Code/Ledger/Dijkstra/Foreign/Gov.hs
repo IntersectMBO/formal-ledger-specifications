@@ -590,7 +590,7 @@ d_RewardCredentialsOf_154 v0
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Gov._.Computational-GOV
 d_Computational'45'GOV_166 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'GOV_166
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational.d_Computational'45'GOV_2484
@@ -600,7 +600,7 @@ d_Computational'45'GOV_166
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
 -- Ledger.Dijkstra.Foreign.Gov._.Computational-GOVS
 d_Computational'45'GOVS_168 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'GOVS_168
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational.d_Computational'45'GOVS_2890
@@ -13365,7 +13365,7 @@ d_gov'45'step_362 v0
                         (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                      (coe d_Conv'45'GovActionState_356))))))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
+         MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational.d_Computational'45'GOV_2484
             (coe
@@ -13456,7 +13456,7 @@ d_govs'45'step_364 v0
                         (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                      (coe d_Conv'45'GovActionState_356))))))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
+         MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational.d_Computational'45'GOVS_2890
             (coe
