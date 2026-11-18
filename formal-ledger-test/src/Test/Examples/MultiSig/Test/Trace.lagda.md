@@ -71,24 +71,24 @@ makeTx s script (propose id w v tw d) = makeProposeTx id s script w v tw d
 makeTx s script (cancel id w) = makeCancelTx id s script w
 makeTx s script (stop id w) = makeStopTx id s script w
 
-evalTransanctions : UTxOEnv → ComputationResult String UTxOState → List Tx' → ComputationResult String UTxOState
-evalTransanctions env s [] = s
-evalTransanctions env state@(failure s) (x ∷ xs) = state
-evalTransanctions env (success s) (tx' ∷ txs') =
+evalTransactions : UTxOEnv → ComputationResult String UTxOState → List Tx' → ComputationResult String UTxOState
+evalTransactions env s [] = s
+evalTransactions env state@(failure s) (x ∷ xs) = state
+evalTransactions env (success s) (tx' ∷ txs') =
   maybe
-    (λ tx → evalTransanctions
+    (λ tx → evalTransactions
               initEnv
               (UTXO-step initEnv s tx)
               txs')
     (failure "failed to generate tx")
     (makeTx s multiSigScript tx')
 
-evalTransanctionsW : UTxOEnv → ComputationResult String UTxOState → List Tx' → ComputationResult String UTxOState
-evalTransanctionsW env s [] = s
-evalTransanctionsW env state@(failure s) (x ∷ xs) = state
-evalTransanctionsW env (success s) (tx' ∷ txs') =
+evalTransactionsW : UTxOEnv → ComputationResult String UTxOState → List Tx' → ComputationResult String UTxOState
+evalTransactionsW env s [] = s
+evalTransactionsW env state@(failure s) (x ∷ xs) = state
+evalTransactionsW env (success s) (tx' ∷ txs') =
   maybe
-    (λ tx → evalTransanctions
+    (λ tx → evalTransactions
               initEnv
               (UTXO-step initEnv s tx)
               txs')
@@ -153,31 +153,31 @@ opaque
   unfolding outs
 
   t0 : ComputationResult String UTxOState
-  t0 = evalTransanctions initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) addSigTrace
+  t0 = evalTransactions initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) addSigTrace
 
   _ : isSuccess t0 ≡ true
   _ = refl 
 
   t1 : ComputationResult String UTxOState
-  t1 = evalTransanctions initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) failingTrace
+  t1 = evalTransactions initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) failingTrace
 
   _ : isSuccess t1 ≡ false
   _ = refl 
 
   t2 : ComputationResult String UTxOState
-  t2 = evalTransanctionsW initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) utxowTrace
+  t2 = evalTransactionsW initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) utxowTrace
 
   _ : isSuccess t2 ≡ true
   _ = refl
 
   t3 : ComputationResult String UTxOState
-  t3 = evalTransanctionsW initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) utxowTrace2
+  t3 = evalTransactionsW initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) utxowTrace2
 
   _ : isSuccess t3 ≡ true
   _ = refl
   
   t4 : ComputationResult String UTxOState
-  t4 = evalTransanctionsW initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) utxowTrace3
+  t4 = evalTransactionsW initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) utxowTrace3
 
   _ : isSuccess t4 ≡ true
   _ = refl
