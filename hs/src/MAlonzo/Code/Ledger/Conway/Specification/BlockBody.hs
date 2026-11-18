@@ -199,10 +199,10 @@ d_withdrawals_2120 v0
 d__'8866'_'8640''10631'_'44'LEDGERS'10632'__2128 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LEnv_2944 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2970 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LEnv_2946 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2972 ->
   [MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3646] ->
-  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2970 -> ()
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2972 -> ()
 d__'8866'_'8640''10631'_'44'LEDGERS'10632'__2128 = erased
 -- Ledger.Conway.Specification.BlockBody._.HasCast-LEnv
 d_HasCast'45'LEnv_2134 ::
@@ -214,32 +214,32 @@ du_HasCast'45'LEnv_2134 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'LEnv_2134
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_HasCast'45'LEnv_3034
+      MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_HasCast'45'LEnv_3036
 -- Ledger.Conway.Specification.BlockBody._.LState
 d_LState_2178 a0 a1 = ()
 -- Ledger.Conway.Specification.BlockBody._.LState.certState
 d_certState_2216 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2970 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2972 ->
   MAlonzo.Code.Ledger.Conway.Specification.Certs.T_CertState_1466
 d_certState_2216 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_certState_2982
+      MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_certState_2984
       (coe v0)
 -- Ledger.Conway.Specification.BlockBody._.LState.govSt
 d_govSt_2218 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2970 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2972 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_govSt_2218 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_govSt_2980
+      MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_govSt_2982
       (coe v0)
 -- Ledger.Conway.Specification.BlockBody._.LState.utxoSt
 d_utxoSt_2220 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2970 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2972 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2510
 d_utxoSt_2220 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_utxoSt_2978
+      MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_utxoSt_2980
       (coe v0)
 -- Ledger.Conway.Specification.BlockBody._.BlocksMade
 d_BlocksMade_2226 ::

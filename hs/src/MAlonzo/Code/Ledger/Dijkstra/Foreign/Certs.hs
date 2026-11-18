@@ -80,7 +80,7 @@ data CertState = MkCertState {dState :: MAlonzo.Code.Ledger.Dijkstra.Foreign.Cer
   deriving (Show, Eq, Generic)
 -- Ledger.Dijkstra.Foreign.Certs._.Computational-DELEG
 d_Computational'45'DELEG_10 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_234
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'DELEG_10
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.Properties.Computational.d_Computational'45'DELEG_1854
@@ -92,7 +92,7 @@ d_Computational'45'DELEG_10
                MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)))
 -- Ledger.Dijkstra.Foreign.Certs._.Computational-GOVCERT
 d_Computational'45'GOVCERT_12 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_234
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'GOVCERT_12
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.Properties.Computational.d_Computational'45'GOVCERT_2508
@@ -104,7 +104,7 @@ d_Computational'45'GOVCERT_12
                MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)))
 -- Ledger.Dijkstra.Foreign.Certs._.Computational-POOL
 d_Computational'45'POOL_14 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_234
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'POOL_14
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.Properties.Computational.d_Computational'45'POOL_1944
@@ -14250,7 +14250,7 @@ d_deleg'45'step_60 v0
                (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvString_12)
                (coe d_Conv'45'DState_42))))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_compute_276
+         MAlonzo.Code.Interface.ComputationalRelation.du_compute_348
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.Properties.Computational.d_Computational'45'DELEG_1854
             (coe
@@ -14290,7 +14290,7 @@ d_pool'45'step_62 v0
                (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvString_12)
                (coe d_Conv'45'PState_38))))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_compute_276
+         MAlonzo.Code.Interface.ComputationalRelation.du_compute_348
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.Properties.Computational.d_Computational'45'POOL_1944
             (coe
@@ -14330,7 +14330,7 @@ d_govcert'45'step_64 v0
                (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvString_12)
                (coe d_Conv'45'CertState_58))))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_compute_276
+         MAlonzo.Code.Interface.ComputationalRelation.du_compute_348
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.Properties.Computational.d_Computational'45'GOVCERT_2508
             (coe

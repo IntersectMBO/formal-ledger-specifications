@@ -196,7 +196,7 @@ d_EnactStateOf_92 v0
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Enact._.Computational-ENACT
 d_Computational'45'ENACT_96 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_234
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'ENACT_96
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.Properties.Computational.d_Computational'45'ENACT_1434
@@ -605,7 +605,7 @@ d_enact'45'step_108 v0
                (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvString_12)
                (coe d_Conv'45'EnactState_106))))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_compute_276
+         MAlonzo.Code.Interface.ComputationalRelation.du_compute_348
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.Properties.Computational.d_Computational'45'ENACT_1434
             (coe

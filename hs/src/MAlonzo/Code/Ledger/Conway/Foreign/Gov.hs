@@ -1517,7 +1517,7 @@ d_GovStateOf_700 v0
       (coe v0)
 -- Ledger.Conway.Foreign.Gov._.Computational-GOV
 d_Computational'45'GOV_712 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_234
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'GOV_712
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Properties.Computational.d_Computational'45'GOV_1818
@@ -1527,7 +1527,7 @@ d_Computational'45'GOV_712
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
 -- Ledger.Conway.Foreign.Gov._.Computational-GOVS
 d_Computational'45'GOVS_714 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_234
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'GOVS_714
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Properties.Computational.d_Computational'45'GOVS_2224
@@ -12758,7 +12758,7 @@ govStep ::
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     ()
     (MAlonzo.Code.Foreign.Haskell.Either.T_Either_22
-       () () MAlonzo.Code.Ledger.Conway.Foreign.Gov.Core.T_GovVote_5431
+       () () MAlonzo.Code.Ledger.Conway.Foreign.Gov.Core.T_GovVote_5433
        T_GovProposal_7777) ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
     MAlonzo.Code.Agda.Builtin.String.T_String_6
@@ -12778,7 +12778,7 @@ d_gov'45'step_900 ::
      T_GovActionState_12043] ->
   [MAlonzo.Code.Foreign.Haskell.Either.T_Either_22
      AgdaAny AgdaAny
-     MAlonzo.Code.Ledger.Conway.Foreign.Gov.Core.T_GovVote_5431
+     MAlonzo.Code.Ledger.Conway.Foreign.Gov.Core.T_GovVote_5433
      T_GovProposal_7777] ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
     MAlonzo.Code.Agda.Builtin.String.T_String_6
@@ -12831,7 +12831,7 @@ d_gov'45'step_900 v0 v1 v2
                               (coe MAlonzo.Code.Class.Convertible.Core.d_from_22 v3 v6)
                        _ -> MAlonzo.RTE.mazUnreachableError)))))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_compute_276
+         MAlonzo.Code.Interface.ComputationalRelation.du_compute_348
          (coe
             MAlonzo.Code.Ledger.Conway.Specification.Gov.Properties.Computational.d_Computational'45'GOVS_2224
             (coe

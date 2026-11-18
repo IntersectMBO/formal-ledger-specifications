@@ -1732,10 +1732,10 @@ d_isRegistered'63'_2482 v0 v1 v2
 -- Ledger.Dijkstra.Specification.Gov.Properties.Computational.Computational-GOV
 d_Computational'45'GOV_2484 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_234
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'GOV_2484 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_414
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_486
       (d_computeProof_2874 (coe v0))
 -- Ledger.Dijkstra.Specification.Gov.Properties.Computational._.Go.Γ
 d_Γ_2496 ::
@@ -2827,17 +2827,17 @@ d_completeness_2884 = erased
 -- Ledger.Dijkstra.Specification.Gov.Properties.Computational.Computational-GOVS
 d_Computational'45'GOVS_2890 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_234
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'GOVS_2890 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'ReflexiveTransitiveClosure'7522''7495'_1104
+      MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'ReflexiveTransitiveClosure'7522''7495'_1176
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'Id_742)
+         MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'Id_814)
       (coe d_Computational'45'GOV_2484 (coe v0))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_730)
+         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_802)
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45'Id_734)
+         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45'Id_806)
 -- Ledger.Dijkstra.Specification.Gov.Properties.Computational.allEnactable-singleton
 d_allEnactable'45'singleton_2898 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->

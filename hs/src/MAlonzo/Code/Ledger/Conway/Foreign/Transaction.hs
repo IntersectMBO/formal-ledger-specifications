@@ -2065,7 +2065,7 @@ check_MkTxBody_12213 ::
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
-    () MAlonzo.Code.Ledger.Conway.Foreign.Gov.Core.T_GovVote_5431 ->
+    () MAlonzo.Code.Ledger.Conway.Foreign.Gov.Core.T_GovVote_5433 ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     () MAlonzo.Code.Ledger.Conway.Foreign.Gov.T_GovProposal_7777 ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer ->

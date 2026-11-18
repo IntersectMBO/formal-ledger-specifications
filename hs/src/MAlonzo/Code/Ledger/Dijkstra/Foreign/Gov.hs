@@ -590,7 +590,7 @@ d_RewardCredentialsOf_154 v0
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Gov._.Computational-GOV
 d_Computational'45'GOV_166 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_234
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'GOV_166
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational.d_Computational'45'GOV_2484
@@ -600,7 +600,7 @@ d_Computational'45'GOV_166
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
 -- Ledger.Dijkstra.Foreign.Gov._.Computational-GOVS
 d_Computational'45'GOVS_168 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_234
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'GOVS_168
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational.d_Computational'45'GOVS_2890
@@ -13301,7 +13301,7 @@ govStep ::
        (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22 () () Integer Integer)
        T_GovActionState_6079) ->
   MAlonzo.Code.Foreign.Haskell.Either.T_Either_22
-    () () MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.T_GovVote_5431
+    () () MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.T_GovVote_5433
     T_GovProposal_1393 ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
     MAlonzo.Code.Agda.Builtin.String.T_String_6
@@ -13322,7 +13322,7 @@ d_gov'45'step_362 ::
      T_GovActionState_6079] ->
   MAlonzo.Code.Foreign.Haskell.Either.T_Either_22
     AgdaAny AgdaAny
-    MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.T_GovVote_5431
+    MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.T_GovVote_5433
     T_GovProposal_1393 ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
     MAlonzo.Code.Agda.Builtin.String.T_String_6
@@ -13365,7 +13365,7 @@ d_gov'45'step_362 v0
                         (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                      (coe d_Conv'45'GovActionState_356))))))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_compute_276
+         MAlonzo.Code.Interface.ComputationalRelation.du_compute_348
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational.d_Computational'45'GOV_2484
             (coe
@@ -13391,7 +13391,7 @@ govsStep ::
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     ()
     (MAlonzo.Code.Foreign.Haskell.Either.T_Either_22
-       () () MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.T_GovVote_5431
+       () () MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.T_GovVote_5433
        T_GovProposal_1393) ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
     MAlonzo.Code.Agda.Builtin.String.T_String_6
@@ -13411,7 +13411,7 @@ d_govs'45'step_364 ::
      T_GovActionState_6079] ->
   [MAlonzo.Code.Foreign.Haskell.Either.T_Either_22
      AgdaAny AgdaAny
-     MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.T_GovVote_5431
+     MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.T_GovVote_5433
      T_GovProposal_1393] ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
     MAlonzo.Code.Agda.Builtin.String.T_String_6
@@ -13456,7 +13456,7 @@ d_govs'45'step_364 v0
                         (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                      (coe d_Conv'45'GovActionState_356))))))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_compute_276
+         MAlonzo.Code.Interface.ComputationalRelation.du_compute_348
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational.d_Computational'45'GOVS_2890
             (coe

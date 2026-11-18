@@ -109,7 +109,7 @@ du_DecEq'45'Credential_986 v0 v1
       (coe v0) (coe v1)
 -- Ledger.Dijkstra.Specification.Certs.Properties.Computational._.completeness
 d_completeness_1834 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_234 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
@@ -118,14 +118,14 @@ d_completeness_1834 ::
 d_completeness_1834 = erased
 -- Ledger.Dijkstra.Specification.Certs.Properties.Computational._.computeProof
 d_computeProof_1840 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_234 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_computeProof_1840 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_274
+      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_346
       (coe v0)
 -- Ledger.Dijkstra.Specification.Certs.Properties.Computational._
 d___1852 ::
@@ -141,10 +141,10 @@ d___1852 v0
 -- Ledger.Dijkstra.Specification.Certs.Properties.Computational.Computational-DELEG
 d_Computational'45'DELEG_1854 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_234
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'DELEG_1854 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_414
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_486
       (\ v1 v2 v3 ->
          let v4
                = coe
@@ -1054,10 +1054,10 @@ d_Computational'45'DELEG_1854 v0
 -- Ledger.Dijkstra.Specification.Certs.Properties.Computational.Computational-POOL
 d_Computational'45'POOL_1944 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_234
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'POOL_1944 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_414
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_486
       (\ v1 v2 v3 ->
          let v4
                = coe
@@ -2164,7 +2164,7 @@ d_Computational'45'POOL_1944 v0
                                                                                                           v19 of
                                                                                                      MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v20
                                                                                                        -> coe
-                                                                                                            ("\172\nLedger.Dijkstra.Specification.Certs.IsBLSUnique govStructure\n(maybe (\955 x \8594 just (.proj\8321 x)) nothing\n (.Ledger.Dijkstra.Specification.Certs.StakePoolParams.bls\n  poolParams))\n(.proj\8321\n (.Axiom.Set.Theory.specification\n  (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (.proj\8321 (.Ledger.Dijkstra.Specification.Certs.PState.pools st\7510))\n  (.Axiom.Set.SpecProperty.sp-\8728\n   (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n   (.Axiom.Set.SpecProperty.sp-\172\n    (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n    (.Axiom.Set.Theory\7496.\8712-sp List-Model\7496))\n   (\955 r \8594 .proj\8321 r)))\n ,\n (\955 {z} {z\8321} {z\8322} x y \8594\n    .proj\8322 (.Ledger.Dijkstra.Specification.Certs.PState.pools st\7510)\n    (.proj\8322\n     (.Equivalence.from\n      (.proj\8322\n       (.Axiom.Set.Theory.specification\n        (.Axiom.Set.Theory\7496.th List-Model\7496)\n        (.proj\8321 (.Ledger.Dijkstra.Specification.Certs.PState.pools st\7510))\n        (.Axiom.Set.SpecProperty.sp-\8728\n         (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n         (.Axiom.Set.SpecProperty.sp-\172\n          (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n          (.Axiom.Set.Theory\7496.\8712-sp List-Model\7496))\n         (\955 r \8594 .proj\8321 r))))\n      x))\n    (.proj\8322\n     (.Equivalence.from\n      (.proj\8322\n       (.Axiom.Set.Theory.specification\n        (.Axiom.Set.Theory\7496.th List-Model\7496)\n        (.proj\8321 (.Ledger.Dijkstra.Specification.Certs.PState.pools st\7510))\n        (.Axiom.Set.SpecProperty.sp-\8728\n         (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n         (.Axiom.Set.SpecProperty.sp-\172\n          (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n          (.Axiom.Set.Theory\7496.\8712-sp List-Model\7496))\n         (\955 r \8594 .proj\8321 r))))\n      y))))\n(.proj\8321\n (.Axiom.Set.Theory.specification\n  (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (.proj\8321 (.Ledger.Dijkstra.Specification.Certs.PState.fPools st\7510))\n  (.Axiom.Set.SpecProperty.sp-\8728\n   (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n   (.Axiom.Set.SpecProperty.sp-\172\n    (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n    (.Axiom.Set.Theory\7496.\8712-sp List-Model\7496))\n   (\955 r \8594 .proj\8321 r)))\n ,\n (\955 {z} {z\8321} {z\8322} x y \8594\n    .proj\8322 (.Ledger.Dijkstra.Specification.Certs.PState.fPools st\7510)\n    (.proj\8322\n     (.Equivalence.from\n      (.proj\8322\n       (.Axiom.Set.Theory.specification\n        (.Axiom.Set.Theory\7496.th List-Model\7496)\n        (.proj\8321 (.Ledger.Dijkstra.Specification.Certs.PState.fPools st\7510))\n        (.Axiom.Set.SpecProperty.sp-\8728\n         (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n         (.Axiom.Set.SpecProperty.sp-\172\n          (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n          (.Axiom.Set.Theory\7496.\8712-sp List-Model\7496))\n         (\955 r \8594 .proj\8321 r))))\n      x))\n    (.proj\8322\n     (.Equivalence.from\n      (.proj\8322\n       (.Axiom.Set.Theory.specification\n        (.Axiom.Set.Theory\7496.th List-Model\7496)\n        (.proj\8321 (.Ledger.Dijkstra.Specification.Certs.PState.fPools st\7510))\n        (.Axiom.Set.SpecProperty.sp-\8728\n         (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n         (.Axiom.Set.SpecProperty.sp-\172\n          (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n          (.Axiom.Set.Theory\7496.\8712-sp List-Model\7496))\n         (\955 r \8594 .proj\8321 r))))\n      y))))"
+                                                                                                            ("\172\nLedger.Dijkstra.Specification.Certs.IsBLSUnique govStructure\n(maybe (\955 x \8594 just (.proj\8321 x)) nothing\n (.Ledger.Dijkstra.Specification.Certs.StakePoolParams.bls\n  poolParams))\n(.proj\8321\n (.Axiom.Set.Theory.specification\n  (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (.proj\8321 (.Ledger.Dijkstra.Specification.Certs.PState.pools st\7510))\n  (.Axiom.Set.SpecProperty.sp-\8728\n   (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n   (.Axiom.Set.SpecProperty.sp-\172\n    (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n    (.Axiom.Set.Theory\7496.\8712-sp List-Model\7496))\n   (\955 r \8594 .proj\8321 r)))\n ,\n (\955 {z} {z\8321} {z\8321 = z\8322} x y \8594\n    .proj\8322 (.Ledger.Dijkstra.Specification.Certs.PState.pools st\7510)\n    (.proj\8322\n     (.Equivalence.from\n      (.proj\8322\n       (.Axiom.Set.Theory.specification\n        (.Axiom.Set.Theory\7496.th List-Model\7496)\n        (.proj\8321 (.Ledger.Dijkstra.Specification.Certs.PState.pools st\7510))\n        (.Axiom.Set.SpecProperty.sp-\8728\n         (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n         (.Axiom.Set.SpecProperty.sp-\172\n          (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n          (.Axiom.Set.Theory\7496.\8712-sp List-Model\7496))\n         (\955 r \8594 .proj\8321 r))))\n      x))\n    (.proj\8322\n     (.Equivalence.from\n      (.proj\8322\n       (.Axiom.Set.Theory.specification\n        (.Axiom.Set.Theory\7496.th List-Model\7496)\n        (.proj\8321 (.Ledger.Dijkstra.Specification.Certs.PState.pools st\7510))\n        (.Axiom.Set.SpecProperty.sp-\8728\n         (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n         (.Axiom.Set.SpecProperty.sp-\172\n          (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n          (.Axiom.Set.Theory\7496.\8712-sp List-Model\7496))\n         (\955 r \8594 .proj\8321 r))))\n      y))))\n(.proj\8321\n (.Axiom.Set.Theory.specification\n  (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (.proj\8321 (.Ledger.Dijkstra.Specification.Certs.PState.fPools st\7510))\n  (.Axiom.Set.SpecProperty.sp-\8728\n   (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n   (.Axiom.Set.SpecProperty.sp-\172\n    (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n    (.Axiom.Set.Theory\7496.\8712-sp List-Model\7496))\n   (\955 r \8594 .proj\8321 r)))\n ,\n (\955 {z} {z\8321} {z\8321 = z\8322} x y \8594\n    .proj\8322 (.Ledger.Dijkstra.Specification.Certs.PState.fPools st\7510)\n    (.proj\8322\n     (.Equivalence.from\n      (.proj\8322\n       (.Axiom.Set.Theory.specification\n        (.Axiom.Set.Theory\7496.th List-Model\7496)\n        (.proj\8321 (.Ledger.Dijkstra.Specification.Certs.PState.fPools st\7510))\n        (.Axiom.Set.SpecProperty.sp-\8728\n         (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n         (.Axiom.Set.SpecProperty.sp-\172\n          (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n          (.Axiom.Set.Theory\7496.\8712-sp List-Model\7496))\n         (\955 r \8594 .proj\8321 r))))\n      x))\n    (.proj\8322\n     (.Equivalence.from\n      (.proj\8322\n       (.Axiom.Set.Theory.specification\n        (.Axiom.Set.Theory\7496.th List-Model\7496)\n        (.proj\8321 (.Ledger.Dijkstra.Specification.Certs.PState.fPools st\7510))\n        (.Axiom.Set.SpecProperty.sp-\8728\n         (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n         (.Axiom.Set.SpecProperty.sp-\172\n          (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n          (.Axiom.Set.Theory\7496.\8712-sp List-Model\7496))\n         (\955 r \8594 .proj\8321 r))))\n      y))))"
                                                                                                              ::
                                                                                                              Data.Text.Text)
                                                                                                      MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v20
@@ -2902,7 +2902,7 @@ d_Computational'45'POOL_1944 v0
                                                                                                              v19 of
                                                                                                         MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v20
                                                                                                           -> coe
-                                                                                                               ("(\172\n Ledger.Dijkstra.Specification.Certs.IsBLSUnique govStructure\n (maybe (\955 x \8594 just (.proj\8321 x)) nothing\n  (.Ledger.Dijkstra.Specification.Certs.StakePoolParams.bls\n   poolParams))\n (.proj\8321\n  (.Axiom.Set.Theory.specification\n   (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (.proj\8321 (.Ledger.Dijkstra.Specification.Certs.PState.pools st\7510))\n   (.Axiom.Set.SpecProperty.sp-\8728\n    (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n    (.Axiom.Set.SpecProperty.sp-\172\n     (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n     (.Axiom.Set.Theory\7496.\8712-sp List-Model\7496))\n    (\955 r \8594 .proj\8321 r)))\n  ,\n  (\955 {z} {z\8321} {z\8322} x y \8594\n     .proj\8322 (.Ledger.Dijkstra.Specification.Certs.PState.pools st\7510)\n     (.proj\8322\n      (.Equivalence.from\n       (.proj\8322\n        (.Axiom.Set.Theory.specification\n         (.Axiom.Set.Theory\7496.th List-Model\7496)\n         (.proj\8321 (.Ledger.Dijkstra.Specification.Certs.PState.pools st\7510))\n         (.Axiom.Set.SpecProperty.sp-\8728\n          (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n          (.Axiom.Set.SpecProperty.sp-\172\n           (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n           (.Axiom.Set.Theory\7496.\8712-sp List-Model\7496))\n          (\955 r \8594 .proj\8321 r))))\n       x))\n     (.proj\8322\n      (.Equivalence.from\n       (.proj\8322\n        (.Axiom.Set.Theory.specification\n         (.Axiom.Set.Theory\7496.th List-Model\7496)\n         (.proj\8321 (.Ledger.Dijkstra.Specification.Certs.PState.pools st\7510))\n         (.Axiom.Set.SpecProperty.sp-\8728\n          (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n          (.Axiom.Set.SpecProperty.sp-\172\n           (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n           (.Axiom.Set.Theory\7496.\8712-sp List-Model\7496))\n          (\955 r \8594 .proj\8321 r))))\n       y))))\n (.proj\8321\n  (.Axiom.Set.Theory.specification\n   (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (.proj\8321 (.Ledger.Dijkstra.Specification.Certs.PState.fPools st\7510))\n   (.Axiom.Set.SpecProperty.sp-\8728\n    (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n    (.Axiom.Set.SpecProperty.sp-\172\n     (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n     (.Axiom.Set.Theory\7496.\8712-sp List-Model\7496))\n    (\955 r \8594 .proj\8321 r)))\n  ,\n  (\955 {z} {z\8321} {z\8322} x y \8594\n     .proj\8322 (.Ledger.Dijkstra.Specification.Certs.PState.fPools st\7510)\n     (.proj\8322\n      (.Equivalence.from\n       (.proj\8322\n        (.Axiom.Set.Theory.specification\n         (.Axiom.Set.Theory\7496.th List-Model\7496)\n         (.proj\8321 (.Ledger.Dijkstra.Specification.Certs.PState.fPools st\7510))\n         (.Axiom.Set.SpecProperty.sp-\8728\n          (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n          (.Axiom.Set.SpecProperty.sp-\172\n           (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n           (.Axiom.Set.Theory\7496.\8712-sp List-Model\7496))\n          (\955 r \8594 .proj\8321 r))))\n       x))\n     (.proj\8322\n      (.Equivalence.from\n       (.proj\8322\n        (.Axiom.Set.Theory.specification\n         (.Axiom.Set.Theory\7496.th List-Model\7496)\n         (.proj\8321 (.Ledger.Dijkstra.Specification.Certs.PState.fPools st\7510))\n         (.Axiom.Set.SpecProperty.sp-\8728\n          (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n          (.Axiom.Set.SpecProperty.sp-\172\n           (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n           (.Axiom.Set.Theory\7496.\8712-sp List-Model\7496))\n          (\955 r \8594 .proj\8321 r))))\n       y)))))"
+                                                                                                               ("(\172\n Ledger.Dijkstra.Specification.Certs.IsBLSUnique govStructure\n (maybe (\955 x \8594 just (.proj\8321 x)) nothing\n  (.Ledger.Dijkstra.Specification.Certs.StakePoolParams.bls\n   poolParams))\n (.proj\8321\n  (.Axiom.Set.Theory.specification\n   (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (.proj\8321 (.Ledger.Dijkstra.Specification.Certs.PState.pools st\7510))\n   (.Axiom.Set.SpecProperty.sp-\8728\n    (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n    (.Axiom.Set.SpecProperty.sp-\172\n     (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n     (.Axiom.Set.Theory\7496.\8712-sp List-Model\7496))\n    (\955 r \8594 .proj\8321 r)))\n  ,\n  (\955 {z} {z\8321} {z\8321 = z\8322} x y \8594\n     .proj\8322 (.Ledger.Dijkstra.Specification.Certs.PState.pools st\7510)\n     (.proj\8322\n      (.Equivalence.from\n       (.proj\8322\n        (.Axiom.Set.Theory.specification\n         (.Axiom.Set.Theory\7496.th List-Model\7496)\n         (.proj\8321 (.Ledger.Dijkstra.Specification.Certs.PState.pools st\7510))\n         (.Axiom.Set.SpecProperty.sp-\8728\n          (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n          (.Axiom.Set.SpecProperty.sp-\172\n           (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n           (.Axiom.Set.Theory\7496.\8712-sp List-Model\7496))\n          (\955 r \8594 .proj\8321 r))))\n       x))\n     (.proj\8322\n      (.Equivalence.from\n       (.proj\8322\n        (.Axiom.Set.Theory.specification\n         (.Axiom.Set.Theory\7496.th List-Model\7496)\n         (.proj\8321 (.Ledger.Dijkstra.Specification.Certs.PState.pools st\7510))\n         (.Axiom.Set.SpecProperty.sp-\8728\n          (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n          (.Axiom.Set.SpecProperty.sp-\172\n           (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n           (.Axiom.Set.Theory\7496.\8712-sp List-Model\7496))\n          (\955 r \8594 .proj\8321 r))))\n       y))))\n (.proj\8321\n  (.Axiom.Set.Theory.specification\n   (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (.proj\8321 (.Ledger.Dijkstra.Specification.Certs.PState.fPools st\7510))\n   (.Axiom.Set.SpecProperty.sp-\8728\n    (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n    (.Axiom.Set.SpecProperty.sp-\172\n     (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n     (.Axiom.Set.Theory\7496.\8712-sp List-Model\7496))\n    (\955 r \8594 .proj\8321 r)))\n  ,\n  (\955 {z} {z\8321} {z\8321 = z\8322} x y \8594\n     .proj\8322 (.Ledger.Dijkstra.Specification.Certs.PState.fPools st\7510)\n     (.proj\8322\n      (.Equivalence.from\n       (.proj\8322\n        (.Axiom.Set.Theory.specification\n         (.Axiom.Set.Theory\7496.th List-Model\7496)\n         (.proj\8321 (.Ledger.Dijkstra.Specification.Certs.PState.fPools st\7510))\n         (.Axiom.Set.SpecProperty.sp-\8728\n          (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n          (.Axiom.Set.SpecProperty.sp-\172\n           (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n           (.Axiom.Set.Theory\7496.\8712-sp List-Model\7496))\n          (\955 r \8594 .proj\8321 r))))\n       x))\n     (.proj\8322\n      (.Equivalence.from\n       (.proj\8322\n        (.Axiom.Set.Theory.specification\n         (.Axiom.Set.Theory\7496.th List-Model\7496)\n         (.proj\8321 (.Ledger.Dijkstra.Specification.Certs.PState.fPools st\7510))\n         (.Axiom.Set.SpecProperty.sp-\8728\n          (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n          (.Axiom.Set.SpecProperty.sp-\172\n           (.Axiom.Set.Theory.sp (.Axiom.Set.Theory\7496.th List-Model\7496))\n           (.Axiom.Set.Theory\7496.\8712-sp List-Model\7496))\n          (\955 r \8594 .proj\8321 r))))\n       y)))))"
                                                                                                                 ::
                                                                                                                 Data.Text.Text)
                                                                                                         MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v20
@@ -3963,10 +3963,10 @@ d_Computational'45'POOL_1944 v0
 -- Ledger.Dijkstra.Specification.Certs.Properties.Computational.Computational-GOVCERT
 d_Computational'45'GOVCERT_2508 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_234
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'GOVCERT_2508 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_414
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_486
       (\ v1 v2 v3 ->
          let v4
                = coe
@@ -4833,14 +4833,14 @@ d_Computational'45'GOVCERT_2508 v0
 -- Ledger.Dijkstra.Specification.Certs.Properties.Computational.Computational-CERT
 d_Computational'45'CERT_2588 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_234
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'CERT_2588 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_414
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_486
       (\ v1 v2 v3 ->
          let v4
                = coe
-                   MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_274
+                   MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_346
                    (d_Computational'45'POOL_1944 (coe v0))
                    (coe
                       MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
@@ -4951,7 +4951,7 @@ d_Computational'45'CERT_2588 v0
          coe
            (let v5
                   = coe
-                      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_274
+                      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_346
                       (d_Computational'45'GOVCERT_2508 (coe v0))
                       (coe
                          MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
@@ -7175,14 +7175,14 @@ d_Computational'45'CERT_2588 v0
 -- Ledger.Dijkstra.Specification.Certs.Properties.Computational.Computational-CERTS
 d_Computational'45'CERTS_2812 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_234
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'CERTS_2812 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'ReflexiveTransitiveClosure'7495'_778
+      MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'ReflexiveTransitiveClosure'7495'_850
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'Id_742)
+         MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'Id_814)
       (coe d_Computational'45'CERT_2588 (coe v0))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_730)
+         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_802)
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45'Id_734)
+         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45'Id_806)

@@ -658,6 +658,7 @@ library
       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base
       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive
       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Instances
+      MAlonzo.Code.QstdlibZ45Zmeta.Tactic.Derive.DecEqRecord
       MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError
       MAlonzo.Code.QstdlibZ45Zmeta.Tactic.MonoidSolver.NonNormalising
       MAlonzo.Code.Reflection

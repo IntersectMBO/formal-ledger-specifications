@@ -664,7 +664,7 @@ d_Conv'45'GovVote''_116
             case coe v0 of
               C_constructor_84 v1 v2 v3 v4
                 -> coe
-                     C_MkGovVote_5433
+                     C_MkGovVote_5435
                      (coe
                         MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
                         (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
@@ -731,7 +731,7 @@ d_Conv'45'GovVote''_116
       (coe
          (\ v0 ->
             case coe v0 of
-              C_MkGovVote_5433 v1 v2 v3 v4
+              C_MkGovVote_5435 v1 v2 v3 v4
                 -> coe
                      C_constructor_84
                      (coe
@@ -876,10 +876,10 @@ cover_GovVotes_1267 x
   = case x of
       GovVotes _ _ _ -> ()
 -- Ledger.Conway.Foreign.Gov.Core.GovVote
-d_GovVote_5431 = ()
-type T_GovVote_5431 = GovVote
-pattern C_MkGovVote_5433 a0 a1 a2 a3 = MkGovVote a0 a1 a2 a3
-check_MkGovVote_5433 ::
+d_GovVote_5433 = ()
+type T_GovVote_5433 = GovVote
+pattern C_MkGovVote_5435 a0 a1 a2 a3 = MkGovVote a0 a1 a2 a3
+check_MkGovVote_5435 ::
   MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
     () () Integer Integer ->
   MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
@@ -887,9 +887,9 @@ check_MkGovVote_5433 ::
     MAlonzo.Code.Ledger.Core.Foreign.Address.T_Credential_615 ->
   T_Vote_1137 ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () T_Anchor_147 ->
-  T_GovVote_5431
-check_MkGovVote_5433 = MkGovVote
-cover_GovVote_5431 :: GovVote -> ()
-cover_GovVote_5431 x
+  T_GovVote_5433
+check_MkGovVote_5435 = MkGovVote
+cover_GovVote_5433 :: GovVote -> ()
+cover_GovVote_5433 x
   = case x of
       MkGovVote _ _ _ _ -> ()

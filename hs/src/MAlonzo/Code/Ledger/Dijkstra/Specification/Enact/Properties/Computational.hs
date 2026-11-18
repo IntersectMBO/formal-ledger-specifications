@@ -160,7 +160,7 @@ d_withdrawals_1392 v0
       (coe v0)
 -- Ledger.Dijkstra.Specification.Enact.Properties.Computational._.completeness
 d_completeness_1400 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_234 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
@@ -169,14 +169,14 @@ d_completeness_1400 ::
 d_completeness_1400 = erased
 -- Ledger.Dijkstra.Specification.Enact.Properties.Computational._.computeProof
 d_computeProof_1406 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_234 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_computeProof_1406 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_274
+      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_346
       (coe v0)
 -- Ledger.Dijkstra.Specification.Enact.Properties.Computational._.ENACT-deterministic
 d_ENACT'45'deterministic_1432 ::
@@ -193,10 +193,10 @@ d_ENACT'45'deterministic_1432 = erased
 -- Ledger.Dijkstra.Specification.Enact.Properties.Computational.Computational-ENACT
 d_Computational'45'ENACT_1434 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_234
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'ENACT_1434 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_414
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_486
       (\ v1 v2 v3 ->
          case coe v3 of
            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984 v4 v5
