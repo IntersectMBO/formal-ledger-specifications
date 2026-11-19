@@ -52,8 +52,8 @@ instance
                  , CCHotKeysOf s₀
                  , DepositsOf (GStateOf s₀) ⟧ ⟧
 
-        computeProof : ComputationResult String (∃-syntax (_⊢_⇀⦇_,SUBENTITIES⦈_ Γ s₀ txSub))
-        computeProof with ¿
+        H : Type
+        H =
             ∙ ∀[ a ∈ dom withdrawals ] NetworkIdOf a ≡ NetworkId
             ∙ withdrawalsCredentials ⊆ dom Γ.rewards₀
             ∙ withdrawalsCredentials ⊆ dom (RewardsOf s₀)
@@ -63,33 +63,62 @@ instance
                 (InBalanceInterval (maybe id 0 (lookupᵐ? (RewardsOf s₀) c)) interval)
 
             ∙ ∀[ a ∈ dom directDeposits ] NetworkIdOf a ≡ NetworkId
-          ¿ | Computational-CERTS.computeProof ⟦ Γ.epoch , Γ.pp , Γ.coldCredentials ⟧ s₁ (DCertsOf txSub)
-        ... | no ¬p | _ = failure ""
-        ... | yes _ | failure e = failure e
-        ... | yes (p₁ , p₂ , p₃ , p₄ , p₅ , p₆) | success (s₂ , p)
-          with ¿ directDepositsCredentials ⊆ dom (RewardsOf s₂) ¿
-        ... | no ¬p = failure ""
-        ... | yes p₇ = success (-, (SUBENTITIES (p₁ , p₂ , p₃ , p₄ , p₅ , p , p₆ , p₇)))
 
-        completeness : ∀ (s' : CertState) → Γ ⊢ s₀ ⇀⦇ txSub ,SUBENTITIES⦈ s' → map proj₁ computeProof ≡ success s'
-        completeness s' (SUBENTITIES (p₁ , p₂ , p₃ , p₄ , p₅ , p , p₆ , p₇))
-          with ¿
-            ∙ ∀[ a ∈ dom withdrawals ] NetworkIdOf a ≡ NetworkId
-            ∙ withdrawalsCredentials ⊆ dom Γ.rewards₀
-            ∙ withdrawalsCredentials ⊆ dom (RewardsOf s₀)
+        H? : Dec H
+        H? = ¿ H ¿
 
-            ∙ dom accountBalanceIntervals ⊆ dom (RewardsOf s₀)
-            ∙ ∀[ (c , interval) ∈ accountBalanceIntervals ˢ ]
-                (InBalanceInterval (maybe id 0 (lookupᵐ? (RewardsOf s₀) c)) interval)
+        credit : CertState → CertState
+        credit s₂ = record s₂
+          { dState = record (DStateOf s₂)
+            { rewards = applyDirectDeposits directDeposits (RewardsOf s₂) } }
 
-            ∙ ∀[ a ∈ dom directDeposits ] NetworkIdOf a ≡ NetworkId
-          ¿ | Computational-CERTS.computeProof ⟦ Γ.epoch , Γ.pp , Γ.coldCredentials ⟧ s₁ (DCertsOf txSub) | Computational-CERTS.completeness _ _ _ _ p
-        ... | no ¬p | _ | p' = ⊥-elim (¬p (p₁ , p₂ , p₃ , p₄ , p₅ , p₆))
-        ... | yes _ | failure e | ()
-        ... | yes (p₁ , p₂ , p₃ , p₄ , p₅ , p₆) | success (s₂ , p) | refl
-          with ¿ directDepositsCredentials ⊆ dom (RewardsOf s₂) ¿
-        ... | no ¬p  = ⊥-elim (¬p p₇)
-        ... | yes _ = refl
+        lift-step : H → ∀ {s₂} → ⟦ Γ.epoch , Γ.pp , Γ.coldCredentials ⟧ ⊢ s₁ ⇀⦇ DCertsOf txSub ,CERTS⦈ s₂
+                  → directDepositsCredentials ⊆ dom (RewardsOf s₂)
+                  → Γ ⊢ s₀ ⇀⦇ txSub ,SUBENTITIES⦈ credit s₂
+        lift-step (p₁ , p₂ , p₃ , p₄ , p₅ , p₆) h p₇ =
+          SUBENTITIES (p₁ , p₂ , p₃ , p₄ , p₅ , h , p₆ , p₇)
+
+        finish : H → (s₂ : CertState) → ⟦ Γ.epoch , Γ.pp , Γ.coldCredentials ⟧ ⊢ s₁ ⇀⦇ DCertsOf txSub ,CERTS⦈ s₂
+               → Dec (directDepositsCredentials ⊆ dom (RewardsOf s₂))
+               → ComputationResult String (∃[ s' ] Γ ⊢ s₀ ⇀⦇ txSub ,SUBENTITIES⦈ s')
+        finish p s₂ h (no _) = failure ""
+        finish p s₂ h (yes q) = success (credit s₂ , lift-step p h q)
+
+        computeProof-aux : Dec H
+                         → ComputationResult String (∃[ s₂ ] ⟦ Γ.epoch , Γ.pp , Γ.coldCredentials ⟧ ⊢ s₁ ⇀⦇ DCertsOf txSub ,CERTS⦈ s₂)
+                         → ComputationResult String (∃[ s' ] Γ ⊢ s₀ ⇀⦇ txSub ,SUBENTITIES⦈ s')
+        computeProof-aux (no _) _ = failure ""
+        computeProof-aux (yes _) (failure e) = failure e
+        computeProof-aux (yes p) (success (s₂ , h)) =
+          finish p s₂ h ¿ directDepositsCredentials ⊆ dom (RewardsOf s₂) ¿
+
+        computeProof : ComputationResult String (∃[ s' ] Γ ⊢ s₀ ⇀⦇ txSub ,SUBENTITIES⦈ s')
+        computeProof = computeProof-aux H?
+          (Computational-CERTS.computeProof ⟦ Γ.epoch , Γ.pp , Γ.coldCredentials ⟧ s₁ (DCertsOf txSub))
+
+        finish-complete : (p : H) (s₂ : CertState) (h : ⟦ Γ.epoch , Γ.pp , Γ.coldCredentials ⟧ ⊢ s₁ ⇀⦇ DCertsOf txSub ,CERTS⦈ s₂)
+                         → (d : Dec (directDepositsCredentials ⊆ dom (RewardsOf s₂)))
+                         → directDepositsCredentials ⊆ dom (RewardsOf s₂)
+                         → map proj₁ (finish p s₂ h d) ≡ success (credit s₂)
+        finish-complete p s₂ h (no ¬q) q = ⊥-elim (¬q q)
+        finish-complete p s₂ h (yes _) _ = refl
+
+        completeness-aux : (d : Dec H)
+                         → (r : ComputationResult String (∃[ s₂ ] ⟦ Γ.epoch , Γ.pp , Γ.coldCredentials ⟧ ⊢ s₁ ⇀⦇ DCertsOf txSub ,CERTS⦈ s₂))
+                         → {s₂ : CertState} → H → ⟦ Γ.epoch , Γ.pp , Γ.coldCredentials ⟧ ⊢ s₁ ⇀⦇ DCertsOf txSub ,CERTS⦈ s₂
+                         → directDepositsCredentials ⊆ dom (RewardsOf s₂)
+                         → map proj₁ r ≡ success s₂
+                         → map proj₁ (computeProof-aux d r) ≡ success (credit s₂)
+        completeness-aux (no ¬p) _ p _ _ _ = ⊥-elim (¬p p)
+        completeness-aux (yes _) (failure _) _ _ _ ()
+        completeness-aux (yes p) (success (s₂ , h)) _ _ q refl =
+          finish-complete p s₂ h ¿ directDepositsCredentials ⊆ dom (RewardsOf s₂) ¿ q
+
+        completeness : ∀ s' → Γ ⊢ s₀ ⇀⦇ txSub ,SUBENTITIES⦈ s' → map proj₁ computeProof ≡ success s'
+        completeness s' (SUBENTITIES (p₁ , p₂ , p₃ , p₄ , p₅ , h , p₆ , p₇)) =
+          completeness-aux H?
+            (Computational-CERTS.computeProof ⟦ Γ.epoch , Γ.pp , Γ.coldCredentials ⟧ s₁ (DCertsOf txSub))
+            (p₁ , p₂ , p₃ , p₄ , p₅ , p₆) h p₇ (Computational-CERTS.completeness _ _ _ _ h)
 
   Computational-ENTITIES : Computational _⊢_⇀⦇_,ENTITIES⦈_ String
   Computational-ENTITIES = record {go}
@@ -116,8 +145,8 @@ instance
                  , CCHotKeysOf s₀
                  , DepositsOf (GStateOf s₀) ⟧ ⟧
 
-        computeProof : ComputationResult String (∃-syntax (_⊢_⇀⦇_,ENTITIES⦈_ Γ s₀ txTop))
-        computeProof with ¿
+        H : Type
+        H =
             ∙ ∀[ a ∈ dom withdrawals ] NetworkIdOf a ≡ NetworkId
             ∙ withdrawalsCredentials ⊆ dom (RewardsOf s₀)
 
@@ -138,43 +167,61 @@ instance
                 (InBalanceInterval (maybe id 0 (lookupᵐ? Γ.rewards₀ c)) interval)
 
             ∙ ∀[ a ∈ dom directDeposits ] NetworkIdOf a ≡ NetworkId
-          ¿ | Computational-CERTS.computeProof ⟦ Γ.epoch , Γ.pp , Γ.coldCredentials ⟧ s₁ (DCertsOf txTop)
-        ... | no ¬p | _ = failure ""
-        ... | yes _ | failure e = failure e
-        ... | yes (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉) | success (s₂ , p)
-          with ¿
-            ∙ directDepositsCredentials ⊆ dom (RewardsOf s₂) ¿
-        ... | no ¬p = failure ""
-        ... | yes p₁₀ = success (-, (ENTITIES (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p , p₉ , p₁₀)))
-    
-        completeness : ∀ (s' : CertState) → Γ ⊢ s₀ ⇀⦇ txTop ,ENTITIES⦈ s' → map proj₁ computeProof ≡ success s'
-        completeness s' (ENTITIES (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p , p₉ , p₁₀))
-          with ¿
-            ∙ ∀[ a ∈ dom withdrawals ] NetworkIdOf a ≡ NetworkId
-            ∙ withdrawalsCredentials ⊆ dom (RewardsOf s₀)
 
-            ∙ (Γ.legacyMode ≡ true →
-                ∙ ∀[ (addr , amt) ∈ withdrawals ˢ ] amt ≡ maybe id 0 (lookupᵐ? (RewardsOf s₀) (stake addr))
-                ∙ ∀[ (addr , amt) ∈ withdrawalsSubTxs ˢ ] amt ≤ maybe id 0 (lookupᵐ? Γ.rewards₀ (stake addr)))
+        H? : Dec H
+        H? = ¿ H ¿
 
-            ∙ (Γ.legacyMode ≡ false →
-                ∙ withdrawalsCredentials ⊆ dom Γ.rewards₀
-                ∙ ∀[ (addr , amt) ∈ (withdrawalsSubTxs ∪⁺ withdrawals) ˢ ] amt ≤ maybe id 0 (lookupᵐ? Γ.rewards₀ (stake addr)))
+        credit : CertState → CertState
+        credit s₂ = record s₂
+          { dState = record (DStateOf s₂)
+            { rewards = applyDirectDeposits directDeposits (RewardsOf s₂) } }
 
-            ∙ dom accountBalanceIntervals ⊆ dom (RewardsOf s₀)
-            ∙ ∀[ (c , interval) ∈ accountBalanceIntervals ˢ ]
-                (InBalanceInterval (maybe id 0 (lookupᵐ? (RewardsOf s₀) c)) interval)
+        lift-step : H → ∀ {s₂} → ⟦ Γ.epoch , Γ.pp , Γ.coldCredentials ⟧ ⊢ s₁ ⇀⦇ DCertsOf txTop ,CERTS⦈ s₂
+                  → directDepositsCredentials ⊆ dom (RewardsOf s₂)
+                  → Γ ⊢ s₀ ⇀⦇ txTop ,ENTITIES⦈ credit s₂
+        lift-step (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉) h p₁₀ =
+          ENTITIES (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , h , p₉ , p₁₀)
 
-            ∙ dom startingAccountBalanceIntervals ⊆ dom Γ.rewards₀
-            ∙ ∀[ (c , interval) ∈ startingAccountBalanceIntervals ˢ ]
-                (InBalanceInterval (maybe id 0 (lookupᵐ? Γ.rewards₀ c)) interval)
+        finish : H → (s₂ : CertState) → ⟦ Γ.epoch , Γ.pp , Γ.coldCredentials ⟧ ⊢ s₁ ⇀⦇ DCertsOf txTop ,CERTS⦈ s₂
+               → Dec (directDepositsCredentials ⊆ dom (RewardsOf s₂))
+               → ComputationResult String (∃[ s' ] Γ ⊢ s₀ ⇀⦇ txTop ,ENTITIES⦈ s')
+        finish p s₂ h (no _) = failure ""
+        finish p s₂ h (yes q) = success (credit s₂ , lift-step p h q)
 
-            ∙ ∀[ a ∈ dom directDeposits ] NetworkIdOf a ≡ NetworkId
-          ¿ | Computational-CERTS.computeProof ⟦ Γ.epoch , Γ.pp , Γ.coldCredentials ⟧ s₁ (DCertsOf txTop) | Computational-CERTS.completeness _ _ _ _ p
-        ... | no ¬p | _ | p' = ⊥-elim (¬p (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉))
-        ... | yes _ | failure e | ()
-        ... | yes _ | success (s₂ , p) | refl
-          with ¿ directDepositsCredentials ⊆ dom (RewardsOf s₂) ¿
-        ... | no ¬p  = ⊥-elim (¬p p₁₀)
-        ... | yes _ = refl
+        computeProof-aux : Dec H
+                         → ComputationResult String (∃[ s₂ ] ⟦ Γ.epoch , Γ.pp , Γ.coldCredentials ⟧ ⊢ s₁ ⇀⦇ DCertsOf txTop ,CERTS⦈ s₂)
+                         → ComputationResult String (∃[ s' ] Γ ⊢ s₀ ⇀⦇ txTop ,ENTITIES⦈ s')
+        computeProof-aux (no _) _ = failure ""
+        computeProof-aux (yes _) (failure e) = failure e
+        computeProof-aux (yes p) (success (s₂ , h)) =
+          finish p s₂ h ¿ directDepositsCredentials ⊆ dom (RewardsOf s₂) ¿
+
+        computeProof : ComputationResult String (∃[ s' ] Γ ⊢ s₀ ⇀⦇ txTop ,ENTITIES⦈ s')
+        computeProof = computeProof-aux H?
+          (Computational-CERTS.computeProof ⟦ Γ.epoch , Γ.pp , Γ.coldCredentials ⟧ s₁ (DCertsOf txTop))
+
+        finish-complete : (p : H) (s₂ : CertState) (h : ⟦ Γ.epoch , Γ.pp , Γ.coldCredentials ⟧ ⊢ s₁ ⇀⦇ DCertsOf txTop ,CERTS⦈ s₂)
+                         → (d : Dec (directDepositsCredentials ⊆ dom (RewardsOf s₂)))
+                         → directDepositsCredentials ⊆ dom (RewardsOf s₂)
+                         → map proj₁ (finish p s₂ h d) ≡ success (credit s₂)
+        finish-complete p s₂ h (no ¬q) q = ⊥-elim (¬q q)
+        finish-complete p s₂ h (yes _) _ = refl
+
+        completeness-aux : (d : Dec H)
+                         → (r : ComputationResult String (∃[ s₂ ] ⟦ Γ.epoch , Γ.pp , Γ.coldCredentials ⟧ ⊢ s₁ ⇀⦇ DCertsOf txTop ,CERTS⦈ s₂))
+                         → {s₂ : CertState} → H → ⟦ Γ.epoch , Γ.pp , Γ.coldCredentials ⟧ ⊢ s₁ ⇀⦇ DCertsOf txTop ,CERTS⦈ s₂
+                         → directDepositsCredentials ⊆ dom (RewardsOf s₂)
+                         → map proj₁ r ≡ success s₂
+                         → map proj₁ (computeProof-aux d r) ≡ success (credit s₂)
+        completeness-aux (no ¬p) _ p _ _ _ = ⊥-elim (¬p p)
+        completeness-aux (yes _) (failure _) _ _ _ ()
+        completeness-aux (yes p) (success (s₂ , h)) _ _ q refl =
+          finish-complete p s₂ h ¿ directDepositsCredentials ⊆ dom (RewardsOf s₂) ¿ q
+
+        completeness : ∀ s' → Γ ⊢ s₀ ⇀⦇ txTop ,ENTITIES⦈ s' → map proj₁ computeProof ≡ success s'
+        completeness s' (ENTITIES (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , h , p₉ , p₁₀)) =
+          completeness-aux H?
+            (Computational-CERTS.computeProof ⟦ Γ.epoch , Γ.pp , Γ.coldCredentials ⟧ s₁ (DCertsOf txTop))
+            (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉) h p₁₀ (Computational-CERTS.completeness _ _ _ _ h)
+
 ```

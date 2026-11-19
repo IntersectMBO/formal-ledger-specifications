@@ -34,7 +34,7 @@ statement below more readable.
 +   The **mechanical** equations are about the *running* state: the spent balance
     they account for is `cbalance (UTxOOf s₀ ∣ SpendInputsOf tx)`, resolved
     against the UTxO actually being stepped.  At the `LEDGER`{.AgdaDatatype}
-    level, `s₀` for the top-level step is the *post-`SUBLEDGERS`* state — the
+    level, `s₀` for the top-level step is the *post-`SUBLEDGERS`* state; the
     sub-transactions have already executed on it.
 
 +   The **batch balance** is about the pre-batch snapshot: the spec states the
@@ -486,7 +486,7 @@ gives its freshness in the running UTxO directly.  The step preserves the
 invariant by `agrees-step`{.AgdaFunction} and `fresh-step`{.AgdaFunction} of
 `Utxo.Properties.Base`{.AgdaModule}, which need the stepping id fresh in the
 snapshot and different from the ids that remain pending; both come from
-`FreshTxIds`{.AgdaFunction}.
+`FreshTxIds`{.AgdaRecord}.
 
 ```agda
 module _ {u₀ : UTxO} {ids : List TxId} where
@@ -575,7 +575,7 @@ UTxO `u` and adds `outs tx`, the transaction fee, and the donation.  Given
 freshness of `TxIdOf tx` in `u` (so that `outs tx` splits off cleanly via
 `balance-∪`{.AgdaFunction}), `getCoin`{.AgdaField} changes by exactly the
 spent balance on one side and the outputs/fee/donation on the other.  Note
-that the spent balance is `cbalance (UTxOOf s₀ ∣ SpendInputsOf tx)` — the
+that the spent balance is `cbalance (UTxOOf s₀ ∣ SpendInputsOf tx)`, the
 *running*-state resolution of piece 1; `UTXO-spend-agree`{.AgdaFunction} below
 equates it with the snapshot resolution appearing in
 `UTXO-batch-balance-coin`{.AgdaFunction}.
@@ -631,7 +631,7 @@ The coin projection of the batch balance premise (premise 8 of the
 step hypothesis serves only to extract premises 7 (top-level no-mint) and 8
 (the balance): neither `s₀` nor `s₁` occurs in the conclusion, whose two sides
 are sums computed from the environment's pre-batch snapshot and the transaction
-alone.  Given the premises, the proof is pure substitution — apply
+alone.  Given the premises, the proof is pure substitution: apply
 `cong coin` to premise 8 and rewrite each side with the Layer-3 equations
 (the sub-level no-mint facts are the `noMintingSubTxs`{.AgdaFunction} hypothesis).
 

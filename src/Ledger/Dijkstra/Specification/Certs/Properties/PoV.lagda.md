@@ -1,22 +1,28 @@
+---
+source_branch: master
+source_path: src/Ledger/Dijkstra/Specification/Certs/Properties/PoV.lagda.md
+---
+
 # `CERTS`{.AgdaDatatype} Properties: Preservation of Value {#sec:certs-pov}
 
 This module provides the `CERTS`{.AgdaDatatype}-level value-accounting facts
-consumed by `Ledger.Properties.PoV`{.AgdaModule}: it discharges the
-`CERTS-rewards-pov`, `CERTS-deposits-pov`, `CERTS-deposits-registered`,
-`CERTS-new-thread` and `refundCertDeposits-++` module parameters of the
-`LEDGER-PoV`{.AgdaModule} consumer, with statements matching those parameters
-verbatim.
+consumed by `Ledger.Properties.PoV`{.AgdaModule}.  The facts are
+`CERTS-rewards-pov`{.AgdaFunction}, `CERTS-deposits-pov`{.AgdaFunction},
+`CERTS-deposits-registered`{.AgdaFunction}, `CERTS-new-thread`{.AgdaFunction},
+and `refundCertDeposits-++`{.AgdaFunction}.
 
-`CERTS`{.AgdaDatatype} is the reflexive–transitive closure of the
-single-certificate rule `CERT`{.AgdaDatatype}, so each fact is an induction
-over the closure whose step case is the corresponding per-step lemma of
-`Certs.Properties.PoVLemmas`{.AgdaModule}.  Composing the deposit facts across
+`CERTS`{.AgdaDatatype} is the reflexive-transitive closure of the
+single-certificate rule `CERT`{.AgdaDatatype}.  The four facts about a
+`CERTS`{.AgdaDatatype} derivation are inductions over this closure, using the
+per-step lemmas in `Certs.Properties.PoVLemmas`{.AgdaModule}.  The refund
+concatenation identity is a pure fold lemma from that module.  Composing the
+deposit facts across
 steps rests on the pool-set threading explained there: peeling the first
 certificate off `newCertDeposits`{.AgdaFunction}
 (`newCertDeposits-∷`{.AgdaFunction}) leaves the tail charged against the
-evolved accumulator, which `CERT-poolSet`{.AgdaFunction} identifies — up to
-extensional equality, absorbed by `newCertDeposits-cong`{.AgdaFunction} — with
-the pool set of the state after the step.
+evolved accumulator, which `CERT-poolSet`{.AgdaFunction} identifies with the
+pool set of the state after the step, up to extensional equality absorbed by
+`newCertDeposits-cong`{.AgdaFunction}.
 
 <!--
 ```agda

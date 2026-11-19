@@ -13,7 +13,7 @@ This module proves the top-level preservation-of-value theorem for the Dijkstra
 +  `s` and `s'` are ledger states related by `LEDGER`{.AgdaDatatype},
 +  `s` satisfies `PoolDepositsRegistered`{.AgdaFunction} (see `Certs`{.AgdaModule}), and
 +  the transaction ids of the batch are fresh for the UTxO of `s`
-   (`FreshTxIds`{.AgdaFunction}, see `Utxo.Properties.PoV`{.AgdaModule}),
+   (`FreshTxIds`{.AgdaRecord}, see `Utxo.Properties.PoV`{.AgdaModule}),
 
 then `getCoin s ≡ getCoin s'`.
 
@@ -143,14 +143,14 @@ open ≡-Reasoning
 instance
   _ = +-0-monoid
 
+
 ```
 -->
 
 ## The <span class="AgdaModule">LEDGER-PoV</span> module
 
-The supporting facts about the auxiliary transition systems are imported from
-the property modules that prove them, except for two groups assumed as module
-parameters:
+The supporting facts about the auxiliary transition systems are module parameters
+which are organized into the following groups:
 
 +  the set/map identities consumed by `ApplyToRewards-PoV`{.AgdaModule}
    (`∪ˡ-lookup-preserve`{.AgdaFunction}, `sum-map-proj₂≡getCoin`{.AgdaFunction},
@@ -160,22 +160,19 @@ parameters:
    `Entities.Properties.PoV`{.AgdaModule} for why these are not consequences of
    the rules' own premises.
 
-The imported facts are the following.
+The certificate accounting facts are imported from
+`Certs.Properties.PoV`{.AgdaModule}.
+The governance-deposit accounting facts and proposal extraction lemmas are
+imported from `Gov.Properties.PoV`{.AgdaModule}.
 
-+  UTxO-side facts, from `Utxow.Properties.PoV`{.AgdaModule}: the
-   `UTXOW`{.AgdaDatatype}/`SUBUTXOW`{.AgdaDatatype} coin equations, the batch
-   balance, and the batch-threading facts (freshness of each transaction's id in
-   the running UTxO, and agreement of the running UTxO with the pre-batch snapshot
-   on the spend inputs).  The last hold only along the batch history, so they are
-   stated for the running-UTxO invariant `BatchUTxO`{.AgdaRecord} of
-   `Utxo.Properties.PoV`{.AgdaModule}, which this module threads through the
-   sub-transactions.  The invariant holds initially exactly when the batch's ids
-   are fresh for the initial UTxO, the `FreshTxIds`{.AgdaFunction} hypothesis of
-   `LEDGER-pov`{.AgdaFunction}.
-+  Cert facts: value accounting for a single `CERTS`{.AgdaDatatype} run, from
-   `Certs.Properties.PoV`{.AgdaModule}.
-+  Gov deposit facts, from `Gov.Properties.PoV`{.AgdaModule} together with
-   `proposalsOf`{.AgdaFunction}, whose single home is that module.
+The UTxO-side coin equations and batch-threading facts are imported from
+`Utxow.Properties.PoV`{.AgdaModule}.  The running UTxO agrees with the pre-batch
+snapshot on its remaining inputs, and the pending transaction ids stay fresh,
+under the invariant `BatchUTxO`{.AgdaRecord} from
+`Utxo.Properties.PoV`{.AgdaModule}.  This module threads that invariant through
+the sub-transactions, starting from the `FreshTxIds`{.AgdaRecord} hypothesis of
+`LEDGER-pov`{.AgdaFunction}, and collects their no-mint premises from the
+`SUBLEDGERS`{.AgdaDatatype} derivation.
 
 ```agda
 module LEDGER-PoV
@@ -205,6 +202,7 @@ module LEDGER-PoV
       → Γe ⊢ cs ⇀⦇ stx ,SUBENTITIES⦈ cs'
       → ∀[ (addr , amt) ∈ (WithdrawalsOf stx) ˢ ]
           amt ≤ maybe id 0 (lookupᵐ? (RewardsOf cs) (stake addr)) )
+
   where
 
   open UTXOW-PoV tx
@@ -328,7 +326,7 @@ The running-UTxO invariant `BatchUTxO`{.AgdaRecord} threaded through the
 sub-transactions.  Its pending ids are those of the remaining sub-transactions
 followed by `ids`, the ids applied after them (at the top level, the top-level
 transaction's own), so each step's premises on the pending list are the head and
-tail of `FreshTxIds`{.AgdaFunction}.  Each valid step preserves the invariant by
+tail of `FreshTxIds`{.AgdaRecord}.  Each valid step preserves the invariant by
 `subutxow-batch-step`{.AgdaFunction}; `SUBLEDGER-I`{.AgdaInductiveConstructor}
 is ruled out by the top-level validity flag.
 
@@ -1105,5 +1103,5 @@ on both sides.
 [^1]: One wrinkle: the solver recognises the ring's operations *syntactically*, so
       the `Ledger.Prelude` overloaded `_+_` (a `HasAdd`{.AgdaRecord} method, which merely
       *reduces* to `Data.Nat._+_`) defeats it.  The solver-facing statements are therefore
-      written with the raw natural-number addition, imported as `_+ᴺ_` — definitionally
+      written with the raw natural-number addition, imported as `_+ᴺ_`, definitionally
       equal to `_+_` at `Coin`, so the lemmas discharge `_+_` goals unchanged.
