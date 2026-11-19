@@ -76,7 +76,7 @@ data LState = MkLState {utxoSt :: MAlonzo.Code.Ledger.Conway.Foreign.Utxo.UTxOSt
   deriving (Show, Eq, Generic)
 -- Ledger.Conway.Foreign.Ledger._._⊢_⇀⦇_,LEDGERS⦈_
 d__'8866'_'8640''10631'_'44'LEDGERS'10632'__10 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LEnv_2944 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LEnv_2946 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2716 ->
   [MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3646] ->
   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2716 -> ()
@@ -88,7 +88,7 @@ d_HasCast'45'LEnv_14 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'LEnv_14
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_HasCast'45'LEnv_3034
+      MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_HasCast'45'LEnv_3036
 -- Ledger.Conway.Foreign.Ledger._.HasCast-LState
 d_HasCast'45'LState_16 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
@@ -106,7 +106,7 @@ d_allColdCreds_30 ::
   [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
 d_allColdCreds_30
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_allColdCreds_3102
+      MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_allColdCreds_3104
 -- Ledger.Conway.Foreign.Ledger._.rmOrphanDRepVotes
 d_rmOrphanDRepVotes_32 ::
   MAlonzo.Code.Ledger.Conway.Specification.Certs.T_CertState_1466 ->
@@ -119,53 +119,53 @@ d_rmOrphanDRepVotes_32
                  MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_rmOrphanDRepVotes_3084
+         MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_rmOrphanDRepVotes_3086
          (coe v0))
 -- Ledger.Conway.Foreign.Ledger._.txgov
 d_txgov_34 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TxBody_3446 ->
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30]
 d_txgov_34
-  = coe MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_txgov_3038
+  = coe MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_txgov_3040
 -- Ledger.Conway.Foreign.Ledger._.LEnv.enactState
 d_enactState_46 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LEnv_2944 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LEnv_2946 ->
   MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1186
 d_enactState_46 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_enactState_2962
+      MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_enactState_2964
       (coe v0)
 -- Ledger.Conway.Foreign.Ledger._.LEnv.pparams
 d_pparams_48 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LEnv_2944 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LEnv_2946 ->
   MAlonzo.Code.Ledger.Conway.Specification.PParams.T_PParams_288
 d_pparams_48 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_pparams_2960
+      MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_pparams_2962
       (coe v0)
 -- Ledger.Conway.Foreign.Ledger._.LEnv.ppolicy
 d_ppolicy_50 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LEnv_2944 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LEnv_2946 ->
   Maybe Integer
 d_ppolicy_50 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_ppolicy_2958
+      MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_ppolicy_2960
       (coe v0)
 -- Ledger.Conway.Foreign.Ledger._.LEnv.slot
 d_slot_52 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LEnv_2944 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LEnv_2946 ->
   Integer
 d_slot_52 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_slot_2956
+      MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_slot_2958
       (coe v0)
 -- Ledger.Conway.Foreign.Ledger._.LEnv.treasury
 d_treasury_54 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LEnv_2944 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LEnv_2946 ->
   Integer
 d_treasury_54 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_treasury_2964
+      MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_treasury_2966
       (coe v0)
 -- Ledger.Conway.Foreign.Ledger._.LState.certState
 d_certState_58 ::
@@ -203,7 +203,7 @@ d_Conv'45'LEnv_66
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Conway.Specification.Ledger.C_constructor_2966 v1 v2 v3 v4 v5
+              MAlonzo.Code.Ledger.Conway.Specification.Ledger.C_constructor_2968 v1 v2 v3 v4 v5
                 -> coe
                      C_MkLEnv_113 (coe v1)
                      (coe
@@ -1018,7 +1018,7 @@ d_Conv'45'LEnv_66
             case coe v0 of
               C_MkLEnv_113 v1 v2 v3 v4 v5
                 -> coe
-                     MAlonzo.Code.Ledger.Conway.Specification.Ledger.C_constructor_2966
+                     MAlonzo.Code.Ledger.Conway.Specification.Ledger.C_constructor_2968
                      (coe v1)
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -4691,7 +4691,7 @@ d_ledger'45'step_4656 v0 v1
          MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
          (coe MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
          (coe
-            MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
+            MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
             (coe
                MAlonzo.Code.Ledger.Conway.Conformance.Ledger.Properties.d_Computational'45'LEDGER_3470
                (coe
@@ -4758,9 +4758,9 @@ d_ledgers'45'step_4658 v0 v1 v2 v3
          MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
          (coe MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
          (coe
-            MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
+            MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
             (coe
-               MAlonzo.Code.Ledger.Conway.Conformance.Ledger.Properties.d_Computational'45'LEDGERS_3780
+               MAlonzo.Code.Ledger.Conway.Conformance.Ledger.Properties.d_Computational'45'LEDGERS_3726
                (coe
                   MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_690
                   (coe v0))
