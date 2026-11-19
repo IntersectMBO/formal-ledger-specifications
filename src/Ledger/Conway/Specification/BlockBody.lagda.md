@@ -108,7 +108,7 @@ data _⊢_⇀⦇_,BBODY⦈_
      in
     ∙ block .bBodySize ≡ bhb .hBbsize
     ∙ block .bBodyHash ≡ bhb .bhash
-    ∙ PParams.maxBlockExUnits pp ≥ᵉ (∑ˡ[ tx ← txs ] totExUnits tx)
+    ∙ (∑ˡ[ tx ← txs ] totExUnits tx) ≤ᵉᵘ PParams.maxBlockExUnits pp
     ∙ Γ ⊢ ls ⇀⦇ txs ,LEDGERS⦈ ls'
     ────────────────────────────────
     (es , acnt) ⊢ ls , b ⇀⦇ block ,BBODY⦈ (ls' , incrBlocks hk b)

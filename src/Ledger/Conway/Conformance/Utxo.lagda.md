@@ -38,7 +38,7 @@ instance
 
 open L public using (UTxOEnv; UTxOState; ⟦_,_,_,_⟧ᵘ; HasCast-UTxOState; updateDeposits
                     ; cbalance; balance; depositRefunds; consumed
-                    ; produced; outs; newDeposits; refScriptsSize )
+                    ; produced; outs; newDeposits; refScriptsSize; totExUnits )
 
 private variable
   Γ : UTxOEnv
@@ -97,6 +97,7 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
     ∙ L.inInterval slot txVldt
     ∙ L.minfee pp utxo tx ≤ txFee
     ∙ (txrdmrs ˢ ≢ ∅ → L.collateralCheck pp tx utxo)
+    ∙ lengthˢ collateralInputs ≤ pp .maxCollateralInputs
     ∙ consumed pp s txb ≡ produced pp s txb
     ∙ coin mint ≡ 0
     ∙ (∅ᵐ ≢ᵐ txrdmrs × nothing ≢ proj₂ txVldt →
@@ -104,7 +105,7 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
       )
     ∙ txsize ≤ maxTxSize pp
     ∙ L.refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
-
+    ∙ L.totExUnits tx ≤ᵉᵘ pp .maxTxExUnits
     ∙ ∀[ (_ , txout) ∈ ∣ txOutsʰ ∣ ]
         inject ((overhead + L.utxoEntrySize txout) * coinsPerUTxOByte pp) ≤ᵗ getValueʰ txout
     ∙ ∀[ (_ , txout) ∈ ∣ txOutsʰ ∣ ]
@@ -119,7 +120,7 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 
-pattern UTXO-inductive⋯ tx Γ s x y w k l m c d v j n o p q r t u h
-      = UTXO-inductive {tx}{Γ}{s} (x , y , w , k , l , m , c , d , v , j , n , o , p , q , r , t , u , h)
+pattern UTXO-inductive⋯ tx Γ s x y w k l m c d v j n o p q r t u h a b
+      = UTXO-inductive {tx}{Γ}{s} (x , y , w , k , l , m , c , d , v , j , n , o , p , q , r , t , u , h , a , b)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 ```

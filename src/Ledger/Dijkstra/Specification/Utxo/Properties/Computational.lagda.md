@@ -23,6 +23,7 @@ open import Ledger.Dijkstra.Specification.Utxo txs abs
 open import Ledger.Dijkstra.Specification.Script.Validation txs abs
 open import Relation.Binary.PropositionalEquality
 import Data.Sum.Relation.Unary.All as Sum
+import Data.String as S
 
 open PParams
 
@@ -111,18 +112,19 @@ instance
         : Dec H
         → ComputationResult String (∃[ s₁ ] Γ ⊢ tt ⇀⦇ txTop ,UTXOS⦈ s₁)
         → ComputationResult String (∃[ s₁ ] Γ ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ s₁)
-      computeProof-aux d (failure x) = failure "UTXO" 
-      computeProof-aux (no ¬p) (success x) = failure "UTXO"
-      computeProof-aux (yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ )) (success h)
-        = success (-, UTXO (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , proj₂ h))
+      computeProof-aux (yes _) (failure x) = failure x
+      computeProof-aux (no ¬p) (failure x) = failure (genErrors ¬p S.++ x)
+      computeProof-aux (no ¬p) (success x) = failure (genErrors ¬p)
+      computeProof-aux (yes (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ )) (success h)
+        = success (-, UTXO (p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ , proj₂ h))
 
       computeProof : ComputationResult String (∃[ s₁ ] Γ ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ s₁)
       computeProof = computeProof-aux H? (UTXOS.computeProof Γ tt txTop)
 
       completeness : ∀ s₁ → Γ ⊢ s₀ ⇀⦇ txTop ,UTXO⦈ s₁ → map proj₁ computeProof ≡ success s₁
-      completeness s₁ (UTXO-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ p₁₆ p₁₇ h)
+      completeness s₁ (UTXO-⋯ p₀ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p₉ p₁₀ p₁₁ p₁₂ p₁₃ p₁₄ p₁₅ p₁₆ p₁₇ p₁₈ p₁₉ h)
         with H?
-      ... | no ¬p = ⊥-elim (¬p ((p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ )))
+      ... | no ¬p = ⊥-elim (¬p ((p₀ , p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p₉ , p₁₀ , p₁₁ , p₁₂ , p₁₃ , p₁₄ , p₁₅ , p₁₆ , p₁₇ , p₁₈ , p₁₉ )))
       ... | yes _
         with UTXOS.computeProof Γ tt txTop | UTXOS.completeness _ _ _ _ h
       ... | success h | refl = refl

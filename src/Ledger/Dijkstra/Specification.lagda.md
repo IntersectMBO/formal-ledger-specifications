@@ -56,6 +56,18 @@ import Ledger.Dijkstra.Specification.Chain
 import Ledger.Dijkstra.Specification.Chain.Properties
 ```
 
+## Computational Instances
+
+```agda
+import Ledger.Dijkstra.Specification.Computational
+```
+
+## Abstract Cryptographic Primitives
+
+```agda
+import Ledger.Dijkstra.Specification.Crypto
+```
+
 ## Enactment
 
 ```agda
@@ -97,6 +109,21 @@ import Ledger.Dijkstra.Specification.Gov.Properties
 ```agda
 import Ledger.Dijkstra.Specification.Ledger
 import Ledger.Dijkstra.Specification.Ledger.Properties
+```
+
+## Ledgers
+
+```agda
+import Ledger.Dijkstra.Specification.Ledgers
+import Ledger.Dijkstra.Specification.Ledgers.Properties
+```
+
+## Leios
+
+```agda
+import Ledger.Dijkstra.Specification.Leios
+import Ledger.Dijkstra.Specification.Leios.Types
+import Ledger.Dijkstra.Specification.Leios.Validity
 ```
 
 ## Pool Reaping Transition

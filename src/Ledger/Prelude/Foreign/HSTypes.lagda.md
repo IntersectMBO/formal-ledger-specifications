@@ -12,8 +12,8 @@ open import Foreign.Haskell
 open import Class.HasHsType public
 open import Tactic.Derive.HsType
 open import stdlib.Foreign.Haskell.Empty
--- open import Class.HasHsType.Foreign
-open import Class.Convertible.Foreign
+open import Class.HasHsType.Foreign public
+open import Class.Convertible.Foreign public
 
 open import Ledger.Prelude
 open import Ledger.Prelude.Numeric.UnitInterval

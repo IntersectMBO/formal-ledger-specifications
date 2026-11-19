@@ -42,10 +42,15 @@ instance
   Computational-LEDGER : Computational _⊢_⇀⦇_,LEDGER⦈_ String
   Computational-LEDGER = record {go}
     where
-    open Computational ⦃...⦄ renaming (computeProof to comp; completeness to complete)
-    computeUtxow = comp {STS = _⊢_⇀⦇_,UTXOW⦈_}
-    computeCerts = comp {STS = _⊢_⇀⦇_,CERTS⦈_}
-    computeGov   = comp {STS = _⊢_⇀⦇_,GOVS⦈_}
+    utxowC : Computational _⊢_⇀⦇_,UTXOW⦈_ String
+    utxowC = it
+    certsC : Computational _⊢_⇀⦇_,CERTS⦈_ String
+    certsC = it
+    govsC : Computational _⊢_⇀⦇_,GOVS⦈_ String
+    govsC = it
+    open Computational utxowC renaming (computeProof to computeUtxow; completeness to completeUtxow)
+    open Computational certsC renaming (computeProof to computeCerts; completeness to completeCerts)
+    open Computational govsC  renaming (computeProof to computeGov;   completeness to completeGov)
 
     module go
       (Γ : LEnv)   (let open LEnv Γ)
@@ -57,35 +62,33 @@ instance
       govΓ : CertState → GovEnv
       govΓ = λ certState → ⟦ txId , epoch slot , pparams , ppolicy , enactState , certState , _ ⟧
 
+      computeProof-aux : Dec (isValid ≡ true) → ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s')
+      computeProof-aux (yes p) = do
+        (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
+        (certSt' , certStep) ← computeCerts certΓ certState txCerts
+        (govSt'  , govStep)  ← computeGov (govΓ certSt') (rmOrphanDRepVotes certSt' govSt) (txgov txb)
+        success (_ , LEDGER-V⋯ p utxoStep certStep govStep)
+      computeProof-aux (no ¬p) = do
+        (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
+        success (_ , LEDGER-I⋯ (¬-not ¬p) utxoStep)
+
       computeProof : ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s')
-      computeProof = case isValid ≟ true of λ where
-        (yes p) → do
-          (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
-          (certSt' , certStep) ← computeCerts certΓ certState txCerts
-          (govSt'  , govStep)  ← computeGov (govΓ certSt') (rmOrphanDRepVotes certSt' govSt) (txgov txb)
-          success (_ , LEDGER-V⋯ p utxoStep certStep govStep)
-        (no ¬p) → do
-          (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
-          success (_ , LEDGER-I⋯ (¬-not ¬p) utxoStep)
+      computeProof = computeProof-aux (isValid ≟ true)
+
+      completeness-aux : (d : Dec (isValid ≡ true)) → ∀ s' → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
+                       → (proj₁ <$> computeProof-aux d) ≡ success s'
+      completeness-aux (no ¬v) _ (LEDGER-V⋯ v _ _ _) = contradiction v ¬v
+      completeness-aux (yes _) _ (LEDGER-V⋯ _ utxoStep certStep govStep) =
+        bind-complete (computeUtxow utxoΓ utxoSt tx) (completeUtxow _ _ _ _ utxoStep) λ _ →
+        bind-complete (computeCerts certΓ certState txCerts) (completeCerts _ _ _ _ certStep) λ _ →
+        bind-complete (computeGov (govΓ _) _ (txgov txb))
+                      (completeGov (govΓ _) _ _ _ govStep) λ _ → refl
+      completeness-aux (yes v) _ (LEDGER-I⋯ i _) = case trans (sym v) i of λ ()
+      completeness-aux (no _) _ (LEDGER-I⋯ _ utxoStep) =
+        bind-complete (computeUtxow utxoΓ utxoSt tx) (completeUtxow _ _ _ _ utxoStep) λ _ → refl
 
       completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → (proj₁ <$> computeProof) ≡ success s'
-      completeness ledgerSt (LEDGER-V⋯ v utxoStep certStep govStep)
-        with isValid ≟ true
-      ... | no ¬v = contradiction v ¬v
-      ... | yes refl
-        with computeUtxow utxoΓ utxoSt tx | complete _ _ _ _ utxoStep
-      ... | success (utxoSt' , _) | refl
-        with computeCerts certΓ certState txCerts | complete _ _ _ _ certStep
-      ... | success (certSt' , _) | refl
-        with computeGov (govΓ certSt') (rmOrphanDRepVotes certSt' govSt ) (txgov txb)
-             | complete {STS = _⊢_⇀⦇_,GOVS⦈_} (govΓ certSt') _ _ _ govStep
-      ... | success (govSt' , _) | refl = refl
-      completeness ledgerSt (LEDGER-I⋯ i utxoStep)
-        with isValid ≟ true
-      ... | yes refl = case i of λ ()
-      ... | no ¬v
-        with computeUtxow utxoΓ utxoSt tx | complete _ _ _ _ utxoStep
-      ... | success (utxoSt' , _) | refl = refl
+      completeness = completeness-aux (isValid ≟ true)
 
 Computational-LEDGERS : Computational _⊢_⇀⦇_,LEDGERS⦈_ String
 Computational-LEDGERS = it

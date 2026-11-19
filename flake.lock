@@ -3,11 +3,11 @@
     "abstract-set-theory": {
       "flake": false,
       "locked": {
-        "lastModified": 1763124721,
-        "narHash": "sha256-m+1qltoHALohYnPeQPWie93gewuv3NuUByZ0+HN+Qc0=",
+        "lastModified": 1771423838,
+        "narHash": "sha256-IFTHS6C44PHdwYQVWNW/0WZf+3fWtzSfR21c3UmihLU=",
         "owner": "input-output-hk",
         "repo": "agda-sets",
-        "rev": "bc721845dba3208ce0aca59b09242f06d659fd97",
+        "rev": "2253231ad856b9b95f32d6b06709748e59bdbb3e",
         "type": "github"
       },
       "original": {

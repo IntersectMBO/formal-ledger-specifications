@@ -305,7 +305,7 @@ module LEDGER-PoV
         ≡ cbalance (outs tx) + TxFeesOf tx + DonationsOf tx + getCoin (DirectDepositsOf tx)
           + sum (map (λ stx → cbalance (outs stx) + DonationsOf stx + getCoin (DirectDepositsOf stx))
                      (SubTransactionsOf tx))
-          + newCertDeposits (PParamsOf Γ') (dom (PoolsOf Γ')) (allDCerts tx)
+          + newCertDeposits (PParamsOf Γ') (dom (PoolsOf (PStateOf Γ'))) (allDCerts tx)
           + ( govProposalsDeposits (PParamsOf Γ') (ListOfGovProposalsOf tx)
             + sum (map (λ stx → govProposalsDeposits (PParamsOf Γ') (ListOfGovProposalsOf stx))
                        (SubTransactionsOf tx)) ) )
@@ -420,16 +420,16 @@ the per-`SUBUTXOW`{.AgdaDatatype} coin equation at each step:
       ≡  getCoin (UTxOStateOf s₁)
          + sum (map (λ stx → cbalance (UTxOOf Γ ∣ SpendInputsOf stx)) stxs)
 
-  -- Base case: empty list.  `Id-nop` unifies s₀ ≡ s₁ and both sums are 0.
-  SUBLEDGERS-utxo-coin _ (BS-base Id-nop) = refl
+  -- Base case: empty list.  `SUBLEDGERS-[]` unifies s₀ ≡ s₁ and both sums are 0.
+  SUBLEDGERS-utxo-coin _ SUBLEDGERS-[] = refl
 
   -- SUBLEDGER-I ruled out by isV : isTopLevelValid ≡ true.
-  SUBLEDGERS-utxo-coin isV (BS-ind (SUBLEDGER-I (isI , _)) _) =
+  SUBLEDGERS-utxo-coin isV (SUBLEDGERS-∷ (SUBLEDGER-I (isI , _)) _) =
     ⊥-elim (case trans (sym isV) isI of λ ())
 
   -- Inductive step: combine the per-step SUBUTXOW balance with the IH.
-  SUBLEDGERS-utxo-coin {Γ} isV (BS-ind {s = s₀} {s' = s₁} {sigs} {s'' = sₙ}
-    (SUBLEDGER-V {stx = stx} (isV' , subutxowStep , _ , _)) rest) =
+  SUBLEDGERS-utxo-coin {Γ} isV (SUBLEDGERS-∷ {s = s₀} {s' = s₁} {sigs} {s'' = sₙ}
+    (SUBLEDGER-V {stx = stx} (isV' , _ , _ , subutxowStep )) rest) =
     begin
       U₀ + (p-stx + p-sum)    ≡˘⟨ +-assoc U₀ p-stx p-sum ⟩
       U₀ + p-stx + p-sum      ≡⟨ cong (_+ p-sum) step-P-C ⟩
@@ -480,13 +480,13 @@ invocations.  The `NetworkId` witnesses and domain conditions are premises of th
     →  coinFromRewards (CertStateOf s₀) + sum (map ddwl stxs)
        ≡ coinFromRewards (CertStateOf s₁) + sum (map wdrwl stxs)
 
-  SUBLEDGERS-rewards-pov _ (BS-base Id-nop) = refl
+  SUBLEDGERS-rewards-pov _ (SUBLEDGERS-[]) = refl
 
-  SUBLEDGERS-rewards-pov isV (BS-ind (SUBLEDGER-I (isI , _)) _) =
+  SUBLEDGERS-rewards-pov isV (SUBLEDGERS-∷ (SUBLEDGER-I (isI , _)) _) =
     ⊥-elim (case trans (sym isV) isI of λ ())
 
-  SUBLEDGERS-rewards-pov {Γ} isV (BS-ind {s = s₀} {s' = s₁} {sigs} {s'' = sₙ}
-    (SUBLEDGER-V {stx = stx} (_ , _ , entitiesStep , _)) rest) =
+  SUBLEDGERS-rewards-pov {Γ} isV (SUBLEDGERS-∷ {s = s₀} {s' = s₁} {sigs} {s'' = sₙ}
+    (SUBLEDGER-V {stx = stx} (_ , entitiesStep , _ , _)) rest) =
     begin
       coinFromRewards (CertStateOf s₀) + (getCoin (DirectDepositsOf stx) + sum (map ddwl sigs))
         ≡˘⟨ +-assoc (coinFromRewards (CertStateOf s₀)) (getCoin (DirectDepositsOf stx)) _ ⟩
@@ -541,12 +541,12 @@ transaction's certificates.
     → Γ ⊢ s₀ ⇀⦇ stxs ,SUBLEDGERS⦈ s₁
     → PoolDepositsRegistered (CertStateOf s₁)
 
-  SUBLEDGERS-registered _ registered (BS-base Id-nop) = registered
+  SUBLEDGERS-registered _ registered (SUBLEDGERS-[]) = registered
 
-  SUBLEDGERS-registered isV _ (BS-ind (SUBLEDGER-I (isI , _)) _) =
+  SUBLEDGERS-registered isV _ (SUBLEDGERS-∷ (SUBLEDGER-I (isI , _)) _) =
     ⊥-elim (case trans (sym isV) isI of λ ())
 
-  SUBLEDGERS-registered isV registered (BS-ind (SUBLEDGER-V (_ , _ , entitiesStep , _)) rest) =
+  SUBLEDGERS-registered isV registered (SUBLEDGERS-∷ (SUBLEDGER-V (_ , entitiesStep , _ , _)) rest) =
     SUBLEDGERS-registered isV (SUBENTITIES-deposits-registered registered entitiesStep) rest
 
   SUBLEDGERS-deposits :
@@ -563,15 +563,15 @@ transaction's certificates.
         + sum (map (refundCertDeposits (Γ .pparams) ∘ DCertsOf) stxs)
         + newCertDeposits (Γ .pparams) (dom (PoolsOf (CertStateOf s₁))) ys
 
-  SUBLEDGERS-deposits {Γ} {s₀ = s₀} _ _ (BS-base Id-nop) ys =
+  SUBLEDGERS-deposits {Γ} {s₀ = s₀} _ _ (SUBLEDGERS-[]) ys =
     cong (_+ newCertDeposits (Γ .pparams) (dom (PoolsOf (CertStateOf s₀))) ys)
          (sym (+-identityʳ (coinFromDeposits (CertStateOf s₀))))
 
-  SUBLEDGERS-deposits isV _ (BS-ind (SUBLEDGER-I (isI , _)) _) ys =
+  SUBLEDGERS-deposits isV _ (SUBLEDGERS-∷ (SUBLEDGER-I (isI , _)) _) ys =
     ⊥-elim (case trans (sym isV) isI of λ ())
 
-  SUBLEDGERS-deposits {Γ} isV registered (BS-ind {s = s₀} {s' = s₁} {sigs} {s'' = sₙ}
-    (SUBLEDGER-V {stx = stx} (_ , _ , entitiesStep , _)) rest) ys =
+  SUBLEDGERS-deposits {Γ} isV registered (SUBLEDGERS-∷ {s = s₀} {s' = s₁} {sigs} {s'' = sₙ}
+    (SUBLEDGER-V {stx = stx} (_ , entitiesStep , _ , _)) rest) ys =
     begin
       D₀ + new P₀ ((DCertsOf stx ++ concatMap DCertsOf sigs) ++ ys)
         ≡⟨ cong (λ l → D₀ + new P₀ l) (++-assoc (DCertsOf stx) (concatMap DCertsOf sigs) ys) ⟩
@@ -648,13 +648,13 @@ premise).  `SUBLEDGER-I`{.AgdaInductiveConstructor} is ruled out by the top-leve
       ≡ coinFromGovDeposit (GovStateOf s₀)
         + sum (map (λ stx → govProposalsDeposits (PParamsOf Γ) (ListOfGovProposalsOf stx)) stxs)
 
-  SUBLEDGERS-gov-coin _ (BS-base Id-nop) = sym (+-identityʳ _)
+  SUBLEDGERS-gov-coin _ (SUBLEDGERS-[]) = sym (+-identityʳ _)
 
-  SUBLEDGERS-gov-coin isV (BS-ind (SUBLEDGER-I (isI , _)) _) =
+  SUBLEDGERS-gov-coin isV (SUBLEDGERS-∷ (SUBLEDGER-I (isI , _)) _) =
     ⊥-elim (case trans (sym isV) isI of λ ())
 
-  SUBLEDGERS-gov-coin {Γ} isV (BS-ind {s = s₀} {s' = s₁} {sigs} {s'' = sₙ}
-    (SUBLEDGER-V {stx = stx} (_ , _ , _ , govStep)) rest) =
+  SUBLEDGERS-gov-coin {Γ} isV (SUBLEDGERS-∷ {s = s₀} {s' = s₁} {sigs} {s'' = sₙ}
+    (SUBLEDGER-V {stx = stx} (_ , _ , govStep , _)) rest) =
     begin
       coinFromGovDeposit (GovStateOf sₙ)
         ≡⟨ ih ⟩
