@@ -1,3 +1,8 @@
+---
+source_branch: master
+source_path: src/Ledger/Dijkstra/Specification/Certs/Properties/PoV.lagda.md
+---
+
 # `CERTS`{.AgdaDatatype} Properties: Preservation of Value {#sec:certs-pov}
 
 This module provides the `CERTS`{.AgdaDatatype}-level value-accounting facts
