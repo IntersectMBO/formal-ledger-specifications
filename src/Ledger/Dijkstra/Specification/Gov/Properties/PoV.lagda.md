@@ -3,11 +3,11 @@ source_branch: master
 source_path: src/Ledger/Dijkstra/Specification/Gov/Properties/PoV.lagda.md
 ---
 
-# Properties of `GOV`: Preservation of Value {#sec:gov-properties-pov}
+# Properties of `GOV`{.AgdaDatatype}: Governance Deposit Accounting {#sec:gov-properties-pov}
 
-This module proves the two governance-deposit accounting facts that the top-level
-preservation-of-value proof (`LEDGER-pov`{.AgdaFunction} in
-`Ledger.Properties.PoV`{.AgdaModule}) consumes:
+This module proves two governance-deposit accounting facts consumed by the
+preservation-of-value proof `LEDGER-pov`{.AgdaFunction} in
+`Ledger.Properties.PoV`{.AgdaModule}.  The facts are the following:
 
 +  `rmOrphanDRepVotes-coinFromGovDeposit`{.AgdaFunction}:
    `rmOrphanDRepVotes`{.AgdaFunction} only rewrites the `gvDRep`{.AgdaField} votes of
@@ -16,7 +16,7 @@ preservation-of-value proof (`LEDGER-pov`{.AgdaFunction} in
 
 +  `GOVS-coinFromGovDeposit`{.AgdaFunction}: a `GOVS`{.AgdaDatatype} step grows
    `coinFromGovDeposit`{.AgdaFunction} by exactly the
-   `govProposalsDeposits`{.AgdaFunction} of the proposals in its signal list —
+   `govProposalsDeposits`{.AgdaFunction} of the proposals in its signal list:
    `GOV-Propose`{.AgdaInductiveConstructor} stores `deposit = pp .govActionDeposit`
    for the new action, and `GOV-Vote`{.AgdaInductiveConstructor} never changes a
    deposit.
@@ -55,9 +55,6 @@ open import Interface.STS
 
 The right injections of a list of sums, used (at `GovVote ⊎ GovProposal`) to extract
 the proposals from a mixed `GOVS`{.AgdaDatatype} signal list.
-`Ledger.Properties.PoV`{.AgdaModule} imports this module, so
-`proposalsOf`{.AgdaFunction} lives here, together with the
-`proposalsOf-Proposals+Votes`{.AgdaFunction} extraction lemma.
 
 ```agda
 proposalsOf : ∀ {A B : Type} → List (A ⊎ B) → List B

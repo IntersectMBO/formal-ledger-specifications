@@ -1,10 +1,15 @@
+---
+source_branch: master
+source_path: src/Ledger/Dijkstra/Specification/Certs/Properties/PoVLemmas.lagda.md
+---
+
 # Per-Step Lemmas for the `CERT`{.AgdaDatatype} Preservation-of-Value Property
 
 This module proves the single-certificate ingredients from which
 `Certs.Properties.PoV`{.AgdaModule} assembles the `CERTS`{.AgdaDatatype}-level
-value-accounting facts.  There are two kinds of ingredients:
+value-accounting facts.  The two kinds of ingredients are the following:
 
-+  **Transition lemmas** — for a single `CERT`{.AgdaDatatype} step:
++  **Transition lemmas** for a single `CERT`{.AgdaDatatype} step:
    the rewards balance is unchanged (`CERT-rewards-pov`{.AgdaFunction});
    the deposit pots change by exactly the step's new deposit minus its refund,
    in the closed form used by the `UTXO`{.AgdaDatatype} batch balance
@@ -13,7 +18,7 @@ value-accounting facts.  There are two kinds of ingredients:
    registered-pool set evolves exactly as the `newCertDeposits`{.AgdaFunction}
    fold's internal accumulator predicts (`CERT-poolSet`{.AgdaFunction}).
 
-+  **Fold lemmas** — pure facts about the deposit folds of `Certs`{.AgdaModule}:
++  **Fold lemmas**, pure facts about the deposit folds of `Certs`{.AgdaModule}:
    how `newCertDeposits`{.AgdaFunction} peels off its first certificate
    (`newCertDeposits-∷`{.AgdaFunction}), that it only depends on the pool set
    up to extensional equality (`newCertDeposits-cong`{.AgdaFunction}), and that
@@ -28,9 +33,9 @@ far (`regpool`{.AgdaInductiveConstructor} charges `poolDeposit`{.AgdaField}
 only for keys outside that set, and then adds the key to it).  The fold's
 per-step function is local to `Certs`{.AgdaModule}, so the lemmas here speak
 about it only through `newCertDeposits`{.AgdaFunction} itself.  Two devices
-make this possible:
+make this possible, as follows:
 
-+  **Seed certificates.**  A fold state with coin component `d`{.AgdaBound} and
++  **Seed certificates**.  A fold state with coin component `d`{.AgdaBound} and
    pool set `P`{.AgdaBound} is definitionally the state reached by running the
    fold from `(0 , P)` over a single `delegate`{.AgdaInductiveConstructor} (or
    `regdrep`{.AgdaInductiveConstructor}) certificate carrying deposit
@@ -39,10 +44,10 @@ make this possible:
    `newCertDeposits-regdrep`{.AgdaFunction}) exploit this: they extract such a
    head certificate's deposit as a summand, by induction on the tail,
    re-packing intermediate fold states as new head certificates (built from
-   the fields already at hand — for a `regpool`{.AgdaInductiveConstructor}
-   head, from `KeyHashObj`{.AgdaInductiveConstructor} of its key hash).
+   the fields already at hand; for a `regpool`{.AgdaInductiveConstructor}
+   head, these are `KeyHashObj`{.AgdaInductiveConstructor} of its key hash).
 
-+  **Membership tests only.**  The fold consumes the pool set exclusively
++  **Membership tests only**.  The fold consumes the pool set exclusively
    through the decidable test `kh ∈ P`, so extensionally equal pool sets yield
    equal deposits (`newCertDeposits-cong`{.AgdaFunction}); each
    `regpool`{.AgdaInductiveConstructor} case splits on the test on both sides.
@@ -57,7 +62,7 @@ The deposit accounting of `CERT-deposits-pov`{.AgdaFunction} needs
 `PoolDepositsRegistered`{.AgdaFunction} (see `Certs`{.AgdaModule}) in exactly
 one place: `POOL-reg`{.AgdaInductiveConstructor} extends the pool-deposit pot
 with a *left-biased* union, so the closed form counts `poolDeposit`{.AgdaField}
-as added only if the key is genuinely fresh in the pot.  The rule's premise
+as added only if the key is fresh in the pot.  The rule's premise
 makes the key fresh in `pools`{.AgdaField}; the invariant transports this
 freshness to the pot.  The remaining rules either add through `_∪⁺_` (which
 adds to the total unconditionally), remove an entry whose value the rule pins
