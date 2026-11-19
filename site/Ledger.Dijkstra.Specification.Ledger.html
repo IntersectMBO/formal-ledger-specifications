@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Specification.Ledger.html">
       
       
-        <link rel="prev" href="Ledger.Dijkstra.Specification.Gov.Properties.Computational.html">
+        <link rel="prev" href="Ledger.Dijkstra.Specification.Gov.Properties.PoV.html">
       
       
         <link rel="next" href="Ledger.Dijkstra.Specification.Ledger.Properties.html">
@@ -5508,6 +5508,62 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Dijkstra.Specification.Certs.Properties.PoV.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PoV
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Dijkstra.Specification.Certs.Properties.PoVLemmas.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PoVLemmas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -6711,6 +6767,34 @@
     
   
     Computational
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Dijkstra.Specification.Gov.Properties.PoV.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PoV
   
 
     
@@ -12399,7 +12483,7 @@ transform the ledger state.</p>
   <a id="1200" class="Keyword">field</a>
     <a id="SubLedgerEnv.slot"></a><a id="1210" href="Ledger.Dijkstra.Specification.Ledger.html#1210" class="Field">slot</a>             <a id="1227" class="Symbol">:</a> <a id="1229" href="Ledger.Core.Specification.Epoch.html#818" class="Function">Slot</a>
     <a id="SubLedgerEnv.ppolicy"></a><a id="1238" href="Ledger.Dijkstra.Specification.Ledger.html#1238" class="Field">ppolicy</a>          <a id="1255" class="Symbol">:</a> <a id="1257" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="1263" href="Ledger.Core.Specification.Crypto.html#1721" class="Function">ScriptHash</a>
-    <a id="SubLedgerEnv.pparams"></a><a id="1278" href="Ledger.Dijkstra.Specification.Ledger.html#1278" class="Field">pparams</a>          <a id="1295" class="Symbol">:</a> <a id="1297" href="Ledger.Dijkstra.Specification.PParams.html#2607" class="Record">PParams</a>
+    <a id="SubLedgerEnv.pparams"></a><a id="1278" href="Ledger.Dijkstra.Specification.Ledger.html#1278" class="Field">pparams</a>          <a id="1295" class="Symbol">:</a> <a id="1297" href="Ledger.Dijkstra.Specification.PParams.html#2684" class="Record">PParams</a>
     <a id="SubLedgerEnv.enactState"></a><a id="1309" href="Ledger.Dijkstra.Specification.Ledger.html#1309" class="Field">enactState</a>       <a id="1326" class="Symbol">:</a> <a id="1328" href="Ledger.Dijkstra.Specification.Enact.html#821" class="Record">EnactState</a>
     <a id="SubLedgerEnv.treasury"></a><a id="1343" href="Ledger.Dijkstra.Specification.Ledger.html#1343" class="Field">treasury</a>         <a id="1360" class="Symbol">:</a> <a id="1362" href="Ledger.Prelude.Base.html#558" class="Function">Treasury</a>
     <a id="SubLedgerEnv.utxo₀"></a><a id="1375" href="Ledger.Dijkstra.Specification.Ledger.html#1375" class="Field">utxo₀</a>            <a id="1392" class="Symbol">:</a> <a id="1394" href="Ledger.Dijkstra.Specification.Transaction.html#5652" class="Function">UTxO</a>
@@ -12413,7 +12497,7 @@ transform the ledger state.</p>
   <a id="1587" class="Keyword">field</a>
     <a id="LedgerEnv.slot"></a><a id="1597" href="Ledger.Dijkstra.Specification.Ledger.html#1597" class="Field">slot</a>        <a id="1609" class="Symbol">:</a> <a id="1611" href="Ledger.Core.Specification.Epoch.html#818" class="Function">Slot</a>
     <a id="LedgerEnv.ppolicy"></a><a id="1620" href="Ledger.Dijkstra.Specification.Ledger.html#1620" class="Field">ppolicy</a>     <a id="1632" class="Symbol">:</a> <a id="1634" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="1640" href="Ledger.Core.Specification.Crypto.html#1721" class="Function">ScriptHash</a>
-    <a id="LedgerEnv.pparams"></a><a id="1655" href="Ledger.Dijkstra.Specification.Ledger.html#1655" class="Field">pparams</a>     <a id="1667" class="Symbol">:</a> <a id="1669" href="Ledger.Dijkstra.Specification.PParams.html#2607" class="Record">PParams</a>
+    <a id="LedgerEnv.pparams"></a><a id="1655" href="Ledger.Dijkstra.Specification.Ledger.html#1655" class="Field">pparams</a>     <a id="1667" class="Symbol">:</a> <a id="1669" href="Ledger.Dijkstra.Specification.PParams.html#2684" class="Record">PParams</a>
     <a id="LedgerEnv.enactState"></a><a id="1681" href="Ledger.Dijkstra.Specification.Ledger.html#1681" class="Field">enactState</a>  <a id="1693" class="Symbol">:</a> <a id="1695" href="Ledger.Dijkstra.Specification.Enact.html#821" class="Record">EnactState</a>
     <a id="LedgerEnv.treasury"></a><a id="1710" href="Ledger.Dijkstra.Specification.Ledger.html#1710" class="Field">treasury</a>    <a id="1722" class="Symbol">:</a> <a id="1724" href="Ledger.Prelude.Base.html#558" class="Function">Treasury</a>
 </pre>
@@ -12421,14 +12505,14 @@ transform the ledger state.</p>
   <a id="1761" class="Keyword">unquoteDecl</a> <a id="HasCast-LedgerEnv"></a><a id="1773" href="Ledger.Dijkstra.Specification.Ledger.html#1773" class="Function">HasCast-LedgerEnv</a> <a id="HasCast-SubLedgerEnv"></a><a id="1791" href="Ledger.Dijkstra.Specification.Ledger.html#1791" class="Function">HasCast-SubLedgerEnv</a> <a id="1812" class="Symbol">=</a> <a id="1814" href="stdlib-classes.Class.HasCast.Derive.html#2690" class="Function">derive-HasCast</a>
     <a id="1833" class="Symbol">((</a><a id="1835" class="Keyword">quote</a> <a id="1841" href="Ledger.Dijkstra.Specification.Ledger.html#1562" class="Record">LedgerEnv</a> <a id="1851" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1853" href="Ledger.Dijkstra.Specification.Ledger.html#1773" class="Function">HasCast-LedgerEnv</a><a id="1870" class="Symbol">)</a> <a id="1872" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="1874" class="Symbol">(</a><a id="1875" class="Keyword">quote</a> <a id="1881" href="Ledger.Dijkstra.Specification.Ledger.html#1172" class="Record">SubLedgerEnv</a> <a id="1894" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1896" href="Ledger.Dijkstra.Specification.Ledger.html#1791" class="Function">HasCast-SubLedgerEnv</a><a id="1916" class="Symbol">)</a> <a id="1918" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="1920" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a><a id="1922" class="Symbol">)</a>
 
-  <a id="HasPParams-LedgerEnv"></a><a id="1927" href="Ledger.Dijkstra.Specification.Ledger.html#1927" class="Function">HasPParams-LedgerEnv</a> <a id="1948" class="Symbol">:</a> <a id="1950" href="Ledger.Dijkstra.Specification.PParams.html#8052" class="Record">HasPParams</a> <a id="1961" href="Ledger.Dijkstra.Specification.Ledger.html#1562" class="Record">LedgerEnv</a>
-  <a id="1973" href="Ledger.Dijkstra.Specification.Ledger.html#1927" class="Function">HasPParams-LedgerEnv</a> <a id="1994" class="Symbol">.</a><a id="1995" href="Ledger.Dijkstra.Specification.PParams.html#8103" class="Field">PParamsOf</a> <a id="2005" class="Symbol">=</a> <a id="2007" href="Ledger.Dijkstra.Specification.Ledger.html#1655" class="Field">LedgerEnv.pparams</a>
+  <a id="HasPParams-LedgerEnv"></a><a id="1927" href="Ledger.Dijkstra.Specification.Ledger.html#1927" class="Function">HasPParams-LedgerEnv</a> <a id="1948" class="Symbol">:</a> <a id="1950" href="Ledger.Dijkstra.Specification.PParams.html#8129" class="Record">HasPParams</a> <a id="1961" href="Ledger.Dijkstra.Specification.Ledger.html#1562" class="Record">LedgerEnv</a>
+  <a id="1973" href="Ledger.Dijkstra.Specification.Ledger.html#1927" class="Function">HasPParams-LedgerEnv</a> <a id="1994" class="Symbol">.</a><a id="1995" href="Ledger.Dijkstra.Specification.PParams.html#8180" class="Field">PParamsOf</a> <a id="2005" class="Symbol">=</a> <a id="2007" href="Ledger.Dijkstra.Specification.Ledger.html#1655" class="Field">LedgerEnv.pparams</a>
 
   <a id="HasEnactState-LedgerEnv"></a><a id="2028" href="Ledger.Dijkstra.Specification.Ledger.html#2028" class="Function">HasEnactState-LedgerEnv</a> <a id="2052" class="Symbol">:</a> <a id="2054" href="Ledger.Dijkstra.Specification.Enact.html#1126" class="Record">HasEnactState</a> <a id="2068" href="Ledger.Dijkstra.Specification.Ledger.html#1562" class="Record">LedgerEnv</a>
   <a id="2080" href="Ledger.Dijkstra.Specification.Ledger.html#2028" class="Function">HasEnactState-LedgerEnv</a> <a id="2104" class="Symbol">.</a><a id="2105" href="Ledger.Dijkstra.Specification.Enact.html#1180" class="Field">EnactStateOf</a> <a id="2118" class="Symbol">=</a> <a id="2120" href="Ledger.Dijkstra.Specification.Ledger.html#1681" class="Field">LedgerEnv.enactState</a>
 
-  <a id="HasPParams-SubLedgerEnv"></a><a id="2144" href="Ledger.Dijkstra.Specification.Ledger.html#2144" class="Function">HasPParams-SubLedgerEnv</a> <a id="2168" class="Symbol">:</a> <a id="2170" href="Ledger.Dijkstra.Specification.PParams.html#8052" class="Record">HasPParams</a> <a id="2181" href="Ledger.Dijkstra.Specification.Ledger.html#1172" class="Record">SubLedgerEnv</a>
-  <a id="2196" href="Ledger.Dijkstra.Specification.Ledger.html#2144" class="Function">HasPParams-SubLedgerEnv</a> <a id="2220" class="Symbol">.</a><a id="2221" href="Ledger.Dijkstra.Specification.PParams.html#8103" class="Field">PParamsOf</a> <a id="2231" class="Symbol">=</a> <a id="2233" href="Ledger.Dijkstra.Specification.Ledger.html#1278" class="Field">SubLedgerEnv.pparams</a>
+  <a id="HasPParams-SubLedgerEnv"></a><a id="2144" href="Ledger.Dijkstra.Specification.Ledger.html#2144" class="Function">HasPParams-SubLedgerEnv</a> <a id="2168" class="Symbol">:</a> <a id="2170" href="Ledger.Dijkstra.Specification.PParams.html#8129" class="Record">HasPParams</a> <a id="2181" href="Ledger.Dijkstra.Specification.Ledger.html#1172" class="Record">SubLedgerEnv</a>
+  <a id="2196" href="Ledger.Dijkstra.Specification.Ledger.html#2144" class="Function">HasPParams-SubLedgerEnv</a> <a id="2220" class="Symbol">.</a><a id="2221" href="Ledger.Dijkstra.Specification.PParams.html#8180" class="Field">PParamsOf</a> <a id="2231" class="Symbol">=</a> <a id="2233" href="Ledger.Dijkstra.Specification.Ledger.html#1278" class="Field">SubLedgerEnv.pparams</a>
 
   <a id="HasEnactState-SubLedgerEnv"></a><a id="2257" href="Ledger.Dijkstra.Specification.Ledger.html#2257" class="Function">HasEnactState-SubLedgerEnv</a> <a id="2284" class="Symbol">:</a> <a id="2286" href="Ledger.Dijkstra.Specification.Enact.html#1126" class="Record">HasEnactState</a> <a id="2300" href="Ledger.Dijkstra.Specification.Ledger.html#1172" class="Record">SubLedgerEnv</a>
   <a id="2315" href="Ledger.Dijkstra.Specification.Ledger.html#2257" class="Function">HasEnactState-SubLedgerEnv</a> <a id="2342" class="Symbol">.</a><a id="2343" href="Ledger.Dijkstra.Specification.Enact.html#1180" class="Field">EnactStateOf</a> <a id="2356" class="Symbol">=</a> <a id="2358" href="Ledger.Dijkstra.Specification.Ledger.html#1309" class="Field">SubLedgerEnv.enactState</a>
@@ -12567,7 +12651,7 @@ alone does not account for it.</p>
   <a id="7450" href="Ledger.Dijkstra.Specification.Ledger.html#7450" class="Generalizable">stx</a>                               <a id="7484" class="Symbol">:</a> <a id="7486" href="Ledger.Dijkstra.Specification.Transaction.html#10254" class="Function">SubLevelTx</a>
   <a id="7499" href="Ledger.Dijkstra.Specification.Ledger.html#7499" class="Generalizable">slot</a>                              <a id="7533" class="Symbol">:</a> <a id="7535" href="Ledger.Core.Specification.Epoch.html#818" class="Function">Slot</a>
   <a id="7542" href="Ledger.Dijkstra.Specification.Ledger.html#7542" class="Generalizable">ppolicy</a>                           <a id="7576" class="Symbol">:</a> <a id="7578" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="7584" href="Ledger.Core.Specification.Crypto.html#1721" class="Function">ScriptHash</a>
-  <a id="7597" href="Ledger.Dijkstra.Specification.Ledger.html#7597" class="Generalizable">pp</a>                                <a id="7631" class="Symbol">:</a> <a id="7633" href="Ledger.Dijkstra.Specification.PParams.html#2607" class="Record">PParams</a>
+  <a id="7597" href="Ledger.Dijkstra.Specification.Ledger.html#7597" class="Generalizable">pp</a>                                <a id="7631" class="Symbol">:</a> <a id="7633" href="Ledger.Dijkstra.Specification.PParams.html#2684" class="Record">PParams</a>
   <a id="7643" href="Ledger.Dijkstra.Specification.Ledger.html#7643" class="Generalizable">enactState</a>                        <a id="7677" class="Symbol">:</a> <a id="7679" href="Ledger.Dijkstra.Specification.Enact.html#821" class="Record">EnactState</a>
   <a id="7692" href="Ledger.Dijkstra.Specification.Ledger.html#7692" class="Generalizable">treasury</a>                          <a id="7726" class="Symbol">:</a> <a id="7728" href="Ledger.Prelude.Base.html#558" class="Function">Treasury</a>
   <a id="7739" href="Ledger.Dijkstra.Specification.Ledger.html#7739" class="Generalizable">isTopLevelValid</a>                   <a id="7773" class="Symbol">:</a> <a id="7775" href="Agda.Builtin.Bool.html#173" class="Datatype">Bool</a>
@@ -12705,7 +12789,7 @@ top-level in the <code class="AgdaDatatype">LEDGER</code> rule. This is threaded
          <a id="13715" href="Ledger.Dijkstra.Specification.Ledger.html#13689" class="Bound">pState₀</a> <a id="13723" class="Symbol">=</a> <a id="13725" href="Ledger.Dijkstra.Specification.Certs.html#7547" class="Field">PStateOf</a> <a id="13734" href="Ledger.Dijkstra.Specification.Ledger.html#7306" class="Generalizable">certState₀</a>
 
          <a id="13755" href="Ledger.Dijkstra.Specification.Ledger.html#13755" class="Bound">allScripts</a> <a id="13766" class="Symbol">:</a> <a id="13768" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="13770" href="Ledger.Dijkstra.Specification.Script.Base.html#3319" class="Function">Script</a>
-         <a id="13786" href="Ledger.Dijkstra.Specification.Ledger.html#13755" class="Bound">allScripts</a> <a id="13797" class="Symbol">=</a> <a id="13799" href="Ledger.Dijkstra.Specification.Transaction.html#25093" class="Function">getAllScripts</a> <a id="13813" href="Ledger.Dijkstra.Specification.Ledger.html#7401" class="Generalizable">tx</a> <a id="13816" href="Ledger.Dijkstra.Specification.Ledger.html#13561" class="Bound">utxo₀</a>
+         <a id="13786" href="Ledger.Dijkstra.Specification.Ledger.html#13755" class="Bound">allScripts</a> <a id="13797" class="Symbol">=</a> <a id="13799" href="Ledger.Dijkstra.Specification.Transaction.html#24271" class="Function">getAllScripts</a> <a id="13813" href="Ledger.Dijkstra.Specification.Ledger.html#7401" class="Generalizable">tx</a> <a id="13816" href="Ledger.Dijkstra.Specification.Ledger.html#13561" class="Bound">utxo₀</a>
 
          <a id="13832" href="Ledger.Dijkstra.Specification.Ledger.html#13832" class="Bound">legacyMode</a> <a id="13843" class="Symbol">:</a> <a id="13845" href="Agda.Builtin.Bool.html#173" class="Datatype">Bool</a>
          <a id="13859" href="Ledger.Dijkstra.Specification.Ledger.html#13832" class="Bound">legacyMode</a> <a id="13870" class="Symbol">=</a> <a id="13872" href="Ledger.Dijkstra.Specification.Utxow.html#6867" class="Function">isLegacyMode</a> <a id="13885" href="Ledger.Dijkstra.Specification.Ledger.html#13561" class="Bound">utxo₀</a> <a id="13891" href="Ledger.Dijkstra.Specification.Ledger.html#13755" class="Bound">allScripts</a> <a id="13902" href="Ledger.Dijkstra.Specification.Ledger.html#7401" class="Generalizable">tx</a>
@@ -12729,7 +12813,7 @@ top-level in the <code class="AgdaDatatype">LEDGER</code> rule. This is threaded
          <a id="14988" href="Ledger.Dijkstra.Specification.Ledger.html#14962" class="Bound">pState₀</a> <a id="14996" class="Symbol">=</a> <a id="14998" href="Ledger.Dijkstra.Specification.Certs.html#7547" class="Field">PStateOf</a> <a id="15007" href="Ledger.Dijkstra.Specification.Ledger.html#7306" class="Generalizable">certState₀</a>
 
          <a id="15028" href="Ledger.Dijkstra.Specification.Ledger.html#15028" class="Bound">allScripts</a> <a id="15039" class="Symbol">:</a> <a id="15041" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="15043" href="Ledger.Dijkstra.Specification.Script.Base.html#3319" class="Function">Script</a>
-         <a id="15059" href="Ledger.Dijkstra.Specification.Ledger.html#15028" class="Bound">allScripts</a> <a id="15070" class="Symbol">=</a> <a id="15072" href="Ledger.Dijkstra.Specification.Transaction.html#25093" class="Function">getAllScripts</a> <a id="15086" href="Ledger.Dijkstra.Specification.Ledger.html#7401" class="Generalizable">tx</a> <a id="15089" href="Ledger.Dijkstra.Specification.Ledger.html#14834" class="Bound">utxo₀</a>
+         <a id="15059" href="Ledger.Dijkstra.Specification.Ledger.html#15028" class="Bound">allScripts</a> <a id="15070" class="Symbol">=</a> <a id="15072" href="Ledger.Dijkstra.Specification.Transaction.html#24271" class="Function">getAllScripts</a> <a id="15086" href="Ledger.Dijkstra.Specification.Ledger.html#7401" class="Generalizable">tx</a> <a id="15089" href="Ledger.Dijkstra.Specification.Ledger.html#14834" class="Bound">utxo₀</a>
 
          <a id="15105" href="Ledger.Dijkstra.Specification.Ledger.html#15105" class="Bound">legacyMode</a> <a id="15116" class="Symbol">:</a> <a id="15118" href="Agda.Builtin.Bool.html#173" class="Datatype">Bool</a>
          <a id="15132" href="Ledger.Dijkstra.Specification.Ledger.html#15105" class="Bound">legacyMode</a> <a id="15143" class="Symbol">=</a> <a id="15145" href="Ledger.Dijkstra.Specification.Utxow.html#6867" class="Function">isLegacyMode</a> <a id="15158" href="Ledger.Dijkstra.Specification.Ledger.html#14834" class="Bound">utxo₀</a> <a id="15164" href="Ledger.Dijkstra.Specification.Ledger.html#15028" class="Bound">allScripts</a> <a id="15175" href="Ledger.Dijkstra.Specification.Ledger.html#7401" class="Generalizable">tx</a>
@@ -12772,7 +12856,7 @@ top-level in the <code class="AgdaDatatype">LEDGER</code> rule. This is threaded
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="Ledger.Dijkstra.Specification.Gov.Properties.Computational.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Computational">
+          <a href="Ledger.Dijkstra.Specification.Gov.Properties.PoV.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: PoV">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -12782,7 +12866,7 @@ top-level in the <code class="AgdaDatatype">LEDGER</code> rule. This is threaded
                 Previous
               </span>
               <div class="md-ellipsis">
-                Computational
+                PoV
               </div>
             </div>
           </a>
