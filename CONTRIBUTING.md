@@ -506,9 +506,11 @@ follows:
    Library 'formal-ledger' not found.
    ```
 
-Type-check the test library from that package's own environment, as follows:
+Type-check the test library from that package's own environment, as follows.
+Unset a custom `AGDA_DIR` first so that Agda uses the shell's pinned registry.
 
 ```bash
+unset AGDA_DIR
 nix develop .#formal-ledger-test
 cd formal-ledger-test
 agda src/Test/Prelude.lagda.md
