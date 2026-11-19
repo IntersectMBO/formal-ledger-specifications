@@ -29,6 +29,13 @@ proofs in `Utxo.Properties.PoV`{.AgdaModule} and
 +  `split-balance`{.AgdaFunction}.  `cbalance`{.AgdaFunction} splits along a
    key-set restriction and its complement.
 
++  `_AgreesWith_`{.AgdaFunction} / `agrees-cbalance`{.AgdaFunction} /
+   `agrees-step`{.AgdaFunction} / `fresh-step`{.AgdaFunction}.  The two facts
+   about the running UTxO of a batch, agreement with the pre-batch snapshot and
+   freshness of the pending transaction ids, are preserved by a step, and
+   agreement makes a spent balance the same whether resolved against the running
+   UTxO or the snapshot.
+
 <!--
 ```agda
 {-# OPTIONS --safe #-}
@@ -173,4 +180,83 @@ split-balance u keys =
   cbal-split-≡ =  balance-cong-coin ((u ∣ keys ᶜ) ∪ˡ (u ∣ keys)) u
                   $ disjoint-∪ˡ-∪  (disjoint-sym res-ex-disjoint)
                                    ≡ᵉ-∘ ∪-sym ≡ᵉ-∘ res-ex-∪ (_∈? keys)
+```
+
+## The running UTxO of a batch
+
+Within a batch the UTxO is stepped once per transaction; a step removes the
+transaction's spend inputs and adds its outputs, keyed by its id.  Two facts
+about the running UTxO carry the preservation-of-value argument across the
+batch, and this section proves that a step preserves both.
+
++  **Agreement**.  The running UTxO agrees with the pre-batch snapshot on the
+   snapshot's keys, so a spent balance may be resolved against either.
++  **Freshness**.  The id of a transaction not yet applied does not occur in the
+   running UTxO, so its outputs land on fresh keys.
+
+A UTxO `u` *agrees with* `u₀` when every entry of `u` whose key `u₀` also holds
+is an entry of `u₀`; since both are maps, this is agreement on the common keys.
+
+```agda
+_AgreesWith_ : UTxO → UTxO → Type
+u AgreesWith u₀ = ∀ {i : TxIn} {o : TxOut} → (i , o) ∈ u → i ∈ dom u₀ → (i , o) ∈ u₀
+
+agrees-refl : (u : UTxO) → u AgreesWith u
+agrees-refl _ h _ = h
+```
+
+On a key set that both UTxOs hold, agreement makes the two restrictions equal as
+sets, hence their balances equal.
+
+```agda
+module _ (u₀ u : UTxO) (agree : u AgreesWith u₀) {S : ℙ TxIn}
+  (S⊆u₀ : S ⊆ dom u₀) (S⊆u : S ⊆ dom u)
+  where
+
+  agrees-res : (u ∣ S) ˢ ≡ᵉ (u₀ ∣ S) ˢ
+  agrees-res = u⊆u₀ , u₀⊆u
+    where
+    u⊆u₀ : (u ∣ S) ˢ ⊆ (u₀ ∣ S) ˢ
+    u⊆u₀ h = case to ∈-res h of λ where
+      (io∈u , i∈S) → from ∈-res (agree io∈u (S⊆u₀ i∈S) , i∈S)
+
+    u₀⊆u : (u₀ ∣ S) ˢ ⊆ (u ∣ S) ˢ
+    u₀⊆u {i , o} h = case to ∈-res h of λ where
+      (io∈u₀ , i∈S) → case from dom∈ (S⊆u i∈S) of λ where
+        (o' , io'∈u) → from ∈-res
+          (subst (λ v → (i , v) ∈ u) (proj₂ u₀ (agree io'∈u (S⊆u₀ i∈S)) io∈u₀) io'∈u , i∈S)
+
+  agrees-cbalance : cbalance (u ∣ S) ≡ cbalance (u₀ ∣ S)
+  agrees-cbalance = balance-cong-coin (u ∣ S) (u₀ ∣ S) agrees-res
+```
+
+A step spends the key set `S` and adds `outs t`, so every entry of the stepped
+UTxO is an old entry or carries the id of `t`.  Agreement survives because the
+old entries agree and the new keys lie outside the snapshot when the id of `t`
+is fresh there; freshness of another id survives because the new keys all carry
+the id of `t`.
+
+```agda
+module _ (t : Tx ℓ) (u : UTxO) (S : ℙ TxIn) where
+
+  ∈-step : {i : TxIn} {o : TxOut}
+    → (i , o) ∈ (u ∣ S ᶜ) ∪ˡ outs t → (i , o) ∈ u ⊎ proj₁ i ≡ TxIdOf t
+  ∈-step h = case from ∈-∪ h of λ where
+    (inj₁ h₁) → inj₁ (ex-⊆ h₁)
+    (inj₂ h₂) → inj₂ (case from ∈-filter h₂ of λ where
+      (_ , h₃) → case from ∈-map h₃ of λ where (_ , refl , _) → refl)
+
+  agrees-step : (u₀ : UTxO) → TxIdOf t ∉ mapˢ proj₁ (dom u₀)
+    → u AgreesWith u₀ → ((u ∣ S ᶜ) ∪ˡ outs t) AgreesWith u₀
+  agrees-step u₀ fresh agree io∈u' i∈u₀ = case ∈-step io∈u' of λ where
+    (inj₁ io∈u) → agree io∈u i∈u₀
+    (inj₂ eq)   → ⊥-elim (fresh (subst (_∈ mapˢ proj₁ (dom u₀)) eq (∈-map′ i∈u₀)))
+
+  fresh-step : {tid : TxId} → tid ∉ mapˢ proj₁ (dom u) → tid ≢ TxIdOf t
+    → tid ∉ mapˢ proj₁ (dom ((u ∣ S ᶜ) ∪ˡ outs t))
+  fresh-step tid∉u tid≢t tid∈u' = case from ∈-map tid∈u' of λ where
+    (i , refl , i∈u') → case from dom∈ i∈u' of λ where
+      (o , io∈u') → case ∈-step io∈u' of λ where
+        (inj₁ io∈u) → tid∉u (∈-map′ (to dom∈ (o , io∈u)))
+        (inj₂ eq)   → tid≢t eq
 ```

@@ -86,7 +86,10 @@ module _ {eps : EpochState} {e : Epoch} where
          prs'≡prs'' = POOLREAP-deterministic-≡ refl refl p₁ p₁'
 
          pPRUpd₁≡pPRUpd₂ : pPRUpd₁ ≡ pPRUpd₂
-         pPRUpd₁≡pPRUpd₂ rewrite (cong PoolReapState.dState prs'≡prs'') | (cong PoolReapState.acnt prs'≡prs'') = refl
+         pPRUpd₁≡pPRUpd₂ =
+           cong₂ (λ ds acnt → Post-POOLREAPUpdate.updates es ls ds acnt govUpd)
+                 (cong PoolReapState.dState prs'≡prs'')
+                 (cong PoolReapState.acnt prs'≡prs'')
 
          ls'₁ = ⟦ pPRUpd.utxoSt' , govSt' , ⟦ pPRUpd₁.dState'' , pState'₁ , pPRUpd.gState' ⟧ᶜˢ ⟧
          ls'₂ = ⟦ pPRUpd.utxoSt' , govSt' , ⟦ pPRUpd₂.dState'' , pState'₂ , pPRUpd.gState' ⟧ᶜˢ ⟧
@@ -119,12 +122,15 @@ module _ {eps : EpochState} {e : Epoch} where
          fut'≡fut'' = RATIFIES-deterministic-≡ Γ≡Γ' refl refl p₃ p₃'
 
          eps'≡eps'' : eps' ≡ eps''
-         eps'≡eps''
-           rewrite ss'₁≡ss'₂
-             | cong PoolReapState.pState prs'≡prs''
-             | cong Post-POOLREAP-Update.acnt'' pPRUpd₁≡pPRUpd₂
-             | cong Post-POOLREAP-Update.dState'' pPRUpd₁≡pPRUpd₂
-             | fut'≡fut'' = refl
+         eps'≡eps'' =
+           trans (cong₂ (λ acnt ss → mkEpochState acnt ss ls'₁ (RatifyStateOf eps'))
+                        (cong Post-POOLREAP-Update.acnt'' pPRUpd₁≡pPRUpd₂)
+                        ss'₁≡ss'₂)
+                 (cong₂ (mkEpochState pPRUpd₂.acnt'' ss'₂) ls'₁≡ls'₂ fut'≡fut'')
+           where
+             mkEpochState : Acnt → Snapshots → LedgerState → RatifyState → EpochState
+             mkEpochState acnt ss ls fut =
+               ⟦ acnt , ss , ls , record es { withdrawals = ∅ } , fut ⟧
 
   EPOCH-complete : ∀ eps' → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps' → proj₁ EPOCH-total ≡ eps'
   EPOCH-complete eps' p = EPOCH-deterministic (proj₁ EPOCH-total) eps' (proj₂ EPOCH-total) p
