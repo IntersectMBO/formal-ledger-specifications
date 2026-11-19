@@ -11,6 +11,7 @@ open import Reflection.Tactic
 open import Reflection.Utils.Debug
 
 open import Class.MonadTC
+open import Class.MonadReader using (Functor-ReaderT)
 open import Class.Monad
 open import Class.Functor
 open import Class.Traversable
@@ -44,7 +45,7 @@ getCodPi ty = ty
 -- 3. the number of fields
 fromRecDef : Definition → TC (Name × List Type)
 fromRecDef (record′ c fs) =
-  do tys ← traverse (λ f → fmap ⦃ Functor-M ⦄ getCodPi (getType (unArg f))) fs
+  do tys ← traverse (λ f → fmap ⦃ Functor-ReaderT ⦄ getCodPi (getType (unArg f))) fs
      return (c , tys)
 fromRecDef d  = typeError [ strErr "Expected a record type" ]
 
@@ -99,5 +100,4 @@ private
       field a : ℕ
             b c : Bool
 
-    instance
-      unquoteDecl HasCast-R'' = derive-HasCast ⦃ defaultTCOptions ⦄ ((quote R'' , HasCast-R'') ∷  [])
+    unquoteDecl HasCast-R'' = derive-HasCast ⦃ defaultTCOptions ⦄ ((quote R'' , HasCast-R'') ∷  [])

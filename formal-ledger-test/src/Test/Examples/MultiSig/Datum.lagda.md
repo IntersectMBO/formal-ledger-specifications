@@ -14,9 +14,8 @@ open import Tactic.Derive.DecEq
 data Label : Set where
   Holding : Label
   Collecting : ℕ -> ℕ -> ℕ -> List ℕ -> Label
-instance
-  unquoteDecl DecEq-Label = derive-DecEq
-    ((quote Label , DecEq-Label) ∷ [])
+unquoteDecl DecEq-Label = derive-DecEq
+  ((quote Label , DecEq-Label) ∷ [])
 
 data Input : Set where
   -- Propose: Ada amount, Target Wallet, Slot Deadline
@@ -25,9 +24,8 @@ data Input : Set where
   Add     : ℕ -> Input
   Pay     : Input
   Cancel  : Input
-instance
-  unquoteDecl DecEq-Input = derive-DecEq
-    ((quote Input , DecEq-Input) ∷ [])
+unquoteDecl DecEq-Input = derive-DecEq
+  ((quote Input , DecEq-Input) ∷ [])
 
 MultiSigData = Label ⊎ Input
 ```

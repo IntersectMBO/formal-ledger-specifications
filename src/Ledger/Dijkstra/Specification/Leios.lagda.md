@@ -68,9 +68,8 @@ LeiosCommittee = List LeiosSeat
 ```agda
 open LeiosSeat
 
-instance
-  unquoteDecl HasCast-LeiosSeat = derive-HasCast
-    [ (quote LeiosSeat , HasCast-LeiosSeat) ]
+unquoteDecl HasCast-LeiosSeat = derive-HasCast
+  [ (quote LeiosSeat , HasCast-LeiosSeat) ]
 ```
 -->
 
@@ -225,9 +224,8 @@ record EBCert : Type where
 
 <!--
 ```agda
-instance
-  unquoteDecl HasCast-EBCert = derive-HasCast
-    [ (quote EBCert , HasCast-EBCert) ]
+unquoteDecl HasCast-EBCert = derive-HasCast
+  [ (quote EBCert , HasCast-EBCert) ]
 
 open EBCert
 ```

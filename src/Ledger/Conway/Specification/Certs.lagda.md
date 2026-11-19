@@ -54,9 +54,8 @@ record HasDeposits {a} (A : Type a) : Type a where
   field DepositsOf : A → Deposits
 open HasDeposits ⦃...⦄ public
 
-instance
-  unquoteDecl DecEq-DepositPurpose = derive-DecEq
-    ((quote DepositPurpose , DecEq-DepositPurpose) ∷ [])
+unquoteDecl DecEq-DepositPurpose = derive-DecEq
+  ((quote DepositPurpose , DecEq-DepositPurpose) ∷ [])
 ```
 -->
 
@@ -139,11 +138,10 @@ data DCert : Type where
   -- from using it.
   reg         : Credential → Coin → DCert
 
-instance
-  unquoteDecl DecEq-StakePoolParams = derive-DecEq
-    ((quote StakePoolParams , DecEq-StakePoolParams) ∷ [])
-  unquoteDecl DecEq-DCert = derive-DecEq
-    ((quote DCert , DecEq-DCert) ∷ [])
+unquoteDecl DecEq-StakePoolParams = derive-DecEq
+  ((quote StakePoolParams , DecEq-StakePoolParams) ∷ [])
+unquoteDecl DecEq-DCert = derive-DecEq
+  ((quote DCert , DecEq-DCert) ∷ [])
 ```
 -->
 

@@ -79,9 +79,6 @@ _÷₀_ x y = case y ≟ ℚ.0ℚ of λ where
 ∣_∣ ⦃ f = f ⦄ = f.cast
   where module f = HasCast f
 
-infix 5 ⟦_⟧
-infix 6 ∣_∣
-
 module Filter where
   filter : ∀ {a} {p} {A : Type a} → (P : Pred A p) → ⦃ P ⁇¹ ⦄ → List A → List A
   filter P = Data.List.filter ¿ P ¿¹
