@@ -231,6 +231,8 @@ nav:
       - Properties: Ledger.Dijkstra.Specification.Certs.Properties.md
       - Properties/:
         - Computational: Ledger.Dijkstra.Specification.Certs.Properties.Computational.md
+        - PoV: Ledger.Dijkstra.Specification.Certs.Properties.PoV.md
+        - PoVLemmas: Ledger.Dijkstra.Specification.Certs.Properties.PoVLemmas.md
     - Chain: Ledger.Dijkstra.Specification.Chain.md
     - Chain/:
       - Properties: Ledger.Dijkstra.Specification.Chain.Properties.md
