@@ -11,10 +11,12 @@ consumed by `Ledger.Properties.PoV`{.AgdaModule}.  The facts are
 `CERTS-deposits-registered`{.AgdaFunction}, `CERTS-new-thread`{.AgdaFunction},
 and `refundCertDeposits-++`{.AgdaFunction}.
 
-`CERTS`{.AgdaDatatype} is the reflexive–transitive closure of the
-single-certificate rule `CERT`{.AgdaDatatype}, so each fact is an induction
-over the closure whose step case is the corresponding per-step lemma of
-`Certs.Properties.PoVLemmas`{.AgdaModule}.  Composing the deposit facts across
+`CERTS`{.AgdaDatatype} is the reflexive-transitive closure of the
+single-certificate rule `CERT`{.AgdaDatatype}.  The four facts about a
+`CERTS`{.AgdaDatatype} derivation are inductions over this closure, using the
+per-step lemmas in `Certs.Properties.PoVLemmas`{.AgdaModule}.  The refund
+concatenation identity is a pure fold lemma from that module.  Composing the
+deposit facts across
 steps rests on the pool-set threading explained there: peeling the first
 certificate off `newCertDeposits`{.AgdaFunction}
 (`newCertDeposits-∷`{.AgdaFunction}) leaves the tail charged against the

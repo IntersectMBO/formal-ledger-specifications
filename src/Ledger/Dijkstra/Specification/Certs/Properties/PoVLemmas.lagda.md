@@ -43,9 +43,9 @@ make this possible, as follows:
    (`newCertDeposits-delegate`{.AgdaFunction},
    `newCertDeposits-regdrep`{.AgdaFunction}) exploit this: they extract such a
    head certificate's deposit as a summand, by induction on the tail,
-   re-packing intermediate fold states as new head certificates (built from
-   the fields already at hand; for a `regpool`{.AgdaInductiveConstructor}
-   head, these are `KeyHashObj`{.AgdaInductiveConstructor} of its key hash).
+   re-packing intermediate fold states as new head certificates built from
+   the available fields.  A `regpool`{.AgdaInductiveConstructor} head supplies
+   the credential `KeyHashObj`{.AgdaInductiveConstructor} of its key hash.
 
 +  **Membership tests only**.  The fold consumes the pool set exclusively
    through the decidable test `kh ∈ P`, so extensionally equal pool sets yield
