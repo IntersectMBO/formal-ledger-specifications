@@ -36,18 +36,20 @@ open import Data.Bool.Properties using (¬-not)
 instance
   _ = Monad-ComputationResult
 
+private
+  if-false : ∀ {A : Type} {b : Bool} {x y : A} → b ≡ false → (if b then x else y) ≡ y
+  if-false refl = refl
+
 -- When isTopLevelValid ≡ false, SUBUTXO is a UTxO no-op,
 -- so SUBUTXOW leaves the UTxOState unchanged.
-private
   SUBUTXOW-noop
     : ∀ {Γ : SubUTxOEnv} {s s' : UTxOState} {stx : SubLevelTx}
     → IsTopLevelValidFlagOf Γ ≡ false
     → Γ ⊢ s ⇀⦇ stx ,SUBUTXOW⦈ s'
     → s' ≡ s
-  SUBUTXOW-noop isI (SUBUTXOW (_ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , SUBUTXO _)) rewrite isI = refl
-  -- After `rewrite isI`, `IsTopLevelValidFlagOf Γ` reduces to `false`,
-  -- so the SUBUTXO post-state index reduces to `⟦ UTxOOf s , FeesOf s , DonationsOf s ⟧`
-  -- which is s by eta-expansion of the UTxOState record, giving refl.
+  SUBUTXOW-noop isI (SUBUTXOW (_ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , _ , SUBUTXO _)) = if-false isI
+  -- The SUBUTXO post-state index is `if IsTopLevelValidFlagOf Γ then … else ⟦ UTxOOf s , FeesOf s , DonationsOf s ⟧`;
+  -- `if-false isI` reduces it to the `else` branch, which is s by eta-expansion of the UTxOState record.
 
 -- When isTopLevelValid ≡ false, a single SUBLEDGER step is a no-op.
 -- SUBLEDGER-V is impossible (its first premise is isTopLevelValid ≡ true).
@@ -128,17 +130,19 @@ instance
 
 <!--
 ```agda
-      computeProof = case isTopLevelValid ≟ true of λ where
-        (yes p) → do
-          (certSt' , certStep) ← computeSubentities subentitiesΓ certState stx
-          (govSt'  , govStep)  ← computeGov (govΓ certSt') govSt (GovProposals+Votes stx)
-          (utxoSt' , utxoStep) ← computeSubutxow subUtxoΓ utxoSt stx
-          success (_ , SUBLEDGER-V (p , certStep , govStep , utxoStep ))
-        (no ¬p) → do
-          (utxoSt' , utxoStep) ← computeSubutxow subUtxoΓ utxoSt stx
-          let utxoStep' = subst (subUtxoΓ ⊢ utxoSt ⇀⦇ stx ,SUBUTXOW⦈_)
-                                (SUBUTXOW-noop (¬-not ¬p) utxoStep) utxoStep
-          success (_ , SUBLEDGER-I (¬-not ¬p , utxoStep'))
+      computeProof-aux : Dec (isTopLevelValid ≡ true) → ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ stx ,SUBLEDGER⦈ s')
+      computeProof-aux (yes p) = do
+        (certSt' , certStep) ← computeSubentities subentitiesΓ certState stx
+        (govSt'  , govStep)  ← computeGov (govΓ certSt') govSt (GovProposals+Votes stx)
+        (utxoSt' , utxoStep) ← computeSubutxow subUtxoΓ utxoSt stx
+        success (_ , SUBLEDGER-V (p , certStep , govStep , utxoStep ))
+      computeProof-aux (no ¬p) = do
+        (utxoSt' , utxoStep) ← computeSubutxow subUtxoΓ utxoSt stx
+        let utxoStep' = subst (subUtxoΓ ⊢ utxoSt ⇀⦇ stx ,SUBUTXOW⦈_)
+                              (SUBUTXOW-noop (¬-not ¬p) utxoStep) utxoStep
+        success (_ , SUBLEDGER-I (¬-not ¬p , utxoStep'))
+
+      computeProof = computeProof-aux (isTopLevelValid ≟ true)
 ```
 -->
 
@@ -148,23 +152,18 @@ instance
 
 <!--
 ```agda
-      completeness sub' (SUBLEDGER-V (v , certStep , govStep , utxoStep))
-        with isTopLevelValid ≟ true
-      ... | no ¬v = contradiction v ¬v
-      ... | yes refl
-        with computeSubentities subentitiesΓ certState stx | completeSubentities _ _ _ _ certStep
-      ... | success (certSt' , _) | refl
-        with computeGov (govΓ certSt') govSt (GovProposals+Votes stx)
-           | completeGov (govΓ certSt') _ _ _ govStep
-      ... | success (govSt' , _) | refl
-        with computeSubutxow subUtxoΓ utxoSt stx | completeSubutxow _ _ _ _ utxoStep
-      ... | success (utxoSt' , _) | refl = refl
-      completeness sub' (SUBLEDGER-I (i , utxoStep))
-        with isTopLevelValid ≟ true
-      ... | yes v = case trans (sym v) i of λ ()
-      ... | no ¬v
-        with computeSubutxow subUtxoΓ utxoSt stx | completeSubutxow _ _ _ _ utxoStep
-      ... | success (utxoSt' , _) | refl = refl
+      completeness-aux : (d : Dec (isTopLevelValid ≡ true)) → ∀ s' → Γ ⊢ s ⇀⦇ stx ,SUBLEDGER⦈ s'
+                       → (proj₁ <$> computeProof-aux d) ≡ success s'
+      completeness-aux (no ¬v) _ (SUBLEDGER-V (v , _)) = contradiction v ¬v
+      completeness-aux (yes _) _ (SUBLEDGER-V {certState₁ = certSt'} (_ , certStep , govStep , utxoStep)) =
+        bind-complete (computeSubentities subentitiesΓ certState stx) (completeSubentities _ _ _ _ certStep) λ _ →
+        bind-complete (computeGov (govΓ certSt') govSt (GovProposals+Votes stx)) (completeGov (govΓ certSt') _ _ _ govStep) λ _ →
+        bind-complete (computeSubutxow subUtxoΓ utxoSt stx) (completeSubutxow _ _ _ _ utxoStep) λ _ → refl
+      completeness-aux (yes v) _ (SUBLEDGER-I (i , _)) = case trans (sym v) i of λ ()
+      completeness-aux (no _) _ (SUBLEDGER-I (_ , utxoStep)) =
+        bind-complete (computeSubutxow subUtxoΓ utxoSt stx) (completeSubutxow _ _ _ _ utxoStep) λ _ → refl
+
+      completeness = completeness-aux (isTopLevelValid ≟ true)
 
 instance
 ```
@@ -197,11 +196,10 @@ instance
 
         completeness : ∀ (Γ : SubLedgerEnv) (s : LedgerState) (stxs : List SubLevelTx) (s' : LedgerState) → Γ ⊢ s ⇀⦇ stxs ,SUBLEDGERS⦈ s' → (proj₁ <$> computeProof Γ s stxs) ≡ success s'
         completeness Γ s [] s' SUBLEDGERS-[] = refl
-        completeness Γ s (stx ∷ stxs) s' (SUBLEDGERS-∷ p q)
-          with computeSubLedger Γ s stx | completeSubLedger _ _ _ _ p
-        ... | success (s' , _) | refl
-          with computeProof (record Γ { precedingDCerts = SubLedgerEnv.precedingDCerts Γ ++ DCertsOf stx }) s' stxs | completeness _ _ _ _ q
-        ... | success (_ , _) | refl = refl
+        completeness Γ s (stx ∷ stxs) s' (SUBLEDGERS-∷ p q) =
+          bind-complete (computeSubLedger Γ s stx) (completeSubLedger _ _ _ _ p) λ _ →
+          bind-complete (computeProof Γ' _ stxs) (completeness Γ' _ stxs _ q) λ _ → refl
+          where Γ' = record Γ { precedingDCerts = SubLedgerEnv.precedingDCerts Γ ++ DCertsOf stx }
 
 instance
 ```
@@ -280,19 +278,21 @@ instance
 
 <!--
 ```agda
-      computeProof = case IsValidFlagOf txTop ≟ true of λ where
-        (yes p) → do
-          (s₁      , subStep)  ← computeSubledgers subΓ s (SubTransactionsOf txTop)
-          (certSt₂ , certStep) ← computeEntities (entitiesΓ (GovStateOf s₁) (CertStateOf s)) (CertStateOf s₁) txTop
-          (govSt₂  , govStep)  ← computeGov (govΓ certSt₂) (GovStateOf s₁) (GovProposals+Votes txTop)
-          (utxoSt₂ , utxoStep) ← computeUtxow utxoΓ (UTxOStateOf s₁) txTop
-          success (_ , LEDGER-V (p , subStep , certStep , govStep , utxoStep))
-        (no ¬p) → do
-          (s₁      , subStep)  ← computeSubledgers subΓ s (SubTransactionsOf txTop)
-          (utxoSt₁ , utxoStep) ← computeUtxow utxoΓ utxoSt txTop
-          let subStep' = subst (subΓ ⊢ s ⇀⦇ SubTransactionsOf txTop ,SUBLEDGERS⦈_)
-                               (SUBLEDGERS-noop (¬-not ¬p) subStep) subStep
-          success (_ , LEDGER-I (¬-not ¬p , subStep' , utxoStep))
+      computeProof-aux : Dec (IsValidFlagOf txTop ≡ true) → ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ txTop ,LEDGER⦈ s')
+      computeProof-aux (yes p) = do
+        (s₁      , subStep)  ← computeSubledgers subΓ s (SubTransactionsOf txTop)
+        (certSt₂ , certStep) ← computeEntities (entitiesΓ (GovStateOf s₁) (CertStateOf s)) (CertStateOf s₁) txTop
+        (govSt₂  , govStep)  ← computeGov (govΓ certSt₂) (GovStateOf s₁) (GovProposals+Votes txTop)
+        (utxoSt₂ , utxoStep) ← computeUtxow utxoΓ (UTxOStateOf s₁) txTop
+        success (_ , LEDGER-V (p , subStep , certStep , govStep , utxoStep))
+      computeProof-aux (no ¬p) = do
+        (s₁      , subStep)  ← computeSubledgers subΓ s (SubTransactionsOf txTop)
+        (utxoSt₁ , utxoStep) ← computeUtxow utxoΓ utxoSt txTop
+        let subStep' = subst (subΓ ⊢ s ⇀⦇ SubTransactionsOf txTop ,SUBLEDGERS⦈_)
+                             (SUBLEDGERS-noop (¬-not ¬p) subStep) subStep
+        success (_ , LEDGER-I (¬-not ¬p , subStep' , utxoStep))
+
+      computeProof = computeProof-aux (IsValidFlagOf txTop ≟ true)
 ```
 -->
 
@@ -302,35 +302,27 @@ instance
 
 <!--
 ```agda
-      completeness ledgerSt
+      completeness-aux : (d : Dec (IsValidFlagOf txTop ≡ true)) → ∀ s' → Γ ⊢ s ⇀⦇ txTop ,LEDGER⦈ s'
+                       → (proj₁ <$> computeProof-aux d) ≡ success s'
+      completeness-aux (no ¬v) _ (LEDGER-V (v , _)) = contradiction v ¬v
+      completeness-aux (yes _) _
         (LEDGER-V {utxoState₁ = utxoSt₁} {govSt₁} {certSt₁} {certSt₂} {govSt₂} {utxoSt₂}
-        (v , subStep , entitiesStep , govStep , utxoStep))
-        with IsValidFlagOf txTop ≟ true
-      ... | no ¬v = contradiction v ¬v
-      ... | yes refl
-        with computeSubledgers subΓ s (SubTransactionsOf txTop)
-           | completeSubledgers subΓ s (SubTransactionsOf txTop)
-                      (⟦ utxoSt₁ , govSt₁ , certSt₁ ⟧ˡ) subStep
-      ... | success (⟦ utxoSt₁ , govSt₁ , certSt₁ ⟧ˡ , _) | refl
-        with computeEntities (entitiesΓ govSt₁ (CertStateOf s)) certSt₁ txTop
-           | completeEntities (entitiesΓ govSt₁ (CertStateOf s)) certSt₁ txTop certSt₂ entitiesStep
-      ... | success (certSt₂ , _) | refl
-        with computeGov (govΓ certSt₂) govSt₁ (GovProposals+Votes txTop)
-           | completeGov (govΓ certSt₂) govSt₁ (GovProposals+Votes txTop) govSt₂ govStep
-      ... | success (govSt₂ , _) | refl
-        with computeUtxow utxoΓ utxoSt₁ txTop
-           | completeUtxow utxoΓ utxoSt₁ txTop utxoSt₂ utxoStep
-      ... | success (utxoSt₂ , _) | refl = refl
-      completeness ledgerSt
-        (LEDGER-I {utxoState₁ = utxoSt₁} (i , subStep , utxoStep))
-        with IsValidFlagOf txTop ≟ true
-      ... | yes v = case trans (sym v) i of λ ()
-      ... | no ¬v
-        with computeSubledgers subΓ s (SubTransactionsOf txTop)
-           | completeSubledgers subΓ s (SubTransactionsOf txTop) s subStep
-      ... | success _ | refl
-        with computeUtxow utxoΓ utxoSt txTop
-           | completeUtxow utxoΓ utxoSt txTop utxoSt₁ utxoStep
-      ... | success _ | refl = refl
+        (_ , subStep , entitiesStep , govStep , utxoStep)) =
+        bind-complete (computeSubledgers subΓ s (SubTransactionsOf txTop))
+          (completeSubledgers subΓ s (SubTransactionsOf txTop) ⟦ utxoSt₁ , govSt₁ , certSt₁ ⟧ˡ subStep) λ _ →
+        bind-complete (computeEntities (entitiesΓ govSt₁ (CertStateOf s)) certSt₁ txTop)
+          (completeEntities (entitiesΓ govSt₁ (CertStateOf s)) certSt₁ txTop certSt₂ entitiesStep) λ _ →
+        bind-complete (computeGov (govΓ certSt₂) govSt₁ (GovProposals+Votes txTop))
+          (completeGov (govΓ certSt₂) govSt₁ (GovProposals+Votes txTop) govSt₂ govStep) λ _ →
+        bind-complete (computeUtxow utxoΓ utxoSt₁ txTop)
+          (completeUtxow utxoΓ utxoSt₁ txTop utxoSt₂ utxoStep) λ _ → refl
+      completeness-aux (yes v) _ (LEDGER-I (i , _)) = case trans (sym v) i of λ ()
+      completeness-aux (no _) _ (LEDGER-I {utxoState₁ = utxoSt₁} (_ , subStep , utxoStep)) =
+        bind-complete (computeSubledgers subΓ s (SubTransactionsOf txTop))
+          (completeSubledgers subΓ s (SubTransactionsOf txTop) s subStep) λ _ →
+        bind-complete (computeUtxow utxoΓ utxoSt txTop)
+          (completeUtxow utxoΓ utxoSt txTop utxoSt₁ utxoStep) λ _ → refl
+
+      completeness = completeness-aux (IsValidFlagOf txTop ≟ true)
 ```
 -->
