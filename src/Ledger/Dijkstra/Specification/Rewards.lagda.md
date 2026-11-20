@@ -17,9 +17,9 @@ open import Data.Rational using (ℚ; floor; _*_; _÷_; _/_; _-_; >-nonZero; _�
                           renaming (_⊔_ to _⊔ℚ_; NonZero to NonZeroℚ)
 open import Data.Rational.Literals using (number; fromℤ)
 open import Data.Rational.Properties using (pos⇒nonZero; positive⁻¹; +-mono-<-≤; normalize-pos; p≤p⊔q)
+open import Data.Maybe using (maybe′)
 open import Ledger.Dijkstra.Specification.Abstract
 open import Ledger.Dijkstra.Specification.Transaction
-open import Ledger.Prelude.Numeric.UnitInterval
 
 open import Agda.Builtin.FromNat
 open        Number number renaming (fromNat to fromℕ)
@@ -32,6 +32,7 @@ module Ledger.Dijkstra.Specification.Rewards
 open import Ledger.Dijkstra.Specification.Certs govStructure
 open import Ledger.Dijkstra.Specification.Ledger txs abs
 open import Ledger.Prelude hiding (_/_; _*_; _-_; >-nonZero; _⊓_)
+open import Ledger.Prelude.Numeric
 open import Ledger.Dijkstra.Specification.Utxo txs abs
 
 nonZero-max-1 : ∀ (n : ℕ) → NonZero (1 ⊔ n)
@@ -52,6 +53,7 @@ maxPool pparams rewardPot stake pledge = rewardℕ
     a0    = 0 ⊔ℚ pparams .PParams.a0
     1+a0  = 1 + a0
     nopt  = 1 ⊔ pparams .PParams.nopt
+    maxLeverageFactor = pparams .PParams.maxPledgeLeverage
 
     instance
       nonZero-nopt : NonZero nopt
@@ -59,6 +61,9 @@ maxPool pparams rewardPot stake pledge = rewardℕ
 
     z0       = 1 / nopt
     stake'   = fromUnitInterval stake ⊓ z0
+    stake''  = maybe′ (λ l → stake' ⊓ (fromUnitInterval pledge * l))
+                      stake'
+                      maxLeverageFactor
     pledge'  = fromUnitInterval pledge ⊓ z0
 
     instance
@@ -69,8 +74,8 @@ maxPool pparams rewardPot stake pledge = rewardℕ
       nonZero-1+a0 = nonZero-1+max0-x (pparams .PParams.a0)
 
     rewardℚ =  fromℕ rewardPot ÷ 1+a0
-               *  (  stake' + pledge' * a0
-                    * ( stake' - pledge' * (z0 - stake') ÷ z0 )
+               *  (  stake'' + pledge' * a0
+                    * ( stake'' - pledge' * (z0 - stake'') ÷ z0 )
                     ÷ z0
                   )
     rewardℕ = posPart (floor rewardℚ)
