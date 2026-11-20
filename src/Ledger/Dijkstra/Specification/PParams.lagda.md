@@ -27,7 +27,7 @@ module Ledger.Dijkstra.Specification.PParams
 
 open import Data.Product.Properties
 open import Data.Nat.Properties using (m+1+n≢m)
-open import Data.Rational as ℚ using (ℚ; ½)
+open import Data.Rational as ℚ using (ℚ; ½; 1ℚ)
 import Data.Maybe.Relation.Unary.All as Maybe
 open import Relation.Nullary.Decidable
 open import Data.List.Relation.Unary.Any using (Any; here; there)
@@ -37,12 +37,15 @@ open import Tactic.Derive.Show
 open import Ledger.Prelude
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
--- open import Ledger.Dijkstra.Specification.Script.Base
-open import Ledger.Prelude.Numeric using (UnitInterval; fromUnitInterval; ℕ⁺)
+open import Ledger.Prelude.Numeric using (UnitInterval; fromUnitInterval; ℕ⁺; Show-UnitInterval)
 
 
-private variable
-  m n : ℕ
+private
+  variable
+    m n : ℕ
+
+  instance
+    _ = Show-Maybe
 ```
 -->
 
@@ -147,6 +150,7 @@ record PParams : Type where
     Emax                          : Epoch
     nopt                          : ℕ
     a0                            : ℚ
+    maxPledgeLeverage             : Maybe ℚ
     collateralPercentage          : ℕ
     -- use an association list instead of a map for DecEq
     costmdlsAssoc                 : LanguageCostModels
@@ -201,13 +205,18 @@ disabled state during rollout.
 ## Protocol Parameter Well Formedness
 
 The Leios parameters are deliberately absent from
-`positivePParams`{.AgdaFunction}: zero values are the protocol's disabled
-state, and governance must be able to reach it.  Of CIP-164's quorum
-constraint `0.5 < τ < σ(N_c)`, the lower bound is a property of the parameters
-alone and `paramsWellFormed`{.AgdaFunction} imposes it (the disabled state
-never needs `τ ≡ 0`); the upper bound relates the threshold to the stake
-coverage of the selected committee, a property of the stake distribution rather
-than of the parameters, so it cannot be imposed here.
+`positivePParams`{.AgdaFunction}: zero values are the protocol's
+disabled state, and governance must be able to reach it.
+
+Leios constrains the `leiosQuorumStakeThreshold`{.AgdaField} parameter
+by `0.5 < τ < σ(N_c)` (see [CIP-164]). The lower bound is enforced by
+`paramsWellFormed`{.AgdaFunction}; the upper bound is a function of
+the stake coverage of the selected committee, a property of the stake
+distribution rather than of the parameters.
+
+When set, [CIP-50] protocol parameter,
+`maxPledgeLeverage`{.AgdaField}, must be at least 1. The upper bound
+of 10.000 is left to the constitutional guardrails.
 
 ```agda
 positivePParams : PParams → List ℕ
@@ -220,6 +229,7 @@ positivePParams pp =  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize
 paramsWellFormed : PParams → Type
 paramsWellFormed pp = 0 ∉ fromList (positivePParams pp)
                     × ½ ℚ.< fromUnitInterval leiosQuorumStakeThreshold
+                    × Maybe.All (λ l → 1ℚ ℚ.≤ l) maxPledgeLeverage
   where open PParams pp
 ```
 
@@ -294,6 +304,7 @@ module PParamsUpdate where
           refScriptCostMultiplier       : Maybe ℚ
           minUTxOValue                  : Maybe Coin -- retired, keep for now
           a0                            : Maybe ℚ
+          maxPledgeLeverage             : Maybe (Maybe ℚ)
           Emax                          : Maybe Epoch
           nopt                          : Maybe ℕ
           collateralPercentage          : Maybe ℕ
@@ -311,6 +322,7 @@ module PParamsUpdate where
                          ∷ coinsPerUTxOByte ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
                          ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
      × Maybe.All (λ τ → ½ ℚ.< fromUnitInterval τ) leiosQuorumStakeThreshold
+     × Maybe.All (Maybe.All (λ l → 1ℚ ℚ.≤ l)) maxPledgeLeverage
     where open PParamsUpdate ppu
 ```
 
@@ -365,6 +377,7 @@ module PParamsUpdate where
   modifiesTechnicalGroup ppu = let open PParamsUpdate ppu in
     or
       ( is-just a0
+      ∷ is-just maxPledgeLeverage
       ∷ is-just Emax
       ∷ is-just nopt
       ∷ is-just collateralPercentage
@@ -475,6 +488,7 @@ module PParamsUpdate where
       ; prices                      = U.prices ?↗ P.prices
       ; minUTxOValue                = U.minUTxOValue ?↗ P.minUTxOValue
       ; a0                          = U.a0 ?↗ P.a0
+      ; maxPledgeLeverage           = U.maxPledgeLeverage ?↗ P.maxPledgeLeverage
       ; Emax                        = U.Emax ?↗ P.Emax
       ; nopt                        = U.nopt ?↗ P.nopt
       ; collateralPercentage        = U.collateralPercentage ?↗ P.collateralPercentage
@@ -510,7 +524,6 @@ record PParamsDiff : Type₁ where
     updateGroups  : UpdateT → ℙ PParamGroup
     ⦃ ppWF? ⦄ : ∀ {u} → (∀ pp → paramsWellFormed pp → paramsWellFormed (applyUpdate pp u)) ⁇
 
-  -- Well-formedness condition
   ppdWellFormed : UpdateT → Type
   ppdWellFormed u =
     updateGroups u ≢ ∅
@@ -520,7 +533,6 @@ record GovParams : Type₁ where
   field ppUpd : PParamsDiff
   open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate) public
   field ⦃ DecEq-UpdT ⦄ : DecEq PParamsUpdate
---         ⦃ Show-UpdT ⦄ : Show PParamsUpdate
 ```
 
 
@@ -531,5 +543,5 @@ and Andre Knispel and Matthias Benkort and Kevin Hammond and Charles
 Hoskinson and Samuel Leathers. *A First Step Towards On-Chain
 Decentralized Governance*. 2023.
 
-[cip-164]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#protocol-parameters "CIP-164 | Protocol parameters"
-[cl-6002]: https://github.com/IntersectMBO/cardano-ledger/pull/6002 "cardano-ledger | Add Leios protocol parameters to DijkstraEra"
+[CIP-164]: https://github.com/cardano-scaling/CIPs/blob/leios/CIP-0164/README.md#protocol-parameters "CIP-164 | Protocol parameters"
+[CIP-50]: https://cips.cardano.org/cip/CIP-50 "CIP-50 | Pledge Leverage-Based Staking Rewards"
