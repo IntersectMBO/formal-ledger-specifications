@@ -27,7 +27,7 @@ module Ledger.Dijkstra.Specification.PParams
 
 open import Data.Product.Properties
 open import Data.Nat.Properties using (m+1+n≢m)
-open import Data.Rational as ℚ using (ℚ; ½)
+open import Data.Rational as ℚ using (ℚ; ½; 0ℚ)
 import Data.Maybe.Relation.Unary.All as Maybe
 open import Relation.Nullary.Decidable
 open import Data.List.Relation.Unary.Any using (Any; here; there)
@@ -37,12 +37,16 @@ open import Tactic.Derive.Show
 open import Ledger.Prelude
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
--- open import Ledger.Dijkstra.Specification.Script.Base
-open import Ledger.Prelude.Numeric using (UnitInterval; fromUnitInterval; ℕ⁺)
+open import Ledger.Prelude.Numeric using (UnitInterval; fromUnitInterval; ℕ⁺; Show-UnitInterval)
+import Data.Maybe.Relation.Unary.All as M
 
 
-private variable
-  m n : ℕ
+private
+  variable
+    m n : ℕ
+
+  instance
+    _ = Show-Maybe
 ```
 -->
 
@@ -147,6 +151,7 @@ record PParams : Type where
     Emax                          : Epoch
     nopt                          : ℕ
     a0                            : ℚ
+    maxPledgeLeverage             : Maybe ℚ
     collateralPercentage          : ℕ
     -- use an association list instead of a map for DecEq
     costmdlsAssoc                 : LanguageCostModels
@@ -220,6 +225,7 @@ positivePParams pp =  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize
 paramsWellFormed : PParams → Type
 paramsWellFormed pp = 0 ∉ fromList (positivePParams pp)
                     × ½ ℚ.< fromUnitInterval leiosQuorumStakeThreshold
+                    × M.All (λ l → 0ℚ ℚ.< l) maxPledgeLeverage
   where open PParams pp
 ```
 
@@ -294,6 +300,7 @@ module PParamsUpdate where
           refScriptCostMultiplier       : Maybe ℚ
           minUTxOValue                  : Maybe Coin -- retired, keep for now
           a0                            : Maybe ℚ
+          maxPledgeLeverage             : Maybe (Maybe ℚ)
           Emax                          : Maybe Epoch
           nopt                          : Maybe ℕ
           collateralPercentage          : Maybe ℕ
@@ -365,6 +372,7 @@ module PParamsUpdate where
   modifiesTechnicalGroup ppu = let open PParamsUpdate ppu in
     or
       ( is-just a0
+      ∷ is-just maxPledgeLeverage
       ∷ is-just Emax
       ∷ is-just nopt
       ∷ is-just collateralPercentage
@@ -475,6 +483,7 @@ module PParamsUpdate where
       ; prices                      = U.prices ?↗ P.prices
       ; minUTxOValue                = U.minUTxOValue ?↗ P.minUTxOValue
       ; a0                          = U.a0 ?↗ P.a0
+      ; maxPledgeLeverage           = U.maxPledgeLeverage ?↗ P.maxPledgeLeverage
       ; Emax                        = U.Emax ?↗ P.Emax
       ; nopt                        = U.nopt ?↗ P.nopt
       ; collateralPercentage        = U.collateralPercentage ?↗ P.collateralPercentage
