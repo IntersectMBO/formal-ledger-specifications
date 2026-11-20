@@ -50,11 +50,11 @@ d_TopLevelTx_924 = erased
 d_HasPParams'45'LedgerEnv_2710 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 d_HasPParams'45'LedgerEnv_2710 ~v0 ~v1
   = du_HasPParams'45'LedgerEnv_2710
 du_HasPParams'45'LedgerEnv_2710 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 du_HasPParams'45'LedgerEnv_2710
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasPParams'45'LedgerEnv_3930

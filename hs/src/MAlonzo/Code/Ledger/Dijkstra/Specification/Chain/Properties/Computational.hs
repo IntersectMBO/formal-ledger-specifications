@@ -568,7 +568,7 @@ du_delay'63'_3394 v0 v1 v2 v3
                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2904
                   (coe v0))
                (coe
-                  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+                  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
                   (coe
                      MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasPParams'45'EnactState_1376)
                   (coe
@@ -752,7 +752,7 @@ du_validCert'63'_3398 v0 v1 v2 v3
                         (coe
                            MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosQuorumStakeThreshold_442
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
                               (coe
                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasPParams'45'EnactState_1376)
                               (coe
@@ -886,7 +886,7 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                                                           (coe
                                                                                                              v0))
                                                                                                        (coe
-                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
                                                                                                           (coe
                                                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasPParams'45'EnactState_1376)
                                                                                                           (coe
@@ -1075,7 +1075,7 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                                                                                                                 (coe
                                                                                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosQuorumStakeThreshold_442
                                                                                                                                                                    (coe
-                                                                                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+                                                                                                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
                                                                                                                                                                       (coe
                                                                                                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasPParams'45'EnactState_1376)
                                                                                                                                                                       (coe
@@ -1224,7 +1224,7 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                                                                                                                                             coe
                                                                                                                                                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBSize_436
                                                                                                                                                                                                  (coe
-                                                                                                                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+                                                                                                                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
                                                                                                                                                                                                     (coe
                                                                                                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasPParams'45'LedgerEnv_3930)
                                                                                                                                                                                                     v33)))))
@@ -1254,7 +1254,7 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                                                                                                                                             coe
                                                                                                                                                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBTxsSize_438
                                                                                                                                                                                                  (coe
-                                                                                                                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+                                                                                                                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
                                                                                                                                                                                                     (coe
                                                                                                                                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasPParams'45'LedgerEnv_3930)
                                                                                                                                                                                                     v33))))))) in
@@ -1315,14 +1315,14 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                                                                                                                                                                                    (coe
                                                                                                                                                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxRefScriptSizePerEB_446
                                                                                                                                                                                                                                       (coe
-                                                                                                                                                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+                                                                                                                                                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
                                                                                                                                                                                                                                          (coe
                                                                                                                                                                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasPParams'45'LedgerEnv_3930)
                                                                                                                                                                                                                                          v31))
                                                                                                                                                                                                                                    (coe
                                                                                                                                                                                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBExUnits_444
                                                                                                                                                                                                                                       (coe
-                                                                                                                                                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+                                                                                                                                                                                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
                                                                                                                                                                                                                                          (coe
                                                                                                                                                                                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasPParams'45'LedgerEnv_3930)
                                                                                                                                                                                                                                          v31)))))

@@ -85,7 +85,7 @@ d_HasCast'45'EnactEnv_36
 d_HasEnactState_38 a0 a1 = ()
 -- Ledger.Dijkstra.Foreign.Enact._.HasPParams-EnactState
 d_HasPParams'45'EnactState_42 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 d_HasPParams'45'EnactState_42
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasPParams'45'EnactState_1376
@@ -97,7 +97,7 @@ d_HasWithdrawals'45'EnactState_44
       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasWithdrawals'45'EnactState_1380
 -- Ledger.Dijkstra.Foreign.Enact._.HasccMaxTermLength-EnactState
 d_HasccMaxTermLength'45'EnactState_46 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasCCMaxTermLength_766
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasCCMaxTermLength_768
 d_HasccMaxTermLength'45'EnactState_46
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasccMaxTermLength'45'EnactState_1378

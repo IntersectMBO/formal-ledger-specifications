@@ -632,7 +632,6 @@ library
       MAlonzo.Code.Ledger.Prelude.Instances
       MAlonzo.Code.Ledger.Prelude.Numeric
       MAlonzo.Code.Ledger.Prelude.Numeric.PositiveNat
-      MAlonzo.Code.Ledger.Prelude.Numeric.PositiveRational
       MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval
       MAlonzo.Code.Level
       MAlonzo.Code.Meta.Init

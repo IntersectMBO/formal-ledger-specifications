@@ -43,7 +43,6 @@ import qualified MAlonzo.Code.Foreign.Haskell.Pair
 import qualified MAlonzo.Code.Interface.ComputationalRelation
 import qualified MAlonzo.Code.Ledger.Prelude.Foreign.Util
 import qualified MAlonzo.Code.Ledger.Prelude.Numeric.PositiveNat
-import qualified MAlonzo.Code.Ledger.Prelude.Numeric.PositiveRational
 import qualified MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval
 import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
 
@@ -517,78 +516,6 @@ d_Conv'45'PosNat_156
                    -> coe
                         MAlonzo.Code.Ledger.Prelude.Foreign.Util.d_error_10 erased
                         ("Formal Spec: natural number is zero (not nonZero)"
-                         ::
-                         Data.Text.Text)
-                 _ -> MAlonzo.RTE.mazUnreachableError)))
--- Ledger.Prelude.Foreign.HSTypes.HsTy-PosRational
-d_HsTy'45'PosRational_166 ::
-  MAlonzo.Code.Class.HasHsType.Core.T_HasHsType_10
-d_HsTy'45'PosRational_166 = erased
--- Ledger.Prelude.Foreign.HSTypes.Conv-PosRational
-d_Conv'45'PosRational_168 ::
-  MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
-d_Conv'45'PosRational_168
-  = coe
-      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
-      (coe
-         (\ v0 ->
-            coe
-              MAlonzo.Code.Class.Convertible.Core.d_to_20
-              (coe
-                 MAlonzo.Code.Class.Convertible.Core.C_constructor_24
-                 (coe
-                    (\ v1 ->
-                       case coe v1 of
-                         MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v2 v3
-                           -> coe
-                                C__'44'__24 (coe v2) (coe addInt (coe (1 :: Integer)) (coe v3))
-                         _ -> MAlonzo.RTE.mazUnreachableError))
-                 (coe
-                    (\ v1 ->
-                       case coe v1 of
-                         C__'44'__24 v2 v3
-                           -> case coe v3 of
-                                0 -> coe MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
-                                _ -> coe
-                                       MAlonzo.Code.Data.Rational.Base.du__'47'__156 (coe v2)
-                                       (coe v3)
-                         _ -> MAlonzo.RTE.mazUnreachableError)))
-              (MAlonzo.Code.Ledger.Prelude.Numeric.PositiveRational.d_fromPosRational_16
-                 (coe v0))))
-      (coe
-         (\ v0 ->
-            let v1
-                  = MAlonzo.Code.Ledger.Prelude.Numeric.PositiveRational.d_toPosRational_18
-                      (coe
-                         MAlonzo.Code.Class.Convertible.Core.d_from_22
-                         (coe
-                            MAlonzo.Code.Class.Convertible.Core.C_constructor_24
-                            (coe
-                               (\ v1 ->
-                                  case coe v1 of
-                                    MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v2 v3
-                                      -> coe
-                                           C__'44'__24 (coe v2)
-                                           (coe addInt (coe (1 :: Integer)) (coe v3))
-                                    _ -> MAlonzo.RTE.mazUnreachableError))
-                            (coe
-                               (\ v1 ->
-                                  case coe v1 of
-                                    C__'44'__24 v2 v3
-                                      -> case coe v3 of
-                                           0 -> coe MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
-                                           _ -> coe
-                                                  MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                  (coe v2) (coe v3)
-                                    _ -> MAlonzo.RTE.mazUnreachableError)))
-                         v0) in
-            coe
-              (case coe v1 of
-                 MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v2 -> coe v2
-                 MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
-                   -> coe
-                        MAlonzo.Code.Ledger.Prelude.Foreign.Util.d_error_10 erased
-                        ("Formal Spec: positive rational is not positive"
                          ::
                          Data.Text.Text)
                  _ -> MAlonzo.RTE.mazUnreachableError)))

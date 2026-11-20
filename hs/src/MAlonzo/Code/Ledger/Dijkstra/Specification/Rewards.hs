@@ -64,7 +64,6 @@ import qualified MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo
 import qualified MAlonzo.Code.Ledger.Prelude
 import qualified MAlonzo.Code.Ledger.Prelude.Base
 import qualified MAlonzo.Code.Ledger.Prelude.Instances
-import qualified MAlonzo.Code.Ledger.Prelude.Numeric.PositiveRational
 import qualified MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval
 import qualified MAlonzo.Code.Prelude
 import qualified MAlonzo.Code.Relation.Binary.Construct.Flip.EqAndOrd
@@ -347,7 +346,7 @@ d_maxHeaderSize_2044 v0
 -- _.PParams.maxPledgeLeverage
 d_maxPledgeLeverage_2046 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320 ->
-  Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
+  Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_maxPledgeLeverage_2046 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_484
@@ -935,12 +934,12 @@ d_maxLeverageFactor_3636 ::
   Integer ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 ->
-  Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
+  Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_maxLeverageFactor_3636 ~v0 ~v1 v2 ~v3 ~v4 ~v5
   = du_maxLeverageFactor_3636 v2
 du_maxLeverageFactor_3636 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320 ->
-  Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
+  Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 du_maxLeverageFactor_3636 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_484
@@ -1011,9 +1010,7 @@ du_stake''''_3644 v0 v1 v2
               (coe
                  MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_fromUnitInterval_72
                  (coe v2))
-              (coe
-                 MAlonzo.Code.Ledger.Prelude.Numeric.PositiveRational.d_fromPosRational_16
-                 (coe v3))))
+              (coe v3)))
       (coe du_stake''_3642 (coe v0) (coe v1))
       (coe du_maxLeverageFactor_3636 (coe v0))
 -- Ledger.Dijkstra.Specification.Rewards._.pledge'

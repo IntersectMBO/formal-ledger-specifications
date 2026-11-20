@@ -328,7 +328,7 @@ d_maxHeaderSize_752 v0
 -- _.PParams.maxPledgeLeverage
 d_maxPledgeLeverage_754 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320 ->
-  Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
+  Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_maxPledgeLeverage_754 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_484
@@ -565,10 +565,10 @@ du_HasEpoch'45'GovEnv_1068
 -- Ledger.Dijkstra.Specification.Gov.Properties.Computational._.HasPParams-GovEnv
 d_HasPParams'45'GovEnv_1074 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 d_HasPParams'45'GovEnv_1074 ~v0 = du_HasPParams'45'GovEnv_1074
 du_HasPParams'45'GovEnv_1074 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 du_HasPParams'45'GovEnv_1074
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_HasPParams'45'GovEnv_2176
@@ -2294,7 +2294,7 @@ d_H_2732 v0 v1 v2 v3
                      (coe
                         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionDeposit_500
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
                            (coe
                               MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_HasPParams'45'GovEnv_2176)
                            (coe du_Γ_2500 (coe v1))))))
@@ -2961,7 +2961,7 @@ d_computeProof_2740 v0 v1 v2 v3
                                                                    (coe
                                                                       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionDeposit_500
                                                                       (coe
-                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
                                                                          (coe
                                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_HasPParams'45'GovEnv_2176)
                                                                          (coe du_Γ_2500 (coe v1)))))

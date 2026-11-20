@@ -193,7 +193,7 @@ d_HasNewEpochState'45'ChainState_80
       MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_HasNewEpochState'45'ChainState_4456
 -- Ledger.Dijkstra.Foreign.Chain._.HasPParams-ChainState
 d_HasPParams'45'ChainState_82 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 d_HasPParams'45'ChainState_82
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.du_HasPParams'45'ChainState_4472

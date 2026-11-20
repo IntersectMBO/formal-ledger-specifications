@@ -1987,7 +1987,7 @@ d_'61''61''45'GovActionData_1510 v0 v1
         -> coe
              MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18 (coe ())
              (coe
-                MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_DecEq'45'UpdT_1926
+                MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_DecEq'45'UpdT_1928
                 (coe
                    MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_govParams_1466
                    (coe v0)))

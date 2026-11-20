@@ -1728,7 +1728,7 @@ d_Conv'45'DelegEnv_30
                               MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                               (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                               (coe
-                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosRational_168))
+                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                            (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_484
                               (coe v1)))
                         (coe
@@ -2454,7 +2454,7 @@ d_Conv'45'DelegEnv_30
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosRational_168))
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                              v40)
                                           (coe v41)
                                           (coe
@@ -3246,7 +3246,7 @@ d_Conv'45'DelegEnv_30
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosRational_168))
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                              v40)
                                           (coe v41)
                                           (coe
@@ -4634,7 +4634,7 @@ d_Conv'45'GovCertEnv_34
                               MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                               (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                               (coe
-                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosRational_168))
+                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                            (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_484
                               (coe v2)))
                         (coe
@@ -5350,7 +5350,7 @@ d_Conv'45'GovCertEnv_34
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosRational_168))
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                              v40)
                                           (coe v41)
                                           (coe
@@ -6142,7 +6142,7 @@ d_Conv'45'GovCertEnv_34
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosRational_168))
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                              v40)
                                           (coe v41)
                                           (coe
@@ -8162,7 +8162,7 @@ d_Conv'45'CertEnv_50
                               MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                               (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                               (coe
-                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosRational_168))
+                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                            (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_484
                               (coe v2)))
                         (coe
@@ -8878,7 +8878,7 @@ d_Conv'45'CertEnv_50
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosRational_168))
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                              v40)
                                           (coe v41)
                                           (coe
@@ -9670,7 +9670,7 @@ d_Conv'45'CertEnv_50
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosRational_168))
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                              v40)
                                           (coe v41)
                                           (coe
@@ -11031,7 +11031,7 @@ d_Conv'45'PoolEnv_54
                               MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                               (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                               (coe
-                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosRational_168))
+                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                            (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_484
                               (coe v2)))
                         (coe
@@ -11738,7 +11738,7 @@ d_Conv'45'PoolEnv_54
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosRational_168))
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                              v39)
                                           (coe v40)
                                           (coe
@@ -12530,7 +12530,7 @@ d_Conv'45'PoolEnv_54
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosRational_168))
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                              v39)
                                           (coe v40)
                                           (coe

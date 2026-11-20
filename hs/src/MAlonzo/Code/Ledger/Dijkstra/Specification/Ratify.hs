@@ -585,7 +585,7 @@ d_maxHeaderSize_1716 v0
 -- Ledger.Dijkstra.Specification.Ratify._.PParams.maxPledgeLeverage
 d_maxPledgeLeverage_1718 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320 ->
-  Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
+  Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_maxPledgeLeverage_1718 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_484
@@ -1114,8 +1114,8 @@ du_P'47'Q5_2118 v0 v1 v2
                MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                  (coe du_pparamThreshold_2116 (coe v1) (coe v3)))
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_updateGroups_1878
-               (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1912
+               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_updateGroups_1880
+               (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1914
                   (coe
                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_govParams_1466
                      (coe v0)))
@@ -1131,8 +1131,8 @@ du_P'47'Q5_2118 v0 v1 v2
                MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                  (coe du_pparamThreshold_2116 (coe v1) (coe v3)))
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_updateGroups_1878
-               (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1912
+               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_updateGroups_1880
+               (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1914
                   (coe
                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_govParams_1466
                      (coe v0)))

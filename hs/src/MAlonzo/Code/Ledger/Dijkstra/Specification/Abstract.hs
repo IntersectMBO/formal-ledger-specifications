@@ -393,7 +393,7 @@ d_maxHeaderSize_2038 v0
 -- Ledger.Dijkstra.Specification.Abstract._.PParams.maxPledgeLeverage
 d_maxPledgeLeverage_2040 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320 ->
-  Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
+  Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_maxPledgeLeverage_2040 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_484

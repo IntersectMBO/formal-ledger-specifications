@@ -69,11 +69,11 @@ d_TopLevelTx_928 = erased
 d_HasPParams'45'LedgerEnv_2714 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 d_HasPParams'45'LedgerEnv_2714 ~v0 ~v1
   = du_HasPParams'45'LedgerEnv_2714
 du_HasPParams'45'LedgerEnv_2714 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 du_HasPParams'45'LedgerEnv_2714
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasPParams'45'LedgerEnv_3930
@@ -245,7 +245,7 @@ du_leiosMaxEBSize_2970 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBSize_436
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasPParams'45'LedgerEnv_3930)
          v0)
@@ -266,7 +266,7 @@ du_leiosMaxEBTxsSize_2972 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBTxsSize_438
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasPParams'45'LedgerEnv_3930)
          v0)
@@ -326,7 +326,7 @@ d_checks'63'_3028 v0 v1 v2 v3 v4
                      v1 v4)
                   (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBSize_436
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+                        MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
                         (coe
                            MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasPParams'45'LedgerEnv_3930)
                         v2))))
@@ -346,7 +346,7 @@ d_checks'63'_3028 v0 v1 v2 v3 v4
                      v3)
                   (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBTxsSize_438
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+                        MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
                         (coe
                            MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasPParams'45'LedgerEnv_3930)
                         v2))))))
@@ -413,7 +413,7 @@ d_Computational'45'EB_3030 v0 v1
                                               v1 v6)
                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBSize_436
                                               (coe
-                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
                                                  (coe
                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasPParams'45'LedgerEnv_3930)
                                                  v3))))
@@ -433,7 +433,7 @@ d_Computational'45'EB_3030 v0 v1
                                               v4)
                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBTxsSize_438
                                               (coe
-                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
                                                  (coe
                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasPParams'45'LedgerEnv_3930)
                                                  v3)))))) in
@@ -468,14 +468,14 @@ d_Computational'45'EB_3030 v0 v1
                                                                                 (coe
                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxRefScriptSizePerEB_446
                                                                                    (coe
-                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
                                                                                       (coe
                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasPParams'45'LedgerEnv_3930)
                                                                                       v3))
                                                                                 (coe
                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBExUnits_444
                                                                                    (coe
-                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+                                                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
                                                                                       (coe
                                                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasPParams'45'LedgerEnv_3930)
                                                                                       v3)))))

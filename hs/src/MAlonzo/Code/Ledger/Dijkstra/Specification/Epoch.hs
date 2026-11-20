@@ -195,12 +195,12 @@ d_Number'45'Epoch_728 v0
 d_PParams_740 a0 = ()
 -- _.PParamsOf
 d_PParamsOf_748 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320
 d_PParamsOf_748 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
       (coe v0)
 -- _.RewardAddress
 d_RewardAddress_810 a0 = ()
@@ -296,12 +296,12 @@ d_DRepsOf_1656 v0
       (coe v0)
 -- _.HasPParams.PParamsOf
 d_PParamsOf_1784 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320
 d_PParamsOf_1784 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
       (coe v0)
 -- _.PParams.Emax
 d_Emax_1982 ::
@@ -528,7 +528,7 @@ d_maxHeaderSize_2038 v0
 -- _.PParams.maxPledgeLeverage
 d_maxPledgeLeverage_2040 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320 ->
-  Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
+  Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_maxPledgeLeverage_2040 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_484
@@ -991,11 +991,11 @@ d_HasEnactState_3216 a0 a1 a2 a3 = ()
 d_HasPParams'45'EnactState_3220 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 d_HasPParams'45'EnactState_3220 ~v0 ~v1
   = du_HasPParams'45'EnactState_3220
 du_HasPParams'45'EnactState_3220 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 du_HasPParams'45'EnactState_3220
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasPParams'45'EnactState_1376
@@ -1785,18 +1785,18 @@ du_HasReserves'45'EpochState_4278
 d_HasPParams'45'EpochState_4280 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 d_HasPParams'45'EpochState_4280 ~v0 ~v1
   = du_HasPParams'45'EpochState_4280
 du_HasPParams'45'EpochState_4280 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 du_HasPParams'45'EpochState_4280
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_756
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_758
       (coe
          (\ v0 ->
             coe
-              MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+              MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
               (coe
                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasPParams'45'EnactState_1376)
               (d_es_4240 (coe v0))))
@@ -2100,18 +2100,18 @@ du_HasRewards'45'NewEpochState_4376
 d_HasPParams'45'NewEpochState_4378 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 d_HasPParams'45'NewEpochState_4378 ~v0 ~v1
   = du_HasPParams'45'NewEpochState_4378
 du_HasPParams'45'NewEpochState_4378 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 du_HasPParams'45'NewEpochState_4378
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_756
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_758
       (coe
          (\ v0 ->
             coe
-              MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+              MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
               (coe
                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasPParams'45'EnactState_1376)
               (d_es_4240 (coe d_epochState_4310 (coe v0)))))
@@ -2687,7 +2687,7 @@ du_prevPp_4398 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320
 du_prevPp_4398 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasPParams'45'EnactState_1376)
       (d_es_4240 (coe v0))

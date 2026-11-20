@@ -176,13 +176,13 @@ d_HasLedgerState'45'NewEpochState_60
 d_HasNewEpochState_62 a0 a1 = ()
 -- Ledger.Dijkstra.Foreign.Epoch._.HasPParams-EpochState
 d_HasPParams'45'EpochState_66 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 d_HasPParams'45'EpochState_66
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_HasPParams'45'EpochState_4280
 -- Ledger.Dijkstra.Foreign.Epoch._.HasPParams-NewEpochState
 d_HasPParams'45'NewEpochState_68 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 d_HasPParams'45'NewEpochState_68
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.du_HasPParams'45'NewEpochState_4378

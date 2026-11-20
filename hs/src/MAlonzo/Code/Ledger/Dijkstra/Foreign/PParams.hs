@@ -1091,7 +1091,7 @@ d_Conv'45'PParams_26
                            MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosRational_168))
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                         v36)
                      (coe v37)
                      (coe
@@ -1758,7 +1758,7 @@ d_Conv'45'PParams_26
                            MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosRational_168))
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                         v36)
                      (coe v37)
                      (coe
@@ -2683,7 +2683,7 @@ d_Conv'45'PParamsUpdate_30
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_984 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35 v36 v37 v38 v39 v40 v41 v42 v43 v44 v45 v46
+              MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_986 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35 v36 v37 v38 v39 v40 v41 v42 v43 v44 v45 v46
                 -> coe
                      C_MkPParamsUpdate_215257
                      (coe
@@ -2947,7 +2947,7 @@ d_Conv'45'PParamsUpdate_30
                            (coe
                               MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                               (coe
-                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosRational_168)))
+                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34)))
                         v34)
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3039,7 +3039,7 @@ d_Conv'45'PParamsUpdate_30
             case coe v0 of
               C_MkPParamsUpdate_215257 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35 v36 v37 v38 v39 v40 v41 v42 v43 v44 v45 v46
                 -> coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_984
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_986
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
                         (coe
@@ -3301,7 +3301,7 @@ d_Conv'45'PParamsUpdate_30
                            (coe
                               MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
                               (coe
-                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosRational_168)))
+                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34)))
                         v34)
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22

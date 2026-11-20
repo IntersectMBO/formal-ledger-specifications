@@ -87,7 +87,7 @@ d_EntitiesEnv'45'HasEpoch_22
       MAlonzo.Code.Ledger.Dijkstra.Specification.Entities.du_EntitiesEnv'45'HasEpoch_3214
 -- Ledger.Dijkstra.Foreign.Entities._.EntitiesEnv-HasPParams
 d_EntitiesEnv'45'HasPParams_24 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 d_EntitiesEnv'45'HasPParams_24
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Entities.du_EntitiesEnv'45'HasPParams_3218
@@ -697,7 +697,7 @@ d_Conv'45'EntitiesEnv_100
                               MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                               (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                               (coe
-                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosRational_168))
+                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                            (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_484
                               (coe v2)))
                         (coe
@@ -1426,7 +1426,7 @@ d_Conv'45'EntitiesEnv_100
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosRational_168))
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                              v42)
                                           (coe v43)
                                           (coe
@@ -2218,7 +2218,7 @@ d_Conv'45'EntitiesEnv_100
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosRational_168))
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                              v42)
                                           (coe v43)
                                           (coe
@@ -3629,7 +3629,7 @@ d_Conv'45'SubEntitiesEnv_104
                               MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                               (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                               (coe
-                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosRational_168))
+                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                            (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_484
                               (coe v2)))
                         (coe
@@ -4357,7 +4357,7 @@ d_Conv'45'SubEntitiesEnv_104
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosRational_168))
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                              v41)
                                           (coe v42)
                                           (coe
@@ -5149,7 +5149,7 @@ d_Conv'45'SubEntitiesEnv_104
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosRational_168))
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                              v41)
                                           (coe v42)
                                           (coe

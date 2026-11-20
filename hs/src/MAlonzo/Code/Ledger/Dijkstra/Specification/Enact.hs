@@ -55,11 +55,11 @@ d__'43''7497'__12 v0
          (coe v0))
 -- _.CCMaxTermLengthOf
 d_CCMaxTermLengthOf_52 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasCCMaxTermLength_766 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasCCMaxTermLength_768 ->
   AgdaAny -> Integer
 d_CCMaxTermLengthOf_52 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_CCMaxTermLengthOf_774
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_CCMaxTermLengthOf_776
       (coe v0)
 -- _.Credential
 d_Credential_56 a0 a1 a2 a3 = ()
@@ -113,12 +113,12 @@ d_HasWithdrawals_226 a0 a1 a2 a3 a4 a5 = ()
 d_PParams_288 a0 = ()
 -- _.PParamsOf
 d_PParamsOf_296 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320
 d_PParamsOf_296 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
       (coe v0)
 -- _.UpdateT
 d_UpdateT_298 ::
@@ -153,9 +153,9 @@ d_applyUpdate_428 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320
 d_applyUpdate_428 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_applyUpdate_1876
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_applyUpdate_1878
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1912
+         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1914
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_govParams_1466
             (coe v0)))
@@ -171,20 +171,20 @@ d_preoEpoch_522 v0
          (coe v0))
 -- _.HasCCMaxTermLength.CCMaxTermLengthOf
 d_CCMaxTermLengthOf_638 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasCCMaxTermLength_766 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasCCMaxTermLength_768 ->
   AgdaAny -> Integer
 d_CCMaxTermLengthOf_638 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_CCMaxTermLengthOf_774
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_CCMaxTermLengthOf_776
       (coe v0)
 -- _.HasPParams.PParamsOf
 d_PParamsOf_654 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320
 d_PParamsOf_654 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
       (coe v0)
 -- _.HasWithdrawals.WithdrawalsOf
 d_WithdrawalsOf_662 ::
@@ -419,7 +419,7 @@ d_maxHeaderSize_746 v0
 -- _.PParams.maxPledgeLeverage
 d_maxPledgeLeverage_748 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320 ->
-  Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
+  Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_maxPledgeLeverage_748 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_484
@@ -681,14 +681,14 @@ d_EnactStateOf_1374 v0 = coe d_EnactStateOf_1368 (coe v0)
 -- Ledger.Dijkstra.Specification.Enact.HasPParams-EnactState
 d_HasPParams'45'EnactState_1376 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 d_HasPParams'45'EnactState_1376 ~v0
   = du_HasPParams'45'EnactState_1376
 du_HasPParams'45'EnactState_1376 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 du_HasPParams'45'EnactState_1376
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_756
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_758
       (coe
          (\ v0 ->
             MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
@@ -696,14 +696,14 @@ du_HasPParams'45'EnactState_1376
 -- Ledger.Dijkstra.Specification.Enact.HasccMaxTermLength-EnactState
 d_HasccMaxTermLength'45'EnactState_1378 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasCCMaxTermLength_766
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasCCMaxTermLength_768
 d_HasccMaxTermLength'45'EnactState_1378 ~v0
   = du_HasccMaxTermLength'45'EnactState_1378
 du_HasccMaxTermLength'45'EnactState_1378 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasCCMaxTermLength_766
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasCCMaxTermLength_768
 du_HasccMaxTermLength'45'EnactState_1378
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_776
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_778
       (coe
          (\ v0 ->
             MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMaxTermLength_496

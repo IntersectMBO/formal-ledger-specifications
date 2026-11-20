@@ -335,11 +335,11 @@ d_CCHotKeysOf_88 v0
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.CCMaxTermLengthOf
 d_CCMaxTermLengthOf_90 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasCCMaxTermLength_766 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasCCMaxTermLength_768 ->
   AgdaAny -> Integer
 d_CCMaxTermLengthOf_90 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_CCMaxTermLengthOf_774
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_CCMaxTermLengthOf_776
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.CertEnv
 d_CertEnv_98 = ()
@@ -751,7 +751,7 @@ d_DecEq'45'DrepThresholds_184 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'DrepThresholds_184
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_DecEq'45'DrepThresholds_782
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_DecEq'45'DrepThresholds_784
 -- Ledger.Dijkstra.Foreign.HSStructures._.DecEq-Epoch
 d_DecEq'45'Epoch_186 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'Epoch_186
@@ -964,7 +964,7 @@ d_DecEq'45'PParamGroup_214 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'PParamGroup_214
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_DecEq'45'PParamGroup_788
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_DecEq'45'PParamGroup_790
 -- Ledger.Dijkstra.Foreign.HSStructures._.DecEq-PParams
 d_DecEq'45'PParams_216 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'PParams_216
@@ -976,7 +976,7 @@ d_DecEq'45'PParams_216
                  (coe v0) in
        coe
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_DecEq'45'PParams_786
+            MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_DecEq'45'PParams_788
             (coe
                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1432
                (coe v1))
@@ -988,7 +988,7 @@ d_DecEq'45'PoolThresholds_218 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'PoolThresholds_218
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_DecEq'45'PoolThresholds_784
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_DecEq'45'PoolThresholds_786
 -- Ledger.Dijkstra.Foreign.HSStructures._.DecEq-RewardAddress
 d_DecEq'45'RewardAddress_220 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
@@ -1233,7 +1233,7 @@ d_DecEq'45'UpdT_246
                  (coe v0) in
        coe
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_DecEq'45'UpdT_1926
+            MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_DecEq'45'UpdT_1928
             (coe
                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govParams_2768
                (coe v1))))
@@ -2105,13 +2105,13 @@ d_HasNetworkId'45'RewardAddress_660
 d_HasPParams_662 a0 a1 = ()
 -- Ledger.Dijkstra.Foreign.HSStructures._.HasPParams-CertEnv
 d_HasPParams'45'CertEnv_666 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 d_HasPParams'45'CertEnv_666
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasPParams'45'CertEnv_1998
 -- Ledger.Dijkstra.Foreign.HSStructures._.HasPParams-GovCertEnv
 d_HasPParams'45'GovCertEnv_668 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 d_HasPParams'45'GovCertEnv_668
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.du_HasPParams'45'GovCertEnv_2000
@@ -2525,7 +2525,7 @@ d_Hashable'45'ScriptIntegrity_878
             (coe v0)))
 -- Ledger.Dijkstra.Foreign.HSStructures._.HsGovParams
 d_HsGovParams_880 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1894
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1896
 d_HsGovParams_880
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HsGovParams_648
@@ -2830,12 +2830,12 @@ d_PParams_1000 = ()
 d_PParamsDiff_1004 = ()
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsOf
 d_PParamsOf_1008 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320
 d_PParamsOf_1008 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.UpdateT
 d_UpdateT_1010 :: ()
@@ -3166,7 +3166,7 @@ d_Show'45'DrepThresholds_1132 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'DrepThresholds_1132
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_Show'45'DrepThresholds_790
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_Show'45'DrepThresholds_792
 -- Ledger.Dijkstra.Foreign.HSStructures._.Show-Epoch
 d_Show'45'Epoch_1134 :: MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'Epoch_1134
@@ -3263,7 +3263,7 @@ d_Show'45'PParams_1146
                  (coe v0) in
        coe
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_Show'45'PParams_794
+            MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_Show'45'PParams_796
             (coe
                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1432
                (coe v1))
@@ -3275,7 +3275,7 @@ d_Show'45'PoolThresholds_1148 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'PoolThresholds_1148
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_Show'45'PoolThresholds_792
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_Show'45'PoolThresholds_794
 -- Ledger.Dijkstra.Foreign.HSStructures._.Show-Prices
 d_Show'45'Prices_1150 :: MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'Prices_1150
@@ -3955,7 +3955,7 @@ d_applyFPools_1330
 -- Ledger.Dijkstra.Foreign.HSStructures._.applyUpdate
 d_applyUpdate_1332 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320
 d_applyUpdate_1332
   = let v0
@@ -3966,9 +3966,9 @@ d_applyUpdate_1332
                  (coe v0) in
        coe
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_applyUpdate_1876
+            MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_applyUpdate_1878
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1912
+               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1914
                (coe
                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govParams_2768
                   (coe v1)))))
@@ -4182,7 +4182,7 @@ d_globalConstants_1396
   = coe MAlonzo.Code.Ledger.Core.Foreign.Epoch.d_HSGlobalConstants_8
 -- Ledger.Dijkstra.Foreign.HSStructures._.govParams
 d_govParams_1398 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1894
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1896
 d_govParams_1398
   = let v0
           = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
@@ -4468,7 +4468,7 @@ d_paramsWF'45'elim_1468 ::
   MAlonzo.Code.Data.Nat.Base.T__'8804'__22
 d_paramsWF'45'elim_1468 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_paramsWF'45'elim_722
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_paramsWF'45'elim_724
       v1 v2
 -- Ledger.Dijkstra.Foreign.HSStructures._.paramsWellFormed
 d_paramsWellFormed_1470 ::
@@ -4528,7 +4528,7 @@ d_positivePParams_1480
       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_positivePParams_510
 -- Ledger.Dijkstra.Foreign.HSStructures._.ppUpd
 d_ppUpd_1482 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1860
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1862
 d_ppUpd_1482
   = let v0
           = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
@@ -4538,13 +4538,13 @@ d_ppUpd_1482
                  (coe v0) in
        coe
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1912
+            MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1914
             (coe
                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govParams_2768
                (coe v1))))
 -- Ledger.Dijkstra.Foreign.HSStructures._.ppWF?
 d_ppWF'63'_1484 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_ppWF'63'_1484
   = let v0
@@ -4555,15 +4555,15 @@ d_ppWF'63'_1484
                  (coe v0) in
        coe
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppWF'63'_1884
+            MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppWF'63'_1886
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1912
+               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1914
                (coe
                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govParams_2768
                   (coe v1)))))
 -- Ledger.Dijkstra.Foreign.HSStructures._.ppdWellFormed
 d_ppdWellFormed_1486 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   ()
 d_ppdWellFormed_1486 = erased
 -- Ledger.Dijkstra.Foreign.HSStructures._.preoEpoch
@@ -4827,7 +4827,7 @@ d_txidBytes_1536 :: Integer -> Integer
 d_txidBytes_1536 v0 = coe v0
 -- Ledger.Dijkstra.Foreign.HSStructures._.updateGroups
 d_updateGroups_1538 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   [MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamGroup_240]
 d_updateGroups_1538
   = let v0
@@ -4838,9 +4838,9 @@ d_updateGroups_1538
                  (coe v0) in
        coe
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_updateGroups_1878
+            MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_updateGroups_1880
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1912
+               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1914
                (coe
                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govParams_2768
                   (coe v1)))))
@@ -5544,62 +5544,62 @@ d_pp_1846 v0
       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pp_1668 (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.GovParams.DecEq-UpdT
 d_DecEq'45'UpdT_1850 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1894 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1896 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'UpdT_1850 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_DecEq'45'UpdT_1926
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_DecEq'45'UpdT_1928
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.GovParams.UpdateT
 d_UpdateT_1852 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1894 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1896 ->
   ()
 d_UpdateT_1852 = erased
 -- Ledger.Dijkstra.Foreign.HSStructures._.GovParams.applyUpdate
 d_applyUpdate_1854 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1894 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1896 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320
 d_applyUpdate_1854 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_applyUpdate_1876
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_applyUpdate_1878
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1912
+         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1914
          (coe v0))
 -- Ledger.Dijkstra.Foreign.HSStructures._.GovParams.ppUpd
 d_ppUpd_1856 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1894 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1860
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1896 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1862
 d_ppUpd_1856 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1912
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1914
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.GovParams.ppWF?
 d_ppWF'63'_1858 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1894 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1896 ->
   AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_ppWF'63'_1858 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppWF'63'_1884
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppWF'63'_1886
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1912
+         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1914
          (coe v0))
 -- Ledger.Dijkstra.Foreign.HSStructures._.GovParams.ppdWellFormed
 d_ppdWellFormed_1860 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1894 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1896 ->
   AgdaAny -> ()
 d_ppdWellFormed_1860 = erased
 -- Ledger.Dijkstra.Foreign.HSStructures._.GovParams.updateGroups
 d_updateGroups_1862 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1894 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1896 ->
   AgdaAny ->
   [MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamGroup_240]
 d_updateGroups_1862 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_updateGroups_1878
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_updateGroups_1880
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1912
+         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1914
          (coe v0))
 -- Ledger.Dijkstra.Foreign.HSStructures._.GovProposal.action
 d_action_1866 ::
@@ -6375,11 +6375,11 @@ d_CCHotKeysOf_2220 v0
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.HasCCMaxTermLength.CCMaxTermLengthOf
 d_CCMaxTermLengthOf_2224 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasCCMaxTermLength_766 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasCCMaxTermLength_768 ->
   AgdaAny -> Integer
 d_CCMaxTermLengthOf_2224 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_CCMaxTermLengthOf_774
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_CCMaxTermLengthOf_776
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.HasCertState.CertStateOf
 d_CertStateOf_2228 ::
@@ -6569,12 +6569,12 @@ d_NetworkIdOf_2312 v0
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.HasPParams.PParamsOf
 d_PParamsOf_2316 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320
 d_PParamsOf_2316 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.HasPState.PStateOf
 d_PStateOf_2320 ::
@@ -7324,7 +7324,7 @@ d_maxHeaderSize_2598 v0
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParams.maxPledgeLeverage
 d_maxPledgeLeverage_2600 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320 ->
-  Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
+  Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_maxPledgeLeverage_2600 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_484
@@ -7467,46 +7467,46 @@ d_treasuryCut_2634 v0
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsDiff.UpdateT
 d_UpdateT_2638 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1860 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1862 ->
   ()
 d_UpdateT_2638 = erased
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsDiff.applyUpdate
 d_applyUpdate_2640 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1860 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1862 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320
 d_applyUpdate_2640 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_applyUpdate_1876
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_applyUpdate_1878
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsDiff.ppWF?
 d_ppWF'63'_2642 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1860 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1862 ->
   AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_ppWF'63'_2642 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppWF'63'_1884
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppWF'63'_1886
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsDiff.ppdWellFormed
 d_ppdWellFormed_2644 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1860 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1862 ->
   AgdaAny -> ()
 d_ppdWellFormed_2644 = erased
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsDiff.updateGroups
 d_updateGroups_2646 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1860 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1862 ->
   AgdaAny ->
   [MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamGroup_240]
 d_updateGroups_2646 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_updateGroups_1878
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_updateGroups_1880
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate._?↗_
 d__'63''8599'__2650 :: () -> Maybe AgdaAny -> AgdaAny -> AgdaAny
 d__'63''8599'__2650 v0 v1 v2
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du__'63''8599'__1602
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du__'63''8599'__1604
       v1 v2
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate._∪ˡᶜᵐ_
 d__'8746''737''7580''7504'__2652 ::
@@ -7560,7 +7560,7 @@ d_DecEq'45'PParamsUpdate_2654
                  (coe v0) in
        coe
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_DecEq'45'PParamsUpdate_1858
+            MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_DecEq'45'PParamsUpdate_1860
             (coe
                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1432
                (coe v1))
@@ -7572,7 +7572,7 @@ d_PParamsUpdate_2656 = ()
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.applyPParamsUpdate
 d_applyPParamsUpdate_2660 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320
 d_applyPParamsUpdate_2660
   = let v0
@@ -7583,60 +7583,60 @@ d_applyPParamsUpdate_2660
                  (coe v0) in
        coe
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_applyPParamsUpdate_1656
+            MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_applyPParamsUpdate_1658
             (coe
                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2238
                (coe v1))))
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.modifiedUpdateGroups
 d_modifiedUpdateGroups_2662 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   [MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamGroup_240]
 d_modifiedUpdateGroups_2662
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_modifiedUpdateGroups_1586
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_modifiedUpdateGroups_1588
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.modifiesEconomicGroup
 d_modifiesEconomicGroup_2664 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Bool
 d_modifiesEconomicGroup_2664
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_modifiesEconomicGroup_1194
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_modifiesEconomicGroup_1196
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.modifiesGovernanceGroup
 d_modifiesGovernanceGroup_2666 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Bool
 d_modifiesGovernanceGroup_2666
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_modifiesGovernanceGroup_1390
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_modifiesGovernanceGroup_1392
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.modifiesNetworkGroup
 d_modifiesNetworkGroup_2668 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Bool
 d_modifiesNetworkGroup_2668
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_modifiesNetworkGroup_1096
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_modifiesNetworkGroup_1098
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.modifiesSecurityGroup
 d_modifiesSecurityGroup_2670 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Bool
 d_modifiesSecurityGroup_2670
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_modifiesSecurityGroup_1488
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_modifiesSecurityGroup_1490
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.modifiesTechnicalGroup
 d_modifiesTechnicalGroup_2672 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Bool
 d_modifiesTechnicalGroup_2672
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_modifiesTechnicalGroup_1292
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_modifiesTechnicalGroup_1294
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.paramsUpdateWellFormed
 d_paramsUpdateWellFormed_2674 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   ()
 d_paramsUpdateWellFormed_2674 = erased
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.paramsUpdateWellFormed?
 d_paramsUpdateWellFormed'63'_2676 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_paramsUpdateWellFormed'63'_2676 v0
   = coe
@@ -7663,57 +7663,57 @@ d_paramsUpdateWellFormed'63'_2676 v0
                   (coe
                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockSize_892
+                        MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockSize_894
                         (coe v0))
                      (coe
                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxSize_894
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxSize_896
                            (coe v0))
                         (coe
                            MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxHeaderSize_896
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxHeaderSize_898
                               (coe v0))
                            (coe
                               MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxValSize_898
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxValSize_900
                                  (coe v0))
                               (coe
                                  MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_coinsPerUTxOByte_940
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_coinsPerUTxOByte_942
                                     (coe v0))
                                  (coe
                                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolDeposit_932
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolDeposit_934
                                        (coe v0))
                                     (coe
                                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_collateralPercentage_964
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_collateralPercentage_966
                                           (coe v0))
                                        (coe
                                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMaxTermLength_982
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMaxTermLength_984
                                              (coe v0))
                                           (coe
                                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionLifetime_972
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionLifetime_974
                                                 (coe v0))
                                              (coe
                                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionDeposit_974
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionDeposit_976
                                                    (coe v0))
                                                 (coe
                                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepDeposit_976
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepDeposit_978
                                                       (coe v0))
                                                    (coe
                                                       MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))))))))
@@ -7733,7 +7733,7 @@ d_paramsUpdateWellFormed'63'_2676 v0
                     (MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_fromUnitInterval_72
                        (coe v1))))
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosQuorumStakeThreshold_920
+               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosQuorumStakeThreshold_922
                (coe v0))))
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.≡-update
 d_'8801''45'update_2678 ::
@@ -7743,376 +7743,376 @@ d_'8801''45'update_2678 ::
   AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1858
 d_'8801''45'update_2678 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_'8801''45'update_1616
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_'8801''45'update_1618
       v1
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.Emax
 d_Emax_2682 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_Emax_2682 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Emax_960
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Emax_962
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.a
 d_a_2684 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_a_2684 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a_926 (coe v0)
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a_928 (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.a0
 d_a0_2686 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_a0_2686 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a0_956
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a0_958
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.b
 d_b_2688 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_b_2688 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_b_928 (coe v0)
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_b_930 (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.ccMaxTermLength
 d_ccMaxTermLength_2690 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_ccMaxTermLength_2690 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMaxTermLength_982
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMaxTermLength_984
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.ccMinSize
 d_ccMinSize_2692 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_ccMinSize_2692 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMinSize_980
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMinSize_982
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.coinsPerUTxOByte
 d_coinsPerUTxOByte_2694 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_coinsPerUTxOByte_2694 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_coinsPerUTxOByte_940
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_coinsPerUTxOByte_942
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.collateralPercentage
 d_collateralPercentage_2696 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_collateralPercentage_2696 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_collateralPercentage_964
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_collateralPercentage_966
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.costmdls
 d_costmdls_2698 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe
     MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_LanguageCostModels_690
 d_costmdls_2698 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_costmdls_966
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_costmdls_968
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.drepActivity
 d_drepActivity_2700 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_drepActivity_2700 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepActivity_978
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepActivity_980
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.drepDeposit
 d_drepDeposit_2702 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_drepDeposit_2702 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepDeposit_976
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepDeposit_978
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.drepThresholds
 d_drepThresholds_2704 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe
     MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_DrepThresholds_252
 d_drepThresholds_2704 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_968
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_970
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.govActionDeposit
 d_govActionDeposit_2706 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_govActionDeposit_2706 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionDeposit_974
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionDeposit_976
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.govActionLifetime
 d_govActionLifetime_2708 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_govActionLifetime_2708 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionLifetime_972
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionLifetime_974
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.keyDeposit
 d_keyDeposit_2710 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_keyDeposit_2710 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_keyDeposit_930
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_keyDeposit_932
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.leiosCommitteeSize
 d_leiosCommitteeSize_2712 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_leiosCommitteeSize_2712 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosCommitteeSize_918
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosCommitteeSize_920
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.leiosDiffusionPeriod
 d_leiosDiffusionPeriod_2714 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_leiosDiffusionPeriod_2714 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosDiffusionPeriod_912
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosDiffusionPeriod_914
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.leiosHeaderPeriod
 d_leiosHeaderPeriod_2716 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_leiosHeaderPeriod_2716 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosHeaderPeriod_908
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosHeaderPeriod_910
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.leiosMaxEBExUnits
 d_leiosMaxEBExUnits_2718 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_leiosMaxEBExUnits_2718 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBExUnits_922
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBExUnits_924
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.leiosMaxEBSize
 d_leiosMaxEBSize_2720 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_leiosMaxEBSize_2720 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBSize_914
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBSize_916
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.leiosMaxEBTxsSize
 d_leiosMaxEBTxsSize_2722 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_leiosMaxEBTxsSize_2722 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBTxsSize_916
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBTxsSize_918
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.leiosMaxRefScriptSizePerEB
 d_leiosMaxRefScriptSizePerEB_2724 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_leiosMaxRefScriptSizePerEB_2724 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxRefScriptSizePerEB_924
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxRefScriptSizePerEB_926
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.leiosQuorumStakeThreshold
 d_leiosQuorumStakeThreshold_2726 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_leiosQuorumStakeThreshold_2726 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosQuorumStakeThreshold_920
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosQuorumStakeThreshold_922
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.leiosVotingPeriod
 d_leiosVotingPeriod_2728 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_leiosVotingPeriod_2728 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosVotingPeriod_910
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosVotingPeriod_912
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.maxBlockExUnits
 d_maxBlockExUnits_2730 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_maxBlockExUnits_2730 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockExUnits_904
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockExUnits_906
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.maxBlockSize
 d_maxBlockSize_2732 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_maxBlockSize_2732 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockSize_892
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockSize_894
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.maxCollateralInputs
 d_maxCollateralInputs_2734 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_maxCollateralInputs_2734 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxCollateralInputs_900
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxCollateralInputs_902
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.maxHeaderSize
 d_maxHeaderSize_2736 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_maxHeaderSize_2736 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxHeaderSize_896
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxHeaderSize_898
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.maxPledgeLeverage
 d_maxPledgeLeverage_2738 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
-  Maybe (Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28)
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
+  Maybe (Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6)
 d_maxPledgeLeverage_2738 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_958
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_960
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.maxRefScriptSizePerBlock
 d_maxRefScriptSizePerBlock_2740 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_maxRefScriptSizePerBlock_2740 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerBlock_948
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerBlock_950
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.maxRefScriptSizePerTx
 d_maxRefScriptSizePerTx_2742 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_maxRefScriptSizePerTx_2742 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerTx_946
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerTx_948
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.maxTxExUnits
 d_maxTxExUnits_2744 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_maxTxExUnits_2744 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxExUnits_902
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxExUnits_904
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.maxTxSize
 d_maxTxSize_2746 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_maxTxSize_2746 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxSize_894
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxSize_896
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.maxValSize
 d_maxValSize_2748 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_maxValSize_2748 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxValSize_898
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxValSize_900
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.minFeeRefScriptCoinsPerByte
 d_minFeeRefScriptCoinsPerByte_2750 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_minFeeRefScriptCoinsPerByte_2750 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minFeeRefScriptCoinsPerByte_944
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minFeeRefScriptCoinsPerByte_946
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.minPoolCost
 d_minPoolCost_2752 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_minPoolCost_2752 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minPoolCost_934
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minPoolCost_936
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.minUTxOValue
 d_minUTxOValue_2754 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_minUTxOValue_2754 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minUTxOValue_954
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minUTxOValue_956
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.monetaryExpansion
 d_monetaryExpansion_2756 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_monetaryExpansion_2756 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_monetaryExpansion_936
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_monetaryExpansion_938
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.nopt
 d_nopt_2758 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_nopt_2758 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_nopt_962
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_nopt_964
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.poolDeposit
 d_poolDeposit_2760 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_poolDeposit_2760 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolDeposit_932
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolDeposit_934
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.poolThresholds
 d_poolThresholds_2762 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe
     MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PoolThresholds_296
 d_poolThresholds_2762 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolThresholds_970
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolThresholds_972
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.prices
 d_prices_2764 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6
 d_prices_2764 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_prices_942
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_prices_944
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.pv
 d_pv_2766 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_pv_2766 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_pv_906
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_pv_908
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.refScriptCostMultiplier
 d_refScriptCostMultiplier_2768 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_refScriptCostMultiplier_2768 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostMultiplier_952
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostMultiplier_954
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.refScriptCostStride
 d_refScriptCostStride_2770 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_refScriptCostStride_2770 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostStride_950
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostStride_952
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PParamsUpdate.PParamsUpdate.treasuryCut
 d_treasuryCut_2772 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_treasuryCut_2772 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasuryCut_938
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasuryCut_940
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.PState.deposits
 d_deposits_2776 ::
@@ -10118,11 +10118,11 @@ d_BaseAddr_3396 a0 = ()
 d_BootstrapAddr_3400 a0 = ()
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.CCMaxTermLengthOf
 d_CCMaxTermLengthOf_3406 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasCCMaxTermLength_766 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasCCMaxTermLength_768 ->
   AgdaAny -> Integer
 d_CCMaxTermLengthOf_3406 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_CCMaxTermLengthOf_774
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_CCMaxTermLengthOf_776
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.CollateralInputsOf
 d_CollateralInputsOf_3410 ::
@@ -10451,7 +10451,7 @@ du_DecEq'45'DrepThresholds_3468 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'DrepThresholds_3468
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_DecEq'45'DrepThresholds_782
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_DecEq'45'DrepThresholds_784
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.DecEq-Epoch
 d_DecEq'45'Epoch_3470 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
@@ -10610,14 +10610,14 @@ du_DecEq'45'PParamGroup_3496 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'PParamGroup_3496
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_DecEq'45'PParamGroup_788
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_DecEq'45'PParamGroup_790
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.DecEq-PParams
 d_DecEq'45'PParams_3498 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'PParams_3498 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_DecEq'45'PParams_786
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_DecEq'45'PParams_788
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1432
          (coe v0))
@@ -10634,7 +10634,7 @@ du_DecEq'45'PoolThresholds_3500 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'PoolThresholds_3500
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_DecEq'45'PoolThresholds_784
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_DecEq'45'PoolThresholds_786
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.DecEq-RewardAddress
 d_DecEq'45'RewardAddress_3502 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
@@ -10788,7 +10788,7 @@ d_DecEq'45'UpdT_3524 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'UpdT_3524 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_DecEq'45'UpdT_1926
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_DecEq'45'UpdT_1928
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govParams_2768
          (coe v0))
@@ -12064,12 +12064,12 @@ d_PParams_4068 a0 = ()
 d_PParamsDiff_4072 a0 = ()
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsOf
 d_PParamsOf_4076 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320
 d_PParamsOf_4076 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.UpdateT
 d_UpdateT_4078 ::
@@ -12342,7 +12342,7 @@ du_Show'45'DrepThresholds_4176 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10
 du_Show'45'DrepThresholds_4176
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_Show'45'DrepThresholds_790
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_Show'45'DrepThresholds_792
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.Show-Epoch
 d_Show'45'Epoch_4178 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
@@ -12412,7 +12412,7 @@ d_Show'45'PParams_4190 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'PParams_4190 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_Show'45'PParams_794
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_Show'45'PParams_796
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1432
          (coe v0))
@@ -12428,7 +12428,7 @@ du_Show'45'PoolThresholds_4192 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10
 du_Show'45'PoolThresholds_4192
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_Show'45'PoolThresholds_792
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_Show'45'PoolThresholds_794
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.Show-Prices
 d_Show'45'Prices_4194 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
@@ -12991,9 +12991,9 @@ d_applyUpdate_4356 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320
 d_applyUpdate_4356 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_applyUpdate_1876
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_applyUpdate_1878
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1912
+         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1914
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govParams_2768
             (coe v0)))
@@ -13136,7 +13136,7 @@ d_globalConstants_4404 v0
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.govParams
 d_govParams_4406 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1894
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1896
 d_govParams_4406 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govParams_2768
@@ -13438,7 +13438,7 @@ du_paramsWF'45'elim_4474 ::
   MAlonzo.Code.Data.Nat.Base.T__'8804'__22
 du_paramsWF'45'elim_4474 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_paramsWF'45'elim_722
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_paramsWF'45'elim_724
       v1 v2
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.paramsWellFormed
 d_paramsWellFormed_4476 ::
@@ -13492,10 +13492,10 @@ du_positivePParams_4484
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.ppUpd
 d_ppUpd_4486 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1860
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1862
 d_ppUpd_4486 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1912
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1914
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govParams_2768
          (coe v0))
@@ -13505,9 +13505,9 @@ d_ppWF'63'_4488 ::
   AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_ppWF'63'_4488 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppWF'63'_1884
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppWF'63'_1886
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1912
+         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1914
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govParams_2768
             (coe v0)))
@@ -13730,9 +13730,9 @@ d_updateGroups_4532 ::
   [MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamGroup_240]
 d_updateGroups_4532 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_updateGroups_1878
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_updateGroups_1880
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1912
+         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1914
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govParams_2768
             (coe v0)))
@@ -14054,63 +14054,63 @@ d_votes_4674 v0
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.GovParams.DecEq-UpdT
 d_DecEq'45'UpdT_4694 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1894 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1896 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'UpdT_4694 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_DecEq'45'UpdT_1926
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_DecEq'45'UpdT_1928
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.GovParams.UpdateT
 d_UpdateT_4696 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1894 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1896 ->
   ()
 d_UpdateT_4696 = erased
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.GovParams.applyUpdate
 d_applyUpdate_4698 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1894 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1896 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320
 d_applyUpdate_4698 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_applyUpdate_1876
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_applyUpdate_1878
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1912
+         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1914
          (coe v0))
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.GovParams.ppUpd
 d_ppUpd_4700 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1894 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1860
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1896 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1862
 d_ppUpd_4700 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1912
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1914
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.GovParams.ppWF?
 d_ppWF'63'_4702 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1894 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1896 ->
   AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_ppWF'63'_4702 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppWF'63'_1884
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppWF'63'_1886
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1912
+         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1914
          (coe v0))
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.GovParams.ppdWellFormed
 d_ppdWellFormed_4704 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1894 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1896 ->
   AgdaAny -> ()
 d_ppdWellFormed_4704 = erased
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.GovParams.updateGroups
 d_updateGroups_4706 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1894 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_GovParams_1896 ->
   AgdaAny ->
   [MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamGroup_240]
 d_updateGroups_4706 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_updateGroups_1878
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_updateGroups_1880
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1912
+         MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1914
          (coe v0))
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.GovProposal.action
 d_action_4710 ::
@@ -14914,11 +14914,11 @@ d_BalanceIntervalsOf_5044 v0
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.HasCCMaxTermLength.CCMaxTermLengthOf
 d_CCMaxTermLengthOf_5048 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasCCMaxTermLength_766 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasCCMaxTermLength_768 ->
   AgdaAny -> Integer
 d_CCMaxTermLengthOf_5048 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_CCMaxTermLengthOf_774
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_CCMaxTermLengthOf_776
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.HasCollateralInputs.CollateralInputsOf
 d_CollateralInputsOf_5052 ::
@@ -15048,12 +15048,12 @@ d_NetworkIdOf_5108 v0
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.HasPParams.PParamsOf
 d_PParamsOf_5112 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320
 d_PParamsOf_5112 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.HasRedeemers.RedeemersOf
 d_RedeemersOf_5116 ::
@@ -15758,7 +15758,7 @@ d_maxHeaderSize_5366 v0
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParams.maxPledgeLeverage
 d_maxPledgeLeverage_5368 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320 ->
-  Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
+  Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_maxPledgeLeverage_5368 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_484
@@ -15901,41 +15901,41 @@ d_treasuryCut_5402 v0
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsDiff.UpdateT
 d_UpdateT_5406 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1860 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1862 ->
   ()
 d_UpdateT_5406 = erased
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsDiff.applyUpdate
 d_applyUpdate_5408 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1860 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1862 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320
 d_applyUpdate_5408 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_applyUpdate_1876
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_applyUpdate_1878
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsDiff.ppWF?
 d_ppWF'63'_5410 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1860 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1862 ->
   AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_ppWF'63'_5410 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppWF'63'_1884
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppWF'63'_1886
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsDiff.ppdWellFormed
 d_ppdWellFormed_5412 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1860 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1862 ->
   AgdaAny -> ()
 d_ppdWellFormed_5412 = erased
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsDiff.updateGroups
 d_updateGroups_5414 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1860 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsDiff_1862 ->
   AgdaAny ->
   [MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamGroup_240]
 d_updateGroups_5414 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_updateGroups_1878
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_updateGroups_1880
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate._?↗_
 d__'63''8599'__5418 ::
@@ -15945,7 +15945,7 @@ d__'63''8599'__5418 ~v0 = du__'63''8599'__5418
 du__'63''8599'__5418 :: () -> Maybe AgdaAny -> AgdaAny -> AgdaAny
 du__'63''8599'__5418 v0 v1 v2
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du__'63''8599'__1602
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du__'63''8599'__1604
       v1 v2
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate._∪ˡᶜᵐ_
 d__'8746''737''7580''7504'__5420 ::
@@ -15985,7 +15985,7 @@ d_DecEq'45'PParamsUpdate_5422 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'PParamsUpdate_5422 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_DecEq'45'PParamsUpdate_1858
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_DecEq'45'PParamsUpdate_1860
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_epochStructure_1432
          (coe v0))
@@ -15998,96 +15998,96 @@ d_PParamsUpdate_5424 a0 = ()
 d_applyPParamsUpdate_5428 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320
 d_applyPParamsUpdate_5428 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_applyPParamsUpdate_1656
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_applyPParamsUpdate_1658
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_scriptStructure_2238
          (coe v0))
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.modifiedUpdateGroups
 d_modifiedUpdateGroups_5430 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   [MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamGroup_240]
 d_modifiedUpdateGroups_5430 ~v0 = du_modifiedUpdateGroups_5430
 du_modifiedUpdateGroups_5430 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   [MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamGroup_240]
 du_modifiedUpdateGroups_5430
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_modifiedUpdateGroups_1586
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_modifiedUpdateGroups_1588
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.modifiesEconomicGroup
 d_modifiesEconomicGroup_5432 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Bool
 d_modifiesEconomicGroup_5432 ~v0 = du_modifiesEconomicGroup_5432
 du_modifiesEconomicGroup_5432 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Bool
 du_modifiesEconomicGroup_5432
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_modifiesEconomicGroup_1194
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_modifiesEconomicGroup_1196
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.modifiesGovernanceGroup
 d_modifiesGovernanceGroup_5434 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Bool
 d_modifiesGovernanceGroup_5434 ~v0
   = du_modifiesGovernanceGroup_5434
 du_modifiesGovernanceGroup_5434 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Bool
 du_modifiesGovernanceGroup_5434
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_modifiesGovernanceGroup_1390
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_modifiesGovernanceGroup_1392
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.modifiesNetworkGroup
 d_modifiesNetworkGroup_5436 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Bool
 d_modifiesNetworkGroup_5436 ~v0 = du_modifiesNetworkGroup_5436
 du_modifiesNetworkGroup_5436 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Bool
 du_modifiesNetworkGroup_5436
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_modifiesNetworkGroup_1096
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_modifiesNetworkGroup_1098
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.modifiesSecurityGroup
 d_modifiesSecurityGroup_5438 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Bool
 d_modifiesSecurityGroup_5438 ~v0 = du_modifiesSecurityGroup_5438
 du_modifiesSecurityGroup_5438 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Bool
 du_modifiesSecurityGroup_5438
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_modifiesSecurityGroup_1488
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_modifiesSecurityGroup_1490
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.modifiesTechnicalGroup
 d_modifiesTechnicalGroup_5440 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Bool
 d_modifiesTechnicalGroup_5440 ~v0 = du_modifiesTechnicalGroup_5440
 du_modifiesTechnicalGroup_5440 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Bool
 du_modifiesTechnicalGroup_5440
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_modifiesTechnicalGroup_1292
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_modifiesTechnicalGroup_1294
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.paramsUpdateWellFormed
 d_paramsUpdateWellFormed_5442 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   ()
 d_paramsUpdateWellFormed_5442 = erased
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.paramsUpdateWellFormed?
 d_paramsUpdateWellFormed'63'_5444 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_paramsUpdateWellFormed'63'_5444 v0
   = coe
@@ -16114,57 +16114,57 @@ d_paramsUpdateWellFormed'63'_5444 v0
                   (coe
                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                      (coe
-                        MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockSize_892
+                        MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockSize_894
                         (coe v0))
                      (coe
                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxSize_894
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxSize_896
                            (coe v0))
                         (coe
                            MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxHeaderSize_896
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxHeaderSize_898
                               (coe v0))
                            (coe
                               MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxValSize_898
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxValSize_900
                                  (coe v0))
                               (coe
                                  MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_coinsPerUTxOByte_940
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_coinsPerUTxOByte_942
                                     (coe v0))
                                  (coe
                                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolDeposit_932
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolDeposit_934
                                        (coe v0))
                                     (coe
                                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_collateralPercentage_964
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_collateralPercentage_966
                                           (coe v0))
                                        (coe
                                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMaxTermLength_982
+                                             MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMaxTermLength_984
                                              (coe v0))
                                           (coe
                                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                              (coe
-                                                MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionLifetime_972
+                                                MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionLifetime_974
                                                 (coe v0))
                                              (coe
                                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionDeposit_974
+                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionDeposit_976
                                                    (coe v0))
                                                 (coe
                                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepDeposit_976
+                                                      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepDeposit_978
                                                       (coe v0))
                                                    (coe
                                                       MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))))))))
@@ -16184,7 +16184,7 @@ d_paramsUpdateWellFormed'63'_5444 v0
                     (MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_fromUnitInterval_72
                        (coe v1))))
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosQuorumStakeThreshold_920
+               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosQuorumStakeThreshold_922
                (coe v0))))
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.≡-update
 d_'8801''45'update_5446 ::
@@ -16201,376 +16201,376 @@ du_'8801''45'update_5446 ::
   AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1858
 du_'8801''45'update_5446 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_'8801''45'update_1616
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.du_'8801''45'update_1618
       v1
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.Emax
 d_Emax_5450 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe AgdaAny
 d_Emax_5450 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Emax_960
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Emax_962
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.a
 d_a_5452 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_a_5452 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a_926 (coe v0)
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a_928 (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.a0
 d_a0_5454 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_a0_5454 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a0_956
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a0_958
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.b
 d_b_5456 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_b_5456 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_b_928 (coe v0)
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_b_930 (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.ccMaxTermLength
 d_ccMaxTermLength_5458 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_ccMaxTermLength_5458 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMaxTermLength_982
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMaxTermLength_984
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.ccMinSize
 d_ccMinSize_5460 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_ccMinSize_5460 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMinSize_980
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMinSize_982
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.coinsPerUTxOByte
 d_coinsPerUTxOByte_5462 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_coinsPerUTxOByte_5462 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_coinsPerUTxOByte_940
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_coinsPerUTxOByte_942
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.collateralPercentage
 d_collateralPercentage_5464 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_collateralPercentage_5464 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_collateralPercentage_964
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_collateralPercentage_966
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.costmdls
 d_costmdls_5466 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe
     MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.T_LanguageCostModels_690
 d_costmdls_5466 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_costmdls_966
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_costmdls_968
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.drepActivity
 d_drepActivity_5468 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe AgdaAny
 d_drepActivity_5468 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepActivity_978
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepActivity_980
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.drepDeposit
 d_drepDeposit_5470 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_drepDeposit_5470 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepDeposit_976
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepDeposit_978
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.drepThresholds
 d_drepThresholds_5472 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe
     MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_DrepThresholds_252
 d_drepThresholds_5472 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_968
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_970
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.govActionDeposit
 d_govActionDeposit_5474 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_govActionDeposit_5474 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionDeposit_974
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionDeposit_976
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.govActionLifetime
 d_govActionLifetime_5476 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_govActionLifetime_5476 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionLifetime_972
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionLifetime_974
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.keyDeposit
 d_keyDeposit_5478 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_keyDeposit_5478 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_keyDeposit_930
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_keyDeposit_932
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.leiosCommitteeSize
 d_leiosCommitteeSize_5480 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_leiosCommitteeSize_5480 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosCommitteeSize_918
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosCommitteeSize_920
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.leiosDiffusionPeriod
 d_leiosDiffusionPeriod_5482 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_leiosDiffusionPeriod_5482 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosDiffusionPeriod_912
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosDiffusionPeriod_914
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.leiosHeaderPeriod
 d_leiosHeaderPeriod_5484 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_leiosHeaderPeriod_5484 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosHeaderPeriod_908
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosHeaderPeriod_910
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.leiosMaxEBExUnits
 d_leiosMaxEBExUnits_5486 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe AgdaAny
 d_leiosMaxEBExUnits_5486 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBExUnits_922
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBExUnits_924
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.leiosMaxEBSize
 d_leiosMaxEBSize_5488 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_leiosMaxEBSize_5488 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBSize_914
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBSize_916
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.leiosMaxEBTxsSize
 d_leiosMaxEBTxsSize_5490 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_leiosMaxEBTxsSize_5490 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBTxsSize_916
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBTxsSize_918
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.leiosMaxRefScriptSizePerEB
 d_leiosMaxRefScriptSizePerEB_5492 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_leiosMaxRefScriptSizePerEB_5492 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxRefScriptSizePerEB_924
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxRefScriptSizePerEB_926
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.leiosQuorumStakeThreshold
 d_leiosQuorumStakeThreshold_5494 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_leiosQuorumStakeThreshold_5494 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosQuorumStakeThreshold_920
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosQuorumStakeThreshold_922
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.leiosVotingPeriod
 d_leiosVotingPeriod_5496 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_leiosVotingPeriod_5496 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosVotingPeriod_910
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosVotingPeriod_912
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.maxBlockExUnits
 d_maxBlockExUnits_5498 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe AgdaAny
 d_maxBlockExUnits_5498 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockExUnits_904
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockExUnits_906
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.maxBlockSize
 d_maxBlockSize_5500 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_maxBlockSize_5500 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockSize_892
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockSize_894
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.maxCollateralInputs
 d_maxCollateralInputs_5502 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_maxCollateralInputs_5502 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxCollateralInputs_900
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxCollateralInputs_902
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.maxHeaderSize
 d_maxHeaderSize_5504 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_maxHeaderSize_5504 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxHeaderSize_896
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxHeaderSize_898
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.maxPledgeLeverage
 d_maxPledgeLeverage_5506 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
-  Maybe (Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28)
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
+  Maybe (Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6)
 d_maxPledgeLeverage_5506 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_958
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_960
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.maxRefScriptSizePerBlock
 d_maxRefScriptSizePerBlock_5508 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_maxRefScriptSizePerBlock_5508 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerBlock_948
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerBlock_950
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.maxRefScriptSizePerTx
 d_maxRefScriptSizePerTx_5510 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_maxRefScriptSizePerTx_5510 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerTx_946
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerTx_948
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.maxTxExUnits
 d_maxTxExUnits_5512 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe AgdaAny
 d_maxTxExUnits_5512 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxExUnits_902
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxExUnits_904
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.maxTxSize
 d_maxTxSize_5514 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_maxTxSize_5514 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxSize_894
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxSize_896
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.maxValSize
 d_maxValSize_5516 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_maxValSize_5516 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxValSize_898
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxValSize_900
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.minFeeRefScriptCoinsPerByte
 d_minFeeRefScriptCoinsPerByte_5518 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_minFeeRefScriptCoinsPerByte_5518 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minFeeRefScriptCoinsPerByte_944
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minFeeRefScriptCoinsPerByte_946
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.minPoolCost
 d_minPoolCost_5520 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_minPoolCost_5520 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minPoolCost_934
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minPoolCost_936
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.minUTxOValue
 d_minUTxOValue_5522 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_minUTxOValue_5522 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minUTxOValue_954
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minUTxOValue_956
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.monetaryExpansion
 d_monetaryExpansion_5524 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_monetaryExpansion_5524 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_monetaryExpansion_936
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_monetaryExpansion_938
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.nopt
 d_nopt_5526 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_nopt_5526 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_nopt_962
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_nopt_964
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.poolDeposit
 d_poolDeposit_5528 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe Integer
 d_poolDeposit_5528 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolDeposit_932
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolDeposit_934
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.poolThresholds
 d_poolThresholds_5530 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe
     MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PoolThresholds_296
 d_poolThresholds_5530 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolThresholds_970
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolThresholds_972
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.prices
 d_prices_5532 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe AgdaAny
 d_prices_5532 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_prices_942
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_prices_944
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.pv
 d_pv_5534 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_pv_5534 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_pv_906
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_pv_908
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.refScriptCostMultiplier
 d_refScriptCostMultiplier_5536 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_refScriptCostMultiplier_5536 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostMultiplier_952
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostMultiplier_954
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.refScriptCostStride
 d_refScriptCostStride_5538 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_refScriptCostStride_5538 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostStride_950
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostStride_952
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PParamsUpdate.PParamsUpdate.treasuryCut
 d_treasuryCut_5540 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_798 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParamsUpdate_800 ->
   Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_treasuryCut_5540 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasuryCut_938
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasuryCut_940
       (coe v0)
 -- Ledger.Dijkstra.Foreign.HSStructures._.TransactionStructure.PlutusStructure._≤ᵉᵘ_
 d__'8804''7497''7512'__5554 ::

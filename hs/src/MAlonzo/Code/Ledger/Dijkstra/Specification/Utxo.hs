@@ -379,12 +379,12 @@ d_PlutusScript_736 = erased
 d_PParams_740 a0 = ()
 -- _.PParamsOf
 d_PParamsOf_748 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320
 d_PParamsOf_748 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
       (coe v0)
 -- _.Script
 d_Script_822 ::
@@ -536,12 +536,12 @@ d_DCertsOf_1736 v0
       (coe v0)
 -- _.HasPParams.PParamsOf
 d_PParamsOf_1784 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320
 d_PParamsOf_1784 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
       (coe v0)
 -- _.HasUTxO.UTxOOf
 d_UTxOOf_1848 ::
@@ -776,7 +776,7 @@ d_maxHeaderSize_2038 v0
 -- _.PParams.maxPledgeLeverage
 d_maxPledgeLeverage_2040 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320 ->
-  Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
+  Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_maxPledgeLeverage_2040 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_484
@@ -1454,14 +1454,14 @@ du_HasSlot'45'UTxOEnv_3448
 d_HasPParams'45'UTxOEnv_3450 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 d_HasPParams'45'UTxOEnv_3450 ~v0 ~v1
   = du_HasPParams'45'UTxOEnv_3450
 du_HasPParams'45'UTxOEnv_3450 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 du_HasPParams'45'UTxOEnv_3450
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_756
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_758
       (coe (\ v0 -> d_pparams_3262 (coe v0)))
 -- Ledger.Dijkstra.Specification.Utxo.HasTreasury-UTxOEnv
 d_HasTreasury'45'UTxOEnv_3452 ::
@@ -1534,14 +1534,14 @@ du_HasSlot'45'SubUTxOEnv_3462
 d_HasPParams'45'SubUTxOEnv_3464 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 d_HasPParams'45'SubUTxOEnv_3464 ~v0 ~v1
   = du_HasPParams'45'SubUTxOEnv_3464
 du_HasPParams'45'SubUTxOEnv_3464 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 du_HasPParams'45'SubUTxOEnv_3464
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_756
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_758
       (coe (\ v0 -> d_pparams_3296 (coe v0)))
 -- Ledger.Dijkstra.Specification.Utxo.HasTreasury-SubUTxOEnv
 d_HasTreasury'45'SubUTxOEnv_3466 ::

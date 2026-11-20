@@ -88,11 +88,11 @@ d_EnactState_1338 a0 = ()
 -- Ledger.Dijkstra.Specification.Enact.Properties.Computational._.HasccMaxTermLength-EnactState
 d_HasccMaxTermLength'45'EnactState_1354 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasCCMaxTermLength_766
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasCCMaxTermLength_768
 d_HasccMaxTermLength'45'EnactState_1354 ~v0
   = du_HasccMaxTermLength'45'EnactState_1354
 du_HasccMaxTermLength'45'EnactState_1354 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasCCMaxTermLength_766
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasCCMaxTermLength_768
 du_HasccMaxTermLength'45'EnactState_1354
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasccMaxTermLength'45'EnactState_1378
@@ -267,7 +267,7 @@ d_Computational'45'ENACT_1438 v0
                                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_epochStructure_844
                                                                                  (coe v0))
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_CCMaxTermLengthOf_774
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_CCMaxTermLengthOf_776
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasccMaxTermLength'45'EnactState_1378)
                                                                                  v2)
@@ -286,7 +286,7 @@ d_Computational'45'ENACT_1438 v0
                                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_epochStructure_844
                                                                                  (coe v0))
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_CCMaxTermLengthOf_774
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_CCMaxTermLengthOf_776
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasccMaxTermLength'45'EnactState_1378)
                                                                                  v2)
@@ -305,7 +305,7 @@ d_Computational'45'ENACT_1438 v0
                                                                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_epochStructure_844
                                                                               (coe v0))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_CCMaxTermLengthOf_774
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_CCMaxTermLengthOf_776
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.du_HasccMaxTermLength'45'EnactState_1378)
                                                                               v2)
@@ -533,8 +533,8 @@ d_Computational'45'ENACT_1438 v0
                                (coe
                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                   (coe
-                                     MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_applyUpdate_1876
-                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1912
+                                     MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_applyUpdate_1878
+                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ppUpd_1914
                                         (coe
                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_govParams_1466
                                            (coe v0)))

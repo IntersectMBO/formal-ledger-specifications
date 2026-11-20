@@ -137,12 +137,12 @@ d_NetworkId_270 v0
 d_PParams_288 a0 = ()
 -- _.PParamsOf
 d_PParamsOf_296 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320
 d_PParamsOf_296 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
       (coe v0)
 -- _.RewardAddress
 d_RewardAddress_326 a0 a1 a2 a3 = ()
@@ -173,12 +173,12 @@ d_preoEpoch_522 v0
          (coe v0))
 -- _.HasPParams.PParamsOf
 d_PParamsOf_654 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320
 d_PParamsOf_654 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_754
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_PParamsOf_756
       (coe v0)
 -- _.PParams.Emax
 d_Emax_690 ::
@@ -405,7 +405,7 @@ d_maxHeaderSize_746 v0
 -- _.PParams.maxPledgeLeverage
 d_maxPledgeLeverage_748 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320 ->
-  Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
+  Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_maxPledgeLeverage_748 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_484
@@ -1605,25 +1605,25 @@ d_VotesOf_1996 v0 = coe d_VotesOf_1990 (coe v0)
 -- Ledger.Dijkstra.Specification.Certs.HasPParams-CertEnv
 d_HasPParams'45'CertEnv_1998 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 d_HasPParams'45'CertEnv_1998 ~v0 = du_HasPParams'45'CertEnv_1998
 du_HasPParams'45'CertEnv_1998 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 du_HasPParams'45'CertEnv_1998
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_756
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_758
       (coe (\ v0 -> d_pp_1552 (coe v0)))
 -- Ledger.Dijkstra.Specification.Certs.HasPParams-GovCertEnv
 d_HasPParams'45'GovCertEnv_2000 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 d_HasPParams'45'GovCertEnv_2000 ~v0
   = du_HasPParams'45'GovCertEnv_2000
 du_HasPParams'45'GovCertEnv_2000 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_746
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 du_HasPParams'45'GovCertEnv_2000
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_756
+      MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_758
       (coe (\ v0 -> d_pp_1668 (coe v0)))
 -- Ledger.Dijkstra.Specification.Certs.HasColdCredentials-GovCertEnv
 d_HasColdCredentials'45'GovCertEnv_2002 ::
