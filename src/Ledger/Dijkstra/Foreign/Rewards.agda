@@ -12,6 +12,7 @@ open import Ledger.Core.Foreign.Address
 open import Ledger.Dijkstra.Foreign.HSStructures
 open import Ledger.Dijkstra.Foreign.PParams
 open import Ledger.Dijkstra.Foreign.Cert
+open import Ledger.Prelude.Numeric.UnitInterval
 open import Ledger.Dijkstra.Specification.Rewards it DummyAbstractFunctions
 
 instance
@@ -63,3 +64,8 @@ instance
 
 unquoteDecl = do
   hsTypeAlias BlocksMade ⊣ withName "BlocksMade"
+
+maxPoolConformance : HsType (PParams → Coin → UnitInterval → UnitInterval → Coin)
+maxPoolConformance = to maxPool
+
+{-# COMPILE GHC maxPoolConformance as maxPool #-}

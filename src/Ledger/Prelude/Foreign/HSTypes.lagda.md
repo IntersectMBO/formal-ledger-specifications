@@ -5,7 +5,7 @@ source_path: src/Ledger/Prelude/Foreign/HSTypes.lagda.md
 ```agda
 module Ledger.Prelude.Foreign.HSTypes where
 
-open import Data.Rational
+open import Data.Rational hiding (show)
 open import Class.Convertible
 open import Tactic.Derive.Convertible
 open import Foreign.Haskell
@@ -19,6 +19,7 @@ open import Ledger.Prelude
 open import Ledger.Prelude.Numeric.UnitInterval
 open import Ledger.Prelude.Foreign.Util
 open import Ledger.Prelude.Numeric.PositiveNat
+import Data.String as S
 
 {-# FOREIGN GHC
   {-# LANGUAGE DeriveGeneric #-}
@@ -49,6 +50,10 @@ instance
 data Rational : Type where
   _,_ : ℤ → ℕ → Rational
 {-# COMPILE GHC Rational = data Rational ((:%)) #-}
+
+instance
+  Show-Rational : Show Rational
+  Show-Rational .show (n , d) = show n S.++ " :% " S.++ show d
 
 -- We'll generate code with qualified references to Rational in this
 -- module, so make sure to define it.
@@ -150,7 +155,7 @@ instance
   Conv-UnitInterval .from x =
     case toUnitInterval (from x) of λ where
       (just x) → x
-      nothing → error "Formal Spec: rational outside of unit interval"
+      nothing → error ("Formal Spec: " S.++ show x S.++ " rational outside of unit interval")
 
 instance
   HsTy-PosNat : HasHsType PosNat
