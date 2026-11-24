@@ -248,21 +248,20 @@ record HasCCMaxTermLength {a} (A : Type a) : Type a where
   field CCMaxTermLengthOf : A → ℕ
 open HasCCMaxTermLength ⦃...⦄ public
 
-instance
-  unquoteDecl DecEq-DrepThresholds = derive-DecEq
-    ((quote DrepThresholds , DecEq-DrepThresholds) ∷ [])
-  unquoteDecl DecEq-PoolThresholds = derive-DecEq
-    ((quote PoolThresholds , DecEq-PoolThresholds) ∷ [])
-  unquoteDecl DecEq-PParams        = derive-DecEqRecord
-    ((quote PParams , DecEq-PParams) ∷ [])
-  unquoteDecl DecEq-PParamGroup    = derive-DecEq
-    ((quote PParamGroup , DecEq-PParamGroup) ∷ [])
-  unquoteDecl Show-DrepThresholds = derive-Show
-    ((quote DrepThresholds , Show-DrepThresholds) ∷ [])
-  unquoteDecl Show-PoolThresholds = derive-Show
-    ((quote PoolThresholds , Show-PoolThresholds) ∷ [])
-  unquoteDecl Show-PParams        = derive-Show
-    ((quote PParams , Show-PParams) ∷ [])
+unquoteDecl DecEq-DrepThresholds = derive-DecEq
+  ((quote DrepThresholds , DecEq-DrepThresholds) ∷ [])
+unquoteDecl DecEq-PoolThresholds = derive-DecEq
+  ((quote PoolThresholds , DecEq-PoolThresholds) ∷ [])
+unquoteDecl DecEq-PParams        = derive-DecEqRecord
+  ((quote PParams , DecEq-PParams) ∷ [])
+unquoteDecl DecEq-PParamGroup    = derive-DecEq
+  ((quote PParamGroup , DecEq-PParamGroup) ∷ [])
+unquoteDecl Show-DrepThresholds = derive-Show
+  ((quote DrepThresholds , Show-DrepThresholds) ∷ [])
+unquoteDecl Show-PoolThresholds = derive-Show
+  ((quote PoolThresholds , Show-PoolThresholds) ∷ [])
+unquoteDecl Show-PParams        = derive-Show
+  ((quote PParams , Show-PParams) ∷ [])
 ```
 -->
 
@@ -507,9 +506,8 @@ module PParamsUpdate where
       open module P = PParams pp
       open module U = PParamsUpdate ppu
 
-  instance
-    unquoteDecl DecEq-PParamsUpdate  = derive-DecEqRecord
-      ((quote PParamsUpdate , DecEq-PParamsUpdate) ∷ [])
+  unquoteDecl DecEq-PParamsUpdate  = derive-DecEqRecord
+    ((quote PParamsUpdate , DecEq-PParamsUpdate) ∷ [])
 ```
 -->
 

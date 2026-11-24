@@ -121,9 +121,8 @@ open CertState
 open DState
 open GovVotes
 
-instance
-  unquoteDecl HasCast-LEnv HasCast-LState = derive-HasCast
-    ((quote LEnv , HasCast-LEnv) ∷ (quote LState , HasCast-LState) ∷ [])
+unquoteDecl HasCast-LEnv HasCast-LState = derive-HasCast
+  ((quote LEnv , HasCast-LEnv) ∷ (quote LState , HasCast-LState) ∷ [])
 ```
 -->
 

@@ -34,9 +34,8 @@ record PoolReapState : Type where
 
 <!--
 ```agda
-instance
-  unquoteDecl HasCast-PoolReapState = derive-HasCast
-                [ (quote PoolReapState , HasCast-PoolReapState) ]
+unquoteDecl HasCast-PoolReapState = derive-HasCast
+              [ (quote PoolReapState , HasCast-PoolReapState) ]
 
 private variable
   e : Epoch
