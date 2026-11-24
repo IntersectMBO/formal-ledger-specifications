@@ -7,7 +7,7 @@
 mkDerivation {
   LANG = "en_US.UTF-8";
   LC_ALL = "en_US.UTF-8";
-  LOCALE_ARCHIVE = lib.optionalString stdenv.isLinux "${glibcLocales}/lib/locale/locale-archive";
+  LOCALE_ARCHIVE = lib.optionalString stdenv.hostPlatform.isLinux "${glibcLocales}/lib/locale/locale-archive";
   pname = "html";
   src = lib.fileset.toSource {
     root = ../../.;
