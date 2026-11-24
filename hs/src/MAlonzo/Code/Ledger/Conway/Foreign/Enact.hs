@@ -195,7 +195,7 @@ d_EnactStateOf_92 v0
       (coe v0)
 -- Ledger.Conway.Foreign.Enact._.Computational-ENACT
 d_Computational'45'ENACT_96 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'ENACT_96
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Enact.Properties.Computational.d_Computational'45'ENACT_1292
@@ -502,7 +502,7 @@ d_Conv'45'EnactState_102
                                        MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1418
                                        (coe v7))))))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v6 ->
@@ -604,7 +604,7 @@ d_enact'45'step_108 v0
                (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvString_12)
                (coe d_Conv'45'EnactState_102))))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
+         MAlonzo.Code.Interface.ComputationalRelation.du_compute_348
          (coe
             MAlonzo.Code.Ledger.Conway.Specification.Enact.Properties.Computational.d_Computational'45'ENACT_1292
             (coe

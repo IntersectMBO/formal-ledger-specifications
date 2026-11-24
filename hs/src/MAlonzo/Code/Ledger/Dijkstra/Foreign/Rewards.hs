@@ -150,9 +150,9 @@ d_nonZero'45'1'47'n_52 ::
   MAlonzo.Code.Data.Nat.Base.T_NonZero_112
 d_nonZero'45'1'47'n_52 v0 v1
   = coe
-      MAlonzo.Code.Data.Rational.Properties.du_pos'8658'nonZero_3004
+      MAlonzo.Code.Data.Rational.Properties.du_pos'8658'nonZero_3256
       (coe
-         MAlonzo.Code.Data.Rational.Base.du__'47'__156 (coe (1 :: Integer))
+         MAlonzo.Code.Data.Rational.Base.du__'47'__162 (coe (1 :: Integer))
          (coe v0))
 -- Ledger.Dijkstra.Foreign.Rewards._.nonZero-max-1
 d_nonZero'45'max'45'1_54 ::
@@ -284,7 +284,7 @@ d_Δf_84 v0
 -- Ledger.Dijkstra.Foreign.Rewards._.RewardUpdate.Δf-nonpositive
 d_Δf'45'nonpositive_86 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_RewardUpdate_3892 ->
-  MAlonzo.Code.Data.Integer.Base.T__'8804'__26
+  MAlonzo.Code.Data.Integer.Base.T__'8804'__48
 d_Δf'45'nonpositive_86 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_Δf'45'nonpositive_3924
@@ -308,7 +308,7 @@ d_Δt_90 v0
 -- Ledger.Dijkstra.Foreign.Rewards._.RewardUpdate.Δt-nonnegative
 d_Δt'45'nonnegative_92 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_RewardUpdate_3892 ->
-  MAlonzo.Code.Data.Integer.Base.T__'8804'__26
+  MAlonzo.Code.Data.Integer.Base.T__'8804'__48
 d_Δt'45'nonnegative_92 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_Δt'45'nonnegative_3922
@@ -456,7 +456,7 @@ d_Conv'45'Snapshot_114
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                        (coe v5))))))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v4 ->
@@ -505,7 +505,7 @@ d_Conv'45'Snapshot_114
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                        (coe v5))))))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v4 ->
@@ -534,7 +534,7 @@ d_Conv'45'Snapshot_114
                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                         (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v4 ->
@@ -813,7 +813,7 @@ d_Conv'45'Snapshots_118
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v10))))))
                                              (coe
-                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                 () erased () erased
                                                 (\ v9 ->
@@ -864,7 +864,7 @@ d_Conv'45'Snapshots_118
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v10))))))
                                              (coe
-                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                 () erased () erased
                                                 (\ v9 ->
@@ -896,7 +896,7 @@ d_Conv'45'Snapshots_118
                                              (coe
                                                 MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                              (coe
-                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                 () erased () erased
                                                 (\ v9 ->
@@ -1008,7 +1008,7 @@ d_Conv'45'Snapshots_118
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v10))))))
                                              (coe
-                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                 () erased () erased
                                                 (\ v9 ->
@@ -1059,7 +1059,7 @@ d_Conv'45'Snapshots_118
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v10))))))
                                              (coe
-                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                 () erased () erased
                                                 (\ v9 ->
@@ -1091,7 +1091,7 @@ d_Conv'45'Snapshots_118
                                              (coe
                                                 MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                              (coe
-                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                 () erased () erased
                                                 (\ v9 ->
@@ -1203,7 +1203,7 @@ d_Conv'45'Snapshots_118
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v10))))))
                                              (coe
-                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                 () erased () erased
                                                 (\ v9 ->
@@ -1254,7 +1254,7 @@ d_Conv'45'Snapshots_118
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v10))))))
                                              (coe
-                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                 () erased () erased
                                                 (\ v9 ->
@@ -1286,7 +1286,7 @@ d_Conv'45'Snapshots_118
                                              (coe
                                                 MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                              (coe
-                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                 () erased () erased
                                                 (\ v9 ->
@@ -1490,7 +1490,7 @@ d_Conv'45'HsRewardUpdate_200
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                        (coe v6))))))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v5 ->
@@ -1521,7 +1521,7 @@ d_Conv'45'RewardUpdate_204 ::
   MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Conv'45'RewardUpdate_204
   = coe
-      MAlonzo.Code.Class.Convertible.Core.du__'10814'__76
+      MAlonzo.Code.Class.Convertible.Core.du__'10814'__82
       (coe d_mkHsRewardUpdate_164) (coe d_Conv'45'HsRewardUpdate_200)
 -- Ledger.Dijkstra.Foreign.Rewards.maxPoolConformance
 maxPool ::

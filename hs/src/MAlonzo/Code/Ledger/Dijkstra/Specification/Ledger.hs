@@ -2969,13 +2969,13 @@ du_txgov_4008 v0
   = coe
       MAlonzo.Code.Data.List.Base.du__'43''43'__32
       (coe
-         MAlonzo.Code.Class.Functor.Core.du_fmap_22
+         MAlonzo.Code.Class.Functor.Core.du_fmap_24
          MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
          () erased (coe MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42)
          (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovProposals_3982
             (coe v0)))
       (coe
-         MAlonzo.Code.Class.Functor.Core.du_fmap_22
+         MAlonzo.Code.Class.Functor.Core.du_fmap_24
          MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
          () erased (coe MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38)
          (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovVotes_3980
@@ -2996,7 +2996,7 @@ du_GovProposals'43'Votes_4068 v0
   = coe
       MAlonzo.Code.Data.List.Base.du__'43''43'__32
       (coe
-         MAlonzo.Code.Class.Functor.Core.du_fmap_22
+         MAlonzo.Code.Class.Functor.Core.du_fmap_24
          MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
          () erased (coe MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42)
          (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovProposals_3982
@@ -3004,7 +3004,7 @@ du_GovProposals'43'Votes_4068 v0
                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txBody_3898
                (coe v0))))
       (coe
-         MAlonzo.Code.Class.Functor.Core.du_fmap_22
+         MAlonzo.Code.Class.Functor.Core.du_fmap_24
          MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
          () erased (coe MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38)
          (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txGovVotes_3980
@@ -3030,8 +3030,8 @@ du_rmOrphanDRepVotes_4072 v0 v1 v2
       MAlonzo.Code.Data.List.Base.du_map_22
       (coe
          MAlonzo.Code.Class.Bifunctor.du_map'8322'_124
-         (coe MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45''215'_156)
-         (coe du_go_4086 (coe v0) (coe v1)))
+         (coe MAlonzo.Code.Class.Bifunctor.d_Bifunctor'45''215'_160)
+         (coe ()) (coe ()) (coe du_go_4086 (coe v0) (coe v1)))
       (coe v2)
 -- Ledger.Dijkstra.Specification.Ledger._.ifDRepRegistered
 d_ifDRepRegistered_4082 ::

@@ -30,10 +30,10 @@ import qualified MAlonzo.Code.Data.Vec.Base
 
 -- Class.Applicative.Instances.Applicative-Maybe
 d_Applicative'45'Maybe_6 ::
-  MAlonzo.Code.Class.Applicative.Core.T_Applicative_8
+  MAlonzo.Code.Class.Applicative.Core.T_Applicative_10
 d_Applicative'45'Maybe_6
   = coe
-      MAlonzo.Code.Class.Applicative.Core.C_constructor_58
+      MAlonzo.Code.Class.Applicative.Core.C_mkApplicative_60
       (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
       (coe (\ v0 v1 -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_just_16))
       (coe
@@ -41,34 +41,34 @@ d_Applicative'45'Maybe_6
             coe
               MAlonzo.Code.Data.Maybe.Base.du_maybe_32
               (coe
-                 MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                 MAlonzo.Code.Class.Functor.Core.du_fmap_24
                  MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6 v0 erased
                  v2 erased)
               (let v4 = coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18 in
                coe (coe (\ v5 -> v4)))))
 -- Class.Applicative.Instances.Applicative₀-Maybe
 d_Applicative'8320''45'Maybe_10 ::
-  MAlonzo.Code.Class.Applicative.Core.T_Applicative'8320'_86
+  MAlonzo.Code.Class.Applicative.Core.T_Applicative'8320'_118
 d_Applicative'8320''45'Maybe_10
   = coe
-      MAlonzo.Code.Class.Applicative.Core.C_constructor_98
+      MAlonzo.Code.Class.Applicative.Core.C_constructor_130
       (coe d_Applicative'45'Maybe_6)
       (coe (\ v0 v1 -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))
 -- Class.Applicative.Instances.Alternative-Maybe
 d_Alternative'45'Maybe_12 ::
-  MAlonzo.Code.Class.Applicative.Core.T_Alternative_108
+  MAlonzo.Code.Class.Applicative.Core.T_Alternative_142
 d_Alternative'45'Maybe_12
   = coe
-      MAlonzo.Code.Class.Applicative.Core.C_constructor_116
+      MAlonzo.Code.Class.Applicative.Core.C_constructor_150
       (coe
          (\ v0 v1 ->
             coe MAlonzo.Code.Data.Maybe.Base.du__'60''8739''62'__80))
 -- Class.Applicative.Instances.Applicative-List
 d_Applicative'45'List_18 ::
-  MAlonzo.Code.Class.Applicative.Core.T_Applicative_8
+  MAlonzo.Code.Class.Applicative.Core.T_Applicative_10
 d_Applicative'45'List_18
   = coe
-      MAlonzo.Code.Class.Applicative.Core.C_constructor_58
+      MAlonzo.Code.Class.Applicative.Core.C_mkApplicative_60
       (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92)
       (coe (\ v0 v1 -> coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_270))
       (coe
@@ -76,31 +76,31 @@ d_Applicative'45'List_18
             coe
               MAlonzo.Code.Data.List.Base.du_concatMap_246
               (coe
-                 MAlonzo.Code.Class.Functor.Core.du__'60''38''62'__30
+                 MAlonzo.Code.Class.Functor.Core.du__'60''38''62'__32
                  (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92)
                  (coe v0) (coe v2) (coe v5))
               (coe v4)))
 -- Class.Applicative.Instances.Applicative₀-List
 d_Applicative'8320''45'List_22 ::
-  MAlonzo.Code.Class.Applicative.Core.T_Applicative'8320'_86
+  MAlonzo.Code.Class.Applicative.Core.T_Applicative'8320'_118
 d_Applicative'8320''45'List_22
   = coe
-      MAlonzo.Code.Class.Applicative.Core.C_constructor_98
+      MAlonzo.Code.Class.Applicative.Core.C_constructor_130
       (coe d_Applicative'45'List_18)
       (coe (\ v0 v1 -> coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))
 -- Class.Applicative.Instances.Alternative-List
 d_Alternative'45'List_24 ::
-  MAlonzo.Code.Class.Applicative.Core.T_Alternative_108
+  MAlonzo.Code.Class.Applicative.Core.T_Alternative_142
 d_Alternative'45'List_24
   = coe
-      MAlonzo.Code.Class.Applicative.Core.C_constructor_116
+      MAlonzo.Code.Class.Applicative.Core.C_constructor_150
       (coe (\ v0 v1 -> coe MAlonzo.Code.Data.List.Base.du__'43''43'__32))
 -- Class.Applicative.Instances.Applicative-List⁺
 d_Applicative'45'List'8314'_26 ::
-  MAlonzo.Code.Class.Applicative.Core.T_Applicative_8
+  MAlonzo.Code.Class.Applicative.Core.T_Applicative_10
 d_Applicative'45'List'8314'_26
   = coe
-      MAlonzo.Code.Class.Applicative.Core.C_constructor_58
+      MAlonzo.Code.Class.Applicative.Core.C_mkApplicative_60
       (coe
          MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List'8314'_140)
       (coe
@@ -111,17 +111,17 @@ d_Applicative'45'List'8314'_26
             coe
               MAlonzo.Code.Data.List.NonEmpty.Base.du_concatMap_208
               (coe
-                 MAlonzo.Code.Class.Functor.Core.du__'60''38''62'__30
+                 MAlonzo.Code.Class.Functor.Core.du__'60''38''62'__32
                  (coe
                     MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List'8314'_140)
                  (coe v0) (coe v2) (coe v5))
               v4))
 -- Class.Applicative.Instances.Applicative-Vec
 d_Applicative'45'Vec_36 ::
-  Integer -> MAlonzo.Code.Class.Applicative.Core.T_Applicative_8
+  Integer -> MAlonzo.Code.Class.Applicative.Core.T_Applicative_10
 d_Applicative'45'Vec_36 v0
   = coe
-      MAlonzo.Code.Class.Applicative.Core.C_constructor_58
+      MAlonzo.Code.Class.Applicative.Core.C_mkApplicative_60
       (coe MAlonzo.Code.Class.Functor.Instances.du_Functor'45'Vec_264)
       (coe
          (\ v1 v2 ->
@@ -130,25 +130,25 @@ d_Applicative'45'Vec_36 v0
          (\ v1 v2 v3 v4 -> coe MAlonzo.Code.Data.Vec.Base.du__'8859'__284))
 -- Class.Applicative.Instances.Applicative₀-Vec
 d_Applicative'8320''45'Vec_44 ::
-  MAlonzo.Code.Class.Applicative.Core.T_Applicative'8320'_86
+  MAlonzo.Code.Class.Applicative.Core.T_Applicative'8320'_118
 d_Applicative'8320''45'Vec_44
   = coe
-      MAlonzo.Code.Class.Applicative.Core.C_constructor_98
+      MAlonzo.Code.Class.Applicative.Core.C_constructor_130
       (coe d_Applicative'45'Vec_36 (coe (0 :: Integer)))
       (coe (\ v0 v1 -> coe MAlonzo.Code.Data.Vec.Base.C_'91''93'_32))
 -- Class.Applicative.Instances.Alternative-TC
 d_Alternative'45'TC_48 ::
-  MAlonzo.Code.Class.Applicative.Core.T_Alternative_108
+  MAlonzo.Code.Class.Applicative.Core.T_Alternative_142
 d_Alternative'45'TC_48
   = coe
-      MAlonzo.Code.Class.Applicative.Core.C_constructor_116
+      MAlonzo.Code.Class.Applicative.Core.C_constructor_150
       (coe MAlonzo.Code.Agda.Builtin.Reflection.d_catchTC_358)
 -- Class.Applicative.Instances.Applicative-TC
 d_Applicative'45'TC_50 ::
-  MAlonzo.Code.Class.Applicative.Core.T_Applicative_8
+  MAlonzo.Code.Class.Applicative.Core.T_Applicative_10
 d_Applicative'45'TC_50
   = coe
-      MAlonzo.Code.Class.Applicative.Core.C_constructor_58
+      MAlonzo.Code.Class.Applicative.Core.C_mkApplicative_60
       (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'TC_438)
       (coe MAlonzo.Code.Agda.Builtin.Reflection.d_returnTC_326)
       (coe

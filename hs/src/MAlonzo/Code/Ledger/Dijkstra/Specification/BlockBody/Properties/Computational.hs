@@ -145,7 +145,7 @@ d_signers_2856 v0
       (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody.Properties.Computational._.completeness
 d_completeness_3118 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
@@ -154,14 +154,14 @@ d_completeness_3118 ::
 d_completeness_3118 = erased
 -- Ledger.Dijkstra.Specification.BlockBody.Properties.Computational._.computeProof
 d_computeProof_3124 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_computeProof_3124 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_304
+      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_346
       (coe v0)
 -- Ledger.Dijkstra.Specification.BlockBody.Properties.Computational.validLeiosBlockFailure
 d_validLeiosBlockFailure_3136 ::
@@ -227,15 +227,15 @@ d_BBODY'45'computeProof_3154 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_BBODY'45'computeProof_3154 v0 v1 v2 v3 v4
   = case coe v3 of
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v5 v6
         -> let v7
                  = coe
-                     MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8846''45'dec__96
+                     MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8846''63'__96
                      (coe
-                        MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+                        MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                         (coe
                            MAlonzo.Code.Class.Decidable.Core.d_dec_16
                            (coe
@@ -259,7 +259,7 @@ d_BBODY'45'computeProof_3154 v0 v1 v2 v3 v4
                                        (coe v4))))
                               (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8))))
                      (coe
-                        MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+                        MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                         (coe
                            MAlonzo.Code.Class.Decidable.Core.d_dec_16
                            (coe
@@ -271,7 +271,7 @@ d_BBODY'45'computeProof_3154 v0 v1 v2 v3 v4
                                  MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_ebCert_3154
                                  (coe v4))))
                         (coe
-                           MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+                           MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                            (coe
                               MAlonzo.Code.Class.Decidable.Core.d_dec_16
                               (coe
@@ -302,9 +302,9 @@ d_BBODY'45'computeProof_3154 v0 v1 v2 v3 v4
                        then case coe v9 of
                               MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v10
                                 -> coe
-                                     MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                     MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                      (coe
-                                        MAlonzo.Code.Interface.ComputationalRelation.du_Monad'45'ComputationResult_162)
+                                        MAlonzo.Code.Interface.ComputationalRelation.du_Monad'45'ComputationResult_178)
                                      () erased () erased
                                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Ledgers.Properties.Computational.d_LEDGERS'45'computeProof_3526
                                         (coe v0) (coe v1)
@@ -848,7 +848,7 @@ d_BBODY'45'computeProof_3154 v0 v1 v2 v3 v4
                                         case coe v11 of
                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v12 v13
                                             -> coe
-                                                 MAlonzo.Code.Interface.ComputationalRelation.C_success_42
+                                                 MAlonzo.Code.Interface.ComputationalRelation.C_success_46
                                                  (coe
                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                     (coe
@@ -888,7 +888,7 @@ d_BBODY'45'computeProof_3154 v0 v1 v2 v3 v4
                        else coe
                               seq (coe v9)
                               (coe
-                                 MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
+                                 MAlonzo.Code.Interface.ComputationalRelation.C_failure_48
                                  (coe du_validLeiosBlockFailure_3136 (coe v4)))
                 _ -> MAlonzo.RTE.mazUnreachableError)
       _ -> MAlonzo.RTE.mazUnreachableError
@@ -907,8 +907,8 @@ d_BBODY'45'completeness_3192 = erased
 d_Computational'45'BBODY_3244 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'BBODY_3244 v0 v1
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_486
       (d_BBODY'45'computeProof_3154 (coe v0) (coe v1))

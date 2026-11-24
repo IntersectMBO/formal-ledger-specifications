@@ -86,7 +86,7 @@ du_ι_360 v0
                                              MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                                              (coe v1))))
                                     (coe
-                                       MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222
+                                       MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6586
                                        (coe
                                           MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Base.du_go_140
                                           (coe v2) (coe v3))) in
@@ -138,7 +138,7 @@ du_ι_360 v0
                                        MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                                        (coe v1))))
                               (coe
-                                 MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222 (coe v2))
+                                 MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6586 (coe v2))
                        MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v7
                          -> case coe v7 of
                               MAlonzo.Code.Data.List.Kleene.Base.C__'38'__42 v8 v9
@@ -155,12 +155,12 @@ du_ι_360 v0
                                                                         MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Base.C__'8848'__208
                                                                         (coe v14) (coe v15)
                                                                         (coe
-                                                                           MAlonzo.Code.Function.Base.du__'10216'_'10217'__240
+                                                                           MAlonzo.Code.Function.Base.du__'10216'_'10217'__254
                                                                            (coe
                                                                               MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352
                                                                               v16)
                                                                            (coe
-                                                                              MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6214)
+                                                                              MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6578)
                                                                            (coe v6))
                                                                  _ -> MAlonzo.RTE.mazUnreachableError
                                                           MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v14
@@ -370,7 +370,7 @@ du_ι'45'hom_504 v0 v1 v2 v3
                                               MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_from_286
                                               (coe v0)))))
                                   (coe
-                                     MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222
+                                     MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6586
                                      (coe
                                         MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Base.du_go_140
                                         (coe v1) (coe v2))) in
@@ -438,12 +438,12 @@ du_ι'45'hom_504 v0 v1 v2 v3
                                                             MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Base.C__'8848'__208 v14 v15 v16
                                                               -> let v17
                                                                        = coe
-                                                                           MAlonzo.Code.Function.Base.du__'10216'_'10217'__240
+                                                                           MAlonzo.Code.Function.Base.du__'10216'_'10217'__254
                                                                            (coe
                                                                               MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352
                                                                               v16)
                                                                            (coe
-                                                                              MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6214)
+                                                                              MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6578)
                                                                            (coe v6) in
                                                                  coe
                                                                    (case coe v15 of
@@ -708,19 +708,19 @@ du_ι'45'hom_504 v0 v1 v2 v3
             (coe
                MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                  MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                     MAlonzo.Code.Algebra.Structures.d_isMagma_498
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                        MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                           MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                              MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                                 MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                                  (coe
-                                    MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                                    MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                                     (coe
                                        MAlonzo.Code.Tactic.RingSolver.Core.AlmostCommutativeRing.d_isCommutativeSemiring_62
                                        (coe
@@ -753,7 +753,7 @@ du_ι'45'hom_504 v0 v1 v2 v3
                                                  MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_from_286
                                                  (coe v0)))))
                                      (coe
-                                        MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222
+                                        MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6586
                                         (coe
                                            MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Base.du_go_140
                                            (coe v1) (coe v2))) in
@@ -821,12 +821,12 @@ du_ι'45'hom_504 v0 v1 v2 v3
                                                                MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Base.C__'8848'__208 v14 v15 v16
                                                                  -> let v17
                                                                           = coe
-                                                                              MAlonzo.Code.Function.Base.du__'10216'_'10217'__240
+                                                                              MAlonzo.Code.Function.Base.du__'10216'_'10217'__254
                                                                               (coe
                                                                                  MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352
                                                                                  v16)
                                                                               (coe
-                                                                                 MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6214)
+                                                                                 MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6578)
                                                                               (coe v6) in
                                                                     coe
                                                                       (case coe v15 of
@@ -1109,7 +1109,7 @@ du_ι'45'hom_504 v0 v1 v2 v3
                                          MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_from_286
                                          (coe v0)))))
                              (coe
-                                MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222
+                                MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6586
                                 (coe
                                    MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Base.du_go_140
                                    (coe v1) (coe v2))) in
@@ -1160,19 +1160,19 @@ du_ι'45'hom_504 v0 v1 v2 v3
                (coe
                   MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                        MAlonzo.Code.Algebra.Structures.d_isMagma_498
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                              MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                                 MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                                  (coe
-                                    MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                                    MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                                     (coe
-                                       MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                                       MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                                        (coe
                                           MAlonzo.Code.Tactic.RingSolver.Core.AlmostCommutativeRing.d_isCommutativeSemiring_62
                                           (coe
@@ -1203,7 +1203,7 @@ du_ι'45'hom_504 v0 v1 v2 v3
                                             MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_from_286
                                             (coe v0)))))
                                 (coe
-                                   MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222
+                                   MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6586
                                    (coe
                                       MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Base.du_go_140
                                       (coe v1) (coe v2))) in
@@ -1280,19 +1280,19 @@ du_ι'45'hom_504 v0 v1 v2 v3
                   (coe
                      MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                           MAlonzo.Code.Algebra.Structures.d_isMagma_498
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                  (coe
-                                    MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                                    MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                                     (coe
-                                       MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                                       MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                                        (coe
-                                          MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                                          MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                                           (coe
                                              MAlonzo.Code.Tactic.RingSolver.Core.AlmostCommutativeRing.d_isCommutativeSemiring_62
                                              (coe
@@ -1351,19 +1351,19 @@ du_ι'45'hom_504 v0 v1 v2 v3
                      (coe
                         MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                           MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                              MAlonzo.Code.Algebra.Structures.d_isMagma_498
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                 MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                  (coe
-                                    MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                    MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                     (coe
-                                       MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                                       MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                                        (coe
-                                          MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                                          MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                                           (coe
-                                             MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                                             MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                                              (coe
                                                 MAlonzo.Code.Tactic.RingSolver.Core.AlmostCommutativeRing.d_isCommutativeSemiring_62
                                                 (coe
@@ -1419,19 +1419,19 @@ du_ι'45'hom_504 v0 v1 v2 v3
                            (coe
                               MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                 MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                  (coe
-                                    MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                    MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                     (coe
-                                       MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                       MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                        (coe
-                                          MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                          MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                           (coe
-                                             MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                                             MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                                              (coe
-                                                MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                                                MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                                                 (coe
-                                                   MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                                                   MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                                                    (coe
                                                       MAlonzo.Code.Tactic.RingSolver.Core.AlmostCommutativeRing.d_isCommutativeSemiring_62
                                                       (coe
@@ -1442,13 +1442,13 @@ du_ι'45'hom_504 v0 v1 v2 v3
                         (coe MAlonzo.Code.Data.Vec.Base.du_lookup_82 (coe v3) (coe v2)))
                      erased)
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_identity'691'_754
+                     MAlonzo.Code.Algebra.Structures.du_identity'691'_756
                      (coe
-                        MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                        MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                           MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                              MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                               (coe
                                  MAlonzo.Code.Tactic.RingSolver.Core.AlmostCommutativeRing.d_isCommutativeSemiring_62
                                  (coe
@@ -1466,10 +1466,10 @@ du_ι'45'hom_504 v0 v1 v2 v3
                                  (coe v2))
                               (coe v3))))))
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_'42''45'cong_1558
-                  (MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_'42''45'cong_1560
+                  (MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                         (coe
                            MAlonzo.Code.Tactic.RingSolver.Core.AlmostCommutativeRing.d_isCommutativeSemiring_62
                            (coe
@@ -1546,7 +1546,7 @@ du_ι'45'hom_504 v0 v1 v2 v3
                               MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_from_286
                               (coe v0)))))
                   (coe
-                     MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222
+                     MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6586
                      (coe
                         MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Base.du_go_140
                         (coe v1) (coe v2))))
@@ -1595,7 +1595,7 @@ du_ι'45'hom_504 v0 v1 v2 v3
                                          MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_from_286
                                          (coe v0)))))
                              (coe
-                                MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222
+                                MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6586
                                 (coe
                                    MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Base.du_go_140
                                    (coe v1) (coe v2))) in

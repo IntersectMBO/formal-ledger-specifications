@@ -623,7 +623,7 @@ d_NonZero'45'SlotsPerEpoch'7580'_914 v0
       (coe d_globalConstants_894 (coe v0))
 -- Ledger.Dijkstra.Specification.Gov.Base.GovStructure._.Positive-ActiveSlotCoeff
 d_Positive'45'ActiveSlotCoeff_916 ::
-  T_GovStructure_10 -> MAlonzo.Code.Data.Integer.Base.T_Positive_134
+  T_GovStructure_10 -> MAlonzo.Code.Data.Integer.Base.T_Positive_174
 d_Positive'45'ActiveSlotCoeff_916 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Epoch.d_Positive'45'ActiveSlotCoeff_342
@@ -2104,9 +2104,9 @@ d_paramsUpdateWellFormed'63'_1356 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_paramsUpdateWellFormed'63'_1356 v0
   = coe
-      MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+      MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
       (coe
-         MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8594''45'dec__106
+         MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8594''63'__106
          (coe
             MAlonzo.Code.Class.Decidable.Core.d_dec_16
             (coe
@@ -2186,7 +2186,7 @@ d_paramsUpdateWellFormed'63'_1356 v0
             (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
             (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)))
       (coe
-         MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+         MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
          (coe
             MAlonzo.Code.Class.Decidable.Core.d_dec_16
             (coe
@@ -2195,7 +2195,7 @@ d_paramsUpdateWellFormed'63'_1356 v0
                   (\ v1 ->
                      coe
                        MAlonzo.Code.Class.Decidable.Instances.d_ℚ'45'Dec'45''60'_44
-                       MAlonzo.Code.Data.Rational.Base.d_'189'_182
+                       MAlonzo.Code.Data.Rational.Base.d_'189'_188
                        (MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_fromUnitInterval_72
                           (coe v1))))
                (coe
@@ -2209,7 +2209,7 @@ d_paramsUpdateWellFormed'63'_1356 v0
                   MAlonzo.Code.Class.Decidable.Instances.du_Dec'45'MAll_30
                   (coe
                      MAlonzo.Code.Class.Decidable.Instances.d_ℚ'45'Dec'45''8804'_42
-                     MAlonzo.Code.Data.Rational.Base.d_1ℚ_180))
+                     MAlonzo.Code.Data.Rational.Base.d_1ℚ_186))
                (coe
                   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_960
                   (coe v0)))))

@@ -283,10 +283,10 @@ du_evalP2Scripts_2940 v0
 d_Computational'45'SUBUTXO_2958 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'SUBUTXO_2958 v0 v1
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_486
       (d_computeProof_3006 (coe v0) (coe v1))
 -- Ledger.Dijkstra.Specification.Utxo.Properties.Computational._.go.computeProof-aux
 d_computeProof'45'aux_2978 ::
@@ -296,7 +296,7 @@ d_computeProof'45'aux_2978 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3312 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3878 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_computeProof'45'aux_2978 v0 ~v1 v2 v3 v4 v5
   = du_computeProof'45'aux_2978 v0 v2 v3 v4 v5
 du_computeProof'45'aux_2978 ::
@@ -305,7 +305,7 @@ du_computeProof'45'aux_2978 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3312 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3878 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 du_computeProof'45'aux_2978 v0 v1 v2 v3 v4
   = case coe v4 of
       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v5 v6
@@ -338,7 +338,7 @@ du_computeProof'45'aux_2978 v0 v1 v2 v3 v4
                                                                                                  (coe
                                                                                                     v27)
                                                                                                  (coe
-                                                                                                    MAlonzo.Code.Interface.ComputationalRelation.C_success_42
+                                                                                                    MAlonzo.Code.Interface.ComputationalRelation.C_success_46
                                                                                                     (coe
                                                                                                        MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                                                                        (let v28
@@ -483,7 +483,7 @@ du_computeProof'45'aux_2978 v0 v1 v2 v3 v4
              else coe
                     seq (coe v6)
                     (coe
-                       MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
+                       MAlonzo.Code.Interface.ComputationalRelation.C_failure_48
                        (coe ("SUBUTXO" :: Data.Text.Text)))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Specification.Utxo.Properties.Computational._.go.computeProof
@@ -493,7 +493,7 @@ d_computeProof_3006 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3276 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3312 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3878 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_computeProof_3006 v0 v1 v2 v3 v4
   = coe
       du_computeProof'45'aux_2978 (coe v0) (coe v2) (coe v3) (coe v4)
@@ -519,10 +519,10 @@ d_completeness_3010 = erased
 d_Computational'45'UTXOS_3032 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'UTXOS_3032 v0 v1
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_486
       (\ v2 v3 v4 -> coe du_computeProof_3056 (coe v0) (coe v1) v2 v4)
 -- Ledger.Dijkstra.Specification.Utxo.Properties.Computational._.go.computeProof-aux
 d_computeProof'45'aux_3048 ::
@@ -532,12 +532,12 @@ d_computeProof'45'aux_3048 ::
   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3878 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_computeProof'45'aux_3048 ~v0 ~v1 ~v2 ~v3 ~v4 v5
   = du_computeProof'45'aux_3048 v5
 du_computeProof'45'aux_3048 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 du_computeProof'45'aux_3048 v0
   = case coe v0 of
       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v1 v2
@@ -545,7 +545,7 @@ du_computeProof'45'aux_3048 v0
              then coe
                     seq (coe v2)
                     (coe
-                       MAlonzo.Code.Interface.ComputationalRelation.C_success_42
+                       MAlonzo.Code.Interface.ComputationalRelation.C_success_46
                        (coe
                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                           (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
@@ -554,7 +554,7 @@ du_computeProof'45'aux_3048 v0
              else coe
                     seq (coe v2)
                     (coe
-                       MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
+                       MAlonzo.Code.Interface.ComputationalRelation.C_failure_48
                        (coe
                           ("\172\nevalP2Scripts (allP2ScriptsWithContext \915 txTop) \8801\n.TransactionStructure.HasIsValidFlag.IsValidFlagOf\n(TransactionStructure.HasIsValidFlag-Tx txs) txTop"
                            ::
@@ -567,7 +567,7 @@ d_computeProof_3056 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3244 ->
   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3878 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_computeProof_3056 v0 v1 v2 ~v3 v4
   = du_computeProof_3056 v0 v1 v2 v4
 du_computeProof_3056 ::
@@ -575,7 +575,7 @@ du_computeProof_3056 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3244 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3878 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 du_computeProof_3056 v0 v1 v2 v3
   = coe
       du_computeProof'45'aux_3048
@@ -609,10 +609,10 @@ d_completeness_3060 = erased
 d_Computational'45'UTXO_3076 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'UTXO_3076 v0 v1
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_486
       (d_computeProof_3174 (coe v0) (coe v1))
 -- Ledger.Dijkstra.Specification.Utxo.Properties.Computational._.go.computeProof-aux
 d_computeProof'45'aux_3118 ::
@@ -622,8 +622,8 @@ d_computeProof'45'aux_3118 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3312 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3878 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_computeProof'45'aux_3118 v0 v1 v2 v3 v4 v5 v6
   = case coe v5 of
       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v7 v8
@@ -631,7 +631,7 @@ d_computeProof'45'aux_3118 v0 v1 v2 v3 v4 v5 v6
              then case coe v8 of
                     MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v9
                       -> case coe v6 of
-                           MAlonzo.Code.Interface.ComputationalRelation.C_success_42 v10
+                           MAlonzo.Code.Interface.ComputationalRelation.C_success_46 v10
                              -> case coe v9 of
                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v11 v12
                                     -> case coe v12 of
@@ -682,7 +682,7 @@ d_computeProof'45'aux_3118 v0 v1 v2 v3 v4 v5 v6
                                                                                                                                                                      v46 of
                                                                                                                                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v47 v48
                                                                                                                                                                   -> coe
-                                                                                                                                                                       MAlonzo.Code.Interface.ComputationalRelation.C_success_42
+                                                                                                                                                                       MAlonzo.Code.Interface.ComputationalRelation.C_success_46
                                                                                                                                                                        (coe
                                                                                                                                                                           MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                                                                                                                                           (let v49
@@ -993,16 +993,16 @@ d_computeProof'45'aux_3118 v0 v1 v2 v3 v4 v5 v6
                                                 _ -> MAlonzo.RTE.mazUnreachableError
                                          _ -> MAlonzo.RTE.mazUnreachableError
                                   _ -> MAlonzo.RTE.mazUnreachableError
-                           MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v10
+                           MAlonzo.Code.Interface.ComputationalRelation.C_failure_48 v10
                              -> coe v6
                            _ -> MAlonzo.RTE.mazUnreachableError
                     _ -> MAlonzo.RTE.mazUnreachableError
              else coe
                     seq (coe v8)
                     (case coe v6 of
-                       MAlonzo.Code.Interface.ComputationalRelation.C_success_42 v9
+                       MAlonzo.Code.Interface.ComputationalRelation.C_success_46 v9
                          -> coe
-                              MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
+                              MAlonzo.Code.Interface.ComputationalRelation.C_failure_48
                               (let v10
                                      = coe
                                          MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_dec'45'de'45'morgan_10
@@ -2203,9 +2203,9 @@ d_computeProof'45'aux_3118 v0 v1 v2 v3 v4 v5 v6
                                                         _ -> MAlonzo.RTE.mazUnreachableError)
                                               _ -> MAlonzo.RTE.mazUnreachableError)
                                     _ -> MAlonzo.RTE.mazUnreachableError))
-                       MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v9
+                       MAlonzo.Code.Interface.ComputationalRelation.C_failure_48 v9
                          -> coe
-                              MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
+                              MAlonzo.Code.Interface.ComputationalRelation.C_failure_48
                               (coe
                                  MAlonzo.Code.Data.String.Base.d__'43''43'__20
                                  (let v10
@@ -3421,7 +3421,7 @@ d_computeProof_3174 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3244 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3312 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3878 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_computeProof_3174 v0 v1 v2 v3 v4
   = coe
       d_computeProof'45'aux_3118 (coe v0) (coe v1) (coe v2) (coe v3)

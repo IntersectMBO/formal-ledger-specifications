@@ -429,7 +429,7 @@ d_set_4016 v0
       (coe v0)
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._.completeness
 d_completeness_4030 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
@@ -438,14 +438,14 @@ d_completeness_4030 ::
 d_completeness_4030 = erased
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._.computeProof
 d_computeProof_4036 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_computeProof_4036 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_304
+      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_346
       (coe v0)
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._.EPOCH-total
 d_EPOCH'45'total_4058 ::
@@ -1076,12 +1076,12 @@ du_EPOCH'45'total_4058 v0 v1 v2
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                        (coe v0))))
                               (coe
-                                 MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-                                 (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+                                 MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+                                 (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
                               (coe
                                  MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                                  (coe
-                                    MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                                    MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                               (coe (\ v3 -> v3))
                               (let v3
                                      = coe
@@ -2155,13 +2155,13 @@ du_EPOCH'45'total_4058 v0 v1 v2
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v0))))
                                                    (coe
-                                                      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+                                                      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
                                                       (coe
-                                                         MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+                                                         MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
                                                    (coe
                                                       MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                                                       (coe
-                                                         MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                                                         MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                                                    (coe (\ v3 -> v3))
                                                    (let v3
                                                           = coe
@@ -3773,13 +3773,13 @@ du_EPOCH'45'total_4058 v0 v1 v2
                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                          (coe v0))))
                                                 (coe
-                                                   MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+                                                   MAlonzo.Code.Class.DecEq.Core.C_constructor_26
                                                    (coe
-                                                      MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+                                                      MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
                                                 (coe
                                                    MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                                                    (coe
-                                                      MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                                                      MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                                                 (coe (\ v3 -> v3))
                                                 (let v3
                                                        = coe
@@ -5463,13 +5463,13 @@ du_EPOCH'45'total_4058 v0 v1 v2
                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                (coe v0))))
                                                       (coe
-                                                         MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+                                                         MAlonzo.Code.Class.DecEq.Core.C_constructor_26
                                                          (coe
-                                                            MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+                                                            MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
                                                       (coe
                                                          MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                                                          (coe
-                                                            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                                                            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                                                       (coe (\ v3 -> v3))
                                                       (let v3
                                                              = coe
@@ -6653,13 +6653,13 @@ du_EPOCH'45'total_4058 v0 v1 v2
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                        (coe v0))))
                                                                               (coe
-                                                                                 MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+                                                                                 MAlonzo.Code.Class.DecEq.Core.C_constructor_26
                                                                                  (coe
-                                                                                    MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+                                                                                    MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
                                                                               (coe
                                                                                  MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                                                                                  (coe
-                                                                                    MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                                                                                    MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                                                                               (coe (\ v3 -> v3))
                                                                               (let v3
                                                                                      = coe
@@ -8494,13 +8494,13 @@ du_EPOCH'45'total_4058 v0 v1 v2
                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                     (coe v0))))
                                                                            (coe
-                                                                              MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+                                                                              MAlonzo.Code.Class.DecEq.Core.C_constructor_26
                                                                               (coe
-                                                                                 MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+                                                                                 MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
                                                                            (coe
                                                                               MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                                                                               (coe
-                                                                                 MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                                                                                 MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                                                                            (coe (\ v3 -> v3))
                                                                            (let v3
                                                                                   = coe
@@ -10316,13 +10316,13 @@ du_EPOCH'45'total_4058 v0 v1 v2
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                        (coe v0))))
                                                                               (coe
-                                                                                 MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+                                                                                 MAlonzo.Code.Class.DecEq.Core.C_constructor_26
                                                                                  (coe
-                                                                                    MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+                                                                                    MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
                                                                               (coe
                                                                                  MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                                                                                  (coe
-                                                                                    MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                                                                                    MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                                                                               (coe (\ v3 -> v3))
                                                                               (let v3
                                                                                      = coe
@@ -12087,13 +12087,13 @@ du_EPOCH'45'total_4058 v0 v1 v2
                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                               (coe v0))))
                                                                      (coe
-                                                                        MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+                                                                        MAlonzo.Code.Class.DecEq.Core.C_constructor_26
                                                                         (coe
-                                                                           MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+                                                                           MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
                                                                      (coe
                                                                         MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                                                                         (coe
-                                                                           MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                                                                           MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                                                                      (coe (\ v3 -> v3))
                                                                      (let v3
                                                                             = coe
@@ -13302,13 +13302,13 @@ du_EPOCH'45'total_4058 v0 v1 v2
                                                                                              (coe
                                                                                                 v0))))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+                                                                                       MAlonzo.Code.Class.DecEq.Core.C_constructor_26
                                                                                        (coe
-                                                                                          MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+                                                                                          MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
                                                                                     (coe
                                                                                        MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                                                                                        (coe
-                                                                                          MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                                                                                          MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                                                                                     (coe
                                                                                        (\ v3 -> v3))
                                                                                     (let v3
@@ -15152,13 +15152,13 @@ du_EPOCH'45'total_4058 v0 v1 v2
                                                                                              (coe
                                                                                                 v0))))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+                                                                                       MAlonzo.Code.Class.DecEq.Core.C_constructor_26
                                                                                        (coe
-                                                                                          MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+                                                                                          MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
                                                                                     (coe
                                                                                        MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                                                                                        (coe
-                                                                                          MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                                                                                          MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                                                                                     (coe
                                                                                        (\ v3 -> v3))
                                                                                     (let v3
@@ -16901,12 +16901,12 @@ du_EPOCH'45'total_4058 v0 v1 v2
                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                               (coe v0))))
                      (coe
-                        MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-                        (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+                        MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+                        (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
                      (coe
                         MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                         (coe
-                           MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                           MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                      (coe (\ v3 -> v3))
                      (let v3
                             = coe
@@ -18017,13 +18017,13 @@ du_EPOCH'45'total_4058 v0 v1 v2
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v0))))
                                                    (coe
-                                                      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+                                                      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
                                                       (coe
-                                                         MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+                                                         MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
                                                    (coe
                                                       MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                                                       (coe
-                                                         MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                                                         MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                                                    (coe (\ v3 -> v3))
                                                    (let v3
                                                           = coe
@@ -19656,13 +19656,13 @@ du_EPOCH'45'total_4058 v0 v1 v2
                                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                          (coe v0))))
                                                 (coe
-                                                   MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+                                                   MAlonzo.Code.Class.DecEq.Core.C_constructor_26
                                                    (coe
-                                                      MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+                                                      MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
                                                 (coe
                                                    MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                                                    (coe
-                                                      MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                                                      MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                                                 (coe (\ v3 -> v3))
                                                 (let v3
                                                        = coe
@@ -20827,13 +20827,13 @@ du_EPOCH'45'total_4058 v0 v1 v2
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                  (coe v0))))
                                                                         (coe
-                                                                           MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+                                                                           MAlonzo.Code.Class.DecEq.Core.C_constructor_26
                                                                            (coe
-                                                                              MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+                                                                              MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
                                                                         (coe
                                                                            MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                                                                            (coe
-                                                                              MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                                                                              MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                                                                         (coe (\ v3 -> v3))
                                                                         (let v3
                                                                                = coe
@@ -22631,13 +22631,13 @@ du_EPOCH'45'total_4058 v0 v1 v2
                                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                               (coe v0))))
                                                                      (coe
-                                                                        MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+                                                                        MAlonzo.Code.Class.DecEq.Core.C_constructor_26
                                                                         (coe
-                                                                           MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+                                                                           MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
                                                                      (coe
                                                                         MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                                                                         (coe
-                                                                           MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                                                                           MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                                                                      (coe (\ v3 -> v3))
                                                                      (let v3
                                                                             = coe
@@ -24405,13 +24405,13 @@ du_EPOCH'45'total_4058 v0 v1 v2
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                  (coe v0))))
                                                                         (coe
-                                                                           MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+                                                                           MAlonzo.Code.Class.DecEq.Core.C_constructor_26
                                                                            (coe
-                                                                              MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+                                                                              MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
                                                                         (coe
                                                                            MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                                                                            (coe
-                                                                              MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                                                                              MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                                                                         (coe (\ v3 -> v3))
                                                                         (let v3
                                                                                = coe
@@ -26127,13 +26127,13 @@ du_EPOCH'45'total_4058 v0 v1 v2
                                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                         (coe v0))))
                                                                (coe
-                                                                  MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+                                                                  MAlonzo.Code.Class.DecEq.Core.C_constructor_26
                                                                   (coe
-                                                                     MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+                                                                     MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
                                                                (coe
                                                                   MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                                                                   (coe
-                                                                     MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                                                                     MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                                                                (coe (\ v3 -> v3))
                                                                (let v3
                                                                       = coe
@@ -27328,13 +27328,13 @@ du_EPOCH'45'total_4058 v0 v1 v2
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                        (coe v0))))
                                                                               (coe
-                                                                                 MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+                                                                                 MAlonzo.Code.Class.DecEq.Core.C_constructor_26
                                                                                  (coe
-                                                                                    MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+                                                                                    MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
                                                                               (coe
                                                                                  MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                                                                                  (coe
-                                                                                    MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                                                                                    MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                                                                               (coe (\ v3 -> v3))
                                                                               (let v3
                                                                                      = coe
@@ -29160,13 +29160,13 @@ du_EPOCH'45'total_4058 v0 v1 v2
                                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                        (coe v0))))
                                                                               (coe
-                                                                                 MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+                                                                                 MAlonzo.Code.Class.DecEq.Core.C_constructor_26
                                                                                  (coe
-                                                                                    MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+                                                                                    MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
                                                                               (coe
                                                                                  MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                                                                                  (coe
-                                                                                    MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                                                                                    MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                                                                               (coe (\ v3 -> v3))
                                                                               (let v3
                                                                                      = coe
@@ -32959,18 +32959,18 @@ d_EPOCH'45'complete''_4204 = erased
 d_Computational'45'EPOCH_4206 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'EPOCH_4206 v0 ~v1
   = du_Computational'45'EPOCH_4206 v0
 du_Computational'45'EPOCH_4206 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 du_Computational'45'EPOCH_4206 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_486
       (\ v1 v2 v3 ->
          coe
-           MAlonzo.Code.Interface.ComputationalRelation.C_success_42
+           MAlonzo.Code.Interface.ComputationalRelation.C_success_46
            (coe du_EPOCH'45'total''_4200 (coe v0) (coe v2) (coe v3)))
 -- Ledger.Dijkstra.Specification.Epoch.Properties.Computational._.NEWEPOCH-total
 d_NEWEPOCH'45'total_4234 ::
@@ -34155,16 +34155,16 @@ d_NEWEPOCH'45'complete_4260 = erased
 d_Computational'45'NEWEPOCH_4356 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'NEWEPOCH_4356 v0 ~v1
   = du_Computational'45'NEWEPOCH_4356 v0
 du_Computational'45'NEWEPOCH_4356 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 du_Computational'45'NEWEPOCH_4356 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_486
       (\ v1 v2 v3 ->
          coe
-           MAlonzo.Code.Interface.ComputationalRelation.C_success_42
+           MAlonzo.Code.Interface.ComputationalRelation.C_success_46
            (coe du_NEWEPOCH'45'total_4234 (coe v0) (coe v3) (coe v2)))

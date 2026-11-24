@@ -33,7 +33,7 @@ d__'8776''63'__8
   = coe
       MAlonzo.Code.Relation.Binary.Construct.On.du_decidable_102
       (coe MAlonzo.Code.Agda.Builtin.Reflection.d_primMetaToNat_46)
-      (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796)
+      (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032)
 -- Reflection.AST.Meta._≟_
 d__'8799'__10 ::
   AgdaAny ->

@@ -250,7 +250,7 @@ d_Δf_2990 v0
 -- Ledger.Dijkstra.Specification.RewardUpdate._.RewardUpdate.Δf-nonpositive
 d_Δf'45'nonpositive_2992 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_RewardUpdate_3892 ->
-  MAlonzo.Code.Data.Integer.Base.T__'8804'__26
+  MAlonzo.Code.Data.Integer.Base.T__'8804'__48
 d_Δf'45'nonpositive_2992 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_Δf'45'nonpositive_3924
@@ -274,7 +274,7 @@ d_Δt_2996 v0
 -- Ledger.Dijkstra.Specification.RewardUpdate._.RewardUpdate.Δt-nonnegative
 d_Δt'45'nonnegative_2998 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.T_RewardUpdate_3892 ->
-  MAlonzo.Code.Data.Integer.Base.T__'8804'__26
+  MAlonzo.Code.Data.Integer.Base.T__'8804'__48
 d_Δt'45'nonnegative_2998 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Rewards.d_Δt'45'nonnegative_3922

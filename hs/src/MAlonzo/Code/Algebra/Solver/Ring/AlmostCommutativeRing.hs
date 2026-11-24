@@ -32,13 +32,13 @@ import qualified MAlonzo.Code.Relation.Binary.Structures
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing
 d_IsAlmostCommutativeRing_26 a0 a1 a2 a3 a4 a5 a6 a7 a8 = ()
 data T_IsAlmostCommutativeRing_26
-  = C_constructor_174 MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1750
+  = C_constructor_174 MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1752
                       (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
                       (AgdaAny -> AgdaAny -> AgdaAny) (AgdaAny -> AgdaAny -> AgdaAny)
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing.isCommutativeSemiring
 d_isCommutativeSemiring_62 ::
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1750
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1752
 d_isCommutativeSemiring_62 v0
   = case coe v0 of
       C_constructor_174 v1 v2 v3 v4 -> coe v1
@@ -71,18 +71,18 @@ d_'42''45'assoc_80 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_'42''45'assoc_80 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'assoc_1560
+      MAlonzo.Code.Algebra.Structures.d_'42''45'assoc_1562
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe d_isCommutativeSemiring_62 (coe v0))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.*-comm
 d_'42''45'comm_82 ::
   T_IsAlmostCommutativeRing_26 -> AgdaAny -> AgdaAny -> AgdaAny
 d_'42''45'comm_82 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'comm_1766
+      MAlonzo.Code.Algebra.Structures.d_'42''45'comm_1768
       (coe d_isCommutativeSemiring_62 (coe v0))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.*-cong
 d_'42''45'cong_84 ::
@@ -91,11 +91,11 @@ d_'42''45'cong_84 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_'42''45'cong_84 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'cong_1558
+      MAlonzo.Code.Algebra.Structures.d_'42''45'cong_1560
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe d_isCommutativeSemiring_62 (coe v0))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.∙-congʳ
 d_'8729''45'cong'691'_86 ::
@@ -119,27 +119,27 @@ du_'8729''45'cong'691'_86 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v1) in
+             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                     (coe v2) in
           coe
             (let v4
                    = coe
-                       MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                       MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v4) in
+                      = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v4) in
                 coe
-                  (let v6 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v5) in
+                  (let v6 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v5) in
                    coe
                      (let v7
-                            = coe MAlonzo.Code.Algebra.Structures.du_setoid_202 (coe v6) in
+                            = coe MAlonzo.Code.Algebra.Structures.du_setoid_204 (coe v6) in
                       coe
                         (let v8
-                               = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188 (coe v6) in
+                               = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190 (coe v6) in
                          coe
                            (coe
                               MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'691'_46
@@ -171,27 +171,27 @@ du_'8729''45'cong'737'_88 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v1) in
+             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                     (coe v2) in
           coe
             (let v4
                    = coe
-                       MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                       MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v4) in
+                      = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v4) in
                 coe
-                  (let v6 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v5) in
+                  (let v6 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v5) in
                    coe
                      (let v7
-                            = coe MAlonzo.Code.Algebra.Structures.du_setoid_202 (coe v6) in
+                            = coe MAlonzo.Code.Algebra.Structures.du_setoid_204 (coe v6) in
                       coe
                         (let v8
-                               = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188 (coe v6) in
+                               = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190 (coe v6) in
                          coe
                            (coe
                               MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'737'_42
@@ -207,11 +207,11 @@ d_'42''45'identity_90 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_'42''45'identity_90 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'identity_1562
+      MAlonzo.Code.Algebra.Structures.d_'42''45'identity_1564
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe d_isCommutativeSemiring_62 (coe v0))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.identityʳ
 d_identity'691'_92 ::
@@ -232,16 +232,16 @@ du_identity'691'_92 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v1) in
+             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                     (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_identity'691'_754
+               MAlonzo.Code.Algebra.Structures.du_identity'691'_756
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                  MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.identityˡ
 d_identity'737'_94 ::
@@ -262,16 +262,16 @@ du_identity'737'_94 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v1) in
+             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                     (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_identity'737'_752
+               MAlonzo.Code.Algebra.Structures.du_identity'737'_754
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                  MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.isCommutativeMagma
 d_isCommutativeMagma_96 ::
@@ -285,24 +285,24 @@ d_isCommutativeMagma_96 ::
   AgdaAny ->
   AgdaAny ->
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_214
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_216
 d_isCommutativeMagma_96 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
   = du_isCommutativeMagma_96 v9
 du_isCommutativeMagma_96 ::
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_214
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_216
 du_isCommutativeMagma_96 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (let v2
              = coe
-                 MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1852
+                 MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1854
                  (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_606
+            MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_608
             (coe
-               MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1520
+               MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1522
                (coe v2))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.*-isCommutativeMonoid
 d_'42''45'isCommutativeMonoid_98 ::
@@ -316,16 +316,16 @@ d_'42''45'isCommutativeMonoid_98 ::
   AgdaAny ->
   AgdaAny ->
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 d_'42''45'isCommutativeMonoid_98 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7
                                  ~v8 v9
   = du_'42''45'isCommutativeMonoid_98 v9
 du_'42''45'isCommutativeMonoid_98 ::
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 du_'42''45'isCommutativeMonoid_98 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeMonoid_1860
+      MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeMonoid_1862
       (coe d_isCommutativeSemiring_62 (coe v0))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.*-isCommutativeSemigroup
 d_'42''45'isCommutativeSemigroup_100 ::
@@ -339,20 +339,20 @@ d_'42''45'isCommutativeSemigroup_100 ::
   AgdaAny ->
   AgdaAny ->
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_570
 d_'42''45'isCommutativeSemigroup_100 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6
                                      ~v7 ~v8 v9
   = du_'42''45'isCommutativeSemigroup_100 v9
 du_'42''45'isCommutativeSemigroup_100 ::
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_570
 du_'42''45'isCommutativeSemigroup_100 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1520
+         MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1522
          (coe
-            MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1852
+            MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1854
             (coe v1)))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.*-isMagma
 d_'42''45'isMagma_102 ::
@@ -366,22 +366,22 @@ d_'42''45'isMagma_102 ::
   AgdaAny ->
   AgdaAny ->
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 d_'42''45'isMagma_102 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
   = du_'42''45'isMagma_102 v9
 du_'42''45'isMagma_102 ::
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 du_'42''45'isMagma_102 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v1) in
+             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Structures.du_'42''45'isMagma_1614
+            MAlonzo.Code.Algebra.Structures.du_'42''45'isMagma_1616
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                (coe v2))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.*-isMonoid
 d_'42''45'isMonoid_104 ::
@@ -395,22 +395,22 @@ d_'42''45'isMonoid_104 ::
   AgdaAny ->
   AgdaAny ->
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 d_'42''45'isMonoid_104 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
   = du_'42''45'isMonoid_104 v9
 du_'42''45'isMonoid_104 ::
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 du_'42''45'isMonoid_104 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v1) in
+             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+            MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                (coe v2))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.*-isSemigroup
 d_'42''45'isSemigroup_106 ::
@@ -424,22 +424,22 @@ d_'42''45'isSemigroup_106 ::
   AgdaAny ->
   AgdaAny ->
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 d_'42''45'isSemigroup_106 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
   = du_'42''45'isSemigroup_106 v9
 du_'42''45'isSemigroup_106 ::
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 du_'42''45'isSemigroup_106 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v1) in
+             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Structures.du_'42''45'isSemigroup_1616
+            MAlonzo.Code.Algebra.Structures.du_'42''45'isSemigroup_1618
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                (coe v2))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.assoc
 d_assoc_108 ::
@@ -447,30 +447,30 @@ d_assoc_108 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_assoc_108 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_assoc_498
+      MAlonzo.Code.Algebra.Structures.d_assoc_500
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+         MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+            MAlonzo.Code.Algebra.Structures.d_isMonoid_776
             (coe
-               MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+               MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                     MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                      (coe d_isCommutativeSemiring_62 (coe v0)))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.comm
 d_comm_110 ::
   T_IsAlmostCommutativeRing_26 -> AgdaAny -> AgdaAny -> AgdaAny
 d_comm_110 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_comm_776
+      MAlonzo.Code.Algebra.Structures.d_comm_778
       (coe
-         MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+         MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+            MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+               MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                (coe d_isCommutativeSemiring_62 (coe v0)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.∙-cong
 d_'8729''45'cong_112 ::
@@ -479,19 +479,19 @@ d_'8729''45'cong_112 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_'8729''45'cong_112 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+      MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isMagma_496
+         MAlonzo.Code.Algebra.Structures.d_isMagma_498
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+            MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+               MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                     MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                         (coe d_isCommutativeSemiring_62 (coe v0))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.∙-congʳ
 d_'8729''45'cong'691'_114 ::
@@ -515,29 +515,29 @@ du_'8729''45'cong'691'_114 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v1) in
+             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                     (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                   = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v4) in
+                      = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v5) in
                    coe
-                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v6) in
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v6) in
                       coe
                         (let v8
-                               = coe MAlonzo.Code.Algebra.Structures.du_setoid_202 (coe v7) in
+                               = coe MAlonzo.Code.Algebra.Structures.du_setoid_204 (coe v7) in
                          coe
                            (let v9
-                                  = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188 (coe v7) in
+                                  = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190 (coe v7) in
                             coe
                               (coe
                                  MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'691'_46
@@ -569,29 +569,29 @@ du_'8729''45'cong'737'_116 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v1) in
+             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                     (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                   = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v4) in
+                      = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v5) in
                    coe
-                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v6) in
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v6) in
                       coe
                         (let v8
-                               = coe MAlonzo.Code.Algebra.Structures.du_setoid_202 (coe v7) in
+                               = coe MAlonzo.Code.Algebra.Structures.du_setoid_204 (coe v7) in
                          coe
                            (let v9
-                                  = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188 (coe v7) in
+                                  = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190 (coe v7) in
                             coe
                               (coe
                                  MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'737'_42
@@ -607,15 +607,15 @@ d_identity_118 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_identity_118 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_identity_724
+      MAlonzo.Code.Algebra.Structures.d_identity_726
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+         MAlonzo.Code.Algebra.Structures.d_isMonoid_776
          (coe
-            MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+            MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                  MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                   (coe d_isCommutativeSemiring_62 (coe v0))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.identityʳ
 d_identity'691'_120 ::
@@ -636,19 +636,19 @@ du_identity'691'_120 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v1) in
+             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                     (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                   = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                        (coe v3) in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_identity'691'_754
-                  (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v4))))))
+                  MAlonzo.Code.Algebra.Structures.du_identity'691'_756
+                  (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v4))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.identityˡ
 d_identity'737'_122 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -668,19 +668,19 @@ du_identity'737'_122 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v1) in
+             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                     (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                   = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                        (coe v3) in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_identity'737'_752
-                  (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v4))))))
+                  MAlonzo.Code.Algebra.Structures.du_identity'737'_754
+                  (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v4))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.isCommutativeMagma
 d_isCommutativeMagma_124 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -693,42 +693,42 @@ d_isCommutativeMagma_124 ::
   AgdaAny ->
   AgdaAny ->
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_214
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_216
 d_isCommutativeMagma_124 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
   = du_isCommutativeMagma_124 v9
 du_isCommutativeMagma_124 ::
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_214
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_216
 du_isCommutativeMagma_124 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v1) in
+             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                     (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                   = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                        (coe v3) in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_606
+                  MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_608
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_isCommutativeSemigroup_814
+                     MAlonzo.Code.Algebra.Structures.du_isCommutativeSemigroup_816
                      (coe v4))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.+-isCommutativeMonoid
 d_'43''45'isCommutativeMonoid_126 ::
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 d_'43''45'isCommutativeMonoid_126 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+      MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe d_isCommutativeSemiring_62 (coe v0))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.isCommutativeSemigroup
 d_isCommutativeSemigroup_128 ::
@@ -742,74 +742,74 @@ d_isCommutativeSemigroup_128 ::
   AgdaAny ->
   AgdaAny ->
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_570
 d_isCommutativeSemigroup_128 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
   = du_isCommutativeSemigroup_128 v9
 du_isCommutativeSemigroup_128 ::
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_570
 du_isCommutativeSemigroup_128 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v1) in
+             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                     (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_isCommutativeSemigroup_814
+               MAlonzo.Code.Algebra.Structures.du_isCommutativeSemigroup_816
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.isMagma
 d_isMagma_130 ::
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 d_isMagma_130 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isMagma_496
+      MAlonzo.Code.Algebra.Structures.d_isMagma_498
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+         MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+            MAlonzo.Code.Algebra.Structures.d_isMonoid_776
             (coe
-               MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+               MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                     MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                      (coe d_isCommutativeSemiring_62 (coe v0)))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.isMonoid
 d_isMonoid_132 ::
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 d_isMonoid_132 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+      MAlonzo.Code.Algebra.Structures.d_isMonoid_776
       (coe
-         MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+         MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+            MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+               MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                (coe d_isCommutativeSemiring_62 (coe v0)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.isSemigroup
 d_isSemigroup_134 ::
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 d_isSemigroup_134 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+      MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+         MAlonzo.Code.Algebra.Structures.d_isMonoid_776
          (coe
-            MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+            MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                  MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                   (coe d_isCommutativeSemiring_62 (coe v0))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.isUnitalMagma
 d_isUnitalMagma_136 ::
@@ -823,40 +823,40 @@ d_isUnitalMagma_136 ::
   AgdaAny ->
   AgdaAny ->
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsUnitalMagma_666
+  MAlonzo.Code.Algebra.Structures.T_IsUnitalMagma_668
 d_isUnitalMagma_136 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
   = du_isUnitalMagma_136 v9
 du_isUnitalMagma_136 ::
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsUnitalMagma_666
+  MAlonzo.Code.Algebra.Structures.T_IsUnitalMagma_668
 du_isUnitalMagma_136 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v1) in
+             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                     (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                   = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                        (coe v3) in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_isUnitalMagma_756
-                  (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v4))))))
+                  MAlonzo.Code.Algebra.Structures.du_isUnitalMagma_758
+                  (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v4))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.distrib
 d_distrib_138 ::
   T_IsAlmostCommutativeRing_26 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_distrib_138 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_distrib_1564
+      MAlonzo.Code.Algebra.Structures.d_distrib_1566
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe d_isCommutativeSemiring_62 (coe v0))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.distribʳ
 d_distrib'691'_140 ::
@@ -880,12 +880,12 @@ du_distrib'691'_140 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v1) in
+             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Structures.du_distrib'691'_1568
+            MAlonzo.Code.Algebra.Structures.du_distrib'691'_1570
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                (coe v2))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.distribˡ
 d_distrib'737'_142 ::
@@ -909,12 +909,12 @@ du_distrib'737'_142 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v1) in
+             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Structures.du_distrib'737'_1566
+            MAlonzo.Code.Algebra.Structures.du_distrib'737'_1568
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                (coe v2))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.isCommutativeSemiringWithoutOne
 d_isCommutativeSemiringWithoutOne_144 ::
@@ -928,16 +928,16 @@ d_isCommutativeSemiringWithoutOne_144 ::
   AgdaAny ->
   AgdaAny ->
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1438
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1440
 d_isCommutativeSemiringWithoutOne_144 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6
                                       ~v7 ~v8 v9
   = du_isCommutativeSemiringWithoutOne_144 v9
 du_isCommutativeSemiringWithoutOne_144 ::
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1438
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1440
 du_isCommutativeSemiringWithoutOne_144 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1852
+      MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1854
       (coe d_isCommutativeSemiring_62 (coe v0))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.isEquivalence
 d_isEquivalence_146 ::
@@ -945,19 +945,19 @@ d_isEquivalence_146 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_28
 d_isEquivalence_146 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+      MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isMagma_496
+         MAlonzo.Code.Algebra.Structures.d_isMagma_498
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+            MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+               MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                     MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                         (coe d_isCommutativeSemiring_62 (coe v0))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.isNearSemiring
 d_isNearSemiring_148 ::
@@ -971,22 +971,22 @@ d_isNearSemiring_148 ::
   AgdaAny ->
   AgdaAny ->
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsNearSemiring_1260
+  MAlonzo.Code.Algebra.Structures.T_IsNearSemiring_1262
 d_isNearSemiring_148 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
   = du_isNearSemiring_148 v9
 du_isNearSemiring_148 ::
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsNearSemiring_1260
+  MAlonzo.Code.Algebra.Structures.T_IsNearSemiring_1262
 du_isNearSemiring_148 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v1) in
+             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Structures.du_isNearSemiring_1428
+            MAlonzo.Code.Algebra.Structures.du_isNearSemiring_1430
             (coe
-               MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1730
+               MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1732
                (coe v2))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.isPartialEquivalence
 d_isPartialEquivalence_150 ::
@@ -1010,46 +1010,46 @@ du_isPartialEquivalence_150 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v1) in
+             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                     (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                   = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v4) in
+                      = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v5) in
                    coe
-                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v6) in
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v6) in
                       coe
                         (coe
                            MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_44
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                              MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                               (coe v7)))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.isSemiring
 d_isSemiring_152 ::
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1640
+  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1642
 d_isSemiring_152 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+      MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
       (coe d_isCommutativeSemiring_62 (coe v0))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.isSemiringWithoutAnnihilatingZero
 d_isSemiringWithoutAnnihilatingZero_154 ::
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1536
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1538
 d_isSemiringWithoutAnnihilatingZero_154 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+      MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+         MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
          (coe d_isCommutativeSemiring_62 (coe v0)))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.isSemiringWithoutOne
 d_isSemiringWithoutOne_156 ::
@@ -1063,37 +1063,37 @@ d_isSemiringWithoutOne_156 ::
   AgdaAny ->
   AgdaAny ->
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutOne_1342
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutOne_1344
 d_isSemiringWithoutOne_156 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
   = du_isSemiringWithoutOne_156 v9
 du_isSemiringWithoutOne_156 ::
   T_IsAlmostCommutativeRing_26 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutOne_1342
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutOne_1344
 du_isSemiringWithoutOne_156 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1730
-         (coe MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v1)))
+         MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1732
+         (coe MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v1)))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.refl
 d_refl_158 :: T_IsAlmostCommutativeRing_26 -> AgdaAny -> AgdaAny
 d_refl_158 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_36
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+         MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+            MAlonzo.Code.Algebra.Structures.d_isMagma_498
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                  MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                            (coe d_isCommutativeSemiring_62 (coe v0)))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.reflexive
 d_reflexive_160 ::
@@ -1121,28 +1121,28 @@ du_reflexive_160 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v1) in
+             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                     (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                   = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v4) in
+                      = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v5) in
                    coe
-                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v6) in
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v6) in
                       coe
                         (\ v8 v9 v10 ->
                            coe
                              MAlonzo.Code.Relation.Binary.Structures.du_reflexive_42
-                             (coe MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v7))
+                             (coe MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v7))
                              v8)))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.setoid
 d_setoid_162 ::
@@ -1166,25 +1166,25 @@ du_setoid_162 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v1) in
+             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                     (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                   = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v4) in
+                      = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v5) in
                    coe
                      (coe
-                        MAlonzo.Code.Algebra.Structures.du_setoid_202
-                        (coe MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v6))))))))
+                        MAlonzo.Code.Algebra.Structures.du_setoid_204
+                        (coe MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v6))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.sym
 d_sym_164 ::
   T_IsAlmostCommutativeRing_26 ->
@@ -1193,19 +1193,19 @@ d_sym_164 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_38
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+         MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+            MAlonzo.Code.Algebra.Structures.d_isMagma_498
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                  MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                            (coe d_isCommutativeSemiring_62 (coe v0)))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.trans
 d_trans_166 ::
@@ -1215,19 +1215,19 @@ d_trans_166 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_40
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+         MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+            MAlonzo.Code.Algebra.Structures.d_isMagma_498
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                  MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                            (coe d_isCommutativeSemiring_62 (coe v0)))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.zero
 d_zero_168 ::
@@ -1235,9 +1235,9 @@ d_zero_168 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_zero_168 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_zero_1656
+      MAlonzo.Code.Algebra.Structures.d_zero_1658
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+         MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
          (coe d_isCommutativeSemiring_62 (coe v0)))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.zeroʳ
 d_zero'691'_170 ::
@@ -1258,12 +1258,12 @@ du_zero'691'_170 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v1) in
+             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Structures.du_zero'691'_1426
+            MAlonzo.Code.Algebra.Structures.du_zero'691'_1428
             (coe
-               MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1730
+               MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1732
                (coe v2))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.IsAlmostCommutativeRing._.zeroˡ
 d_zero'737'_172 ::
@@ -1284,12 +1284,12 @@ du_zero'737'_172 v0
   = let v1 = d_isCommutativeSemiring_62 (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v1) in
+             = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Structures.du_zero'737'_1424
+            MAlonzo.Code.Algebra.Structures.du_zero'737'_1426
             (coe
-               MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1730
+               MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1732
                (coe v2))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing
 d_AlmostCommutativeRing_180 a0 a1 = ()
@@ -1349,11 +1349,11 @@ d_'42''45'assoc_220 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_'42''45'assoc_220 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'assoc_1560
+      MAlonzo.Code.Algebra.Structures.d_'42''45'assoc_1562
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -1362,7 +1362,7 @@ d_'42''45'comm_222 ::
   T_AlmostCommutativeRing_180 -> AgdaAny -> AgdaAny -> AgdaAny
 d_'42''45'comm_222 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'comm_1766
+      MAlonzo.Code.Algebra.Structures.d_'42''45'comm_1768
       (coe
          d_isCommutativeSemiring_62
          (coe d_isAlmostCommutativeRing_216 (coe v0)))
@@ -1373,11 +1373,11 @@ d_'42''45'cong_224 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_'42''45'cong_224 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'cong_1558
+      MAlonzo.Code.Algebra.Structures.d_'42''45'cong_1560
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -1398,27 +1398,27 @@ du_'8729''45'cong'691'_226 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                          MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v5) in
                    coe
-                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v6) in
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v6) in
                       coe
                         (let v8
-                               = coe MAlonzo.Code.Algebra.Structures.du_setoid_202 (coe v7) in
+                               = coe MAlonzo.Code.Algebra.Structures.du_setoid_204 (coe v7) in
                          coe
                            (let v9
-                                  = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188 (coe v7) in
+                                  = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190 (coe v7) in
                             coe
                               (coe
                                  MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'691'_46
@@ -1445,27 +1445,27 @@ du_'8729''45'cong'737'_228 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                          MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v5) in
                    coe
-                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v6) in
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v6) in
                       coe
                         (let v8
-                               = coe MAlonzo.Code.Algebra.Structures.du_setoid_202 (coe v7) in
+                               = coe MAlonzo.Code.Algebra.Structures.du_setoid_204 (coe v7) in
                          coe
                            (let v9
-                                  = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188 (coe v7) in
+                                  = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190 (coe v7) in
                             coe
                               (coe
                                  MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'737'_42
@@ -1481,11 +1481,11 @@ d_'42''45'identity_230 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_'42''45'identity_230 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'identity_1562
+      MAlonzo.Code.Algebra.Structures.d_'42''45'identity_1564
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -1503,16 +1503,16 @@ du_identity'691'_232 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_identity'691'_754
+                  MAlonzo.Code.Algebra.Structures.du_identity'691'_756
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                     MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                      (coe v4))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.identityˡ
 d_identity'737'_234 ::
@@ -1528,27 +1528,27 @@ du_identity'737'_234 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_identity'737'_752
+                  MAlonzo.Code.Algebra.Structures.du_identity'737'_754
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                     MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                      (coe v4))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.isCommutativeMagma
 d_isCommutativeMagma_236 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_214
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_216
 d_isCommutativeMagma_236 ~v0 ~v1 v2 = du_isCommutativeMagma_236 v2
 du_isCommutativeMagma_236 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_214
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_216
 du_isCommutativeMagma_236 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
@@ -1556,121 +1556,121 @@ du_isCommutativeMagma_236 v0
        coe
          (let v3
                 = coe
-                    MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1852
+                    MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1854
                     (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_606
+               MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_608
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1520
+                  MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1522
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.*-isCommutativeMonoid
 d_'42''45'isCommutativeMonoid_238 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 d_'42''45'isCommutativeMonoid_238 ~v0 ~v1 v2
   = du_'42''45'isCommutativeMonoid_238 v2
 du_'42''45'isCommutativeMonoid_238 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 du_'42''45'isCommutativeMonoid_238 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeMonoid_1860
+         MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeMonoid_1862
          (coe d_isCommutativeSemiring_62 (coe v1)))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.*-isCommutativeSemigroup
 d_'42''45'isCommutativeSemigroup_240 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_570
 d_'42''45'isCommutativeSemigroup_240 ~v0 ~v1 v2
   = du_'42''45'isCommutativeSemigroup_240 v2
 du_'42''45'isCommutativeSemigroup_240 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_570
 du_'42''45'isCommutativeSemigroup_240 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1520
+            MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1522
             (coe
-               MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1852
+               MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1854
                (coe v2))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.*-isMagma
 d_'42''45'isMagma_242 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 d_'42''45'isMagma_242 ~v0 ~v1 v2 = du_'42''45'isMagma_242 v2
 du_'42''45'isMagma_242 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 du_'42''45'isMagma_242 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_'42''45'isMagma_1614
+               MAlonzo.Code.Algebra.Structures.du_'42''45'isMagma_1616
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.*-isMonoid
 d_'42''45'isMonoid_244 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 d_'42''45'isMonoid_244 ~v0 ~v1 v2 = du_'42''45'isMonoid_244 v2
 du_'42''45'isMonoid_244 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 du_'42''45'isMonoid_244 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+               MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.*-isSemigroup
 d_'42''45'isSemigroup_246 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 d_'42''45'isSemigroup_246 ~v0 ~v1 v2
   = du_'42''45'isSemigroup_246 v2
 du_'42''45'isSemigroup_246 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 du_'42''45'isSemigroup_246 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_'42''45'isSemigroup_1616
+               MAlonzo.Code.Algebra.Structures.du_'42''45'isSemigroup_1618
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.assoc
 d_assoc_248 ::
@@ -1678,17 +1678,17 @@ d_assoc_248 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_assoc_248 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_assoc_498
+      MAlonzo.Code.Algebra.Structures.d_assoc_500
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+         MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+            MAlonzo.Code.Algebra.Structures.d_isMonoid_776
             (coe
-               MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+               MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                     MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                      (coe
                         d_isCommutativeSemiring_62
                         (coe d_isAlmostCommutativeRing_216 (coe v0))))))))
@@ -1697,13 +1697,13 @@ d_comm_250 ::
   T_AlmostCommutativeRing_180 -> AgdaAny -> AgdaAny -> AgdaAny
 d_comm_250 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_comm_776
+      MAlonzo.Code.Algebra.Structures.d_comm_778
       (coe
-         MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+         MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+            MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+               MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                (coe
                   d_isCommutativeSemiring_62
                   (coe d_isAlmostCommutativeRing_216 (coe v0))))))
@@ -1714,19 +1714,19 @@ d_'8729''45'cong_252 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_'8729''45'cong_252 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+      MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isMagma_496
+         MAlonzo.Code.Algebra.Structures.d_isMagma_498
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+            MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+               MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                     MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                         (coe
                            d_isCommutativeSemiring_62
                            (coe d_isAlmostCommutativeRing_216 (coe v0)))))))))
@@ -1747,29 +1747,29 @@ du_'8729''45'cong'691'_254 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7) in
                          coe
                            (let v9
-                                  = coe MAlonzo.Code.Algebra.Structures.du_setoid_202 (coe v8) in
+                                  = coe MAlonzo.Code.Algebra.Structures.du_setoid_204 (coe v8) in
                             coe
                               (let v10
-                                     = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+                                     = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
                                          (coe v8) in
                                coe
                                  (coe
@@ -1797,29 +1797,29 @@ du_'8729''45'cong'737'_256 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7) in
                          coe
                            (let v9
-                                  = coe MAlonzo.Code.Algebra.Structures.du_setoid_202 (coe v8) in
+                                  = coe MAlonzo.Code.Algebra.Structures.du_setoid_204 (coe v8) in
                             coe
                               (let v10
-                                     = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+                                     = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
                                          (coe v8) in
                                coe
                                  (coe
@@ -1836,15 +1836,15 @@ d_identity_258 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_identity_258 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_identity_724
+      MAlonzo.Code.Algebra.Structures.d_identity_726
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+         MAlonzo.Code.Algebra.Structures.d_isMonoid_776
          (coe
-            MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+            MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                  MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                   (coe
                      d_isCommutativeSemiring_62
                      (coe d_isAlmostCommutativeRing_216 (coe v0)))))))
@@ -1862,19 +1862,19 @@ du_identity'691'_260 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_identity'691'_754
-                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5)))))))
+                     MAlonzo.Code.Algebra.Structures.du_identity'691'_756
+                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5)))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.identityˡ
 d_identity'737'_262 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -1889,61 +1889,61 @@ du_identity'737'_262 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_identity'737'_752
-                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5)))))))
+                     MAlonzo.Code.Algebra.Structures.du_identity'737'_754
+                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5)))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.isCommutativeMagma
 d_isCommutativeMagma_264 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_214
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_216
 d_isCommutativeMagma_264 ~v0 ~v1 v2 = du_isCommutativeMagma_264 v2
 du_isCommutativeMagma_264 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_214
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_216
 du_isCommutativeMagma_264 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_606
+                     MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_608
                      (coe
-                        MAlonzo.Code.Algebra.Structures.du_isCommutativeSemigroup_814
+                        MAlonzo.Code.Algebra.Structures.du_isCommutativeSemigroup_816
                         (coe v5)))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.+-isCommutativeMonoid
 d_'43''45'isCommutativeMonoid_266 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 d_'43''45'isCommutativeMonoid_266 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+      MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -1952,80 +1952,80 @@ d_isCommutativeSemigroup_268 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_570
 d_isCommutativeSemigroup_268 ~v0 ~v1 v2
   = du_isCommutativeSemigroup_268 v2
 du_isCommutativeSemigroup_268 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_570
 du_isCommutativeSemigroup_268 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_isCommutativeSemigroup_814
+                  MAlonzo.Code.Algebra.Structures.du_isCommutativeSemigroup_816
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                      (coe v4))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.isMagma
 d_isMagma_270 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 d_isMagma_270 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isMagma_496
+      MAlonzo.Code.Algebra.Structures.d_isMagma_498
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+         MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+            MAlonzo.Code.Algebra.Structures.d_isMonoid_776
             (coe
-               MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+               MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                     MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                      (coe
                         d_isCommutativeSemiring_62
                         (coe d_isAlmostCommutativeRing_216 (coe v0))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.isMonoid
 d_isMonoid_272 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 d_isMonoid_272 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+      MAlonzo.Code.Algebra.Structures.d_isMonoid_776
       (coe
-         MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+         MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+            MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+               MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                (coe
                   d_isCommutativeSemiring_62
                   (coe d_isAlmostCommutativeRing_216 (coe v0))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.isSemigroup
 d_isSemigroup_274 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 d_isSemigroup_274 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+      MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+         MAlonzo.Code.Algebra.Structures.d_isMonoid_776
          (coe
-            MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+            MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                  MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                   (coe
                      d_isCommutativeSemiring_62
                      (coe d_isAlmostCommutativeRing_216 (coe v0)))))))
@@ -2034,30 +2034,30 @@ d_isUnitalMagma_276 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsUnitalMagma_666
+  MAlonzo.Code.Algebra.Structures.T_IsUnitalMagma_668
 d_isUnitalMagma_276 ~v0 ~v1 v2 = du_isUnitalMagma_276 v2
 du_isUnitalMagma_276 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsUnitalMagma_666
+  MAlonzo.Code.Algebra.Structures.T_IsUnitalMagma_668
 du_isUnitalMagma_276 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_isUnitalMagma_756
-                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5)))))))
+                     MAlonzo.Code.Algebra.Structures.du_isUnitalMagma_758
+                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5)))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.-‿*-distribˡ
 d_'45''8255''42''45'distrib'737'_278 ::
   T_AlmostCommutativeRing_180 -> AgdaAny -> AgdaAny -> AgdaAny
@@ -2085,11 +2085,11 @@ d_distrib_284 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_distrib_284 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_distrib_1564
+      MAlonzo.Code.Algebra.Structures.d_distrib_1566
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -2109,12 +2109,12 @@ du_distrib'691'_286 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_distrib'691'_1568
+               MAlonzo.Code.Algebra.Structures.du_distrib'691'_1570
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.distribˡ
 d_distrib'737'_288 ::
@@ -2132,17 +2132,17 @@ du_distrib'737'_288 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_distrib'737'_1566
+               MAlonzo.Code.Algebra.Structures.du_distrib'737'_1568
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.isCommutativeSemiring
 d_isCommutativeSemiring_290 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1750
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1752
 d_isCommutativeSemiring_290 v0
   = coe
       d_isCommutativeSemiring_62
@@ -2152,17 +2152,17 @@ d_isCommutativeSemiringWithoutOne_292 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1438
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1440
 d_isCommutativeSemiringWithoutOne_292 ~v0 ~v1 v2
   = du_isCommutativeSemiringWithoutOne_292 v2
 du_isCommutativeSemiringWithoutOne_292 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1438
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1440
 du_isCommutativeSemiringWithoutOne_292 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1852
+         MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1854
          (coe d_isCommutativeSemiring_62 (coe v1)))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.isEquivalence
 d_isEquivalence_294 ::
@@ -2170,19 +2170,19 @@ d_isEquivalence_294 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_28
 d_isEquivalence_294 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+      MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isMagma_496
+         MAlonzo.Code.Algebra.Structures.d_isMagma_498
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+            MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+               MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                     MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                         (coe
                            d_isCommutativeSemiring_62
                            (coe d_isAlmostCommutativeRing_216 (coe v0)))))))))
@@ -2191,23 +2191,23 @@ d_isNearSemiring_296 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsNearSemiring_1260
+  MAlonzo.Code.Algebra.Structures.T_IsNearSemiring_1262
 d_isNearSemiring_296 ~v0 ~v1 v2 = du_isNearSemiring_296 v2
 du_isNearSemiring_296 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsNearSemiring_1260
+  MAlonzo.Code.Algebra.Structures.T_IsNearSemiring_1262
 du_isNearSemiring_296 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_isNearSemiring_1428
+               MAlonzo.Code.Algebra.Structures.du_isNearSemiring_1430
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1730
+                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1732
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.isPartialEquivalence
 d_isPartialEquivalence_298 ::
@@ -2226,48 +2226,48 @@ du_isPartialEquivalence_298 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7) in
                          coe
                            (coe
                               MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_44
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                 MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                  (coe v8))))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.isSemiring
 d_isSemiring_300 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1640
+  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1642
 d_isSemiring_300 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+      MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
       (coe
          d_isCommutativeSemiring_62
          (coe d_isAlmostCommutativeRing_216 (coe v0)))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.isSemiringWithoutAnnihilatingZero
 d_isSemiringWithoutAnnihilatingZero_302 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1536
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1538
 d_isSemiringWithoutAnnihilatingZero_302 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+      MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+         MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
          (coe
             d_isCommutativeSemiring_62
             (coe d_isAlmostCommutativeRing_216 (coe v0))))
@@ -2276,39 +2276,39 @@ d_isSemiringWithoutOne_304 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutOne_1342
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutOne_1344
 d_isSemiringWithoutOne_304 ~v0 ~v1 v2
   = du_isSemiringWithoutOne_304 v2
 du_isSemiringWithoutOne_304 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutOne_1342
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutOne_1344
 du_isSemiringWithoutOne_304 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1730
-            (coe MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2))))
+            MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1732
+            (coe MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.refl
 d_refl_306 :: T_AlmostCommutativeRing_180 -> AgdaAny -> AgdaAny
 d_refl_306 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_36
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+         MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+            MAlonzo.Code.Algebra.Structures.d_isMagma_498
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                  MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                            (coe
                               d_isCommutativeSemiring_62
                               (coe d_isAlmostCommutativeRing_216 (coe v0))))))))))
@@ -2332,28 +2332,28 @@ du_reflexive_308 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7) in
                          coe
                            (\ v9 v10 v11 ->
                               coe
                                 MAlonzo.Code.Relation.Binary.Structures.du_reflexive_42
-                                (coe MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v8))
+                                (coe MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v8))
                                 v9))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.setoid
 d_setoid_310 ::
@@ -2371,25 +2371,25 @@ du_setoid_310 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
                         (coe
-                           MAlonzo.Code.Algebra.Structures.du_setoid_202
-                           (coe MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7)))))))))
+                           MAlonzo.Code.Algebra.Structures.du_setoid_204
+                           (coe MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7)))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.sym
 d_sym_312 ::
   T_AlmostCommutativeRing_180 ->
@@ -2398,19 +2398,19 @@ d_sym_312 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_38
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+         MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+            MAlonzo.Code.Algebra.Structures.d_isMagma_498
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                  MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                            (coe
                               d_isCommutativeSemiring_62
                               (coe d_isAlmostCommutativeRing_216 (coe v0))))))))))
@@ -2422,19 +2422,19 @@ d_trans_314 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_40
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+         MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+            MAlonzo.Code.Algebra.Structures.d_isMagma_498
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                  MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                            (coe
                               d_isCommutativeSemiring_62
                               (coe d_isAlmostCommutativeRing_216 (coe v0))))))))))
@@ -2444,9 +2444,9 @@ d_zero_316 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_zero_316 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_zero_1656
+      MAlonzo.Code.Algebra.Structures.d_zero_1658
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+         MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
          (coe
             d_isCommutativeSemiring_62
             (coe d_isAlmostCommutativeRing_216 (coe v0))))
@@ -2464,12 +2464,12 @@ du_zero'691'_318 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_zero'691'_1426
+               MAlonzo.Code.Algebra.Structures.du_zero'691'_1428
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1730
+                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1732
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing._.zeroˡ
 d_zero'737'_320 ::
@@ -2485,12 +2485,12 @@ du_zero'737'_320 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_zero'737'_1424
+               MAlonzo.Code.Algebra.Structures.du_zero'737'_1426
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1730
+                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1732
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.AlmostCommutativeRing.commutativeSemiring
 d_commutativeSemiring_322 ::
@@ -2858,11 +2858,11 @@ d_'42''45'assoc_416 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_'42''45'assoc_416 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'assoc_1560
+      MAlonzo.Code.Algebra.Structures.d_'42''45'assoc_1562
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -2871,7 +2871,7 @@ d_'42''45'comm_418 ::
   T_AlmostCommutativeRing_180 -> AgdaAny -> AgdaAny -> AgdaAny
 d_'42''45'comm_418 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'comm_1766
+      MAlonzo.Code.Algebra.Structures.d_'42''45'comm_1768
       (coe
          d_isCommutativeSemiring_62
          (coe d_isAlmostCommutativeRing_216 (coe v0)))
@@ -2922,11 +2922,11 @@ d_'42''45'cong_424 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_'42''45'cong_424 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'cong_1558
+      MAlonzo.Code.Algebra.Structures.d_'42''45'cong_1560
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -2950,27 +2950,27 @@ du_'8729''45'cong'691'_426 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                          MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v5) in
                    coe
-                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v6) in
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v6) in
                       coe
                         (let v8
-                               = coe MAlonzo.Code.Algebra.Structures.du_setoid_202 (coe v7) in
+                               = coe MAlonzo.Code.Algebra.Structures.du_setoid_204 (coe v7) in
                          coe
                            (let v9
-                                  = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188 (coe v7) in
+                                  = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190 (coe v7) in
                             coe
                               (coe
                                  MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'691'_46
@@ -3000,27 +3000,27 @@ du_'8729''45'cong'737'_428 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                          MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v5) in
                    coe
-                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v6) in
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v6) in
                       coe
                         (let v8
-                               = coe MAlonzo.Code.Algebra.Structures.du_setoid_202 (coe v7) in
+                               = coe MAlonzo.Code.Algebra.Structures.du_setoid_204 (coe v7) in
                          coe
                            (let v9
-                                  = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188 (coe v7) in
+                                  = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190 (coe v7) in
                             coe
                               (coe
                                  MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'737'_42
@@ -3036,11 +3036,11 @@ d_'42''45'identity_430 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_'42''45'identity_430 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'identity_1562
+      MAlonzo.Code.Algebra.Structures.d_'42''45'identity_1564
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -3062,16 +3062,16 @@ du_identity'691'_432 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_identity'691'_754
+                  MAlonzo.Code.Algebra.Structures.du_identity'691'_756
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                     MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                      (coe v4))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.identityˡ
 d_identity'737'_434 ::
@@ -3091,16 +3091,16 @@ du_identity'737'_434 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_identity'737'_752
+                  MAlonzo.Code.Algebra.Structures.du_identity'737'_754
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                     MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                      (coe v4))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.isCommutativeMagma
 d_isCommutativeMagma_436 ::
@@ -3110,12 +3110,12 @@ d_isCommutativeMagma_436 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_214
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_216
 d_isCommutativeMagma_436 ~v0 ~v1 ~v2 ~v3 ~v4 v5
   = du_isCommutativeMagma_436 v5
 du_isCommutativeMagma_436 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_214
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_216
 du_isCommutativeMagma_436 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
@@ -3123,13 +3123,13 @@ du_isCommutativeMagma_436 v0
        coe
          (let v3
                 = coe
-                    MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1852
+                    MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1854
                     (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_606
+               MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_608
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1520
+                  MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1522
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.*-isCommutativeMonoid
 d_'42''45'isCommutativeMonoid_438 ::
@@ -3139,17 +3139,17 @@ d_'42''45'isCommutativeMonoid_438 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 d_'42''45'isCommutativeMonoid_438 ~v0 ~v1 ~v2 ~v3 ~v4 v5
   = du_'42''45'isCommutativeMonoid_438 v5
 du_'42''45'isCommutativeMonoid_438 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 du_'42''45'isCommutativeMonoid_438 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeMonoid_1860
+         MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeMonoid_1862
          (coe d_isCommutativeSemiring_62 (coe v1)))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.*-isCommutativeSemigroup
 d_'42''45'isCommutativeSemigroup_440 ::
@@ -3159,21 +3159,21 @@ d_'42''45'isCommutativeSemigroup_440 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_570
 d_'42''45'isCommutativeSemigroup_440 ~v0 ~v1 ~v2 ~v3 ~v4 v5
   = du_'42''45'isCommutativeSemigroup_440 v5
 du_'42''45'isCommutativeSemigroup_440 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_570
 du_'42''45'isCommutativeSemigroup_440 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1520
+            MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1522
             (coe
-               MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1852
+               MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1854
                (coe v2))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.*-isMagma
 d_'42''45'isMagma_442 ::
@@ -3183,24 +3183,24 @@ d_'42''45'isMagma_442 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 d_'42''45'isMagma_442 ~v0 ~v1 ~v2 ~v3 ~v4 v5
   = du_'42''45'isMagma_442 v5
 du_'42''45'isMagma_442 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 du_'42''45'isMagma_442 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_'42''45'isMagma_1614
+               MAlonzo.Code.Algebra.Structures.du_'42''45'isMagma_1616
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.*-isMonoid
 d_'42''45'isMonoid_444 ::
@@ -3210,24 +3210,24 @@ d_'42''45'isMonoid_444 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 d_'42''45'isMonoid_444 ~v0 ~v1 ~v2 ~v3 ~v4 v5
   = du_'42''45'isMonoid_444 v5
 du_'42''45'isMonoid_444 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 du_'42''45'isMonoid_444 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+               MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.*-isSemigroup
 d_'42''45'isSemigroup_446 ::
@@ -3237,24 +3237,24 @@ d_'42''45'isSemigroup_446 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 d_'42''45'isSemigroup_446 ~v0 ~v1 ~v2 ~v3 ~v4 v5
   = du_'42''45'isSemigroup_446 v5
 du_'42''45'isSemigroup_446 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 du_'42''45'isSemigroup_446 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_'42''45'isSemigroup_1616
+               MAlonzo.Code.Algebra.Structures.du_'42''45'isSemigroup_1618
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.magma
 d_magma_448 ::
@@ -3346,17 +3346,17 @@ d_assoc_454 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_assoc_454 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_assoc_498
+      MAlonzo.Code.Algebra.Structures.d_assoc_500
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+         MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+            MAlonzo.Code.Algebra.Structures.d_isMonoid_776
             (coe
-               MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+               MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                     MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                      (coe
                         d_isCommutativeSemiring_62
                         (coe d_isAlmostCommutativeRing_216 (coe v0))))))))
@@ -3365,13 +3365,13 @@ d_comm_456 ::
   T_AlmostCommutativeRing_180 -> AgdaAny -> AgdaAny -> AgdaAny
 d_comm_456 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_comm_776
+      MAlonzo.Code.Algebra.Structures.d_comm_778
       (coe
-         MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+         MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+            MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+               MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                (coe
                   d_isCommutativeSemiring_62
                   (coe d_isAlmostCommutativeRing_216 (coe v0))))))
@@ -3407,19 +3407,19 @@ d_'8729''45'cong_460 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_'8729''45'cong_460 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+      MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isMagma_496
+         MAlonzo.Code.Algebra.Structures.d_isMagma_498
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+            MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+               MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                     MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                         (coe
                            d_isCommutativeSemiring_62
                            (coe d_isAlmostCommutativeRing_216 (coe v0)))))))))
@@ -3443,29 +3443,29 @@ du_'8729''45'cong'691'_462 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7) in
                          coe
                            (let v9
-                                  = coe MAlonzo.Code.Algebra.Structures.du_setoid_202 (coe v8) in
+                                  = coe MAlonzo.Code.Algebra.Structures.du_setoid_204 (coe v8) in
                             coe
                               (let v10
-                                     = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+                                     = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
                                          (coe v8) in
                                coe
                                  (coe
@@ -3496,29 +3496,29 @@ du_'8729''45'cong'737'_464 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7) in
                          coe
                            (let v9
-                                  = coe MAlonzo.Code.Algebra.Structures.du_setoid_202 (coe v8) in
+                                  = coe MAlonzo.Code.Algebra.Structures.du_setoid_204 (coe v8) in
                             coe
                               (let v10
-                                     = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+                                     = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
                                          (coe v8) in
                                coe
                                  (coe
@@ -3535,15 +3535,15 @@ d_identity_466 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_identity_466 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_identity_724
+      MAlonzo.Code.Algebra.Structures.d_identity_726
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+         MAlonzo.Code.Algebra.Structures.d_isMonoid_776
          (coe
-            MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+            MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                  MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                   (coe
                      d_isCommutativeSemiring_62
                      (coe d_isAlmostCommutativeRing_216 (coe v0)))))))
@@ -3565,19 +3565,19 @@ du_identity'691'_468 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_identity'691'_754
-                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5)))))))
+                     MAlonzo.Code.Algebra.Structures.du_identity'691'_756
+                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5)))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.identityˡ
 d_identity'737'_470 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -3596,19 +3596,19 @@ du_identity'737'_470 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_identity'737'_752
-                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5)))))))
+                     MAlonzo.Code.Algebra.Structures.du_identity'737'_754
+                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5)))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.isCommutativeMagma
 d_isCommutativeMagma_472 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -3617,44 +3617,44 @@ d_isCommutativeMagma_472 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_214
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_216
 d_isCommutativeMagma_472 ~v0 ~v1 ~v2 ~v3 ~v4 v5
   = du_isCommutativeMagma_472 v5
 du_isCommutativeMagma_472 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_214
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_216
 du_isCommutativeMagma_472 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_606
+                     MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_608
                      (coe
-                        MAlonzo.Code.Algebra.Structures.du_isCommutativeSemigroup_814
+                        MAlonzo.Code.Algebra.Structures.du_isCommutativeSemigroup_816
                         (coe v5)))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.+-isCommutativeMonoid
 d_'43''45'isCommutativeMonoid_474 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 d_'43''45'isCommutativeMonoid_474 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+      MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -3666,80 +3666,80 @@ d_isCommutativeSemigroup_476 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_570
 d_isCommutativeSemigroup_476 ~v0 ~v1 ~v2 ~v3 ~v4 v5
   = du_isCommutativeSemigroup_476 v5
 du_isCommutativeSemigroup_476 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_570
 du_isCommutativeSemigroup_476 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_isCommutativeSemigroup_814
+                  MAlonzo.Code.Algebra.Structures.du_isCommutativeSemigroup_816
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                      (coe v4))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.isMagma
 d_isMagma_478 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 d_isMagma_478 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isMagma_496
+      MAlonzo.Code.Algebra.Structures.d_isMagma_498
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+         MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+            MAlonzo.Code.Algebra.Structures.d_isMonoid_776
             (coe
-               MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+               MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                     MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                      (coe
                         d_isCommutativeSemiring_62
                         (coe d_isAlmostCommutativeRing_216 (coe v0))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.isMonoid
 d_isMonoid_480 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 d_isMonoid_480 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+      MAlonzo.Code.Algebra.Structures.d_isMonoid_776
       (coe
-         MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+         MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+            MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+               MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                (coe
                   d_isCommutativeSemiring_62
                   (coe d_isAlmostCommutativeRing_216 (coe v0))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.isSemigroup
 d_isSemigroup_482 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 d_isSemigroup_482 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+      MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+         MAlonzo.Code.Algebra.Structures.d_isMonoid_776
          (coe
-            MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+            MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                  MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                   (coe
                      d_isCommutativeSemiring_62
                      (coe d_isAlmostCommutativeRing_216 (coe v0)))))))
@@ -3751,31 +3751,31 @@ d_isUnitalMagma_484 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsUnitalMagma_666
+  MAlonzo.Code.Algebra.Structures.T_IsUnitalMagma_668
 d_isUnitalMagma_484 ~v0 ~v1 ~v2 ~v3 ~v4 v5
   = du_isUnitalMagma_484 v5
 du_isUnitalMagma_484 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsUnitalMagma_666
+  MAlonzo.Code.Algebra.Structures.T_IsUnitalMagma_668
 du_isUnitalMagma_484 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_isUnitalMagma_756
-                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5)))))))
+                     MAlonzo.Code.Algebra.Structures.du_isUnitalMagma_758
+                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5)))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.magma
 d_magma_486 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -3927,11 +3927,11 @@ d_distrib_508 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_distrib_508 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_distrib_1564
+      MAlonzo.Code.Algebra.Structures.d_distrib_1566
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -3954,12 +3954,12 @@ du_distrib'691'_510 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_distrib'691'_1568
+               MAlonzo.Code.Algebra.Structures.du_distrib'691'_1570
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.distribˡ
 d_distrib'737'_512 ::
@@ -3980,12 +3980,12 @@ du_distrib'737'_512 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_distrib'737'_1566
+               MAlonzo.Code.Algebra.Structures.du_distrib'737'_1568
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.isAlmostCommutativeRing
 d_isAlmostCommutativeRing_514 ::
@@ -3995,7 +3995,7 @@ d_isAlmostCommutativeRing_514 v0
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.isCommutativeSemiring
 d_isCommutativeSemiring_516 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1750
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1752
 d_isCommutativeSemiring_516 v0
   = coe
       d_isCommutativeSemiring_62
@@ -4008,17 +4008,17 @@ d_isCommutativeSemiringWithoutOne_518 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1438
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1440
 d_isCommutativeSemiringWithoutOne_518 ~v0 ~v1 ~v2 ~v3 ~v4 v5
   = du_isCommutativeSemiringWithoutOne_518 v5
 du_isCommutativeSemiringWithoutOne_518 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1438
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1440
 du_isCommutativeSemiringWithoutOne_518 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1852
+         MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1854
          (coe d_isCommutativeSemiring_62 (coe v1)))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.isEquivalence
 d_isEquivalence_520 ::
@@ -4026,19 +4026,19 @@ d_isEquivalence_520 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_28
 d_isEquivalence_520 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+      MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isMagma_496
+         MAlonzo.Code.Algebra.Structures.d_isMagma_498
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+            MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+               MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                     MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                         (coe
                            d_isCommutativeSemiring_62
                            (coe d_isAlmostCommutativeRing_216 (coe v0)))))))))
@@ -4050,24 +4050,24 @@ d_isNearSemiring_522 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsNearSemiring_1260
+  MAlonzo.Code.Algebra.Structures.T_IsNearSemiring_1262
 d_isNearSemiring_522 ~v0 ~v1 ~v2 ~v3 ~v4 v5
   = du_isNearSemiring_522 v5
 du_isNearSemiring_522 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsNearSemiring_1260
+  MAlonzo.Code.Algebra.Structures.T_IsNearSemiring_1262
 du_isNearSemiring_522 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_isNearSemiring_1428
+               MAlonzo.Code.Algebra.Structures.du_isNearSemiring_1430
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1730
+                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1732
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.isPartialEquivalence
 d_isPartialEquivalence_524 ::
@@ -4089,48 +4089,48 @@ du_isPartialEquivalence_524 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7) in
                          coe
                            (coe
                               MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_44
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                 MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                  (coe v8))))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.isSemiring
 d_isSemiring_526 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1640
+  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1642
 d_isSemiring_526 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+      MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
       (coe
          d_isCommutativeSemiring_62
          (coe d_isAlmostCommutativeRing_216 (coe v0)))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.isSemiringWithoutAnnihilatingZero
 d_isSemiringWithoutAnnihilatingZero_528 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1536
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1538
 d_isSemiringWithoutAnnihilatingZero_528 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+      MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+         MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
          (coe
             d_isCommutativeSemiring_62
             (coe d_isAlmostCommutativeRing_216 (coe v0))))
@@ -4142,20 +4142,20 @@ d_isSemiringWithoutOne_530 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutOne_1342
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutOne_1344
 d_isSemiringWithoutOne_530 ~v0 ~v1 ~v2 ~v3 ~v4 v5
   = du_isSemiringWithoutOne_530 v5
 du_isSemiringWithoutOne_530 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutOne_1342
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutOne_1344
 du_isSemiringWithoutOne_530 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1730
-            (coe MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2))))
+            MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1732
+            (coe MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.rawRing
 d_rawRing_532 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -4176,19 +4176,19 @@ d_refl_534 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_36
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+         MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+            MAlonzo.Code.Algebra.Structures.d_isMagma_498
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                  MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                            (coe
                               d_isCommutativeSemiring_62
                               (coe d_isAlmostCommutativeRing_216 (coe v0))))))))))
@@ -4215,28 +4215,28 @@ du_reflexive_536 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7) in
                          coe
                            (\ v9 v10 v11 ->
                               coe
                                 MAlonzo.Code.Relation.Binary.Structures.du_reflexive_42
-                                (coe MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v8))
+                                (coe MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v8))
                                 v9))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.semiring
 d_semiring_538 ::
@@ -4274,25 +4274,25 @@ du_setoid_540 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
                         (coe
-                           MAlonzo.Code.Algebra.Structures.du_setoid_202
-                           (coe MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7)))))))))
+                           MAlonzo.Code.Algebra.Structures.du_setoid_204
+                           (coe MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7)))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.sym
 d_sym_542 ::
   T_AlmostCommutativeRing_180 ->
@@ -4301,19 +4301,19 @@ d_sym_542 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_38
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+         MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+            MAlonzo.Code.Algebra.Structures.d_isMagma_498
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                  MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                            (coe
                               d_isCommutativeSemiring_62
                               (coe d_isAlmostCommutativeRing_216 (coe v0))))))))))
@@ -4325,19 +4325,19 @@ d_trans_544 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_40
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+         MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+            MAlonzo.Code.Algebra.Structures.d_isMagma_498
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                  MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                            (coe
                               d_isCommutativeSemiring_62
                               (coe d_isAlmostCommutativeRing_216 (coe v0))))))))))
@@ -4347,9 +4347,9 @@ d_zero_546 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_zero_546 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_zero_1656
+      MAlonzo.Code.Algebra.Structures.d_zero_1658
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+         MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
          (coe
             d_isCommutativeSemiring_62
             (coe d_isAlmostCommutativeRing_216 (coe v0))))
@@ -4370,12 +4370,12 @@ du_zero'691'_548 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_zero'691'_1426
+               MAlonzo.Code.Algebra.Structures.du_zero'691'_1428
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1730
+                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1732
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.T.zeroˡ
 d_zero'737'_550 ::
@@ -4394,12 +4394,12 @@ du_zero'737'_550 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_zero'737'_1424
+               MAlonzo.Code.Algebra.Structures.du_zero'737'_1426
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1730
+                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1732
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._.Homomorphic₀
 d_Homomorphic'8320'_554 ::
@@ -4499,11 +4499,11 @@ du_'42''45'assoc_614 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'42''45'assoc_614 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'assoc_1560
+      MAlonzo.Code.Algebra.Structures.d_'42''45'assoc_1562
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -4523,7 +4523,7 @@ du_'42''45'comm_616 ::
   T_AlmostCommutativeRing_180 -> AgdaAny -> AgdaAny -> AgdaAny
 du_'42''45'comm_616 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'comm_1766
+      MAlonzo.Code.Algebra.Structures.d_'42''45'comm_1768
       (coe
          d_isCommutativeSemiring_62
          (coe d_isAlmostCommutativeRing_216 (coe v0)))
@@ -4588,11 +4588,11 @@ du_'42''45'cong_622 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'42''45'cong_622 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'cong_1558
+      MAlonzo.Code.Algebra.Structures.d_'42''45'cong_1560
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -4617,27 +4617,27 @@ du_'8729''45'cong'691'_624 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                          MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v5) in
                    coe
-                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v6) in
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v6) in
                       coe
                         (let v8
-                               = coe MAlonzo.Code.Algebra.Structures.du_setoid_202 (coe v7) in
+                               = coe MAlonzo.Code.Algebra.Structures.du_setoid_204 (coe v7) in
                          coe
                            (let v9
-                                  = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188 (coe v7) in
+                                  = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190 (coe v7) in
                             coe
                               (coe
                                  MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'691'_46
@@ -4668,27 +4668,27 @@ du_'8729''45'cong'737'_626 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                          MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v5) in
                    coe
-                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v6) in
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v6) in
                       coe
                         (let v8
-                               = coe MAlonzo.Code.Algebra.Structures.du_setoid_202 (coe v7) in
+                               = coe MAlonzo.Code.Algebra.Structures.du_setoid_204 (coe v7) in
                          coe
                            (let v9
-                                  = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188 (coe v7) in
+                                  = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190 (coe v7) in
                             coe
                               (coe
                                  MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'737'_42
@@ -4715,11 +4715,11 @@ du_'42''45'identity_628 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_'42''45'identity_628 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'identity_1562
+      MAlonzo.Code.Algebra.Structures.d_'42''45'identity_1564
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -4742,16 +4742,16 @@ du_identity'691'_630 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_identity'691'_754
+                  MAlonzo.Code.Algebra.Structures.du_identity'691'_756
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                     MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                      (coe v4))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._-Raw-AlmostCommutative⟶_.T.identityˡ
 d_identity'737'_632 ::
@@ -4772,16 +4772,16 @@ du_identity'737'_632 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_identity'737'_752
+                  MAlonzo.Code.Algebra.Structures.du_identity'737'_754
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                     MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                      (coe v4))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._-Raw-AlmostCommutative⟶_.T.isCommutativeMagma
 d_isCommutativeMagma_634 ::
@@ -4792,12 +4792,12 @@ d_isCommutativeMagma_634 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_214
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_216
 d_isCommutativeMagma_634 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
   = du_isCommutativeMagma_634 v5
 du_isCommutativeMagma_634 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_214
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_216
 du_isCommutativeMagma_634 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
@@ -4805,13 +4805,13 @@ du_isCommutativeMagma_634 v0
        coe
          (let v3
                 = coe
-                    MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1852
+                    MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1854
                     (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_606
+               MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_608
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1520
+                  MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1522
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._-Raw-AlmostCommutative⟶_.T.*-isCommutativeMonoid
 d_'42''45'isCommutativeMonoid_636 ::
@@ -4822,17 +4822,17 @@ d_'42''45'isCommutativeMonoid_636 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 d_'42''45'isCommutativeMonoid_636 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
   = du_'42''45'isCommutativeMonoid_636 v5
 du_'42''45'isCommutativeMonoid_636 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 du_'42''45'isCommutativeMonoid_636 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeMonoid_1860
+         MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeMonoid_1862
          (coe d_isCommutativeSemiring_62 (coe v1)))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._-Raw-AlmostCommutative⟶_.T.*-isCommutativeSemigroup
 d_'42''45'isCommutativeSemigroup_638 ::
@@ -4843,21 +4843,21 @@ d_'42''45'isCommutativeSemigroup_638 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_570
 d_'42''45'isCommutativeSemigroup_638 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
   = du_'42''45'isCommutativeSemigroup_638 v5
 du_'42''45'isCommutativeSemigroup_638 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_570
 du_'42''45'isCommutativeSemigroup_638 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1520
+            MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1522
             (coe
-               MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1852
+               MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1854
                (coe v2))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._-Raw-AlmostCommutative⟶_.T.*-isMagma
 d_'42''45'isMagma_640 ::
@@ -4868,24 +4868,24 @@ d_'42''45'isMagma_640 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 d_'42''45'isMagma_640 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
   = du_'42''45'isMagma_640 v5
 du_'42''45'isMagma_640 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 du_'42''45'isMagma_640 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_'42''45'isMagma_1614
+               MAlonzo.Code.Algebra.Structures.du_'42''45'isMagma_1616
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._-Raw-AlmostCommutative⟶_.T.*-isMonoid
 d_'42''45'isMonoid_642 ::
@@ -4896,24 +4896,24 @@ d_'42''45'isMonoid_642 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 d_'42''45'isMonoid_642 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
   = du_'42''45'isMonoid_642 v5
 du_'42''45'isMonoid_642 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 du_'42''45'isMonoid_642 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+               MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._-Raw-AlmostCommutative⟶_.T.*-isSemigroup
 d_'42''45'isSemigroup_644 ::
@@ -4924,24 +4924,24 @@ d_'42''45'isSemigroup_644 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 d_'42''45'isSemigroup_644 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
   = du_'42''45'isSemigroup_644 v5
 du_'42''45'isSemigroup_644 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 du_'42''45'isSemigroup_644 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_'42''45'isSemigroup_1616
+               MAlonzo.Code.Algebra.Structures.du_'42''45'isSemigroup_1618
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._-Raw-AlmostCommutative⟶_.T.magma
 d_magma_646 ::
@@ -5046,17 +5046,17 @@ du_assoc_652 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_assoc_652 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_assoc_498
+      MAlonzo.Code.Algebra.Structures.d_assoc_500
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+         MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+            MAlonzo.Code.Algebra.Structures.d_isMonoid_776
             (coe
-               MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+               MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                     MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                      (coe
                         d_isCommutativeSemiring_62
                         (coe d_isAlmostCommutativeRing_216 (coe v0))))))))
@@ -5075,13 +5075,13 @@ du_comm_654 ::
   T_AlmostCommutativeRing_180 -> AgdaAny -> AgdaAny -> AgdaAny
 du_comm_654 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_comm_776
+      MAlonzo.Code.Algebra.Structures.d_comm_778
       (coe
-         MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+         MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+            MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+               MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                (coe
                   d_isCommutativeSemiring_62
                   (coe d_isAlmostCommutativeRing_216 (coe v0))))))
@@ -5130,19 +5130,19 @@ du_'8729''45'cong_658 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'8729''45'cong_658 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+      MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isMagma_496
+         MAlonzo.Code.Algebra.Structures.d_isMagma_498
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+            MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+               MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                     MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                         (coe
                            d_isCommutativeSemiring_62
                            (coe d_isAlmostCommutativeRing_216 (coe v0)))))))))
@@ -5167,29 +5167,29 @@ du_'8729''45'cong'691'_660 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7) in
                          coe
                            (let v9
-                                  = coe MAlonzo.Code.Algebra.Structures.du_setoid_202 (coe v8) in
+                                  = coe MAlonzo.Code.Algebra.Structures.du_setoid_204 (coe v8) in
                             coe
                               (let v10
-                                     = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+                                     = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
                                          (coe v8) in
                                coe
                                  (coe
@@ -5221,29 +5221,29 @@ du_'8729''45'cong'737'_662 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7) in
                          coe
                            (let v9
-                                  = coe MAlonzo.Code.Algebra.Structures.du_setoid_202 (coe v8) in
+                                  = coe MAlonzo.Code.Algebra.Structures.du_setoid_204 (coe v8) in
                             coe
                               (let v10
-                                     = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+                                     = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
                                          (coe v8) in
                                coe
                                  (coe
@@ -5270,15 +5270,15 @@ du_identity_664 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_identity_664 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_identity_724
+      MAlonzo.Code.Algebra.Structures.d_identity_726
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+         MAlonzo.Code.Algebra.Structures.d_isMonoid_776
          (coe
-            MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+            MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                  MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                   (coe
                      d_isCommutativeSemiring_62
                      (coe d_isAlmostCommutativeRing_216 (coe v0)))))))
@@ -5301,19 +5301,19 @@ du_identity'691'_666 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_identity'691'_754
-                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5)))))))
+                     MAlonzo.Code.Algebra.Structures.du_identity'691'_756
+                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5)))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._-Raw-AlmostCommutative⟶_.T.identityˡ
 d_identity'737'_668 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -5333,19 +5333,19 @@ du_identity'737'_668 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_identity'737'_752
-                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5)))))))
+                     MAlonzo.Code.Algebra.Structures.du_identity'737'_754
+                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5)))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._-Raw-AlmostCommutative⟶_.T.isCommutativeMagma
 d_isCommutativeMagma_670 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -5355,32 +5355,32 @@ d_isCommutativeMagma_670 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_214
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_216
 d_isCommutativeMagma_670 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
   = du_isCommutativeMagma_670 v5
 du_isCommutativeMagma_670 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_214
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_216
 du_isCommutativeMagma_670 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_606
+                     MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_608
                      (coe
-                        MAlonzo.Code.Algebra.Structures.du_isCommutativeSemigroup_814
+                        MAlonzo.Code.Algebra.Structures.du_isCommutativeSemigroup_816
                         (coe v5)))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._-Raw-AlmostCommutative⟶_.T.+-isCommutativeMonoid
 d_'43''45'isCommutativeMonoid_672 ::
@@ -5391,19 +5391,19 @@ d_'43''45'isCommutativeMonoid_672 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 d_'43''45'isCommutativeMonoid_672 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
   = du_'43''45'isCommutativeMonoid_672 v5
 du_'43''45'isCommutativeMonoid_672 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 du_'43''45'isCommutativeMonoid_672 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+      MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -5416,28 +5416,28 @@ d_isCommutativeSemigroup_674 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_570
 d_isCommutativeSemigroup_674 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
   = du_isCommutativeSemigroup_674 v5
 du_isCommutativeSemigroup_674 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_570
 du_isCommutativeSemigroup_674 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_isCommutativeSemigroup_814
+                  MAlonzo.Code.Algebra.Structures.du_isCommutativeSemigroup_816
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                      (coe v4))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._-Raw-AlmostCommutative⟶_.T.isMagma
 d_isMagma_676 ::
@@ -5448,24 +5448,24 @@ d_isMagma_676 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 d_isMagma_676 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6 = du_isMagma_676 v5
 du_isMagma_676 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 du_isMagma_676 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isMagma_496
+      MAlonzo.Code.Algebra.Structures.d_isMagma_498
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+         MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+            MAlonzo.Code.Algebra.Structures.d_isMonoid_776
             (coe
-               MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+               MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                     MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                      (coe
                         d_isCommutativeSemiring_62
                         (coe d_isAlmostCommutativeRing_216 (coe v0))))))))
@@ -5478,20 +5478,20 @@ d_isMonoid_678 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 d_isMonoid_678 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6 = du_isMonoid_678 v5
 du_isMonoid_678 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 du_isMonoid_678 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+      MAlonzo.Code.Algebra.Structures.d_isMonoid_776
       (coe
-         MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+         MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+            MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+               MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                (coe
                   d_isCommutativeSemiring_62
                   (coe d_isAlmostCommutativeRing_216 (coe v0))))))
@@ -5504,23 +5504,23 @@ d_isSemigroup_680 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 d_isSemigroup_680 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
   = du_isSemigroup_680 v5
 du_isSemigroup_680 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 du_isSemigroup_680 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+      MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+         MAlonzo.Code.Algebra.Structures.d_isMonoid_776
          (coe
-            MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+            MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                  MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                   (coe
                      d_isCommutativeSemiring_62
                      (coe d_isAlmostCommutativeRing_216 (coe v0)))))))
@@ -5533,31 +5533,31 @@ d_isUnitalMagma_682 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
-  MAlonzo.Code.Algebra.Structures.T_IsUnitalMagma_666
+  MAlonzo.Code.Algebra.Structures.T_IsUnitalMagma_668
 d_isUnitalMagma_682 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
   = du_isUnitalMagma_682 v5
 du_isUnitalMagma_682 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsUnitalMagma_666
+  MAlonzo.Code.Algebra.Structures.T_IsUnitalMagma_668
 du_isUnitalMagma_682 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_isUnitalMagma_756
-                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5)))))))
+                     MAlonzo.Code.Algebra.Structures.du_isUnitalMagma_758
+                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5)))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._-Raw-AlmostCommutative⟶_.T.magma
 d_magma_684 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -5790,11 +5790,11 @@ du_distrib_706 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_distrib_706 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_distrib_1564
+      MAlonzo.Code.Algebra.Structures.d_distrib_1566
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -5819,12 +5819,12 @@ du_distrib'691'_708 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_distrib'691'_1568
+               MAlonzo.Code.Algebra.Structures.du_distrib'691'_1570
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._-Raw-AlmostCommutative⟶_.T.distribˡ
 d_distrib'737'_710 ::
@@ -5847,12 +5847,12 @@ du_distrib'737'_710 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_distrib'737'_1566
+               MAlonzo.Code.Algebra.Structures.du_distrib'737'_1568
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._-Raw-AlmostCommutative⟶_.T.isAlmostCommutativeRing
 d_isAlmostCommutativeRing_712 ::
@@ -5879,12 +5879,12 @@ d_isCommutativeSemiring_714 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1750
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1752
 d_isCommutativeSemiring_714 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
   = du_isCommutativeSemiring_714 v5
 du_isCommutativeSemiring_714 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1750
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1752
 du_isCommutativeSemiring_714 v0
   = coe
       d_isCommutativeSemiring_62
@@ -5898,17 +5898,17 @@ d_isCommutativeSemiringWithoutOne_716 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1438
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1440
 d_isCommutativeSemiringWithoutOne_716 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
   = du_isCommutativeSemiringWithoutOne_716 v5
 du_isCommutativeSemiringWithoutOne_716 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1438
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1440
 du_isCommutativeSemiringWithoutOne_716 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1852
+         MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1854
          (coe d_isCommutativeSemiring_62 (coe v1)))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._-Raw-AlmostCommutative⟶_.T.isEquivalence
 d_isEquivalence_718 ::
@@ -5927,19 +5927,19 @@ du_isEquivalence_718 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_28
 du_isEquivalence_718 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+      MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isMagma_496
+         MAlonzo.Code.Algebra.Structures.d_isMagma_498
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+            MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+               MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                     MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                         (coe
                            d_isCommutativeSemiring_62
                            (coe d_isAlmostCommutativeRing_216 (coe v0)))))))))
@@ -5952,24 +5952,24 @@ d_isNearSemiring_720 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
-  MAlonzo.Code.Algebra.Structures.T_IsNearSemiring_1260
+  MAlonzo.Code.Algebra.Structures.T_IsNearSemiring_1262
 d_isNearSemiring_720 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
   = du_isNearSemiring_720 v5
 du_isNearSemiring_720 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsNearSemiring_1260
+  MAlonzo.Code.Algebra.Structures.T_IsNearSemiring_1262
 du_isNearSemiring_720 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_isNearSemiring_1428
+               MAlonzo.Code.Algebra.Structures.du_isNearSemiring_1430
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1730
+                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1732
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._-Raw-AlmostCommutative⟶_.T.isPartialEquivalence
 d_isPartialEquivalence_722 ::
@@ -5992,28 +5992,28 @@ du_isPartialEquivalence_722 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7) in
                          coe
                            (coe
                               MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_44
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                 MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                  (coe v8))))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._-Raw-AlmostCommutative⟶_.T.isSemiring
 d_isSemiring_724 ::
@@ -6024,14 +6024,14 @@ d_isSemiring_724 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1640
+  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1642
 d_isSemiring_724 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6 = du_isSemiring_724 v5
 du_isSemiring_724 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1640
+  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1642
 du_isSemiring_724 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+      MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
       (coe
          d_isCommutativeSemiring_62
          (coe d_isAlmostCommutativeRing_216 (coe v0)))
@@ -6044,17 +6044,17 @@ d_isSemiringWithoutAnnihilatingZero_726 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1536
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1538
 d_isSemiringWithoutAnnihilatingZero_726 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
   = du_isSemiringWithoutAnnihilatingZero_726 v5
 du_isSemiringWithoutAnnihilatingZero_726 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1536
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1538
 du_isSemiringWithoutAnnihilatingZero_726 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+      MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+         MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
          (coe
             d_isCommutativeSemiring_62
             (coe d_isAlmostCommutativeRing_216 (coe v0))))
@@ -6067,20 +6067,20 @@ d_isSemiringWithoutOne_728 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutOne_1342
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutOne_1344
 d_isSemiringWithoutOne_728 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
   = du_isSemiringWithoutOne_728 v5
 du_isSemiringWithoutOne_728 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutOne_1342
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutOne_1344
 du_isSemiringWithoutOne_728 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1730
-            (coe MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2))))
+            MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1732
+            (coe MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._-Raw-AlmostCommutative⟶_.T.rawRing
 d_rawRing_730 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -6111,19 +6111,19 @@ du_refl_732 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_36
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+         MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+            MAlonzo.Code.Algebra.Structures.d_isMagma_498
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                  MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                            (coe
                               d_isCommutativeSemiring_62
                               (coe d_isAlmostCommutativeRing_216 (coe v0))))))))))
@@ -6151,28 +6151,28 @@ du_reflexive_734 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7) in
                          coe
                            (\ v9 v10 v11 ->
                               coe
                                 MAlonzo.Code.Relation.Binary.Structures.du_reflexive_42
-                                (coe MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v8))
+                                (coe MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v8))
                                 v9))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._-Raw-AlmostCommutative⟶_.T.semiring
 d_semiring_736 ::
@@ -6212,25 +6212,25 @@ du_setoid_738 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
                         (coe
-                           MAlonzo.Code.Algebra.Structures.du_setoid_202
-                           (coe MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7)))))))))
+                           MAlonzo.Code.Algebra.Structures.du_setoid_204
+                           (coe MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7)))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._-Raw-AlmostCommutative⟶_.T.sym
 d_sym_740 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -6249,19 +6249,19 @@ du_sym_740 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_38
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+         MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+            MAlonzo.Code.Algebra.Structures.d_isMagma_498
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                  MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                            (coe
                               d_isCommutativeSemiring_62
                               (coe d_isAlmostCommutativeRing_216 (coe v0))))))))))
@@ -6283,19 +6283,19 @@ du_trans_742 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_40
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+         MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+            MAlonzo.Code.Algebra.Structures.d_isMagma_498
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                  MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                            (coe
                               d_isCommutativeSemiring_62
                               (coe d_isAlmostCommutativeRing_216 (coe v0))))))))))
@@ -6315,9 +6315,9 @@ du_zero_744 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_zero_744 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_zero_1656
+      MAlonzo.Code.Algebra.Structures.d_zero_1658
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+         MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
          (coe
             d_isCommutativeSemiring_62
             (coe d_isAlmostCommutativeRing_216 (coe v0))))
@@ -6339,12 +6339,12 @@ du_zero'691'_746 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_zero'691'_1426
+               MAlonzo.Code.Algebra.Structures.du_zero'691'_1428
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1730
+                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1732
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._-Raw-AlmostCommutative⟶_.T.zeroˡ
 d_zero'737'_748 ::
@@ -6364,12 +6364,12 @@ du_zero'737'_748 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_zero'737'_1424
+               MAlonzo.Code.Algebra.Structures.du_zero'737'_1426
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1730
+                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1732
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._-Raw-AlmostCommutative⟶_.⟦_⟧
 d_'10214'_'10215'_760 ::
@@ -6433,19 +6433,19 @@ du_'45'raw'45'almostCommutative'10230'_780 v0
          (\ v1 v2 ->
             coe
               MAlonzo.Code.Relation.Binary.Structures.d_refl_36
-              (MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+              (MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                  (coe
-                    MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                    MAlonzo.Code.Algebra.Structures.d_isMagma_498
                     (coe
-                       MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                       MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                        (coe
-                          MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                          MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                           (coe
-                             MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                             MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                              (coe
-                                MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                                MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                                 (coe
-                                   MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                                   MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                                    (coe
                                       d_isCommutativeSemiring_62
                                       (coe d_isAlmostCommutativeRing_216 (coe v0))))))))))
@@ -6455,19 +6455,19 @@ du_'45'raw'45'almostCommutative'10230'_780 v0
          (\ v1 v2 ->
             coe
               MAlonzo.Code.Relation.Binary.Structures.d_refl_36
-              (MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+              (MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                  (coe
-                    MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                    MAlonzo.Code.Algebra.Structures.d_isMagma_498
                     (coe
-                       MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                       MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                        (coe
-                          MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                          MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                           (coe
-                             MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                             MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                              (coe
-                                MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                                MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                                 (coe
-                                   MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                                   MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                                    (coe
                                       d_isCommutativeSemiring_62
                                       (coe d_isAlmostCommutativeRing_216 (coe v0))))))))))
@@ -6477,19 +6477,19 @@ du_'45'raw'45'almostCommutative'10230'_780 v0
          (\ v1 ->
             coe
               MAlonzo.Code.Relation.Binary.Structures.d_refl_36
-              (MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+              (MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                  (coe
-                    MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                    MAlonzo.Code.Algebra.Structures.d_isMagma_498
                     (coe
-                       MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                       MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                        (coe
-                          MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                          MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                           (coe
-                             MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                             MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                              (coe
-                                MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                                MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                                 (coe
-                                   MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                                   MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                                    (coe
                                       d_isCommutativeSemiring_62
                                       (coe d_isAlmostCommutativeRing_216 (coe v0))))))))))
@@ -6497,19 +6497,19 @@ du_'45'raw'45'almostCommutative'10230'_780 v0
                coe (coe MAlonzo.Code.Algebra.Bundles.Raw.d_'45'__318 v2 v1))))
       (coe
          MAlonzo.Code.Relation.Binary.Structures.d_refl_36
-         (MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+         (MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isMagma_496
+               MAlonzo.Code.Algebra.Structures.d_isMagma_498
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                  MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                     MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                        MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                           MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                              MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                               (coe
                                  d_isCommutativeSemiring_62
                                  (coe d_isAlmostCommutativeRing_216 (coe v0))))))))))
@@ -6517,19 +6517,19 @@ du_'45'raw'45'almostCommutative'10230'_780 v0
           coe (MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_320 (coe v1))))
       (coe
          MAlonzo.Code.Relation.Binary.Structures.d_refl_36
-         (MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+         (MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isMagma_496
+               MAlonzo.Code.Algebra.Structures.d_isMagma_498
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                  MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                     MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                        MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                           MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                              MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                               (coe
                                  d_isCommutativeSemiring_62
                                  (coe d_isAlmostCommutativeRing_216 (coe v0))))))))))
@@ -6553,11 +6553,11 @@ d_'42''45'assoc_796 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_'42''45'assoc_796 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'assoc_1560
+      MAlonzo.Code.Algebra.Structures.d_'42''45'assoc_1562
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -6566,7 +6566,7 @@ d_'42''45'comm_798 ::
   T_AlmostCommutativeRing_180 -> AgdaAny -> AgdaAny -> AgdaAny
 d_'42''45'comm_798 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'comm_1766
+      MAlonzo.Code.Algebra.Structures.d_'42''45'comm_1768
       (coe
          d_isCommutativeSemiring_62
          (coe d_isAlmostCommutativeRing_216 (coe v0)))
@@ -6611,11 +6611,11 @@ d_'42''45'cong_804 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_'42''45'cong_804 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'cong_1558
+      MAlonzo.Code.Algebra.Structures.d_'42''45'cong_1560
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -6636,27 +6636,27 @@ du_'8729''45'cong'691'_806 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                          MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v5) in
                    coe
-                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v6) in
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v6) in
                       coe
                         (let v8
-                               = coe MAlonzo.Code.Algebra.Structures.du_setoid_202 (coe v7) in
+                               = coe MAlonzo.Code.Algebra.Structures.du_setoid_204 (coe v7) in
                          coe
                            (let v9
-                                  = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188 (coe v7) in
+                                  = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190 (coe v7) in
                             coe
                               (coe
                                  MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'691'_46
@@ -6683,27 +6683,27 @@ du_'8729''45'cong'737'_808 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                          MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v5) in
                    coe
-                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v6) in
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v6) in
                       coe
                         (let v8
-                               = coe MAlonzo.Code.Algebra.Structures.du_setoid_202 (coe v7) in
+                               = coe MAlonzo.Code.Algebra.Structures.du_setoid_204 (coe v7) in
                          coe
                            (let v9
-                                  = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188 (coe v7) in
+                                  = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190 (coe v7) in
                             coe
                               (coe
                                  MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'737'_42
@@ -6719,11 +6719,11 @@ d_'42''45'identity_810 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_'42''45'identity_810 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'identity_1562
+      MAlonzo.Code.Algebra.Structures.d_'42''45'identity_1564
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -6741,16 +6741,16 @@ du_identity'691'_812 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_identity'691'_754
+                  MAlonzo.Code.Algebra.Structures.du_identity'691'_756
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                     MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                      (coe v4))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.identityˡ
 d_identity'737'_814 ::
@@ -6766,27 +6766,27 @@ du_identity'737'_814 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_identity'737'_752
+                  MAlonzo.Code.Algebra.Structures.du_identity'737'_754
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                     MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                      (coe v4))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.isCommutativeMagma
 d_isCommutativeMagma_816 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_214
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_216
 d_isCommutativeMagma_816 ~v0 ~v1 v2 = du_isCommutativeMagma_816 v2
 du_isCommutativeMagma_816 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_214
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_216
 du_isCommutativeMagma_816 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
@@ -6794,121 +6794,121 @@ du_isCommutativeMagma_816 v0
        coe
          (let v3
                 = coe
-                    MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1852
+                    MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1854
                     (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_606
+               MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_608
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1520
+                  MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1522
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.*-isCommutativeMonoid
 d_'42''45'isCommutativeMonoid_818 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 d_'42''45'isCommutativeMonoid_818 ~v0 ~v1 v2
   = du_'42''45'isCommutativeMonoid_818 v2
 du_'42''45'isCommutativeMonoid_818 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 du_'42''45'isCommutativeMonoid_818 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeMonoid_1860
+         MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeMonoid_1862
          (coe d_isCommutativeSemiring_62 (coe v1)))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.*-isCommutativeSemigroup
 d_'42''45'isCommutativeSemigroup_820 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_570
 d_'42''45'isCommutativeSemigroup_820 ~v0 ~v1 v2
   = du_'42''45'isCommutativeSemigroup_820 v2
 du_'42''45'isCommutativeSemigroup_820 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_570
 du_'42''45'isCommutativeSemigroup_820 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1520
+            MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1522
             (coe
-               MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1852
+               MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1854
                (coe v2))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.*-isMagma
 d_'42''45'isMagma_822 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 d_'42''45'isMagma_822 ~v0 ~v1 v2 = du_'42''45'isMagma_822 v2
 du_'42''45'isMagma_822 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 du_'42''45'isMagma_822 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_'42''45'isMagma_1614
+               MAlonzo.Code.Algebra.Structures.du_'42''45'isMagma_1616
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.*-isMonoid
 d_'42''45'isMonoid_824 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 d_'42''45'isMonoid_824 ~v0 ~v1 v2 = du_'42''45'isMonoid_824 v2
 du_'42''45'isMonoid_824 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 du_'42''45'isMonoid_824 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+               MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.*-isSemigroup
 d_'42''45'isSemigroup_826 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 d_'42''45'isSemigroup_826 ~v0 ~v1 v2
   = du_'42''45'isSemigroup_826 v2
 du_'42''45'isSemigroup_826 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 du_'42''45'isSemigroup_826 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_'42''45'isSemigroup_1616
+               MAlonzo.Code.Algebra.Structures.du_'42''45'isSemigroup_1618
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.magma
 d_magma_828 ::
@@ -6990,17 +6990,17 @@ d_assoc_834 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_assoc_834 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_assoc_498
+      MAlonzo.Code.Algebra.Structures.d_assoc_500
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+         MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+            MAlonzo.Code.Algebra.Structures.d_isMonoid_776
             (coe
-               MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+               MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                     MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                      (coe
                         d_isCommutativeSemiring_62
                         (coe d_isAlmostCommutativeRing_216 (coe v0))))))))
@@ -7009,13 +7009,13 @@ d_comm_836 ::
   T_AlmostCommutativeRing_180 -> AgdaAny -> AgdaAny -> AgdaAny
 d_comm_836 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_comm_776
+      MAlonzo.Code.Algebra.Structures.d_comm_778
       (coe
-         MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+         MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+            MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+               MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                (coe
                   d_isCommutativeSemiring_62
                   (coe d_isAlmostCommutativeRing_216 (coe v0))))))
@@ -7048,19 +7048,19 @@ d_'8729''45'cong_840 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_'8729''45'cong_840 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+      MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isMagma_496
+         MAlonzo.Code.Algebra.Structures.d_isMagma_498
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+            MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+               MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                     MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                         (coe
                            d_isCommutativeSemiring_62
                            (coe d_isAlmostCommutativeRing_216 (coe v0)))))))))
@@ -7081,29 +7081,29 @@ du_'8729''45'cong'691'_842 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7) in
                          coe
                            (let v9
-                                  = coe MAlonzo.Code.Algebra.Structures.du_setoid_202 (coe v8) in
+                                  = coe MAlonzo.Code.Algebra.Structures.du_setoid_204 (coe v8) in
                             coe
                               (let v10
-                                     = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+                                     = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
                                          (coe v8) in
                                coe
                                  (coe
@@ -7131,29 +7131,29 @@ du_'8729''45'cong'737'_844 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7) in
                          coe
                            (let v9
-                                  = coe MAlonzo.Code.Algebra.Structures.du_setoid_202 (coe v8) in
+                                  = coe MAlonzo.Code.Algebra.Structures.du_setoid_204 (coe v8) in
                             coe
                               (let v10
-                                     = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+                                     = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
                                          (coe v8) in
                                coe
                                  (coe
@@ -7170,15 +7170,15 @@ d_identity_846 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_identity_846 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_identity_724
+      MAlonzo.Code.Algebra.Structures.d_identity_726
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+         MAlonzo.Code.Algebra.Structures.d_isMonoid_776
          (coe
-            MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+            MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                  MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                   (coe
                      d_isCommutativeSemiring_62
                      (coe d_isAlmostCommutativeRing_216 (coe v0)))))))
@@ -7196,19 +7196,19 @@ du_identity'691'_848 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_identity'691'_754
-                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5)))))))
+                     MAlonzo.Code.Algebra.Structures.du_identity'691'_756
+                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5)))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.identityˡ
 d_identity'737'_850 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -7223,61 +7223,61 @@ du_identity'737'_850 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_identity'737'_752
-                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5)))))))
+                     MAlonzo.Code.Algebra.Structures.du_identity'737'_754
+                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5)))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.isCommutativeMagma
 d_isCommutativeMagma_852 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_214
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_216
 d_isCommutativeMagma_852 ~v0 ~v1 v2 = du_isCommutativeMagma_852 v2
 du_isCommutativeMagma_852 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_214
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_216
 du_isCommutativeMagma_852 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_606
+                     MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_608
                      (coe
-                        MAlonzo.Code.Algebra.Structures.du_isCommutativeSemigroup_814
+                        MAlonzo.Code.Algebra.Structures.du_isCommutativeSemigroup_816
                         (coe v5)))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.+-isCommutativeMonoid
 d_'43''45'isCommutativeMonoid_854 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 d_'43''45'isCommutativeMonoid_854 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+      MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -7286,80 +7286,80 @@ d_isCommutativeSemigroup_856 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_570
 d_isCommutativeSemigroup_856 ~v0 ~v1 v2
   = du_isCommutativeSemigroup_856 v2
 du_isCommutativeSemigroup_856 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_570
 du_isCommutativeSemigroup_856 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_isCommutativeSemigroup_814
+                  MAlonzo.Code.Algebra.Structures.du_isCommutativeSemigroup_816
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                      (coe v4))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.isMagma
 d_isMagma_858 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 d_isMagma_858 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isMagma_496
+      MAlonzo.Code.Algebra.Structures.d_isMagma_498
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+         MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+            MAlonzo.Code.Algebra.Structures.d_isMonoid_776
             (coe
-               MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+               MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                     MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                      (coe
                         d_isCommutativeSemiring_62
                         (coe d_isAlmostCommutativeRing_216 (coe v0))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.isMonoid
 d_isMonoid_860 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 d_isMonoid_860 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+      MAlonzo.Code.Algebra.Structures.d_isMonoid_776
       (coe
-         MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+         MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+            MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+               MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                (coe
                   d_isCommutativeSemiring_62
                   (coe d_isAlmostCommutativeRing_216 (coe v0))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.isSemigroup
 d_isSemigroup_862 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 d_isSemigroup_862 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+      MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+         MAlonzo.Code.Algebra.Structures.d_isMonoid_776
          (coe
-            MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+            MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                  MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                   (coe
                      d_isCommutativeSemiring_62
                      (coe d_isAlmostCommutativeRing_216 (coe v0)))))))
@@ -7368,30 +7368,30 @@ d_isUnitalMagma_864 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsUnitalMagma_666
+  MAlonzo.Code.Algebra.Structures.T_IsUnitalMagma_668
 d_isUnitalMagma_864 ~v0 ~v1 v2 = du_isUnitalMagma_864 v2
 du_isUnitalMagma_864 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsUnitalMagma_666
+  MAlonzo.Code.Algebra.Structures.T_IsUnitalMagma_668
 du_isUnitalMagma_864 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_isUnitalMagma_756
-                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5)))))))
+                     MAlonzo.Code.Algebra.Structures.du_isUnitalMagma_758
+                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5)))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.magma
 d_magma_866 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -7531,11 +7531,11 @@ d_distrib_888 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_distrib_888 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_distrib_1564
+      MAlonzo.Code.Algebra.Structures.d_distrib_1566
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -7555,12 +7555,12 @@ du_distrib'691'_890 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_distrib'691'_1568
+               MAlonzo.Code.Algebra.Structures.du_distrib'691'_1570
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.distribˡ
 d_distrib'737'_892 ::
@@ -7578,12 +7578,12 @@ du_distrib'737'_892 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_distrib'737'_1566
+               MAlonzo.Code.Algebra.Structures.du_distrib'737'_1568
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.isAlmostCommutativeRing
 d_isAlmostCommutativeRing_894 ::
@@ -7593,7 +7593,7 @@ d_isAlmostCommutativeRing_894 v0
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.isCommutativeSemiring
 d_isCommutativeSemiring_896 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1750
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1752
 d_isCommutativeSemiring_896 v0
   = coe
       d_isCommutativeSemiring_62
@@ -7603,17 +7603,17 @@ d_isCommutativeSemiringWithoutOne_898 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1438
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1440
 d_isCommutativeSemiringWithoutOne_898 ~v0 ~v1 v2
   = du_isCommutativeSemiringWithoutOne_898 v2
 du_isCommutativeSemiringWithoutOne_898 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1438
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1440
 du_isCommutativeSemiringWithoutOne_898 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1852
+         MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1854
          (coe d_isCommutativeSemiring_62 (coe v1)))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.isEquivalence
 d_isEquivalence_900 ::
@@ -7621,19 +7621,19 @@ d_isEquivalence_900 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_28
 d_isEquivalence_900 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+      MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isMagma_496
+         MAlonzo.Code.Algebra.Structures.d_isMagma_498
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+            MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+               MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                     MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                         (coe
                            d_isCommutativeSemiring_62
                            (coe d_isAlmostCommutativeRing_216 (coe v0)))))))))
@@ -7642,23 +7642,23 @@ d_isNearSemiring_902 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsNearSemiring_1260
+  MAlonzo.Code.Algebra.Structures.T_IsNearSemiring_1262
 d_isNearSemiring_902 ~v0 ~v1 v2 = du_isNearSemiring_902 v2
 du_isNearSemiring_902 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsNearSemiring_1260
+  MAlonzo.Code.Algebra.Structures.T_IsNearSemiring_1262
 du_isNearSemiring_902 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_isNearSemiring_1428
+               MAlonzo.Code.Algebra.Structures.du_isNearSemiring_1430
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1730
+                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1732
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.isPartialEquivalence
 d_isPartialEquivalence_904 ::
@@ -7677,48 +7677,48 @@ du_isPartialEquivalence_904 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7) in
                          coe
                            (coe
                               MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_44
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                 MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                  (coe v8))))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.isSemiring
 d_isSemiring_906 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1640
+  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1642
 d_isSemiring_906 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+      MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
       (coe
          d_isCommutativeSemiring_62
          (coe d_isAlmostCommutativeRing_216 (coe v0)))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.isSemiringWithoutAnnihilatingZero
 d_isSemiringWithoutAnnihilatingZero_908 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1536
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1538
 d_isSemiringWithoutAnnihilatingZero_908 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+      MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+         MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
          (coe
             d_isCommutativeSemiring_62
             (coe d_isAlmostCommutativeRing_216 (coe v0))))
@@ -7727,20 +7727,20 @@ d_isSemiringWithoutOne_910 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutOne_1342
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutOne_1344
 d_isSemiringWithoutOne_910 ~v0 ~v1 v2
   = du_isSemiringWithoutOne_910 v2
 du_isSemiringWithoutOne_910 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutOne_1342
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutOne_1344
 du_isSemiringWithoutOne_910 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1730
-            (coe MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2))))
+            MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1732
+            (coe MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.rawRing
 d_rawRing_912 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -7758,19 +7758,19 @@ d_refl_914 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_36
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+         MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+            MAlonzo.Code.Algebra.Structures.d_isMagma_498
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                  MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                            (coe
                               d_isCommutativeSemiring_62
                               (coe d_isAlmostCommutativeRing_216 (coe v0))))))))))
@@ -7794,28 +7794,28 @@ du_reflexive_916 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7) in
                          coe
                            (\ v9 v10 v11 ->
                               coe
                                 MAlonzo.Code.Relation.Binary.Structures.du_reflexive_42
-                                (coe MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v8))
+                                (coe MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v8))
                                 v9))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.semiring
 d_semiring_918 ::
@@ -7847,25 +7847,25 @@ du_setoid_920 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
                         (coe
-                           MAlonzo.Code.Algebra.Structures.du_setoid_202
-                           (coe MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7)))))))))
+                           MAlonzo.Code.Algebra.Structures.du_setoid_204
+                           (coe MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7)))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.sym
 d_sym_922 ::
   T_AlmostCommutativeRing_180 ->
@@ -7874,19 +7874,19 @@ d_sym_922 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_38
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+         MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+            MAlonzo.Code.Algebra.Structures.d_isMagma_498
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                  MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                            (coe
                               d_isCommutativeSemiring_62
                               (coe d_isAlmostCommutativeRing_216 (coe v0))))))))))
@@ -7898,19 +7898,19 @@ d_trans_924 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_40
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+         MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+            MAlonzo.Code.Algebra.Structures.d_isMagma_498
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                  MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                            (coe
                               d_isCommutativeSemiring_62
                               (coe d_isAlmostCommutativeRing_216 (coe v0))))))))))
@@ -7920,9 +7920,9 @@ d_zero_926 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_zero_926 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_zero_1656
+      MAlonzo.Code.Algebra.Structures.d_zero_1658
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+         MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
          (coe
             d_isCommutativeSemiring_62
             (coe d_isAlmostCommutativeRing_216 (coe v0))))
@@ -7940,12 +7940,12 @@ du_zero'691'_928 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_zero'691'_1426
+               MAlonzo.Code.Algebra.Structures.du_zero'691'_1428
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1730
+                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1732
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.zeroˡ
 d_zero'737'_930 ::
@@ -7961,12 +7961,12 @@ du_zero'737'_930 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_zero'737'_1424
+               MAlonzo.Code.Algebra.Structures.du_zero'737'_1426
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1730
+                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1732
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.Induced-equivalence
 d_Induced'45'equivalence_954 ::
@@ -8035,11 +8035,11 @@ du_'42''45'assoc_976 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'42''45'assoc_976 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'assoc_1560
+      MAlonzo.Code.Algebra.Structures.d_'42''45'assoc_1562
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -8059,7 +8059,7 @@ du_'42''45'comm_978 ::
   T_AlmostCommutativeRing_180 -> AgdaAny -> AgdaAny -> AgdaAny
 du_'42''45'comm_978 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'comm_1766
+      MAlonzo.Code.Algebra.Structures.d_'42''45'comm_1768
       (coe
          d_isCommutativeSemiring_62
          (coe d_isAlmostCommutativeRing_216 (coe v0)))
@@ -8128,11 +8128,11 @@ du_'42''45'cong_984 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'42''45'cong_984 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'cong_1558
+      MAlonzo.Code.Algebra.Structures.d_'42''45'cong_1560
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -8158,27 +8158,27 @@ du_'8729''45'cong'691'_986 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                          MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v5) in
                    coe
-                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v6) in
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v6) in
                       coe
                         (let v8
-                               = coe MAlonzo.Code.Algebra.Structures.du_setoid_202 (coe v7) in
+                               = coe MAlonzo.Code.Algebra.Structures.du_setoid_204 (coe v7) in
                          coe
                            (let v9
-                                  = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188 (coe v7) in
+                                  = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190 (coe v7) in
                             coe
                               (coe
                                  MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'691'_46
@@ -8210,27 +8210,27 @@ du_'8729''45'cong'737'_988 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                          MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v5) in
                    coe
-                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v6) in
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v6) in
                       coe
                         (let v8
-                               = coe MAlonzo.Code.Algebra.Structures.du_setoid_202 (coe v7) in
+                               = coe MAlonzo.Code.Algebra.Structures.du_setoid_204 (coe v7) in
                          coe
                            (let v9
-                                  = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188 (coe v7) in
+                                  = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190 (coe v7) in
                             coe
                               (coe
                                  MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'737'_42
@@ -8257,11 +8257,11 @@ du_'42''45'identity_990 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_'42''45'identity_990 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'identity_1562
+      MAlonzo.Code.Algebra.Structures.d_'42''45'identity_1564
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -8285,16 +8285,16 @@ du_identity'691'_992 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_identity'691'_754
+                  MAlonzo.Code.Algebra.Structures.du_identity'691'_756
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                     MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                      (coe v4))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.identityˡ
 d_identity'737'_994 ::
@@ -8316,16 +8316,16 @@ du_identity'737'_994 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_identity'737'_752
+                  MAlonzo.Code.Algebra.Structures.du_identity'737'_754
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+                     MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                      (coe v4))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.isCommutativeMagma
 d_isCommutativeMagma_996 ::
@@ -8337,12 +8337,12 @@ d_isCommutativeMagma_996 ::
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_214
+  AgdaAny -> MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_216
 d_isCommutativeMagma_996 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6 ~v7 ~v8
   = du_isCommutativeMagma_996 v5
 du_isCommutativeMagma_996 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_214
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_216
 du_isCommutativeMagma_996 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
@@ -8350,13 +8350,13 @@ du_isCommutativeMagma_996 v0
        coe
          (let v3
                 = coe
-                    MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1852
+                    MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1854
                     (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_606
+               MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_608
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1520
+                  MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1522
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.*-isCommutativeMonoid
 d_'42''45'isCommutativeMonoid_998 ::
@@ -8369,18 +8369,18 @@ d_'42''45'isCommutativeMonoid_998 ::
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
   AgdaAny ->
   AgdaAny ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 d_'42''45'isCommutativeMonoid_998 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6 ~v7
                                   ~v8
   = du_'42''45'isCommutativeMonoid_998 v5
 du_'42''45'isCommutativeMonoid_998 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 du_'42''45'isCommutativeMonoid_998 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeMonoid_1860
+         MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeMonoid_1862
          (coe d_isCommutativeSemiring_62 (coe v1)))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.*-isCommutativeSemigroup
 d_'42''45'isCommutativeSemigroup_1000 ::
@@ -8393,22 +8393,22 @@ d_'42''45'isCommutativeSemigroup_1000 ::
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
   AgdaAny ->
   AgdaAny ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_570
 d_'42''45'isCommutativeSemigroup_1000 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
                                       ~v7 ~v8
   = du_'42''45'isCommutativeSemigroup_1000 v5
 du_'42''45'isCommutativeSemigroup_1000 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_570
 du_'42''45'isCommutativeSemigroup_1000 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1520
+            MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1522
             (coe
-               MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1852
+               MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1854
                (coe v2))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.*-isMagma
 d_'42''45'isMagma_1002 ::
@@ -8419,24 +8419,24 @@ d_'42''45'isMagma_1002 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
-  AgdaAny -> AgdaAny -> MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  AgdaAny -> AgdaAny -> MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 d_'42''45'isMagma_1002 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6 ~v7 ~v8
   = du_'42''45'isMagma_1002 v5
 du_'42''45'isMagma_1002 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 du_'42''45'isMagma_1002 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_'42''45'isMagma_1614
+               MAlonzo.Code.Algebra.Structures.du_'42''45'isMagma_1616
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.*-isMonoid
 d_'42''45'isMonoid_1004 ::
@@ -8448,24 +8448,24 @@ d_'42''45'isMonoid_1004 ::
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  AgdaAny -> MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 d_'42''45'isMonoid_1004 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6 ~v7 ~v8
   = du_'42''45'isMonoid_1004 v5
 du_'42''45'isMonoid_1004 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 du_'42''45'isMonoid_1004 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1618
+               MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_1620
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.*-isSemigroup
 d_'42''45'isSemigroup_1006 ::
@@ -8477,24 +8477,24 @@ d_'42''45'isSemigroup_1006 ::
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  AgdaAny -> MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 d_'42''45'isSemigroup_1006 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6 ~v7 ~v8
   = du_'42''45'isSemigroup_1006 v5
 du_'42''45'isSemigroup_1006 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 du_'42''45'isSemigroup_1006 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_'42''45'isSemigroup_1616
+               MAlonzo.Code.Algebra.Structures.du_'42''45'isSemigroup_1618
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.magma
 d_magma_1008 ::
@@ -8600,17 +8600,17 @@ du_assoc_1014 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_assoc_1014 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_assoc_498
+      MAlonzo.Code.Algebra.Structures.d_assoc_500
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+         MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+            MAlonzo.Code.Algebra.Structures.d_isMonoid_776
             (coe
-               MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+               MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                     MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                      (coe
                         d_isCommutativeSemiring_62
                         (coe d_isAlmostCommutativeRing_216 (coe v0))))))))
@@ -8629,13 +8629,13 @@ du_comm_1016 ::
   T_AlmostCommutativeRing_180 -> AgdaAny -> AgdaAny -> AgdaAny
 du_comm_1016 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_comm_776
+      MAlonzo.Code.Algebra.Structures.d_comm_778
       (coe
-         MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+         MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+            MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+               MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                (coe
                   d_isCommutativeSemiring_62
                   (coe d_isAlmostCommutativeRing_216 (coe v0))))))
@@ -8687,19 +8687,19 @@ du_'8729''45'cong_1020 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'8729''45'cong_1020 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+      MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isMagma_496
+         MAlonzo.Code.Algebra.Structures.d_isMagma_498
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+            MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+               MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                     MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                         (coe
                            d_isCommutativeSemiring_62
                            (coe d_isAlmostCommutativeRing_216 (coe v0)))))))))
@@ -8725,29 +8725,29 @@ du_'8729''45'cong'691'_1022 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7) in
                          coe
                            (let v9
-                                  = coe MAlonzo.Code.Algebra.Structures.du_setoid_202 (coe v8) in
+                                  = coe MAlonzo.Code.Algebra.Structures.du_setoid_204 (coe v8) in
                             coe
                               (let v10
-                                     = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+                                     = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
                                          (coe v8) in
                                coe
                                  (coe
@@ -8780,29 +8780,29 @@ du_'8729''45'cong'737'_1024 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7) in
                          coe
                            (let v9
-                                  = coe MAlonzo.Code.Algebra.Structures.du_setoid_202 (coe v8) in
+                                  = coe MAlonzo.Code.Algebra.Structures.du_setoid_204 (coe v8) in
                             coe
                               (let v10
-                                     = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+                                     = MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
                                          (coe v8) in
                                coe
                                  (coe
@@ -8830,15 +8830,15 @@ du_identity_1026 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_identity_1026 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_identity_724
+      MAlonzo.Code.Algebra.Structures.d_identity_726
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+         MAlonzo.Code.Algebra.Structures.d_isMonoid_776
          (coe
-            MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+            MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                  MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                   (coe
                      d_isCommutativeSemiring_62
                      (coe d_isAlmostCommutativeRing_216 (coe v0)))))))
@@ -8862,19 +8862,19 @@ du_identity'691'_1028 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_identity'691'_754
-                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5)))))))
+                     MAlonzo.Code.Algebra.Structures.du_identity'691'_756
+                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5)))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.identityˡ
 d_identity'737'_1030 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -8895,19 +8895,19 @@ du_identity'737'_1030 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_identity'737'_752
-                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5)))))))
+                     MAlonzo.Code.Algebra.Structures.du_identity'737'_754
+                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5)))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.isCommutativeMagma
 d_isCommutativeMagma_1032 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -8918,32 +8918,32 @@ d_isCommutativeMagma_1032 ::
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_214
+  AgdaAny -> MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_216
 d_isCommutativeMagma_1032 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6 ~v7 ~v8
   = du_isCommutativeMagma_1032 v5
 du_isCommutativeMagma_1032 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_214
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMagma_216
 du_isCommutativeMagma_1032 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_606
+                     MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_608
                      (coe
-                        MAlonzo.Code.Algebra.Structures.du_isCommutativeSemigroup_814
+                        MAlonzo.Code.Algebra.Structures.du_isCommutativeSemigroup_816
                         (coe v5)))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.+-isCommutativeMonoid
 d_'43''45'isCommutativeMonoid_1034 ::
@@ -8956,20 +8956,20 @@ d_'43''45'isCommutativeMonoid_1034 ::
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
   AgdaAny ->
   AgdaAny ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 d_'43''45'isCommutativeMonoid_1034 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6 ~v7
                                    ~v8
   = du_'43''45'isCommutativeMonoid_1034 v5
 du_'43''45'isCommutativeMonoid_1034 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 du_'43''45'isCommutativeMonoid_1034 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+      MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -8984,28 +8984,28 @@ d_isCommutativeSemigroup_1036 ::
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
   AgdaAny ->
   AgdaAny ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_570
 d_isCommutativeSemigroup_1036 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6 ~v7 ~v8
   = du_isCommutativeSemigroup_1036 v5
 du_isCommutativeSemigroup_1036 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_568
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemigroup_570
 du_isCommutativeSemigroup_1036 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_isCommutativeSemigroup_814
+                  MAlonzo.Code.Algebra.Structures.du_isCommutativeSemigroup_816
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                      (coe v4))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.isMagma
 d_isMagma_1038 ::
@@ -9016,25 +9016,25 @@ d_isMagma_1038 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
-  AgdaAny -> AgdaAny -> MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  AgdaAny -> AgdaAny -> MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 d_isMagma_1038 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6 ~v7 ~v8
   = du_isMagma_1038 v5
 du_isMagma_1038 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 du_isMagma_1038 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isMagma_496
+      MAlonzo.Code.Algebra.Structures.d_isMagma_498
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+         MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+            MAlonzo.Code.Algebra.Structures.d_isMonoid_776
             (coe
-               MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+               MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                     MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                      (coe
                         d_isCommutativeSemiring_62
                         (coe d_isAlmostCommutativeRing_216 (coe v0))))))))
@@ -9048,21 +9048,21 @@ d_isMonoid_1040 ::
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  AgdaAny -> MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 d_isMonoid_1040 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6 ~v7 ~v8
   = du_isMonoid_1040 v5
 du_isMonoid_1040 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 du_isMonoid_1040 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+      MAlonzo.Code.Algebra.Structures.d_isMonoid_776
       (coe
-         MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+         MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+            MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+               MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                (coe
                   d_isCommutativeSemiring_62
                   (coe d_isAlmostCommutativeRing_216 (coe v0))))))
@@ -9076,23 +9076,23 @@ d_isSemigroup_1042 ::
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  AgdaAny -> MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 d_isSemigroup_1042 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6 ~v7 ~v8
   = du_isSemigroup_1042 v5
 du_isSemigroup_1042 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 du_isSemigroup_1042 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+      MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+         MAlonzo.Code.Algebra.Structures.d_isMonoid_776
          (coe
-            MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+            MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+               MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                  MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                   (coe
                      d_isCommutativeSemiring_62
                      (coe d_isAlmostCommutativeRing_216 (coe v0)))))))
@@ -9106,31 +9106,31 @@ d_isUnitalMagma_1044 ::
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Algebra.Structures.T_IsUnitalMagma_666
+  AgdaAny -> MAlonzo.Code.Algebra.Structures.T_IsUnitalMagma_668
 d_isUnitalMagma_1044 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6 ~v7 ~v8
   = du_isUnitalMagma_1044 v5
 du_isUnitalMagma_1044 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsUnitalMagma_666
+  MAlonzo.Code.Algebra.Structures.T_IsUnitalMagma_668
 du_isUnitalMagma_1044 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_isUnitalMagma_756
-                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5)))))))
+                     MAlonzo.Code.Algebra.Structures.du_isUnitalMagma_758
+                     (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5)))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.magma
 d_magma_1046 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -9372,11 +9372,11 @@ du_distrib_1068 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_distrib_1068 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_distrib_1564
+      MAlonzo.Code.Algebra.Structures.d_distrib_1566
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+         MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+            MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
             (coe
                d_isCommutativeSemiring_62
                (coe d_isAlmostCommutativeRing_216 (coe v0)))))
@@ -9401,12 +9401,12 @@ du_distrib'691'_1070 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_distrib'691'_1568
+               MAlonzo.Code.Algebra.Structures.du_distrib'691'_1570
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.distribˡ
 d_distrib'737'_1072 ::
@@ -9429,12 +9429,12 @@ du_distrib'737'_1072 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_distrib'737'_1566
+               MAlonzo.Code.Algebra.Structures.du_distrib'737'_1568
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                  MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.isAlmostCommutativeRing
 d_isAlmostCommutativeRing_1074 ::
@@ -9463,12 +9463,12 @@ d_isCommutativeSemiring_1076 ::
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
   AgdaAny ->
   AgdaAny ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1750
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1752
 d_isCommutativeSemiring_1076 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6 ~v7 ~v8
   = du_isCommutativeSemiring_1076 v5
 du_isCommutativeSemiring_1076 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1750
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1752
 du_isCommutativeSemiring_1076 v0
   = coe
       d_isCommutativeSemiring_62
@@ -9484,18 +9484,18 @@ d_isCommutativeSemiringWithoutOne_1078 ::
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
   AgdaAny ->
   AgdaAny ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1438
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1440
 d_isCommutativeSemiringWithoutOne_1078 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
                                        ~v7 ~v8
   = du_isCommutativeSemiringWithoutOne_1078 v5
 du_isCommutativeSemiringWithoutOne_1078 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1438
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1440
 du_isCommutativeSemiringWithoutOne_1078 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1852
+         MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1854
          (coe d_isCommutativeSemiring_62 (coe v1)))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.isEquivalence
 d_isEquivalence_1080 ::
@@ -9516,19 +9516,19 @@ du_isEquivalence_1080 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_28
 du_isEquivalence_1080 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+      MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isMagma_496
+         MAlonzo.Code.Algebra.Structures.d_isMagma_498
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+            MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+               MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                  MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                     MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                        MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                         (coe
                            d_isCommutativeSemiring_62
                            (coe d_isAlmostCommutativeRing_216 (coe v0)))))))))
@@ -9542,24 +9542,24 @@ d_isNearSemiring_1082 ::
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Algebra.Structures.T_IsNearSemiring_1260
+  AgdaAny -> MAlonzo.Code.Algebra.Structures.T_IsNearSemiring_1262
 d_isNearSemiring_1082 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6 ~v7 ~v8
   = du_isNearSemiring_1082 v5
 du_isNearSemiring_1082 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsNearSemiring_1260
+  MAlonzo.Code.Algebra.Structures.T_IsNearSemiring_1262
 du_isNearSemiring_1082 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_isNearSemiring_1428
+               MAlonzo.Code.Algebra.Structures.du_isNearSemiring_1430
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1730
+                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1732
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.isPartialEquivalence
 d_isPartialEquivalence_1084 ::
@@ -9584,28 +9584,28 @@ du_isPartialEquivalence_1084 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7) in
                          coe
                            (coe
                               MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_44
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                 MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                  (coe v8))))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.isSemiring
 d_isSemiring_1086 ::
@@ -9617,15 +9617,15 @@ d_isSemiring_1086 ::
   T_AlmostCommutativeRing_180 ->
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Algebra.Structures.T_IsSemiring_1640
+  AgdaAny -> MAlonzo.Code.Algebra.Structures.T_IsSemiring_1642
 d_isSemiring_1086 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6 ~v7 ~v8
   = du_isSemiring_1086 v5
 du_isSemiring_1086 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1640
+  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1642
 du_isSemiring_1086 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+      MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
       (coe
          d_isCommutativeSemiring_62
          (coe d_isAlmostCommutativeRing_216 (coe v0)))
@@ -9640,18 +9640,18 @@ d_isSemiringWithoutAnnihilatingZero_1088 ::
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
   AgdaAny ->
   AgdaAny ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1536
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1538
 d_isSemiringWithoutAnnihilatingZero_1088 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
                                          ~v7 ~v8
   = du_isSemiringWithoutAnnihilatingZero_1088 v5
 du_isSemiringWithoutAnnihilatingZero_1088 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1536
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1538
 du_isSemiringWithoutAnnihilatingZero_1088 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+      MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+         MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
          (coe
             d_isCommutativeSemiring_62
             (coe d_isAlmostCommutativeRing_216 (coe v0))))
@@ -9666,20 +9666,20 @@ d_isSemiringWithoutOne_1090 ::
   T__'45'Raw'45'AlmostCommutative'10230'__362 ->
   AgdaAny ->
   AgdaAny ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutOne_1342
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutOne_1344
 d_isSemiringWithoutOne_1090 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6 ~v7 ~v8
   = du_isSemiringWithoutOne_1090 v5
 du_isSemiringWithoutOne_1090 ::
   T_AlmostCommutativeRing_180 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutOne_1342
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutOne_1344
 du_isSemiringWithoutOne_1090 v0
   = let v1 = d_isAlmostCommutativeRing_216 (coe v0) in
     coe
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1730
-            (coe MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2))))
+            MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1732
+            (coe MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.rawRing
 d_rawRing_1092 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -9713,19 +9713,19 @@ du_refl_1094 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_36
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+         MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+            MAlonzo.Code.Algebra.Structures.d_isMagma_498
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                  MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                            (coe
                               d_isCommutativeSemiring_62
                               (coe d_isAlmostCommutativeRing_216 (coe v0))))))))))
@@ -9756,28 +9756,28 @@ du_reflexive_1096 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7) in
                          coe
                            (\ v9 v10 v11 ->
                               coe
                                 MAlonzo.Code.Relation.Binary.Structures.du_reflexive_42
-                                (coe MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v8))
+                                (coe MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v8))
                                 v9))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.semiring
 d_semiring_1098 ::
@@ -9820,25 +9820,25 @@ du_setoid_1100 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                   = MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v5) in
+                         = MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v6) in
+                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v6) in
                       coe
                         (coe
-                           MAlonzo.Code.Algebra.Structures.du_setoid_202
-                           (coe MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v7)))))))))
+                           MAlonzo.Code.Algebra.Structures.du_setoid_204
+                           (coe MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v7)))))))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.sym
 d_sym_1102 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -9857,19 +9857,19 @@ du_sym_1102 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_38
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+         MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+            MAlonzo.Code.Algebra.Structures.d_isMagma_498
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                  MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                            (coe
                               d_isCommutativeSemiring_62
                               (coe d_isAlmostCommutativeRing_216 (coe v0))))))))))
@@ -9893,19 +9893,19 @@ du_trans_1104 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_40
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+         MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+            MAlonzo.Code.Algebra.Structures.d_isMagma_498
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                  MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                        MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                           MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                            (coe
                               d_isCommutativeSemiring_62
                               (coe d_isAlmostCommutativeRing_216 (coe v0))))))))))
@@ -9925,9 +9925,9 @@ du_zero_1106 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_zero_1106 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_zero_1656
+      MAlonzo.Code.Algebra.Structures.d_zero_1658
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+         MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
          (coe
             d_isCommutativeSemiring_62
             (coe d_isAlmostCommutativeRing_216 (coe v0))))
@@ -9951,12 +9951,12 @@ du_zero'691'_1108 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_zero'691'_1426
+               MAlonzo.Code.Algebra.Structures.du_zero'691'_1428
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1730
+                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1732
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.zeroˡ
 d_zero'737'_1110 ::
@@ -9978,12 +9978,12 @@ du_zero'737'_1110 v0
       (let v2 = d_isCommutativeSemiring_62 (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1764 (coe v2) in
+                = MAlonzo.Code.Algebra.Structures.d_isSemiring_1766 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_zero'737'_1424
+               MAlonzo.Code.Algebra.Structures.du_zero'737'_1426
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1730
+                  MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1732
                   (coe v3)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing._._.*-homo
 d_'42''45'homo_1114 ::
@@ -10081,90 +10081,90 @@ du_'10214'_'10215'_1124 v0 = coe d_'10214'_'10215'_760 (coe v0)
 d_fromCommutativeRing_1130 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeRing_4126 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeRing_4314 ->
   T_AlmostCommutativeRing_180
 d_fromCommutativeRing_1130 ~v0 ~v1 v2
   = du_fromCommutativeRing_1130 v2
 du_fromCommutativeRing_1130 ::
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeRing_4126 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeRing_4314 ->
   T_AlmostCommutativeRing_180
 du_fromCommutativeRing_1130 v0
   = coe
       C_constructor_348
-      (MAlonzo.Code.Algebra.Bundles.d__'43'__4152 (coe v0))
-      (MAlonzo.Code.Algebra.Bundles.d__'42'__4154 (coe v0))
-      (MAlonzo.Code.Algebra.Bundles.d_'45'__4156 (coe v0))
-      (MAlonzo.Code.Algebra.Bundles.d_0'35'_4158 (coe v0))
-      (MAlonzo.Code.Algebra.Bundles.d_1'35'_4160 (coe v0))
+      (MAlonzo.Code.Algebra.Bundles.d__'43'__4340 (coe v0))
+      (MAlonzo.Code.Algebra.Bundles.d__'42'__4342 (coe v0))
+      (MAlonzo.Code.Algebra.Bundles.d_'45'__4344 (coe v0))
+      (MAlonzo.Code.Algebra.Bundles.d_0'35'_4346 (coe v0))
+      (MAlonzo.Code.Algebra.Bundles.d_1'35'_4348 (coe v0))
       (coe
          C_constructor_174
          (coe
-            MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiring_3018
-            (coe MAlonzo.Code.Algebra.Bundles.d__'43'__4152 (coe v0))
-            (coe MAlonzo.Code.Algebra.Bundles.d__'42'__4154 (coe v0))
-            (coe MAlonzo.Code.Algebra.Bundles.d_'45'__4156 (coe v0))
-            (coe MAlonzo.Code.Algebra.Bundles.d_0'35'_4158 (coe v0))
+            MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiring_3146
+            (coe MAlonzo.Code.Algebra.Bundles.d__'43'__4340 (coe v0))
+            (coe MAlonzo.Code.Algebra.Bundles.d__'42'__4342 (coe v0))
+            (coe MAlonzo.Code.Algebra.Bundles.d_'45'__4344 (coe v0))
+            (coe MAlonzo.Code.Algebra.Bundles.d_0'35'_4346 (coe v0))
             (coe
-               MAlonzo.Code.Algebra.Bundles.d_isCommutativeRing_4162 (coe v0)))
+               MAlonzo.Code.Algebra.Bundles.d_isCommutativeRing_4350 (coe v0)))
          (coe
-            MAlonzo.Code.Algebra.Structures.d_'8315''185''45'cong_1092
+            MAlonzo.Code.Algebra.Structures.d_'8315''185''45'cong_1094
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isGroup_1184
+               MAlonzo.Code.Algebra.Structures.d_isGroup_1186
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2762
+                  MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2890
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isRing_2904
+                     MAlonzo.Code.Algebra.Structures.d_isRing_3032
                      (coe
-                        MAlonzo.Code.Algebra.Bundles.d_isCommutativeRing_4162 (coe v0))))))
+                        MAlonzo.Code.Algebra.Bundles.d_isCommutativeRing_4350 (coe v0))))))
          (coe
             (\ v1 v2 ->
                coe
                  MAlonzo.Code.Relation.Binary.Structures.d_sym_38
-                 (MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                 (MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                     (coe
-                       MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                       MAlonzo.Code.Algebra.Structures.d_isMagma_498
                        (coe
-                          MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                          MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                           (coe
-                             MAlonzo.Code.Algebra.Structures.d_isMonoid_1088
+                             MAlonzo.Code.Algebra.Structures.d_isMonoid_1090
                              (coe
-                                MAlonzo.Code.Algebra.Structures.d_isGroup_1184
+                                MAlonzo.Code.Algebra.Structures.d_isGroup_1186
                                 (coe
-                                   MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2762
+                                   MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2890
                                    (coe
-                                      MAlonzo.Code.Algebra.Structures.d_isRing_2904
+                                      MAlonzo.Code.Algebra.Structures.d_isRing_3032
                                       (coe
-                                         MAlonzo.Code.Algebra.Bundles.d_isCommutativeRing_4162
+                                         MAlonzo.Code.Algebra.Bundles.d_isCommutativeRing_4350
                                          (coe v0)))))))))
                  (coe
-                    MAlonzo.Code.Algebra.Bundles.d_'45'__4156 v0
-                    (coe MAlonzo.Code.Algebra.Bundles.d__'42'__4154 v0 v1 v2))
+                    MAlonzo.Code.Algebra.Bundles.d_'45'__4344 v0
+                    (coe MAlonzo.Code.Algebra.Bundles.d__'42'__4342 v0 v1 v2))
                  (coe
-                    MAlonzo.Code.Algebra.Bundles.d__'42'__4154 v0
-                    (coe MAlonzo.Code.Algebra.Bundles.d_'45'__4156 v0 v1) v2)
+                    MAlonzo.Code.Algebra.Bundles.d__'42'__4342 v0
+                    (coe MAlonzo.Code.Algebra.Bundles.d_'45'__4344 v0 v1) v2)
                  (coe
-                    MAlonzo.Code.Algebra.Properties.RingWithoutOne.du_'45''8255'distrib'737''45''42'_260
+                    MAlonzo.Code.Algebra.Properties.RingWithoutOne.du_'45''8255'distrib'737''45''42'_268
                     (coe
-                       MAlonzo.Code.Algebra.Bundles.du_ringWithoutOne_4058
-                       (coe MAlonzo.Code.Algebra.Bundles.du_ring_4288 (coe v0)))
+                       MAlonzo.Code.Algebra.Bundles.du_ringWithoutOne_4246
+                       (coe MAlonzo.Code.Algebra.Bundles.du_ring_4476 (coe v0)))
                     (coe v1) (coe v2))))
          (coe
             MAlonzo.Code.Algebra.Properties.AbelianGroup.du_'8315''185''45''8729''45'comm_244
             (coe
-               MAlonzo.Code.Algebra.Bundles.du_'43''45'abelianGroup_4056
-               (coe MAlonzo.Code.Algebra.Bundles.du_ring_4288 (coe v0)))))
+               MAlonzo.Code.Algebra.Bundles.du_'43''45'abelianGroup_4244
+               (coe MAlonzo.Code.Algebra.Bundles.du_ring_4476 (coe v0)))))
 -- Algebra.Solver.Ring.AlmostCommutativeRing.fromCommutativeSemiring
-d_fromCommutativeSemiring_1506 ::
+d_fromCommutativeSemiring_1508 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.T_CommutativeSemiring_2524 ->
   T_AlmostCommutativeRing_180
-d_fromCommutativeSemiring_1506 ~v0 ~v1 v2
-  = du_fromCommutativeSemiring_1506 v2
-du_fromCommutativeSemiring_1506 ::
+d_fromCommutativeSemiring_1508 ~v0 ~v1 v2
+  = du_fromCommutativeSemiring_1508 v2
+du_fromCommutativeSemiring_1508 ::
   MAlonzo.Code.Algebra.Bundles.T_CommutativeSemiring_2524 ->
   T_AlmostCommutativeRing_180
-du_fromCommutativeSemiring_1506 v0
+du_fromCommutativeSemiring_1508 v0
   = coe
       C_constructor_348
       (MAlonzo.Code.Algebra.Bundles.d__'43'__2548 (coe v0))
@@ -10180,19 +10180,19 @@ du_fromCommutativeSemiring_1506 v0
             (\ v1 v2 ->
                coe
                  MAlonzo.Code.Relation.Binary.Structures.d_refl_36
-                 (MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                 (MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                     (coe
-                       MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                       MAlonzo.Code.Algebra.Structures.d_isMagma_498
                        (coe
-                          MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                          MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                           (coe
-                             MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                             MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                              (coe
-                                MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                                MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                                 (coe
-                                   MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                                   MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                                    (coe
-                                      MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                                      MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                                       (coe
                                          MAlonzo.Code.Algebra.Bundles.d_isCommutativeSemiring_2556
                                          (coe v0)))))))))
@@ -10201,19 +10201,19 @@ du_fromCommutativeSemiring_1506 v0
             (\ v1 v2 ->
                coe
                  MAlonzo.Code.Relation.Binary.Structures.d_refl_36
-                 (MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                 (MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                     (coe
-                       MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                       MAlonzo.Code.Algebra.Structures.d_isMagma_498
                        (coe
-                          MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                          MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                           (coe
-                             MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                             MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                              (coe
-                                MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                                MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                                 (coe
-                                   MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                                   MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                                    (coe
-                                      MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                                      MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                                       (coe
                                          MAlonzo.Code.Algebra.Bundles.d_isCommutativeSemiring_2556
                                          (coe v0)))))))))

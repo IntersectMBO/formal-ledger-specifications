@@ -881,7 +881,7 @@ du_DecEq'45'DrepThresholds_584 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'DrepThresholds_584
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (coe
          (\ v0 ->
             case coe v0 of
@@ -891,28 +891,28 @@ du_DecEq'45'DrepThresholds_584
                         case coe v11 of
                           C_constructor_262 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21
                             -> let v22
-                                     = MAlonzo.Code.Data.Rational.Properties.d__'8799'__2792
+                                     = MAlonzo.Code.Data.Rational.Properties.d__'8799'__3028
                                          (coe v1) (coe v12) in
                                coe
                                  (case coe v22 of
                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v23 v24
                                       -> if coe v23
                                            then let v25
-                                                      = MAlonzo.Code.Data.Rational.Properties.d__'8799'__2792
+                                                      = MAlonzo.Code.Data.Rational.Properties.d__'8799'__3028
                                                           (coe v2) (coe v13) in
                                                 coe
                                                   (case coe v25 of
                                                      MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v26 v27
                                                        -> if coe v26
                                                             then let v28
-                                                                       = MAlonzo.Code.Data.Rational.Properties.d__'8799'__2792
+                                                                       = MAlonzo.Code.Data.Rational.Properties.d__'8799'__3028
                                                                            (coe v3) (coe v14) in
                                                                  coe
                                                                    (case coe v28 of
                                                                       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v29 v30
                                                                         -> if coe v29
                                                                              then let v31
-                                                                                        = MAlonzo.Code.Data.Rational.Properties.d__'8799'__2792
+                                                                                        = MAlonzo.Code.Data.Rational.Properties.d__'8799'__3028
                                                                                             (coe v4)
                                                                                             (coe
                                                                                                v15) in
@@ -922,7 +922,7 @@ du_DecEq'45'DrepThresholds_584
                                                                                          -> if coe
                                                                                                  v32
                                                                                               then let v34
-                                                                                                         = MAlonzo.Code.Data.Rational.Properties.d__'8799'__2792
+                                                                                                         = MAlonzo.Code.Data.Rational.Properties.d__'8799'__3028
                                                                                                              (coe
                                                                                                                 v5)
                                                                                                              (coe
@@ -934,7 +934,7 @@ du_DecEq'45'DrepThresholds_584
                                                                                                           -> if coe
                                                                                                                   v35
                                                                                                                then let v37
-                                                                                                                          = MAlonzo.Code.Data.Rational.Properties.d__'8799'__2792
+                                                                                                                          = MAlonzo.Code.Data.Rational.Properties.d__'8799'__3028
                                                                                                                               (coe
                                                                                                                                  v6)
                                                                                                                               (coe
@@ -946,7 +946,7 @@ du_DecEq'45'DrepThresholds_584
                                                                                                                            -> if coe
                                                                                                                                    v38
                                                                                                                                 then let v40
-                                                                                                                                           = MAlonzo.Code.Data.Rational.Properties.d__'8799'__2792
+                                                                                                                                           = MAlonzo.Code.Data.Rational.Properties.d__'8799'__3028
                                                                                                                                                (coe
                                                                                                                                                   v7)
                                                                                                                                                (coe
@@ -958,7 +958,7 @@ du_DecEq'45'DrepThresholds_584
                                                                                                                                             -> if coe
                                                                                                                                                     v41
                                                                                                                                                  then let v43
-                                                                                                                                                            = MAlonzo.Code.Data.Rational.Properties.d__'8799'__2792
+                                                                                                                                                            = MAlonzo.Code.Data.Rational.Properties.d__'8799'__3028
                                                                                                                                                                 (coe
                                                                                                                                                                    v8)
                                                                                                                                                                 (coe
@@ -970,7 +970,7 @@ du_DecEq'45'DrepThresholds_584
                                                                                                                                                              -> if coe
                                                                                                                                                                      v44
                                                                                                                                                                   then let v46
-                                                                                                                                                                             = MAlonzo.Code.Data.Rational.Properties.d__'8799'__2792
+                                                                                                                                                                             = MAlonzo.Code.Data.Rational.Properties.d__'8799'__3028
                                                                                                                                                                                  (coe
                                                                                                                                                                                     v9)
                                                                                                                                                                                  (coe
@@ -982,7 +982,7 @@ du_DecEq'45'DrepThresholds_584
                                                                                                                                                                               -> if coe
                                                                                                                                                                                       v47
                                                                                                                                                                                    then let v49
-                                                                                                                                                                                              = MAlonzo.Code.Data.Rational.Properties.d__'8799'__2792
+                                                                                                                                                                                              = MAlonzo.Code.Data.Rational.Properties.d__'8799'__3028
                                                                                                                                                                                                   (coe
                                                                                                                                                                                                      v10)
                                                                                                                                                                                                   (coe
@@ -1081,7 +1081,7 @@ du_DecEq'45'PoolThresholds_586 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'PoolThresholds_586
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (coe
          (\ v0 ->
             case coe v0 of
@@ -1091,28 +1091,28 @@ du_DecEq'45'PoolThresholds_586
                         case coe v6 of
                           C_constructor_286 v7 v8 v9 v10 v11
                             -> let v12
-                                     = MAlonzo.Code.Data.Rational.Properties.d__'8799'__2792
+                                     = MAlonzo.Code.Data.Rational.Properties.d__'8799'__3028
                                          (coe v1) (coe v7) in
                                coe
                                  (case coe v12 of
                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v13 v14
                                       -> if coe v13
                                            then let v15
-                                                      = MAlonzo.Code.Data.Rational.Properties.d__'8799'__2792
+                                                      = MAlonzo.Code.Data.Rational.Properties.d__'8799'__3028
                                                           (coe v2) (coe v8) in
                                                 coe
                                                   (case coe v15 of
                                                      MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v16 v17
                                                        -> if coe v16
                                                             then let v18
-                                                                       = MAlonzo.Code.Data.Rational.Properties.d__'8799'__2792
+                                                                       = MAlonzo.Code.Data.Rational.Properties.d__'8799'__3028
                                                                            (coe v3) (coe v9) in
                                                                  coe
                                                                    (case coe v18 of
                                                                       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v19 v20
                                                                         -> if coe v19
                                                                              then let v21
-                                                                                        = MAlonzo.Code.Data.Rational.Properties.d__'8799'__2792
+                                                                                        = MAlonzo.Code.Data.Rational.Properties.d__'8799'__3028
                                                                                             (coe v4)
                                                                                             (coe
                                                                                                v10) in
@@ -1122,7 +1122,7 @@ du_DecEq'45'PoolThresholds_586
                                                                                          -> if coe
                                                                                                  v22
                                                                                               then let v24
-                                                                                                         = MAlonzo.Code.Data.Rational.Properties.d__'8799'__2792
+                                                                                                         = MAlonzo.Code.Data.Rational.Properties.d__'8799'__3028
                                                                                                              (coe
                                                                                                                 v5)
                                                                                                              (coe
@@ -1527,7 +1527,7 @@ du_DecEq'45'PParamGroup_590 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'PParamGroup_590
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (coe
          (\ v0 ->
             case coe v0 of
@@ -1721,39 +1721,39 @@ du_Show'45'DrepThresholds_592
                                                 MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
                                                 (coe ("constructor" :: Data.Text.Text))
                                                 (coe
-                                                   MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                   MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                    (coe
                                                       MAlonzo.Code.Data.Rational.Show.d_show_6
                                                       (coe v1))))
                                              (coe
-                                                MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                 (coe
                                                    MAlonzo.Code.Data.Rational.Show.d_show_6
                                                    (coe v2))))
                                           (coe
-                                             MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                             MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                              (coe
                                                 MAlonzo.Code.Data.Rational.Show.d_show_6 (coe v3))))
                                        (coe
-                                          MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                          MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                           (coe MAlonzo.Code.Data.Rational.Show.d_show_6 (coe v4))))
                                     (coe
-                                       MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                       MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                        (coe MAlonzo.Code.Data.Rational.Show.d_show_6 (coe v5))))
                                  (coe
-                                    MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                    MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                     (coe MAlonzo.Code.Data.Rational.Show.d_show_6 (coe v6))))
                               (coe
-                                 MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                 MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                  (coe MAlonzo.Code.Data.Rational.Show.d_show_6 (coe v7))))
                            (coe
-                              MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                              MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                               (coe MAlonzo.Code.Data.Rational.Show.d_show_6 (coe v8))))
                         (coe
-                           MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                           MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                            (coe MAlonzo.Code.Data.Rational.Show.d_show_6 (coe v9))))
                      (coe
-                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                         (coe MAlonzo.Code.Data.Rational.Show.d_show_6 (coe v10)))
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Specification.PParams.Show-PoolThresholds
@@ -1785,19 +1785,19 @@ du_Show'45'PoolThresholds_594
                                  MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
                                  (coe ("constructor" :: Data.Text.Text))
                                  (coe
-                                    MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                    MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                     (coe MAlonzo.Code.Data.Rational.Show.d_show_6 (coe v1))))
                               (coe
-                                 MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                 MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                  (coe MAlonzo.Code.Data.Rational.Show.d_show_6 (coe v2))))
                            (coe
-                              MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                              MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                               (coe MAlonzo.Code.Data.Rational.Show.d_show_6 (coe v3))))
                         (coe
-                           MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                           MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                            (coe MAlonzo.Code.Data.Rational.Show.d_show_6 (coe v4))))
                      (coe
-                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                         (coe MAlonzo.Code.Data.Rational.Show.d_show_6 (coe v5)))
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Specification.PParams.Show-PParams
@@ -1893,22 +1893,22 @@ du_Show'45'PParams_596 v0 v1
                                                                                                                                ::
                                                                                                                                Data.Text.Text))
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                                                                              MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Data.Nat.Show.d_show_56
                                                                                                                                  v3)))
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                                                                           MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Data.Nat.Show.d_show_56
                                                                                                                               v4)))
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                                                                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Data.Nat.Show.d_show_56
                                                                                                                            v5)))
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                                                                     MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Class.Show.Core.d_show_16
                                                                                                                         (MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Show'45'ExUnits_252
@@ -1918,7 +1918,7 @@ du_Show'45'PParams_596 v0 v1
                                                                                                                                  v1)))
                                                                                                                         v6)))
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                                                                  MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Class.Show.Core.d_show_16
                                                                                                                      (MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Show'45'ExUnits_252
@@ -1928,17 +1928,17 @@ du_Show'45'PParams_596 v0 v1
                                                                                                                               v1)))
                                                                                                                      v7)))
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                                                               MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                                                                (coe
                                                                                                                   MAlonzo.Code.Data.Nat.Show.d_show_56
                                                                                                                   v8)))
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                                                            MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Data.Nat.Show.d_show_56
                                                                                                                v9)))
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                                                         MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Data.String.Base.d_parens_46
                                                                                                             (coe
@@ -1959,27 +1959,27 @@ du_Show'45'PParams_596 v0 v1
                                                                                                                         (coe
                                                                                                                            v10))))))))
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                                                      MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Data.Nat.Show.d_show_56
                                                                                                          v11)))
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                                                   MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Data.Nat.Show.d_show_56
                                                                                                       v12)))
                                                                                              (coe
-                                                                                                MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                                                MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Data.Nat.Show.d_show_56
                                                                                                    v13)))
                                                                                           (coe
-                                                                                             MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                                             MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                                              (coe
                                                                                                 MAlonzo.Code.Data.Nat.Show.d_show_56
                                                                                                 v14)))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                                          MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                                           (coe
                                                                                              MAlonzo.Code.Data.Rational.Show.d_show_6
                                                                                              (coe
@@ -1987,7 +1987,7 @@ du_Show'45'PParams_596 v0 v1
                                                                                                 (coe
                                                                                                    v15)))))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                                       MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                                        (coe
                                                                                           MAlonzo.Code.Data.Rational.Show.d_show_6
                                                                                           (coe
@@ -1995,12 +1995,12 @@ du_Show'45'PParams_596 v0 v1
                                                                                              (coe
                                                                                                 v16)))))
                                                                                  (coe
-                                                                                    MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                                    MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                                     (coe
                                                                                        MAlonzo.Code.Data.Nat.Show.d_show_56
                                                                                        v17)))
                                                                               (coe
-                                                                                 MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                                 MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                                  (coe
                                                                                     MAlonzo.Code.Class.Show.Core.d_show_16
                                                                                     (MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Show'45'Prices_254
@@ -2009,63 +2009,63 @@ du_Show'45'PParams_596 v0 v1
                                                                                           (coe v1)))
                                                                                     v18)))
                                                                            (coe
-                                                                              MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                              MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                               (coe
                                                                                  MAlonzo.Code.Data.Rational.Show.d_show_6
                                                                                  (coe v19))))
                                                                         (coe
-                                                                           MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                           MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                            (coe
                                                                               MAlonzo.Code.Data.Nat.Show.d_show_56
                                                                               v20)))
                                                                      (coe
-                                                                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                         (coe
                                                                            MAlonzo.Code.Data.Nat.Show.d_show_56
                                                                            v21)))
                                                                   (coe
-                                                                     MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                     MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                      (coe
                                                                         MAlonzo.Code.Data.Nat.Show.d_show_56
                                                                         (MAlonzo.Code.Data.Refinement.Base.d_value_38
                                                                            (coe v22)))))
                                                                (coe
-                                                                  MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                  MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                   (coe
                                                                      MAlonzo.Code.Data.Rational.Show.d_show_6
                                                                      (coe v23))))
                                                             (coe
-                                                               MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                               MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                (coe
                                                                   MAlonzo.Code.Data.Nat.Show.d_show_56
                                                                   v24)))
                                                          (coe
-                                                            MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                            MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                             (coe
                                                                MAlonzo.Code.Class.Show.Core.d_show_16
                                                                (MAlonzo.Code.Ledger.Core.Specification.Epoch.d_Show'45'Epoch_84
                                                                   (coe v0))
                                                                v25)))
                                                       (coe
-                                                         MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                         MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                          (coe
                                                             MAlonzo.Code.Data.Nat.Show.d_show_56
                                                             v26)))
                                                    (coe
-                                                      MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                      MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                       (coe
                                                          MAlonzo.Code.Data.Rational.Show.d_show_6
                                                          (coe v27))))
                                                 (coe
-                                                   MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                   MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                    (coe MAlonzo.Code.Data.Nat.Show.d_show_56 v28)))
                                              (coe
-                                                MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                 (coe
                                                    MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
                                                    (coe ("mkLanguageCostModels" :: Data.Text.Text))
                                                    (coe
-                                                      MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                      MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                       (coe
                                                          MAlonzo.Code.Data.String.Base.d_braces_48
                                                          (coe
@@ -2090,7 +2090,7 @@ du_Show'45'PParams_596 v0 v1
                                                                   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_languageCostModels_446
                                                                   (coe v29)))))))))
                                           (coe
-                                             MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                             MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                              (coe
                                                 MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
                                                 (coe
@@ -2103,32 +2103,32 @@ du_Show'45'PParams_596 v0 v1
                                                             MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
                                                             (coe ("constructor" :: Data.Text.Text))
                                                             (coe
-                                                               MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                               MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                (coe
                                                                   MAlonzo.Code.Data.Rational.Show.d_show_6
                                                                   (coe d_Q1_276 (coe v30)))))
                                                          (coe
-                                                            MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                            MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                             (coe
                                                                MAlonzo.Code.Data.Rational.Show.d_show_6
                                                                (coe d_Q2a_278 (coe v30)))))
                                                       (coe
-                                                         MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                         MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                          (coe
                                                             MAlonzo.Code.Data.Rational.Show.d_show_6
                                                             (coe d_Q2b_280 (coe v30)))))
                                                    (coe
-                                                      MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                      MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                       (coe
                                                          MAlonzo.Code.Data.Rational.Show.d_show_6
                                                          (coe d_Q4_282 (coe v30)))))
                                                 (coe
-                                                   MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                   MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                    (coe
                                                       MAlonzo.Code.Data.Rational.Show.d_show_6
                                                       (coe d_Q5_284 (coe v30)))))))
                                        (coe
-                                          MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                          MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                           (coe
                                              MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
                                              (coe
@@ -2154,76 +2154,76 @@ du_Show'45'PParams_596 v0 v1
                                                                             ::
                                                                             Data.Text.Text))
                                                                         (coe
-                                                                           MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                           MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                            (coe
                                                                               MAlonzo.Code.Data.Rational.Show.d_show_6
                                                                               (coe
                                                                                  d_P1_242
                                                                                  (coe v31)))))
                                                                      (coe
-                                                                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                         (coe
                                                                            MAlonzo.Code.Data.Rational.Show.d_show_6
                                                                            (coe
                                                                               d_P2a_244
                                                                               (coe v31)))))
                                                                   (coe
-                                                                     MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                     MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                      (coe
                                                                         MAlonzo.Code.Data.Rational.Show.d_show_6
                                                                         (coe d_P2b_246 (coe v31)))))
                                                                (coe
-                                                                  MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                                  MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                   (coe
                                                                      MAlonzo.Code.Data.Rational.Show.d_show_6
                                                                      (coe d_P3_248 (coe v31)))))
                                                             (coe
-                                                               MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                               MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                                (coe
                                                                   MAlonzo.Code.Data.Rational.Show.d_show_6
                                                                   (coe d_P4_250 (coe v31)))))
                                                          (coe
-                                                            MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                            MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                             (coe
                                                                MAlonzo.Code.Data.Rational.Show.d_show_6
                                                                (coe d_P5a_252 (coe v31)))))
                                                       (coe
-                                                         MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                         MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                          (coe
                                                             MAlonzo.Code.Data.Rational.Show.d_show_6
                                                             (coe d_P5b_254 (coe v31)))))
                                                    (coe
-                                                      MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                      MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                       (coe
                                                          MAlonzo.Code.Data.Rational.Show.d_show_6
                                                          (coe d_P5c_256 (coe v31)))))
                                                 (coe
-                                                   MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                   MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                    (coe
                                                       MAlonzo.Code.Data.Rational.Show.d_show_6
                                                       (coe d_P5d_258 (coe v31)))))
                                              (coe
-                                                MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                                MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                                 (coe
                                                    MAlonzo.Code.Data.Rational.Show.d_show_6
                                                    (coe d_P6_260 (coe v31)))))))
                                     (coe
-                                       MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                       MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                        (coe MAlonzo.Code.Data.Nat.Show.d_show_56 v32)))
                                  (coe
-                                    MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                    MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                     (coe MAlonzo.Code.Data.Nat.Show.d_show_56 v33)))
                               (coe
-                                 MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                                 MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                                  (coe MAlonzo.Code.Data.Nat.Show.d_show_56 v34)))
                            (coe
-                              MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                              MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                               (coe MAlonzo.Code.Data.Nat.Show.d_show_56 v35)))
                         (coe
-                           MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                           MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                            (coe MAlonzo.Code.Data.Nat.Show.d_show_56 v36)))
                      (coe
-                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                         (coe
                            MAlonzo.Code.Class.Show.Core.d_show_16
                            (MAlonzo.Code.Ledger.Core.Specification.Epoch.d_Show'45'Epoch_84
@@ -2653,7 +2653,7 @@ d_paramsUpdateWellFormed'63'_826 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_paramsUpdateWellFormed'63'_826 v0
   = coe
-      MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8594''45'dec__106
+      MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8594''63'__106
       (coe
          MAlonzo.Code.Class.Decidable.Core.d_dec_16
          (coe

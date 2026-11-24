@@ -155,8 +155,7 @@ du_'8816''8658''62'_76 v0 v1 v2 v3 v4 v5
       (case coe v6 of
          MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v7
            -> coe
-                MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                erased
+                MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
          MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v7
            -> coe
                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v7)
@@ -220,8 +219,7 @@ du_'8814''8658''8805'_126 v0 v1 v2 v3 v4 v5
                                 -> case coe v9 of
                                      MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26
                                        -> coe
-                                            MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                            erased
+                                            MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
                                      _ -> coe v10
                               _ -> MAlonzo.RTE.mazUnreachableError))
             _ -> MAlonzo.RTE.mazUnreachableError))
@@ -577,7 +575,7 @@ du_'60''45'decidable_434 ::
   AgdaAny -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 du_'60''45'decidable_434 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+      MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
       (coe v1 v2 v3)
       (coe
          MAlonzo.Code.Relation.Nullary.Decidable.Core.du_'172''63'_76

@@ -335,7 +335,7 @@ d_'96'cong_136 v0 v1 v2 v3 v4 v5 v6
                                   MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                   (coe
                                      (MAlonzo.RTE.QName
-                                        (54 :: Integer) (6189151057044369179 :: Integer)
+                                        (58 :: Integer) (6189151057044369179 :: Integer)
                                         "Relation.Binary.PropositionalEquality.Core.cong"
                                         (MAlonzo.RTE.Fixity
                                            MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))

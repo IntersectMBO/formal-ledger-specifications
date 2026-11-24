@@ -851,7 +851,7 @@ d_stakePerCredential_254 v0 v1 v2 v3 v4 v5
       v1 v2 v4 v5
 -- Ledger.Dijkstra.Foreign.Epoch._.Computational-EPOCH
 d_Computational'45'EPOCH_258 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'EPOCH_258
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.Properties.Computational.du_Computational'45'EPOCH_4206
@@ -861,7 +861,7 @@ d_Computational'45'EPOCH_258
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
 -- Ledger.Dijkstra.Foreign.Epoch._.Computational-NEWEPOCH
 d_Computational'45'NEWEPOCH_260 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'NEWEPOCH_260
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.Properties.Computational.du_Computational'45'NEWEPOCH_4356
@@ -1199,7 +1199,7 @@ d_Conv'45'EpochState_278
                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.d_utxoSt_3950
                                  (coe v3))))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2043,7 +2043,7 @@ d_Conv'45'EpochState_278
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                  (coe v16))))))
                                                                   (coe
-                                                                     MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                     MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                      () erased () erased
                                                                      (\ v15 ->
@@ -2094,7 +2094,7 @@ d_Conv'45'EpochState_278
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                  (coe v16))))))
                                                                   (coe
-                                                                     MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                     MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                      () erased () erased
                                                                      (\ v15 ->
@@ -2126,7 +2126,7 @@ d_Conv'45'EpochState_278
                                                                   (coe
                                                                      MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                                                   (coe
-                                                                     MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                     MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                      () erased () erased
                                                                      (\ v15 ->
@@ -2238,7 +2238,7 @@ d_Conv'45'EpochState_278
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                  (coe v16))))))
                                                                   (coe
-                                                                     MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                     MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                      () erased () erased
                                                                      (\ v15 ->
@@ -2289,7 +2289,7 @@ d_Conv'45'EpochState_278
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                  (coe v16))))))
                                                                   (coe
-                                                                     MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                     MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                      () erased () erased
                                                                      (\ v15 ->
@@ -2321,7 +2321,7 @@ d_Conv'45'EpochState_278
                                                                   (coe
                                                                      MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                                                   (coe
-                                                                     MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                     MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                      () erased () erased
                                                                      (\ v15 ->
@@ -2433,7 +2433,7 @@ d_Conv'45'EpochState_278
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                  (coe v16))))))
                                                                   (coe
-                                                                     MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                     MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                      () erased () erased
                                                                      (\ v15 ->
@@ -2484,7 +2484,7 @@ d_Conv'45'EpochState_278
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                  (coe v16))))))
                                                                   (coe
-                                                                     MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                     MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                      () erased () erased
                                                                      (\ v15 ->
@@ -2516,7 +2516,7 @@ d_Conv'45'EpochState_278
                                                                   (coe
                                                                      MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                                                   (coe
-                                                                     MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                     MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                      () erased () erased
                                                                      (\ v15 ->
@@ -2611,7 +2611,7 @@ d_Conv'45'EpochState_278
                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.d_donations_3324
                                                 (coe v7)))
                                           (coe
-                                             MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                             MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                              MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                              () erased () erased
                                              (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2917,7 +2917,7 @@ d_Conv'45'EpochState_278
                                                                      MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
                                                                      MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                                                   (coe
-                                                                     MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                     MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                      () erased () erased
                                                                      (\ v14 ->
@@ -2976,7 +2976,7 @@ d_Conv'45'EpochState_278
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
                                              v7)
                                           (coe
-                                             MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                             MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                              MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                              () erased () erased
                                              (MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -3300,7 +3300,7 @@ d_Conv'45'EpochState_278
                                                                                                       (coe
                                                                                                          v20))))))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                                           MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                                           () erased
                                                                                           () erased
@@ -3359,7 +3359,7 @@ d_Conv'45'EpochState_278
                                                                                                       (coe
                                                                                                          v20))))))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                                           MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                                           () erased
                                                                                           () erased
@@ -3418,7 +3418,7 @@ d_Conv'45'EpochState_278
                                                                                                       (coe
                                                                                                          v20))))))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                                           MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                                           () erased
                                                                                           () erased
@@ -3477,7 +3477,7 @@ d_Conv'45'EpochState_278
                                                                                                       (coe
                                                                                                          v20))))))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                                           MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                                           () erased
                                                                                           () erased
@@ -3593,7 +3593,7 @@ d_Conv'45'EpochState_278
                                                                                        (coe
                                                                                           MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                                                                        (coe
-                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                                           MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                                           () erased
                                                                                           () erased
@@ -3630,7 +3630,7 @@ d_Conv'45'EpochState_278
                                                                                        (coe
                                                                                           MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                                                                        (coe
-                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                                           MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                                           () erased
                                                                                           () erased
@@ -3667,7 +3667,7 @@ d_Conv'45'EpochState_278
                                                                                        (coe
                                                                                           MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                                                                        (coe
-                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                                           MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                                           () erased
                                                                                           () erased
@@ -3704,7 +3704,7 @@ d_Conv'45'EpochState_278
                                                                                        (coe
                                                                                           MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                                                                        (coe
-                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                                           MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                                           () erased
                                                                                           () erased
@@ -3829,7 +3829,7 @@ d_Conv'45'EpochState_278
                                                                                                       (coe
                                                                                                          v19))))))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                                           MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                                           () erased
                                                                                           () erased
@@ -3888,7 +3888,7 @@ d_Conv'45'EpochState_278
                                                                                                       (coe
                                                                                                          v19))))))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                                           MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                                           () erased
                                                                                           () erased
@@ -3949,7 +3949,7 @@ d_Conv'45'EpochState_278
                                                                                                       (coe
                                                                                                          v19))))))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                                           MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                                           () erased
                                                                                           () erased
@@ -4297,7 +4297,7 @@ d_Conv'45'EpochState_278
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v13))))))
                                              (coe
-                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                 () erased () erased
                                                 (\ v12 ->
@@ -4828,7 +4828,7 @@ d_Conv'45'EpochState_278
                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                  (coe v17))))))
                                                                   (coe
-                                                                     MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                     MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                                      () erased () erased
                                                                      (\ v16 ->
@@ -4917,7 +4917,7 @@ du_epoch'45'step_280
                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45''8869'_18)
                (coe d_Conv'45'EpochState_278))))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
+         MAlonzo.Code.Interface.ComputationalRelation.du_compute_348
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Epoch.Properties.Computational.du_Computational'45'EPOCH_4206
             (coe

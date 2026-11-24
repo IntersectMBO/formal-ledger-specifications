@@ -821,7 +821,7 @@ d_removed_178 v0
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Ratify._.Computational-RATIFIES
 d_Computational'45'RATIFIES_182 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'RATIFIES_182
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.Properties.Computational.d_Computational'45'RATIFIES_3236
@@ -831,7 +831,7 @@ d_Computational'45'RATIFIES_182
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
 -- Ledger.Dijkstra.Foreign.Ratify._.Computational-RATIFY
 d_Computational'45'RATIFY_184 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'RATIFY_184
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.Properties.Computational.d_Computational'45'RATIFY_3234
@@ -1030,7 +1030,7 @@ d_Conv'45'RatifyEnv_200
                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2904
                                     (coe v10)))))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v9 ->
@@ -1059,7 +1059,7 @@ d_Conv'45'RatifyEnv_200
                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                         (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v9 ->
@@ -1108,7 +1108,7 @@ d_Conv'45'RatifyEnv_200
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                        (coe v10))))))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v9 ->
@@ -1157,7 +1157,7 @@ d_Conv'45'RatifyEnv_200
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                        (coe v10))))))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v9 ->
@@ -1189,7 +1189,7 @@ d_Conv'45'RatifyEnv_200
                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                         (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v9 ->
@@ -1237,7 +1237,7 @@ d_Conv'45'RatifyEnv_200
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                        (coe v10))))))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v9 ->
@@ -1753,7 +1753,7 @@ d_Conv'45'RatifyState_204
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v11))))))
                                              (coe
-                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                 () erased () erased
                                                 (\ v10 ->
@@ -1844,7 +1844,7 @@ d_ratify'45'step_206 v0
                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45''8869'_18)
                (coe d_Conv'45'RatifyState_204))))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
+         MAlonzo.Code.Interface.ComputationalRelation.du_compute_348
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.Properties.Computational.d_Computational'45'RATIFY_3234
             (coe
@@ -1903,7 +1903,7 @@ d_ratifies'45'step_208 v0
                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45''8869'_18)
                (coe d_Conv'45'RatifyState_204))))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
+         MAlonzo.Code.Interface.ComputationalRelation.du_compute_348
          (coe
             MAlonzo.Code.Ledger.Dijkstra.Specification.Ratify.Properties.Computational.d_Computational'45'RATIFIES_3236
             (coe

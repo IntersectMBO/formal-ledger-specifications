@@ -149,7 +149,7 @@ d_refScriptsSizeAcc_3140 v0
       (coe v0)
 -- Ledger.Dijkstra.Specification.Ledgers.Properties.Computational._.completeness
 d_completeness_3146 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
@@ -158,14 +158,14 @@ d_completeness_3146 ::
 d_completeness_3146 = erased
 -- Ledger.Dijkstra.Specification.Ledgers.Properties.Computational._.computeProof
 d_computeProof_3152 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_computeProof_3152 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_304
+      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_346
       (coe v0)
 -- Ledger.Dijkstra.Specification.Ledgers.Properties.Computational.computeLedger
 d_computeLedger_3172 ::
@@ -174,7 +174,7 @@ d_computeLedger_3172 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerEnv_3902 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3942 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3878 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_computeLedger_3172 v0 v1
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.Properties.Computational.d_computeProof_4540
@@ -197,12 +197,12 @@ d_LEDGERSWithLimits'45'computeProof_3192 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ledgers.T_LedgersEnv_3086 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ledgers.T_LedgersWithLimitsState_3102 ->
   [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3878] ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_LEDGERSWithLimits'45'computeProof_3192 v0 v1 v2 v3 v4
   = case coe v4 of
       []
         -> coe
-             MAlonzo.Code.Interface.ComputationalRelation.C_success_42
+             MAlonzo.Code.Interface.ComputationalRelation.C_success_46
              (coe
                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v3)
                 (coe
@@ -219,14 +219,14 @@ d_LEDGERSWithLimits'45'computeProof_3192 v0 v1 v2 v3 v4
                         (coe v3))
                      (coe v5)
                      (coe
-                        MAlonzo.Code.Data.Bool.Properties.d__'8799'__3196
+                        MAlonzo.Code.Data.Bool.Properties.d__'8799'__3432
                         (coe
                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_isValid_3904
                            (coe v5))
                         (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10)) in
            coe
              (case coe v7 of
-                MAlonzo.Code.Interface.ComputationalRelation.C_success_42 v8
+                MAlonzo.Code.Interface.ComputationalRelation.C_success_46 v8
                   -> case coe v8 of
                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v9 v10
                          -> let v11
@@ -234,7 +234,7 @@ d_LEDGERSWithLimits'45'computeProof_3192 v0 v1 v2 v3 v4
                                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
                                       (\ v11 ->
                                          coe
-                                           MAlonzo.Code.Data.Nat.Properties.du_'8804''7495''8658''8804'_2854
+                                           MAlonzo.Code.Data.Nat.Properties.du_'8804''7495''8658''8804'_3094
                                            (coe
                                               addInt
                                               (coe
@@ -253,7 +253,7 @@ d_LEDGERSWithLimits'45'computeProof_3192 v0 v1 v2 v3 v4
                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Ledgers.d_refScriptsSizeAcc_3112
                                                  (coe v3))))
                                       (coe
-                                         MAlonzo.Code.Data.Nat.Properties.du_'8804''8658''8804''7495'_2866)
+                                         MAlonzo.Code.Data.Nat.Properties.du_'8804''8658''8804''7495'_3106)
                                       (coe
                                          MAlonzo.Code.Relation.Nullary.Decidable.Core.d_T'63'_72
                                          (coe
@@ -539,12 +539,12 @@ d_LEDGERSWithLimits'45'computeProof_3192 v0 v1 v2 v3 v4
                                                                                       (coe v6) in
                                                                             coe
                                                                               (case coe v19 of
-                                                                                 MAlonzo.Code.Interface.ComputationalRelation.C_success_42 v20
+                                                                                 MAlonzo.Code.Interface.ComputationalRelation.C_success_46 v20
                                                                                    -> case coe
                                                                                              v20 of
                                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v21 v22
                                                                                           -> coe
-                                                                                               MAlonzo.Code.Interface.ComputationalRelation.C_success_42
+                                                                                               MAlonzo.Code.Interface.ComputationalRelation.C_success_46
                                                                                                (coe
                                                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                   (coe
@@ -567,14 +567,14 @@ d_LEDGERSWithLimits'45'computeProof_3192 v0 v1 v2 v3 v4
                                                                                                               (coe
                                                                                                                  v22))))))
                                                                                         _ -> MAlonzo.RTE.mazUnreachableError
-                                                                                 MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v20
+                                                                                 MAlonzo.Code.Interface.ComputationalRelation.C_failure_48 v20
                                                                                    -> coe v19
                                                                                  _ -> MAlonzo.RTE.mazUnreachableError)
                                                                        _ -> MAlonzo.RTE.mazUnreachableError
                                                                 else coe
                                                                        seq (coe v17)
                                                                        (coe
-                                                                          MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
+                                                                          MAlonzo.Code.Interface.ComputationalRelation.C_failure_48
                                                                           (coe
                                                                              ("LEDGERSWithLimits: accumulated ExUnits exceed the limit"
                                                                               ::
@@ -584,14 +584,14 @@ d_LEDGERSWithLimits'45'computeProof_3192 v0 v1 v2 v3 v4
                                         else coe
                                                seq (coe v13)
                                                (coe
-                                                  MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
+                                                  MAlonzo.Code.Interface.ComputationalRelation.C_failure_48
                                                   (coe
                                                      ("LEDGERSWithLimits: accumulated reference script size exceeds the limit"
                                                       ::
                                                       Data.Text.Text)))
                                  _ -> MAlonzo.RTE.mazUnreachableError)
                        _ -> MAlonzo.RTE.mazUnreachableError
-                MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v8
+                MAlonzo.Code.Interface.ComputationalRelation.C_failure_48 v8
                   -> coe v7
                 _ -> MAlonzo.RTE.mazUnreachableError)
       _ -> MAlonzo.RTE.mazUnreachableError
@@ -610,10 +610,10 @@ d_LEDGERSWithLimits'45'completeness_3350 = erased
 d_Computational'45'LEDGERSWithLimits_3516 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'LEDGERSWithLimits_3516 v0 v1
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_486
       (d_LEDGERSWithLimits'45'computeProof_3192 (coe v0) (coe v1))
 -- Ledger.Dijkstra.Specification.Ledgers.Properties.Computational.LEDGERS-computeProof
 d_LEDGERS'45'computeProof_3526 ::
@@ -622,7 +622,7 @@ d_LEDGERS'45'computeProof_3526 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ledgers.T_LedgersEnv_3086 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3942 ->
   [MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3878] ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_LEDGERS'45'computeProof_3526 v0 v1 v2 v3 v4
   = let v5
           = d_LEDGERSWithLimits'45'computeProof_3192
@@ -771,11 +771,11 @@ d_LEDGERS'45'computeProof_3526 v0 v1 v2 v3 v4
               (coe v4) in
     coe
       (case coe v5 of
-         MAlonzo.Code.Interface.ComputationalRelation.C_success_42 v6
+         MAlonzo.Code.Interface.ComputationalRelation.C_success_46 v6
            -> case coe v6 of
                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v7 v8
                   -> coe
-                       MAlonzo.Code.Interface.ComputationalRelation.C_success_42
+                       MAlonzo.Code.Interface.ComputationalRelation.C_success_46
                        (coe
                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                           (coe
@@ -793,7 +793,7 @@ d_LEDGERS'45'computeProof_3526 v0 v1 v2 v3 v4
                                    (coe v7))
                                 (coe v8))))
                 _ -> MAlonzo.RTE.mazUnreachableError
-         MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v6
+         MAlonzo.Code.Interface.ComputationalRelation.C_failure_48 v6
            -> coe v5
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Ledger.Dijkstra.Specification.Ledgers.Properties.Computational.LEDGERS-completeness
@@ -811,8 +811,8 @@ d_LEDGERS'45'completeness_3564 = erased
 d_Computational'45'LEDGERS_3598 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'LEDGERS_3598 v0 v1
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_486
       (d_LEDGERS'45'computeProof_3526 (coe v0) (coe v1))

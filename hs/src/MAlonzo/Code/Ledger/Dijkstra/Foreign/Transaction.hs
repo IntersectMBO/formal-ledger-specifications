@@ -400,7 +400,7 @@ d_Conv'45'TxWitnesses_26
                         (coe
                            MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.d_DecEq'45'HSVKey_22)
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v5 ->
@@ -459,7 +459,7 @@ d_Conv'45'TxWitnesses_26
                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Tag_56
                            MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v5 ->
@@ -877,7 +877,7 @@ d_Conv'45'TxBodySub_212
             case coe v0 of
               C_constructor_106 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19
                 -> coe
-                     C_MkTxBodySub_16013
+                     C_MkTxBodySub_16063
                      (coe
                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_74
                         (coe
@@ -940,7 +940,7 @@ d_Conv'45'TxBodySub_212
                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v3))))
                      (coe v4)
                      (coe
-                        MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                        MAlonzo.Code.Class.Functor.Core.du_fmap_24
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                         () erased
                         (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -980,13 +980,13 @@ d_Conv'45'TxBodySub_212
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                         (coe
-                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                         v8)
                      (coe v9)
                      (coe
-                        MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                        MAlonzo.Code.Class.Functor.Core.du_fmap_24
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                         () erased
                         (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -994,7 +994,7 @@ d_Conv'45'TxBodySub_212
                               MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.d_Conv'45'GovVote_120))
                         v10)
                      (coe
-                        MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                        MAlonzo.Code.Class.Functor.Core.du_fmap_24
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                         () erased
                         (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1004,14 +1004,14 @@ d_Conv'45'TxBodySub_212
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                         (coe
-                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                         v12)
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                         (coe
-                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                         v13)
@@ -1019,7 +1019,7 @@ d_Conv'45'TxBodySub_212
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                         (coe
-                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                         v15)
@@ -1076,7 +1076,7 @@ d_Conv'45'TxBodySub_212
       (coe
          (\ v0 ->
             case coe v0 of
-              C_MkTxBodySub_16013 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19
+              C_MkTxBodySub_16063 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19
                 -> coe
                      C_constructor_106
                      (coe
@@ -1117,7 +1117,7 @@ d_Conv'45'TxBodySub_212
                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                         (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v20 ->
@@ -1165,7 +1165,7 @@ d_Conv'45'TxBodySub_212
                               (coe v3))))
                      (coe v4)
                      (coe
-                        MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                        MAlonzo.Code.Class.Functor.Core.du_fmap_24
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                         () erased
                         (MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -1205,7 +1205,7 @@ d_Conv'45'TxBodySub_212
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                        (coe v21))))))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v20 ->
@@ -1246,13 +1246,13 @@ d_Conv'45'TxBodySub_212
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
                         (coe
-                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                         v8)
                      (coe v9)
                      (coe
-                        MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                        MAlonzo.Code.Class.Functor.Core.du_fmap_24
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                         () erased
                         (MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -1260,7 +1260,7 @@ d_Conv'45'TxBodySub_212
                               MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.d_Conv'45'GovVote_120))
                         v10)
                      (coe
-                        MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                        MAlonzo.Code.Class.Functor.Core.du_fmap_24
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                         () erased
                         (MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -1270,14 +1270,14 @@ d_Conv'45'TxBodySub_212
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
                         (coe
-                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                         v12)
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
                         (coe
-                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                         v13)
@@ -1285,7 +1285,7 @@ d_Conv'45'TxBodySub_212
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
                         (coe
-                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                         v15)
@@ -1356,7 +1356,7 @@ d_Conv'45'TxBodySub_212
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                        (coe v21))))))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v20 ->
@@ -1405,7 +1405,7 @@ d_Conv'45'TxBodySub_212
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                        (coe v21))))))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v20 ->
@@ -1436,7 +1436,7 @@ d_Conv'45'TxBody'45'TxLevelSub_216 ::
   MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Conv'45'TxBody'45'TxLevelSub_216
   = coe
-      MAlonzo.Code.Class.Convertible.Core.du__'10814'__76
+      MAlonzo.Code.Class.Convertible.Core.du__'10814'__82
       (coe d_convTxBodySub_108) (coe d_Conv'45'TxBodySub_212)
 -- Ledger.Dijkstra.Foreign.Transaction.TxSub
 d_TxSub_218 = ()
@@ -1698,9 +1698,9 @@ d_Conv'45'TxSub_270
             case coe v0 of
               C_constructor_236 v1 v2 v3 v4
                 -> coe
-                     C_MkTxSub_113359
+                     C_MkTxSub_113409
                      (coe
-                        C_MkTxBodySub_16013
+                        C_MkTxBodySub_16063
                         (coe
                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_74
                            (coe
@@ -1766,7 +1766,7 @@ d_Conv'45'TxSub_270
                                  (coe d_txOuts_72 (coe v1)))))
                         (coe d_txId_74 (coe v1))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1809,13 +1809,13 @@ d_Conv'45'TxSub_270
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                            (coe
-                              MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                              MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                               (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                               (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                            (d_txADhash_82 (coe v1)))
                         (coe d_txDonation_84 (coe v1))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1823,7 +1823,7 @@ d_Conv'45'TxSub_270
                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.d_Conv'45'GovVote_120))
                            (d_txGovVotes_86 (coe v1)))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1833,14 +1833,14 @@ d_Conv'45'TxSub_270
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                            (coe
-                              MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                              MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                               (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                               (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                            (d_txNetworkId_90 (coe v1)))
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                            (coe
-                              MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                              MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                               (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                               (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                            (d_currentTreasury_92 (coe v1)))
@@ -1848,7 +1848,7 @@ d_Conv'45'TxSub_270
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                            (coe
-                              MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                              MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                               (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                               (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                            (d_scriptIntegrityHash_96 (coe v1)))
@@ -1974,7 +1974,7 @@ d_Conv'45'TxSub_270
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                         (coe
-                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                         v4)
@@ -1982,7 +1982,7 @@ d_Conv'45'TxSub_270
       (coe
          (\ v0 ->
             case coe v0 of
-              C_MkTxSub_113359 v1 v2 v3 v4
+              C_MkTxSub_113409 v1 v2 v3 v4
                 -> coe
                      C_constructor_236
                      (coe
@@ -1994,7 +1994,7 @@ d_Conv'45'TxSub_270
                                  case coe v5 of
                                    C_constructor_106 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24
                                      -> coe
-                                          C_MkTxBodySub_16013
+                                          C_MkTxBodySub_16063
                                           (coe
                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_74
                                              (coe
@@ -2065,7 +2065,7 @@ d_Conv'45'TxSub_270
                                                    (coe v8))))
                                           (coe v9)
                                           (coe
-                                             MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                             MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                              MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                              () erased () erased
                                              (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2110,7 +2110,7 @@ d_Conv'45'TxSub_270
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                              (coe
-                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
@@ -2118,7 +2118,7 @@ d_Conv'45'TxSub_270
                                              v13)
                                           (coe v14)
                                           (coe
-                                             MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                             MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                              MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                              () erased () erased
                                              (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2126,7 +2126,7 @@ d_Conv'45'TxSub_270
                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.d_Conv'45'GovVote_120))
                                              v15)
                                           (coe
-                                             MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                             MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                              MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                              () erased () erased
                                              (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2136,7 +2136,7 @@ d_Conv'45'TxSub_270
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                              (coe
-                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
@@ -2145,7 +2145,7 @@ d_Conv'45'TxSub_270
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                              (coe
-                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
@@ -2155,7 +2155,7 @@ d_Conv'45'TxSub_270
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                              (coe
-                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
@@ -2217,7 +2217,7 @@ d_Conv'45'TxSub_270
                            (coe
                               (\ v5 ->
                                  case coe v5 of
-                                   C_MkTxBodySub_16013 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24
+                                   C_MkTxBodySub_16063 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24
                                      -> coe
                                           C_constructor_106
                                           (coe
@@ -2265,7 +2265,7 @@ d_Conv'45'TxSub_270
                                              (coe
                                                 MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                              (coe
-                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                 () erased () erased
                                                 (\ v25 ->
@@ -2318,7 +2318,7 @@ d_Conv'45'TxSub_270
                                                    (coe v8))))
                                           (coe v9)
                                           (coe
-                                             MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                             MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                              MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                              () erased () erased
                                              (MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -2358,7 +2358,7 @@ d_Conv'45'TxSub_270
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v26))))))
                                              (coe
-                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                 () erased () erased
                                                 (\ v25 ->
@@ -2405,7 +2405,7 @@ d_Conv'45'TxSub_270
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_from_22
                                              (coe
-                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
@@ -2413,7 +2413,7 @@ d_Conv'45'TxSub_270
                                              v13)
                                           (coe v14)
                                           (coe
-                                             MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                             MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                              MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                              () erased () erased
                                              (MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -2421,7 +2421,7 @@ d_Conv'45'TxSub_270
                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.d_Conv'45'GovVote_120))
                                              v15)
                                           (coe
-                                             MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                             MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                              MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                              () erased () erased
                                              (MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -2431,7 +2431,7 @@ d_Conv'45'TxSub_270
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_from_22
                                              (coe
-                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
@@ -2440,7 +2440,7 @@ d_Conv'45'TxSub_270
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_from_22
                                              (coe
-                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
@@ -2450,7 +2450,7 @@ d_Conv'45'TxSub_270
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_from_22
                                              (coe
-                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
@@ -2523,7 +2523,7 @@ d_Conv'45'TxSub_270
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v26))))))
                                              (coe
-                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                 () erased () erased
                                                 (\ v25 ->
@@ -2574,7 +2574,7 @@ d_Conv'45'TxSub_270
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v26))))))
                                              (coe
-                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                 () erased () erased
                                                 (\ v25 ->
@@ -2684,7 +2684,7 @@ d_Conv'45'TxSub_270
                                              (coe
                                                 MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.d_DecEq'45'HSVKey_22)
                                              (coe
-                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                 () erased () erased
                                                 (\ v10 ->
@@ -2749,7 +2749,7 @@ d_Conv'45'TxSub_270
                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Tag_56
                                                 MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                              (coe
-                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                 () erased () erased
                                                 (\ v10 ->
@@ -2789,7 +2789,7 @@ d_Conv'45'TxSub_270
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
                         (coe
-                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                         v4)
@@ -2803,7 +2803,7 @@ d_Conv'45'Tx'45'TxLevelSub_274 ::
   MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Conv'45'Tx'45'TxLevelSub_274
   = coe
-      MAlonzo.Code.Class.Convertible.Core.du__'10814'__76
+      MAlonzo.Code.Class.Convertible.Core.du__'10814'__82
       (coe d_convTxSub_238) (coe d_Conv'45'TxSub_270)
 -- Ledger.Dijkstra.Foreign.Transaction.TxBodyTop
 d_TxBodyTop_276 = ()
@@ -3211,7 +3211,7 @@ d_Conv'45'TxBodyTop_484
             case coe v0 of
               C_constructor_370 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23
                 -> coe
-                     C_MkTxBodyTop_118965
+                     C_MkTxBodyTop_119015
                      (coe
                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_74
                         (coe
@@ -3285,7 +3285,7 @@ d_Conv'45'TxBodyTop_484
                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v4))))
                      (coe v5)
                      (coe
-                        MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                        MAlonzo.Code.Class.Functor.Core.du_fmap_24
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                         () erased
                         (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3326,13 +3326,13 @@ d_Conv'45'TxBodyTop_484
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                         (coe
-                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                         v10)
                      (coe v11)
                      (coe
-                        MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                        MAlonzo.Code.Class.Functor.Core.du_fmap_24
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                         () erased
                         (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3340,7 +3340,7 @@ d_Conv'45'TxBodyTop_484
                               MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.d_Conv'45'GovVote_120))
                         v12)
                      (coe
-                        MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                        MAlonzo.Code.Class.Functor.Core.du_fmap_24
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                         () erased
                         (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3350,14 +3350,14 @@ d_Conv'45'TxBodyTop_484
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                         (coe
-                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                         v14)
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                         (coe
-                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                         v15)
@@ -3365,12 +3365,12 @@ d_Conv'45'TxBodyTop_484
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                         (coe
-                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                         v17)
                      (coe
-                        MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                        MAlonzo.Code.Class.Functor.Core.du_fmap_24
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                         () erased
                         (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3442,7 +3442,7 @@ d_Conv'45'TxBodyTop_484
       (coe
          (\ v0 ->
             case coe v0 of
-              C_MkTxBodyTop_118965 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23
+              C_MkTxBodyTop_119015 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23
                 -> coe
                      C_constructor_370
                      (coe
@@ -3498,7 +3498,7 @@ d_Conv'45'TxBodyTop_484
                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                         (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v24 ->
@@ -3546,7 +3546,7 @@ d_Conv'45'TxBodyTop_484
                               (coe v4))))
                      (coe v5)
                      (coe
-                        MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                        MAlonzo.Code.Class.Functor.Core.du_fmap_24
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                         () erased
                         (MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -3587,7 +3587,7 @@ d_Conv'45'TxBodyTop_484
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                        (coe v25))))))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v24 ->
@@ -3628,13 +3628,13 @@ d_Conv'45'TxBodyTop_484
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
                         (coe
-                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                         v10)
                      (coe v11)
                      (coe
-                        MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                        MAlonzo.Code.Class.Functor.Core.du_fmap_24
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                         () erased
                         (MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -3642,7 +3642,7 @@ d_Conv'45'TxBodyTop_484
                               MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.d_Conv'45'GovVote_120))
                         v12)
                      (coe
-                        MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                        MAlonzo.Code.Class.Functor.Core.du_fmap_24
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                         () erased
                         (MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -3652,14 +3652,14 @@ d_Conv'45'TxBodyTop_484
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
                         (coe
-                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                         v14)
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
                         (coe
-                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                         v15)
@@ -3667,12 +3667,12 @@ d_Conv'45'TxBodyTop_484
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
                         (coe
-                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                         v17)
                      (coe
-                        MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                        MAlonzo.Code.Class.Functor.Core.du_fmap_24
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                         () erased
                         (MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -3745,7 +3745,7 @@ d_Conv'45'TxBodyTop_484
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                        (coe v25))))))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v24 ->
@@ -3794,7 +3794,7 @@ d_Conv'45'TxBodyTop_484
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                        (coe v25))))))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v24 ->
@@ -3843,7 +3843,7 @@ d_Conv'45'TxBodyTop_484
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                        (coe v25))))))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v24 ->
@@ -3874,7 +3874,7 @@ d_Conv'45'TxBody'45'TxLevelTop_488 ::
   MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Conv'45'TxBody'45'TxLevelTop_488
   = coe
-      MAlonzo.Code.Class.Convertible.Core.du__'10814'__76
+      MAlonzo.Code.Class.Convertible.Core.du__'10814'__82
       (coe d_convTxBodyTop_372) (coe d_Conv'45'TxBodyTop_484)
 -- Ledger.Dijkstra.Foreign.Transaction.TxTop
 d_TxTop_490 = ()
@@ -4171,9 +4171,9 @@ d_Conv'45'TxTop_548
             case coe v0 of
               C_constructor_512 v1 v2 v3 v4 v5
                 -> coe
-                     C_MkTxTop_254215
+                     C_MkTxTop_254265
                      (coe
-                        C_MkTxBodyTop_118965
+                        C_MkTxBodyTop_119015
                         (coe
                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_74
                            (coe
@@ -4251,7 +4251,7 @@ d_Conv'45'TxTop_548
                                  (coe d_txOuts_330 (coe v1)))))
                         (coe d_txId_332 (coe v1))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -4295,13 +4295,13 @@ d_Conv'45'TxTop_548
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                            (coe
-                              MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                              MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                               (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                               (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                            (d_txADhash_342 (coe v1)))
                         (coe d_txDonation_344 (coe v1))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -4309,7 +4309,7 @@ d_Conv'45'TxTop_548
                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.d_Conv'45'GovVote_120))
                            (d_txGovVotes_346 (coe v1)))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -4319,14 +4319,14 @@ d_Conv'45'TxTop_548
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                            (coe
-                              MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                              MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                               (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                               (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                            (d_txNetworkId_350 (coe v1)))
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                            (coe
-                              MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                              MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                               (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                               (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                            (d_currentTreasury_352 (coe v1)))
@@ -4334,12 +4334,12 @@ d_Conv'45'TxTop_548
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                            (coe
-                              MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                              MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                               (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                               (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                            (d_scriptIntegrityHash_356 (coe v1)))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -4481,7 +4481,7 @@ d_Conv'45'TxTop_548
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                         (coe
-                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                         v5)
@@ -4489,7 +4489,7 @@ d_Conv'45'TxTop_548
       (coe
          (\ v0 ->
             case coe v0 of
-              C_MkTxTop_254215 v1 v2 v3 v4 v5
+              C_MkTxTop_254265 v1 v2 v3 v4 v5
                 -> coe
                      C_constructor_512
                      (coe
@@ -4501,7 +4501,7 @@ d_Conv'45'TxTop_548
                                  case coe v6 of
                                    C_constructor_370 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29
                                      -> coe
-                                          C_MkTxBodyTop_118965
+                                          C_MkTxBodyTop_119015
                                           (coe
                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_74
                                              (coe
@@ -4585,7 +4585,7 @@ d_Conv'45'TxTop_548
                                                    (coe v10))))
                                           (coe v11)
                                           (coe
-                                             MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                             MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                              MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                              () erased () erased
                                              (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -4631,7 +4631,7 @@ d_Conv'45'TxTop_548
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                              (coe
-                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
@@ -4639,7 +4639,7 @@ d_Conv'45'TxTop_548
                                              v16)
                                           (coe v17)
                                           (coe
-                                             MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                             MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                              MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                              () erased () erased
                                              (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -4647,7 +4647,7 @@ d_Conv'45'TxTop_548
                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.d_Conv'45'GovVote_120))
                                              v18)
                                           (coe
-                                             MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                             MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                              MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                              () erased () erased
                                              (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -4657,7 +4657,7 @@ d_Conv'45'TxTop_548
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                              (coe
-                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
@@ -4666,7 +4666,7 @@ d_Conv'45'TxTop_548
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                              (coe
-                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
@@ -4676,14 +4676,14 @@ d_Conv'45'TxTop_548
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_to_20
                                              (coe
-                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                              v23)
                                           (coe
-                                             MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                             MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                              MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                              () erased () erased
                                              (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -4759,7 +4759,7 @@ d_Conv'45'TxTop_548
                            (coe
                               (\ v6 ->
                                  case coe v6 of
-                                   C_MkTxBodyTop_118965 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29
+                                   C_MkTxBodyTop_119015 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29
                                      -> coe
                                           C_constructor_370
                                           (coe
@@ -4825,7 +4825,7 @@ d_Conv'45'TxTop_548
                                              (coe
                                                 MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                              (coe
-                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                 () erased () erased
                                                 (\ v30 ->
@@ -4878,7 +4878,7 @@ d_Conv'45'TxTop_548
                                                    (coe v10))))
                                           (coe v11)
                                           (coe
-                                             MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                             MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                              MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                              () erased () erased
                                              (MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -4919,7 +4919,7 @@ d_Conv'45'TxTop_548
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v31))))))
                                              (coe
-                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                 () erased () erased
                                                 (\ v30 ->
@@ -4966,7 +4966,7 @@ d_Conv'45'TxTop_548
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_from_22
                                              (coe
-                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
@@ -4974,7 +4974,7 @@ d_Conv'45'TxTop_548
                                              v16)
                                           (coe v17)
                                           (coe
-                                             MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                             MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                              MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                              () erased () erased
                                              (MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -4982,7 +4982,7 @@ d_Conv'45'TxTop_548
                                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.d_Conv'45'GovVote_120))
                                              v18)
                                           (coe
-                                             MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                             MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                              MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                              () erased () erased
                                              (MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -4992,7 +4992,7 @@ d_Conv'45'TxTop_548
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_from_22
                                              (coe
-                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
@@ -5001,7 +5001,7 @@ d_Conv'45'TxTop_548
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_from_22
                                              (coe
-                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
@@ -5011,14 +5011,14 @@ d_Conv'45'TxTop_548
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_from_22
                                              (coe
-                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                              v23)
                                           (coe
-                                             MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                             MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                              MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                              () erased () erased
                                              (MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -5091,7 +5091,7 @@ d_Conv'45'TxTop_548
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v31))))))
                                              (coe
-                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                 () erased () erased
                                                 (\ v30 ->
@@ -5142,7 +5142,7 @@ d_Conv'45'TxTop_548
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v31))))))
                                              (coe
-                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                 () erased () erased
                                                 (\ v30 ->
@@ -5193,7 +5193,7 @@ d_Conv'45'TxTop_548
                                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v31))))))
                                              (coe
-                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                 () erased () erased
                                                 (\ v30 ->
@@ -5303,7 +5303,7 @@ d_Conv'45'TxTop_548
                                              (coe
                                                 MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.d_DecEq'45'HSVKey_22)
                                              (coe
-                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                 () erased () erased
                                                 (\ v11 ->
@@ -5368,7 +5368,7 @@ d_Conv'45'TxTop_548
                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_DecEq'45'Tag_56
                                                 MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                              (coe
-                                                MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                 MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92
                                                 () erased () erased
                                                 (\ v11 ->
@@ -5408,7 +5408,7 @@ d_Conv'45'TxTop_548
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
                         (coe
-                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                         v5)
@@ -5422,7 +5422,7 @@ d_Conv'45'Tx'45'TxLevelTop_552 ::
   MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Conv'45'Tx'45'TxLevelTop_552
   = coe
-      MAlonzo.Code.Class.Convertible.Core.du__'10814'__76
+      MAlonzo.Code.Class.Convertible.Core.du__'10814'__82
       (coe d_convTxTop_514) (coe d_Conv'45'TxTop_548)
 -- Ledger.Dijkstra.Foreign.Transaction..extendedlambda
 d_'46'extendedlambda_1303 ::
@@ -5437,7 +5437,7 @@ d_'46'extendedlambda_1303
                 -> coe
                      C_RequireAllOf_169
                      (coe
-                        MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                        MAlonzo.Code.Class.Functor.Core.du_fmap_24
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                         () erased
                         (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5447,7 +5447,7 @@ d_'46'extendedlambda_1303
                 -> coe
                      C_RequireAnyOf_215
                      (coe
-                        MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                        MAlonzo.Code.Class.Functor.Core.du_fmap_24
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                         () erased
                         (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5457,7 +5457,7 @@ d_'46'extendedlambda_1303
                 -> coe
                      C_RequireMOf_261 (coe v1)
                      (coe
-                        MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                        MAlonzo.Code.Class.Functor.Core.du_fmap_24
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                         () erased
                         (MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5509,7 +5509,7 @@ d_'46'extendedlambda_1303
                 -> coe
                      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Native.C_RequireAllOf_326
                      (coe
-                        MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                        MAlonzo.Code.Class.Functor.Core.du_fmap_24
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                         () erased
                         (MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -5519,7 +5519,7 @@ d_'46'extendedlambda_1303
                 -> coe
                      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Native.C_RequireAnyOf_328
                      (coe
-                        MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                        MAlonzo.Code.Class.Functor.Core.du_fmap_24
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                         () erased
                         (MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -5530,7 +5530,7 @@ d_'46'extendedlambda_1303
                      MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Native.C_RequireMOf_330
                      (coe v1)
                      (coe
-                        MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                        MAlonzo.Code.Class.Functor.Core.du_fmap_24
                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                         () erased
                         (MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -5632,10 +5632,10 @@ cover_TxWitnesses_4927 x
   = case x of
       MkTxWitnesses _ _ _ _ -> ()
 -- Ledger.Dijkstra.Foreign.Transaction.TxBodySub
-d_TxBodySub_16011 = ()
-type T_TxBodySub_16011 = TxBodySub
-pattern C_MkTxBodySub_16013 a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 = MkTxBodySub a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18
-check_MkTxBodySub_16013 ::
+d_TxBodySub_16061 = ()
+type T_TxBodySub_16061 = TxBodySub
+pattern C_MkTxBodySub_16063 a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 = MkTxBodySub a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18
+check_MkTxBodySub_16063 ::
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSSet_66
     (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
        () () Integer Integer) ->
@@ -5673,7 +5673,7 @@ check_MkTxBodySub_16013 ::
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
-    () MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.T_GovVote_5417 ->
+    () MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.T_GovVote_5433 ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     () MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.T_GovProposal_1393 ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer ->
@@ -5692,32 +5692,32 @@ check_MkTxBodySub_16013 ::
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSMap_52
     MAlonzo.Code.Ledger.Core.Foreign.Address.T_Credential_615
     MAlonzo.Code.Ledger.Dijkstra.Foreign.Account.T_BalanceInterval_919 ->
-  T_TxBodySub_16011
-check_MkTxBodySub_16013 = MkTxBodySub
-cover_TxBodySub_16011 :: TxBodySub -> ()
-cover_TxBodySub_16011 x
+  T_TxBodySub_16061
+check_MkTxBodySub_16063 = MkTxBodySub
+cover_TxBodySub_16061 :: TxBodySub -> ()
+cover_TxBodySub_16061 x
   = case x of
       MkTxBodySub _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ -> ()
 -- Ledger.Dijkstra.Foreign.Transaction.TxSub
-d_TxSub_113357 = ()
-type T_TxSub_113357 = TxSub
-pattern C_MkTxSub_113359 a0 a1 a2 a3 = MkTxSub a0 a1 a2 a3
-check_MkTxSub_113359 ::
-  T_TxBodySub_16011 ->
+d_TxSub_113407 = ()
+type T_TxSub_113407 = TxSub
+pattern C_MkTxSub_113409 a0 a1 a2 a3 = MkTxSub a0 a1 a2 a3
+check_MkTxSub_113409 ::
+  T_TxBodySub_16061 ->
   T_TxWitnesses_4927 ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer ->
-  T_TxSub_113357
-check_MkTxSub_113359 = MkTxSub
-cover_TxSub_113357 :: TxSub -> ()
-cover_TxSub_113357 x
+  T_TxSub_113407
+check_MkTxSub_113409 = MkTxSub
+cover_TxSub_113407 :: TxSub -> ()
+cover_TxSub_113407 x
   = case x of
       MkTxSub _ _ _ _ -> ()
 -- Ledger.Dijkstra.Foreign.Transaction.TxBodyTop
-d_TxBodyTop_118963 = ()
-type T_TxBodyTop_118963 = TxBodyTop
-pattern C_MkTxBodyTop_118965 a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 = MkTxBodyTop a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22
-check_MkTxBodyTop_118965 ::
+d_TxBodyTop_119013 = ()
+type T_TxBodyTop_119013 = TxBodyTop
+pattern C_MkTxBodyTop_119015 a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22 = MkTxBodyTop a0 a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13 a14 a15 a16 a17 a18 a19 a20 a21 a22
+check_MkTxBodyTop_119015 ::
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSSet_66
     (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
        () () Integer Integer) ->
@@ -5759,14 +5759,14 @@ check_MkTxBodyTop_118965 ::
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
-    () MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.T_GovVote_5417 ->
+    () MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.T_GovVote_5433 ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     () MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.T_GovProposal_1393 ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer ->
-  MAlonzo.Code.Agda.Builtin.List.T_List_10 () T_TxSub_113357 ->
+  MAlonzo.Code.Agda.Builtin.List.T_List_10 () T_TxSub_113407 ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSSet_66
     (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
        () () MAlonzo.Code.Ledger.Core.Foreign.Address.T_Credential_615
@@ -5782,25 +5782,25 @@ check_MkTxBodyTop_118965 ::
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSMap_52
     MAlonzo.Code.Ledger.Core.Foreign.Address.T_Credential_615
     MAlonzo.Code.Ledger.Dijkstra.Foreign.Account.T_BalanceInterval_919 ->
-  T_TxBodyTop_118963
-check_MkTxBodyTop_118965 = MkTxBodyTop
-cover_TxBodyTop_118963 :: TxBodyTop -> ()
-cover_TxBodyTop_118963 x
+  T_TxBodyTop_119013
+check_MkTxBodyTop_119015 = MkTxBodyTop
+cover_TxBodyTop_119013 :: TxBodyTop -> ()
+cover_TxBodyTop_119013 x
   = case x of
       MkTxBodyTop _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ -> ()
 -- Ledger.Dijkstra.Foreign.Transaction.TxTop
-d_TxTop_254213 = ()
-type T_TxTop_254213 = TxTop
-pattern C_MkTxTop_254215 a0 a1 a2 a3 a4 = MkTxTop a0 a1 a2 a3 a4
-check_MkTxTop_254215 ::
-  T_TxBodyTop_118963 ->
+d_TxTop_254263 = ()
+type T_TxTop_254263 = TxTop
+pattern C_MkTxTop_254265 a0 a1 a2 a3 a4 = MkTxTop a0 a1 a2 a3 a4
+check_MkTxTop_254265 ::
+  T_TxBodyTop_119013 ->
   T_TxWitnesses_4927 ->
   Integer ->
   Bool ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer ->
-  T_TxTop_254213
-check_MkTxTop_254215 = MkTxTop
-cover_TxTop_254213 :: TxTop -> ()
-cover_TxTop_254213 x
+  T_TxTop_254263
+check_MkTxTop_254265 = MkTxTop
+cover_TxTop_254263 :: TxTop -> ()
+cover_TxTop_254263 x
   = case x of
       MkTxTop _ _ _ _ _ -> ()

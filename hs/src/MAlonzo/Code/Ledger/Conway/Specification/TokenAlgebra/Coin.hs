@@ -134,7 +134,7 @@ du_'46'extendedlambda0_134
       (coe
          MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
          (coe
-            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
       (\ v0 -> v0) (\ v0 -> v0)
       (\ v0 ->
          coe

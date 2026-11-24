@@ -1169,7 +1169,7 @@ d_totalRefScriptsSize_3230 v0 v1 v2 v3
       (coe
          MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
          (coe
-            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
       (MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.d_scriptSize_3290
          (coe v1))
       (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_allReferenceScripts_4776
@@ -2946,12 +2946,12 @@ du_consumedTx_3692 v0 v1 v2
                      MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                      (coe v0))))
             (coe
-               MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-               (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+               MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+               (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
             (coe
                MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                (coe
-                  MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                  MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
             (coe (\ v3 -> v3))
             (coe
                MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txWithdrawals_3972
@@ -3131,12 +3131,12 @@ du_producedTx_3718 v0 v1 v2
                         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                         (coe v0))))
                (coe
-                  MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-                  (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+                  MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+                  (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
                (coe
                   MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                   (coe
-                     MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                     MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                (coe (\ v3 -> v3))
                (coe
                   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_txDirectDeposits_3998

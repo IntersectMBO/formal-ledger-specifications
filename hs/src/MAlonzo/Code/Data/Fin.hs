@@ -26,4 +26,4 @@ d_'35'__10 ::
 d_'35'__10 v0 ~v1 ~v2 = du_'35'__10 v0
 du_'35'__10 :: Integer -> MAlonzo.Code.Data.Fin.Base.T_Fin_10
 du_'35'__10 v0
-  = coe MAlonzo.Code.Data.Fin.Base.du_fromℕ'60'_52 (coe v0)
+  = coe MAlonzo.Code.Data.Fin.Base.du_fromℕ'60'_74 (coe v0)

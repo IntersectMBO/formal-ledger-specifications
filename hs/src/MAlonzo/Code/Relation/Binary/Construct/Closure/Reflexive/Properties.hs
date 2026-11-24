@@ -248,8 +248,7 @@ du_antisym_114 v0 v1 v2 v3
                -> coe v0 v1
              MAlonzo.Code.Relation.Binary.Construct.Closure.Reflexive.C_'91'_'93'_44 v9
                -> coe
-                    MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                    erased
+                    MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Binary.Construct.Closure.Reflexive.Properties._.total
@@ -317,7 +316,7 @@ du_dec_174 v0 v1 v2 v3
       MAlonzo.Code.Relation.Nullary.Decidable.du_map_18
       (coe du_'8846''8660'Refl_84)
       (coe
-         MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8846''45'dec__96
+         MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8846''63'__96
          (coe v0 v2 v3) (coe v1 v2 v3))
 -- Relation.Binary.Construct.Closure.Reflexive.Properties._.decidable
 d_decidable_184 ::

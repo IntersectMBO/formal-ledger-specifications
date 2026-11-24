@@ -816,7 +816,7 @@ du_DecEq'45'GovActionType_1382 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'GovActionType_1382
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (coe
          (\ v0 ->
             case coe v0 of
@@ -1110,7 +1110,7 @@ du_DecEq'45'GovRole_1384 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'GovRole_1384
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (coe
          (\ v0 ->
             case coe v0 of
@@ -1183,7 +1183,7 @@ d_DecEq'45'Vote_1386 ~v0 = du_DecEq'45'Vote_1386
 du_DecEq'45'Vote_1386 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'Vote_1386
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (coe
          (\ v0 ->
             case coe v0 of
@@ -1254,7 +1254,7 @@ d_DecEq'45'VDeleg_1388 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'VDeleg_1388 v0
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (coe
          (\ v1 ->
             case coe v1 of
@@ -1355,7 +1355,7 @@ d_DecEq'45'GovVoter_1390 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'GovVoter_1390 v0
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (coe
          (\ v1 ->
             case coe v1 of
@@ -1753,7 +1753,7 @@ d_Show'45'VDeleg_1490 v0
                      MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
                      (coe ("vDelegCredential" :: Data.Text.Text))
                      (coe
-                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                         (coe
                            MAlonzo.Code.Class.Show.Core.d_show_16
                            (coe
@@ -1781,7 +1781,7 @@ d_DecEq'45'Anchor_1492 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'Anchor_1492 v0
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (coe
          (\ v1 ->
             case coe v1 of
@@ -1873,9 +1873,9 @@ d_'61''61''45'GovActionData_1510 v0 v1
   = case coe v1 of
       C_NoConfidence_962
         -> coe
-             MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18 (coe ())
+             MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18
              (coe
-                MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+                MAlonzo.Code.Class.DecEq.Core.C_constructor_26
                 (\ v2 v3 -> coe MAlonzo.Code.Data.Unit.Properties.du__'8799'__8))
       C_UpdateCommittee_964
         -> coe
@@ -1928,7 +1928,6 @@ d_'61''61''45'GovActionData_1510 v0 v1
                                                       MAlonzo.Code.Data.Bool.Base.d__'8743'__24
                                                       (coe
                                                          MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18
-                                                         (coe ())
                                                          (coe
                                                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_DecEq'45'ℙ_1266
                                                             (let v12
@@ -1948,22 +1947,21 @@ d_'61''61''45'GovActionData_1510 v0 v1
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_284
                                                                      (coe v12) (coe v13)))))
-                                                         (coe v5) (coe v10))
+                                                         v5 v10)
                                                       (coe
                                                          MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18
-                                                         (coe ())
                                                          (coe
-                                                            MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+                                                            MAlonzo.Code.Class.DecEq.Core.C_constructor_26
                                                             (coe
-                                                               MAlonzo.Code.Data.Rational.Properties.d__'8799'__2792))
-                                                         (coe v6) (coe v11)))
+                                                               MAlonzo.Code.Data.Rational.Properties.d__'8799'__3028))
+                                                         v6 v11))
                                             _ -> MAlonzo.RTE.mazUnreachableError
                                      _ -> MAlonzo.RTE.mazUnreachableError)
                          _ -> MAlonzo.RTE.mazUnreachableError
                   _ -> MAlonzo.RTE.mazUnreachableError)
       C_NewConstitution_966
         -> coe
-             MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18 (coe ())
+             MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18
              (coe
                 MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182
                 (coe
@@ -1978,14 +1976,14 @@ d_'61''61''45'GovActionData_1510 v0 v1
                          (coe v0)))))
       C_TriggerHardFork_968
         -> coe
-             MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18 (coe ())
+             MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18
              (coe
                 MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182
                 (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                 (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
       C_ChangePParams_970
         -> coe
-             MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18 (coe ())
+             MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18
              (coe
                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_DecEq'45'UpdT_1930
                 (coe
@@ -2026,9 +2024,9 @@ d_'61''61''45'GovActionData_1510 v0 v1
                   (coe MAlonzo.Code.Axiom.Set.Map.du__'738'_580 (coe v3)))
       C_Info_974
         -> coe
-             MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18 (coe ())
+             MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18
              (coe
-                MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+                MAlonzo.Code.Class.DecEq.Core.C_constructor_26
                 (\ v2 v3 -> coe MAlonzo.Code.Data.Unit.Properties.du__'8799'__8))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Specification.Gov.Actions.==-GovAction
@@ -2060,7 +2058,7 @@ d_DecEq'45'NeedsHash_1560 ::
   T_GovActionType_960 -> MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'NeedsHash_1560 v0 v1
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (case coe v1 of
          C_NoConfidence_962
            -> coe
@@ -2070,8 +2068,8 @@ d_DecEq'45'NeedsHash_1560 v0 v1
                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_DecEq'45'TxId_744
                       (coe v0))
                    (coe
-                      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-                      (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796)))
+                      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+                      (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032)))
          C_UpdateCommittee_964
            -> coe
                 MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
@@ -2080,8 +2078,8 @@ d_DecEq'45'NeedsHash_1560 v0 v1
                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_DecEq'45'TxId_744
                       (coe v0))
                    (coe
-                      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-                      (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796)))
+                      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+                      (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032)))
          C_NewConstitution_966
            -> coe
                 MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
@@ -2090,8 +2088,8 @@ d_DecEq'45'NeedsHash_1560 v0 v1
                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_DecEq'45'TxId_744
                       (coe v0))
                    (coe
-                      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-                      (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796)))
+                      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+                      (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032)))
          C_TriggerHardFork_968
            -> coe
                 MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
@@ -2100,8 +2098,8 @@ d_DecEq'45'NeedsHash_1560 v0 v1
                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_DecEq'45'TxId_744
                       (coe v0))
                    (coe
-                      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-                      (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796)))
+                      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+                      (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032)))
          C_ChangePParams_970
            -> coe
                 MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
@@ -2110,8 +2108,8 @@ d_DecEq'45'NeedsHash_1560 v0 v1
                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_DecEq'45'TxId_744
                       (coe v0))
                    (coe
-                      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-                      (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796)))
+                      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+                      (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032)))
          C_TreasuryWithdrawal_972
            -> coe
                 MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
@@ -2155,16 +2153,13 @@ d_'61''61''45'GovProposal_1562 v0 v1 v2
                                                   MAlonzo.Code.Data.Bool.Base.d__'8743'__24
                                                   (coe
                                                      MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18
-                                                     (coe ())
-                                                     (coe
-                                                        d_DecEq'45'NeedsHash_1560 (coe v0)
-                                                        (coe d_gaType_984 (coe v9)))
-                                                     (coe v4) (coe v10))
+                                                     (d_DecEq'45'NeedsHash_1560
+                                                        (coe v0) (coe d_gaType_984 (coe v9)))
+                                                     v4 v10)
                                                   (coe
                                                      MAlonzo.Code.Data.Bool.Base.d__'8743'__24
                                                      (coe
                                                         MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18
-                                                        (coe ())
                                                         (coe
                                                            MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
                                                            (coe
@@ -2172,22 +2167,20 @@ d_'61''61''45'GovProposal_1562 v0 v1 v2
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_cryptoStructure_748
                                                                  (coe v0))))
-                                                        (coe v5) (coe v11))
+                                                        v5 v11)
                                                      (coe
                                                         MAlonzo.Code.Data.Bool.Base.d__'8743'__24
                                                         (coe
                                                            MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18
-                                                           (coe ())
                                                            (coe
-                                                              MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+                                                              MAlonzo.Code.Class.DecEq.Core.C_constructor_26
                                                               (coe
-                                                                 MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
-                                                           (coe v6) (coe v12))
+                                                                 MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
+                                                           v6 v12)
                                                         (coe
                                                            MAlonzo.Code.Data.Bool.Base.d__'8743'__24
                                                            (coe
                                                               MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18
-                                                              (coe ())
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_340
                                                                  (coe
@@ -2207,12 +2200,11 @@ d_'61''61''45'GovProposal_1562 v0 v1 v2
                                                                     (coe
                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_cryptoStructure_748
                                                                        (coe v0))))
-                                                              (coe v7) (coe v13))
+                                                              v7 v13)
                                                            (coe
                                                               MAlonzo.Code.Class.DecEq.Core.du__'61''61'__18
-                                                              (coe ())
-                                                              (coe d_DecEq'45'Anchor_1492 (coe v0))
-                                                              (coe v8) (coe v14))))))
+                                                              (d_DecEq'45'Anchor_1492 (coe v0)) v8
+                                                              v14)))))
                                         _ -> MAlonzo.RTE.mazUnreachableError)
                               else coe seq (coe v17) (coe v16)
                        _ -> MAlonzo.RTE.mazUnreachableError)
@@ -2248,7 +2240,7 @@ du_activeDRepsOf_1668 v0 v1 v2 v3
                     MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_epochStructure_844
                     (coe v0)))
               (coe
-                 MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+                 MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
                  (MAlonzo.Code.Ledger.Core.Specification.Epoch.d_firstSlot_94
                     (coe
                        MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_epochStructure_844
@@ -2256,7 +2248,7 @@ du_activeDRepsOf_1668 v0 v1 v2 v3
                  (\ v5 v6 -> v5) v3
                  (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v4)))
               (coe
-                 MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                 MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                  (\ v5 v6 -> v6)
                  (MAlonzo.Code.Ledger.Core.Specification.Epoch.d_firstSlot_94
                     (coe

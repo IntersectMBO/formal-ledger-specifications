@@ -100,7 +100,7 @@ d_InSubLevel_30 = erased
 d_DecEq'45'TxLevel_36 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'TxLevel_36
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (coe
          (\ v0 ->
             case coe v0 of
@@ -144,7 +144,7 @@ data T_Tag_40
 d_DecEq'45'Tag_56 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'Tag_56
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (coe
          (\ v0 ->
             case coe v0 of
@@ -857,7 +857,7 @@ d_NonZero'45'SlotsPerEpoch'7580'_1468 v0
 -- Ledger.Dijkstra.Specification.Transaction.TransactionStructure._.Positive-ActiveSlotCoeff
 d_Positive'45'ActiveSlotCoeff_1470 ::
   T_TransactionStructure_58 ->
-  MAlonzo.Code.Data.Integer.Base.T_Positive_134
+  MAlonzo.Code.Data.Integer.Base.T_Positive_174
 d_Positive'45'ActiveSlotCoeff_1470 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Epoch.d_Positive'45'ActiveSlotCoeff_342
@@ -1279,7 +1279,7 @@ d_isMagmaHomomorphism_1602 v0
 -- Ledger.Dijkstra.Specification.Transaction.TransactionStructure._.TokenAlgebra.IsMonoidHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_1604 ::
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_380 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1604 v0
   = coe
       MAlonzo.Code.Algebra.Morphism.Structures.d_isRelHomomorphism_202
@@ -1381,7 +1381,7 @@ d_isMonoidMonomorphism_1624 v0
 -- Ledger.Dijkstra.Specification.Transaction.TransactionStructure._.TokenAlgebra.IsMonoidIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_1626 ::
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1626 v0
   = coe
       MAlonzo.Code.Algebra.Morphism.Structures.d_isRelHomomorphism_202
@@ -1397,11 +1397,11 @@ d_isRelIsomorphism_1628 ::
   MAlonzo.Code.Ledger.Conway.Specification.TokenAlgebra.Base.T_TokenAlgebra_14 ->
   (AgdaAny -> Integer) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_1628 ~v0 ~v1 v2 = du_isRelIsomorphism_1628 v2
 du_isRelIsomorphism_1628 ::
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_1628 v0
   = coe
       MAlonzo.Code.Algebra.Morphism.Structures.du_isRelIsomorphism_266
@@ -1413,11 +1413,11 @@ d_isRelMonomorphism_1630 ::
   MAlonzo.Code.Ledger.Conway.Specification.TokenAlgebra.Base.T_TokenAlgebra_14 ->
   (AgdaAny -> Integer) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_1630 ~v0 ~v1 v2 = du_isRelMonomorphism_1630 v2
 du_isRelMonomorphism_1630 ::
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_1630 v0
   = let v1
           = MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_446
@@ -1498,7 +1498,7 @@ d_isMonoidHomomorphism_1648 v0
 -- Ledger.Dijkstra.Specification.Transaction.TransactionStructure._.TokenAlgebra.IsMonoidMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_1650 ::
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1650 v0
   = coe
       MAlonzo.Code.Algebra.Morphism.Structures.d_isRelHomomorphism_202
@@ -1512,11 +1512,11 @@ d_isRelMonomorphism_1652 ::
   MAlonzo.Code.Ledger.Conway.Specification.TokenAlgebra.Base.T_TokenAlgebra_14 ->
   (AgdaAny -> Integer) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_1652 ~v0 ~v1 v2 = du_isRelMonomorphism_1652 v2
 du_isRelMonomorphism_1652 ::
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_1652 v0
   = coe
       MAlonzo.Code.Algebra.Morphism.Structures.du_isRelMonomorphism_234
@@ -4696,9 +4696,9 @@ d_paramsUpdateWellFormed'63'_2658 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_paramsUpdateWellFormed'63'_2658 v0
   = coe
-      MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+      MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
       (coe
-         MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8594''45'dec__106
+         MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8594''63'__106
          (coe
             MAlonzo.Code.Class.Decidable.Core.d_dec_16
             (coe
@@ -4778,7 +4778,7 @@ d_paramsUpdateWellFormed'63'_2658 v0
             (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
             (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)))
       (coe
-         MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+         MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
          (coe
             MAlonzo.Code.Class.Decidable.Core.d_dec_16
             (coe
@@ -4787,7 +4787,7 @@ d_paramsUpdateWellFormed'63'_2658 v0
                   (\ v1 ->
                      coe
                        MAlonzo.Code.Class.Decidable.Instances.d_ℚ'45'Dec'45''60'_44
-                       MAlonzo.Code.Data.Rational.Base.d_'189'_182
+                       MAlonzo.Code.Data.Rational.Base.d_'189'_188
                        (MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_fromUnitInterval_72
                           (coe v1))))
                (coe
@@ -4801,7 +4801,7 @@ d_paramsUpdateWellFormed'63'_2658 v0
                   MAlonzo.Code.Class.Decidable.Instances.du_Dec'45'MAll_30
                   (coe
                      MAlonzo.Code.Class.Decidable.Instances.d_ℚ'45'Dec'45''8804'_42
-                     MAlonzo.Code.Data.Rational.Base.d_1ℚ_180))
+                     MAlonzo.Code.Data.Rational.Base.d_1ℚ_186))
                (coe
                   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_960
                   (coe v0)))))
@@ -5486,7 +5486,7 @@ d_isMagmaHomomorphism_2848 v0
 -- Ledger.Dijkstra.Specification.Transaction.TransactionStructure._.IsMonoidHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_2850 ::
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidHomomorphism_380 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2850 v0
   = coe
       MAlonzo.Code.Algebra.Morphism.Structures.d_isRelHomomorphism_202
@@ -5588,7 +5588,7 @@ d_isMonoidMonomorphism_2870 v0
 -- Ledger.Dijkstra.Specification.Transaction.TransactionStructure._.IsMonoidIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_2872 ::
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2872 v0
   = coe
       MAlonzo.Code.Algebra.Morphism.Structures.d_isRelHomomorphism_202
@@ -5604,11 +5604,11 @@ d_isRelIsomorphism_2874 ::
   T_TransactionStructure_58 ->
   (AgdaAny -> Integer) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_2874 ~v0 ~v1 v2 = du_isRelIsomorphism_2874 v2
 du_isRelIsomorphism_2874 ::
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_2874 v0
   = coe
       MAlonzo.Code.Algebra.Morphism.Structures.du_isRelIsomorphism_266
@@ -5620,11 +5620,11 @@ d_isRelMonomorphism_2876 ::
   T_TransactionStructure_58 ->
   (AgdaAny -> Integer) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_2876 ~v0 ~v1 v2 = du_isRelMonomorphism_2876 v2
 du_isRelMonomorphism_2876 ::
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_2876 v0
   = let v1
           = MAlonzo.Code.Algebra.Morphism.Structures.d_isMonoidMonomorphism_446
@@ -5705,7 +5705,7 @@ d_isMonoidHomomorphism_2894 v0
 -- Ledger.Dijkstra.Specification.Transaction.TransactionStructure._.IsMonoidMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_2896 ::
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2896 v0
   = coe
       MAlonzo.Code.Algebra.Morphism.Structures.d_isRelHomomorphism_202
@@ -5719,11 +5719,11 @@ d_isRelMonomorphism_2898 ::
   T_TransactionStructure_58 ->
   (AgdaAny -> Integer) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_2898 ~v0 ~v1 v2 = du_isRelMonomorphism_2898 v2
 du_isRelMonomorphism_2898 ::
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_2898 v0
   = coe
       MAlonzo.Code.Algebra.Morphism.Structures.du_isRelMonomorphism_234

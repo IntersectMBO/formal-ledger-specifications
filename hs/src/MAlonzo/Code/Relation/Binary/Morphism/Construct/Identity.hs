@@ -29,13 +29,13 @@ d_isRelHomomorphism_28 ::
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_28 ~v0 ~v1 ~v2 ~v3 = du_isRelHomomorphism_28
 du_isRelHomomorphism_28 ::
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 du_isRelHomomorphism_28
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.C_constructor_54
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.C_constructor_46
       (coe (\ v0 v1 v2 -> v2))
 -- Relation.Binary.Morphism.Construct.Identity._.isRelMonomorphism
 d_isRelMonomorphism_30 ::
@@ -43,13 +43,13 @@ d_isRelMonomorphism_30 ::
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_30 ~v0 ~v1 ~v2 ~v3 = du_isRelMonomorphism_30
 du_isRelMonomorphism_30 ::
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_30
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.C_constructor_86
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.C_constructor_78
       (coe du_isRelHomomorphism_28) (coe (\ v0 v1 v2 -> v2))
 -- Relation.Binary.Morphism.Construct.Identity._.isRelIsomorphism
 d_isRelIsomorphism_32 ::
@@ -58,13 +58,13 @@ d_isRelIsomorphism_32 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny) ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_32 ~v0 ~v1 ~v2 ~v3 ~v4 = du_isRelIsomorphism_32
 du_isRelIsomorphism_32 ::
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_32
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.C_constructor_124
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.C_constructor_116
       (coe du_isRelMonomorphism_30)
       (coe MAlonzo.Code.Function.Construct.Identity.du_surjective_26)
 -- Relation.Binary.Morphism.Construct.Identity._.setoidHomomorphism
@@ -114,14 +114,14 @@ d_isOrderHomomorphism_90 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> ()) ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsOrderHomomorphism_144
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsOrderHomomorphism_136
 d_isOrderHomomorphism_90 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
   = du_isOrderHomomorphism_90
 du_isOrderHomomorphism_90 ::
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsOrderHomomorphism_144
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsOrderHomomorphism_136
 du_isOrderHomomorphism_90
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.C_constructor_170
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.C_constructor_162
       (coe (\ v0 v1 v2 -> v2)) (coe (\ v0 v1 v2 -> v2))
 -- Relation.Binary.Morphism.Construct.Identity._.isOrderMonomorphism
 d_isOrderMonomorphism_92 ::
@@ -131,14 +131,14 @@ d_isOrderMonomorphism_92 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> ()) ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsOrderMonomorphism_190
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsOrderMonomorphism_182
 d_isOrderMonomorphism_92 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
   = du_isOrderMonomorphism_92
 du_isOrderMonomorphism_92 ::
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsOrderMonomorphism_190
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsOrderMonomorphism_182
 du_isOrderMonomorphism_92
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.C_constructor_228
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.C_constructor_220
       (coe du_isOrderHomomorphism_90) (coe (\ v0 v1 v2 -> v2))
       (coe (\ v0 v1 v2 -> v2))
 -- Relation.Binary.Morphism.Construct.Identity._.isOrderIsomorphism
@@ -150,14 +150,14 @@ d_isOrderIsomorphism_94 ::
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny) ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsOrderIsomorphism_248
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsOrderIsomorphism_240
 d_isOrderIsomorphism_94 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6
   = du_isOrderIsomorphism_94
 du_isOrderIsomorphism_94 ::
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsOrderIsomorphism_248
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsOrderIsomorphism_240
 du_isOrderIsomorphism_94
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.C_constructor_288
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.C_constructor_280
       (coe du_isOrderMonomorphism_92)
       (coe MAlonzo.Code.Function.Construct.Identity.du_surjective_26)
 -- Relation.Binary.Morphism.Construct.Identity._.preorderHomomorphism

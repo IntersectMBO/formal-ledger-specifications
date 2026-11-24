@@ -540,7 +540,7 @@ du_DecEq'45'Credential_284 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'Credential_284 v0 v1
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (coe
          (\ v2 ->
             case coe v2 of
@@ -740,7 +740,7 @@ du_DecEq'45'BaseAddr_336 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'BaseAddr_336 v0 v1 v2
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (coe
          (\ v3 ->
             case coe v3 of
@@ -822,7 +822,7 @@ du_DecEq'45'BootstrapAddr_338 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'BootstrapAddr_338 v0 v1
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (coe
          (\ v2 ->
             case coe v2 of
@@ -846,7 +846,7 @@ du_DecEq'45'BootstrapAddr_338 v0 v1
                                                      MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v14 v15
                                                        -> if coe v14
                                                             then let v16
-                                                                       = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                                       = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
                                                                            (coe v5) (coe v9) in
                                                                  coe
                                                                    (case coe v16 of
@@ -896,7 +896,7 @@ du_DecEq'45'RewardAddress_340 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'RewardAddress_340 v0 v1 v2
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (coe
          (\ v3 ->
             case coe v3 of
@@ -971,14 +971,14 @@ du_Show'45'Credential_352 v0 v1
                      MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
                      (coe ("KeyHashObj" :: Data.Text.Text))
                      (coe
-                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                         (coe MAlonzo.Code.Class.Show.Core.d_show_16 v0 v3))
               C_ScriptObj_24 v3
                 -> coe
                      MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
                      (coe ("ScriptObj" :: Data.Text.Text))
                      (coe
-                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                         (coe MAlonzo.Code.Class.Show.Core.d_show_16 v1 v3))
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Core.Specification.Address._.Show-RewardAddress
@@ -1013,10 +1013,10 @@ du_Show'45'RewardAddress_354 v0 v1 v2
                         MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
                         (coe ("constructor" :: Data.Text.Text))
                         (coe
-                           MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                           MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                            (coe MAlonzo.Code.Class.Show.Core.d_show_16 v0 v4)))
                      (coe
-                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                         (coe
                            MAlonzo.Code.Class.Show.Core.d_show_16
                            (coe du_Show'45'Credential_352 (coe v1) (coe v2)) v5))

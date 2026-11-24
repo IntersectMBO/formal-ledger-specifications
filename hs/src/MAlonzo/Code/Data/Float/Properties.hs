@@ -91,7 +91,7 @@ d__'8776''63'__30
               (coe MAlonzo.Code.Agda.Builtin.Float.d_primFloatToWord64_22 v0)))
       (coe
          MAlonzo.Code.Data.Maybe.Properties.du_'8801''45'dec_24
-         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
 -- Data.Float.Properties.≈-isEquivalence
 d_'8776''45'isEquivalence_32 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_28

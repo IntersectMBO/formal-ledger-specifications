@@ -80,7 +80,7 @@ d__'8776''63'__26 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d__'8776''63'__26 v0 v1
   = coe
-      MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+      MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
       (coe word64ToNat (coe v0)) (coe word64ToNat (coe v1))
 -- Data.Word64.Properties.≈-isEquivalence
 d_'8776''45'isEquivalence_32 ::
@@ -147,7 +147,7 @@ d__'60''63'__68
   = coe
       MAlonzo.Code.Relation.Binary.Construct.On.du_decidable_102
       (coe word64ToNat)
-      (coe MAlonzo.Code.Data.Nat.Properties.d__'60''63'__3172)
+      (coe MAlonzo.Code.Data.Nat.Properties.d__'60''63'__3412)
 -- Data.Word64.Properties.<-strictTotalOrder-≈
 d_'60''45'strictTotalOrder'45''8776'_70 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_StrictTotalOrder_1280
@@ -155,5 +155,5 @@ d_'60''45'strictTotalOrder'45''8776'_70
   = coe
       MAlonzo.Code.Relation.Binary.Construct.On.du_strictTotalOrder_650
       (coe
-         MAlonzo.Code.Data.Nat.Properties.d_'60''45'strictTotalOrder_3194)
+         MAlonzo.Code.Data.Nat.Properties.d_'60''45'strictTotalOrder_3434)
       (coe word64ToNat)

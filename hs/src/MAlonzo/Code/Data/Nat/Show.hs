@@ -43,12 +43,12 @@ du_readMaybe_10 ::
 du_readMaybe_10 v0 v1
   = let v2
           = coe
-              MAlonzo.Code.Function.Base.du__'8728''8242'__216
+              MAlonzo.Code.Function.Base.du__'8728''8242'__230
               (coe
                  MAlonzo.Code.Data.Maybe.Base.du_map_64
                  (coe du_convert_18 (coe v0)))
               (coe
-                 MAlonzo.Code.Function.Base.du__'8728''8242'__216
+                 MAlonzo.Code.Function.Base.du__'8728''8242'__230
                  (coe
                     MAlonzo.Code.Data.List.Effectful.du_mapA_94
                     (coe MAlonzo.Code.Data.Maybe.Effectful.du_applicative_24)
@@ -185,7 +185,7 @@ d_toDecimalChars_54 ::
   Integer -> [MAlonzo.Code.Agda.Builtin.Char.T_Char_6]
 d_toDecimalChars_54
   = coe
-      MAlonzo.Code.Function.Base.du__'8728''8242'__216
+      MAlonzo.Code.Function.Base.du__'8728''8242'__230
       (coe MAlonzo.Code.Data.List.Base.du_map_22 (coe d_toDigitChar_50))
       (coe
          MAlonzo.Code.Data.Digit.du_toNatDigits_20 (coe (10 :: Integer)))
@@ -193,7 +193,7 @@ d_toDecimalChars_54
 d_show_56 :: Integer -> MAlonzo.Code.Agda.Builtin.String.T_String_6
 d_show_56
   = coe
-      MAlonzo.Code.Function.Base.du__'8728''8242'__216
+      MAlonzo.Code.Function.Base.du__'8728''8242'__230
       (coe MAlonzo.Code.Agda.Builtin.String.d_primStringFromList_14)
       (coe d_toDecimalChars_54)
 -- Data.Nat.Show.charsInBase

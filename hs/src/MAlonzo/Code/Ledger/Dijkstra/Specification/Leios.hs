@@ -727,7 +727,7 @@ d_honouredBlsKey_1492 v0 v1 v2
                     MAlonzo.Code.Class.ToBool.du_if_then_else__38
                     (coe MAlonzo.Code.Class.ToBool.du_ToBool'45''8263'_106)
                     (coe
-                       MAlonzo.Code.Function.Base.du__on__334 erased
+                       MAlonzo.Code.Function.Base.du__on__348 erased
                        (MAlonzo.Code.Ledger.Core.Specification.Epoch.d_firstSlot_94
                           (coe
                              MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_epochStructure_844
@@ -760,7 +760,7 @@ d_honouredBlsKey_1492 v0 v1 v2
                              MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_epochStructure_844
                              (coe v0)))
                        (coe
-                          MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+                          MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
                           (MAlonzo.Code.Ledger.Core.Specification.Epoch.d_firstSlot_94
                              (coe
                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_epochStructure_844
@@ -787,7 +787,7 @@ d_honouredBlsKey_1492 v0 v1 v2
                                       (coe v0))
                                    (d_maxKeyAge_1490 (coe v0))))))
                        (coe
-                          MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                          MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                           (\ v6 v7 -> v7)
                           (MAlonzo.Code.Ledger.Core.Specification.Epoch.d_firstSlot_94
                              (coe
@@ -906,12 +906,12 @@ du_totalStake_1628 v0 v1
                MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_cryptoStructure_748
                (coe v0))))
       (coe
-         MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+         MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
       (coe
          MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
          (coe
-            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
       (coe (\ v2 -> v2)) (coe v1)
 -- Ledger.Dijkstra.Specification.Leios._._._.leiosSeatMap
 d_leiosSeatMap_1632 ::
@@ -1005,7 +1005,7 @@ du_allLeiosSeats_1644 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> [T_LeiosSeat_1470]
 du_allLeiosSeats_1644 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Class.Functor.Core.du_fmap_22
+      MAlonzo.Code.Class.Functor.Core.du_fmap_24
       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
       () erased
       (coe
@@ -1103,7 +1103,7 @@ du_Dec'45'certifiable_1674 v0 v1
   = coe
       MAlonzo.Code.Class.Decidable.Core.C_'8263'__30
       (coe
-         MAlonzo.Code.Data.Rational.Properties.d__'8804''63'__3622
+         MAlonzo.Code.Data.Rational.Properties.d__'8804''63'__3874
          (coe
             MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_fromUnitInterval_72
             (coe
@@ -1114,7 +1114,7 @@ du_Dec'45'certifiable_1674 v0 v1
             (coe
                MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                (coe
-                  MAlonzo.Code.Data.Rational.Properties.d_'43''45'0'45'commutativeMonoid_4354))
+                  MAlonzo.Code.Data.Rational.Properties.d_'43''45'0'45'commutativeMonoid_4606))
             (\ v2 ->
                MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_fromUnitInterval_72
                  (coe d_weight_1480 (coe v2)))
@@ -1249,7 +1249,7 @@ du_signersSeats_1690 ::
   [T_LeiosSeat_1470] -> [Integer] -> [T_LeiosSeat_1470]
 du_signersSeats_1690 v0 v1
   = coe
-      MAlonzo.Code.Class.Functor.Core.du_fmap_22
+      MAlonzo.Code.Class.Functor.Core.du_fmap_24
       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
       () erased
       (\ v2 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v2))
@@ -1336,7 +1336,7 @@ d_Dec'45'ValidEBCert_1756 v0 v1 v2 v3 v4
          MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
          (coe du_fromConjuncts_1778) (coe du_toConjuncts_1788)
          (coe
-            MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+            MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
             (coe
                MAlonzo.Code.Class.Decidable.Core.d_dec_16
                (coe
@@ -1361,7 +1361,7 @@ d_Dec'45'ValidEBCert_1756 v0 v1 v2 v3 v4
                                 (coe MAlonzo.Code.Data.List.Base.du_length_268 v1)))))
                   (coe d_signers_1682 (coe v4))))
             (coe
-               MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+               MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                (coe
                   MAlonzo.Code.Class.Decidable.Core.d_dec_16
                   (coe
@@ -1376,7 +1376,7 @@ d_Dec'45'ValidEBCert_1756 v0 v1 v2 v3 v4
                              (coe d_key_1482 (coe v5))))
                      (coe du_seats_1770 (coe v1) (coe v4))))
                (coe
-                  MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+                  MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                   (coe
                      MAlonzo.Code.Class.Decidable.Core.d_dec_16
                      (coe
@@ -1405,7 +1405,7 @@ d_Dec'45'ValidEBCert_1756 v0 v1 v2 v3 v4
                            (coe
                               MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                               (coe
-                                 MAlonzo.Code.Data.Rational.Properties.d_'43''45'0'45'commutativeMonoid_4354))
+                                 MAlonzo.Code.Data.Rational.Properties.d_'43''45'0'45'commutativeMonoid_4606))
                            (\ v5 ->
                               MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_fromUnitInterval_72
                                 (coe d_weight_1480 (coe v5)))

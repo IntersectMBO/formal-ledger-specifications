@@ -82,7 +82,7 @@ d_pState_2674 v0
       (coe v0)
 -- Ledger.Dijkstra.Specification.PoolReap.Properties.Computational._.completeness
 d_completeness_2678 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
@@ -91,14 +91,14 @@ d_completeness_2678 ::
 d_completeness_2678 = erased
 -- Ledger.Dijkstra.Specification.PoolReap.Properties.Computational._.computeProof
 d_computeProof_2684 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_computeProof_2684 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_304
+      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_346
       (coe v0)
 -- Ledger.Dijkstra.Specification.PoolReap.Properties.Computational._.POOLREAP-total
 d_POOLREAP'45'total_2706 ::
@@ -256,12 +256,12 @@ d_POOLREAP'45'total_2706 v0 v1 v2
                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                  (coe v0))))
                         (coe
-                           MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-                           (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+                           MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+                           (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
                         (coe
                            MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                            (coe
-                              MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                              MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                         (coe (\ v3 -> v3))
                         (let v3
                                = coe
@@ -852,11 +852,11 @@ d_POOLREAP'45'deterministic'45''8801'_2732 = erased
 -- Ledger.Dijkstra.Specification.PoolReap.Properties.Computational.Computational-POOLREAP
 d_Computational'45'POOLREAP_2734 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'POOLREAP_2734 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_486
       (\ v1 v2 v3 ->
          coe
-           MAlonzo.Code.Interface.ComputationalRelation.C_success_42
+           MAlonzo.Code.Interface.ComputationalRelation.C_success_46
            (coe d_POOLREAP'45'total_2706 (coe v0) (coe v3) (coe v2)))

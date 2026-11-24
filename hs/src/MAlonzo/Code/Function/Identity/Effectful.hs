@@ -59,7 +59,7 @@ du_monad_18
       MAlonzo.Code.Effect.Monad.C_constructor_98 (coe du_applicative_16)
       (coe
          (\ v0 v1 ->
-            coe MAlonzo.Code.Function.Base.du__'124''62''8242'__232))
+            coe MAlonzo.Code.Function.Base.du__'124''62''8242'__246))
 -- Function.Identity.Effectful.comonad
 d_comonad_20 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->

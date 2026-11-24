@@ -89,10 +89,10 @@ du_Dec'45'InBalanceInterval_984 v0 v1
                         MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
                         (\ v4 ->
                            coe
-                             MAlonzo.Code.Data.Nat.Properties.du_'8804''7495''8658''8804'_2854
+                             MAlonzo.Code.Data.Nat.Properties.du_'8804''7495''8658''8804'_3094
                              (coe v2))
                         (coe
-                           MAlonzo.Code.Data.Nat.Properties.du_'8804''8658''8804''7495'_2866)
+                           MAlonzo.Code.Data.Nat.Properties.du_'8804''8658''8804''7495'_3106)
                         (coe
                            MAlonzo.Code.Relation.Nullary.Decidable.Core.d_T'63'_72
                            (coe
@@ -104,10 +104,10 @@ du_Dec'45'InBalanceInterval_984 v0 v1
                            MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
                            (\ v5 ->
                               coe
-                                MAlonzo.Code.Data.Nat.Properties.du_'8804''7495''8658''8804'_2854
+                                MAlonzo.Code.Data.Nat.Properties.du_'8804''7495''8658''8804'_3094
                                 (coe addInt (coe (1 :: Integer)) (coe v0)))
                            (coe
-                              MAlonzo.Code.Data.Nat.Properties.du_'8804''8658''8804''7495'_2866)
+                              MAlonzo.Code.Data.Nat.Properties.du_'8804''8658''8804''7495'_3106)
                            (coe
                               MAlonzo.Code.Relation.Nullary.Decidable.Core.d_T'63'_72
                               (coe
@@ -153,10 +153,10 @@ du_Dec'45'InBalanceInterval_984 v0 v1
                         MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
                         (\ v3 ->
                            coe
-                             MAlonzo.Code.Data.Nat.Properties.du_'8804''7495''8658''8804'_2854
+                             MAlonzo.Code.Data.Nat.Properties.du_'8804''7495''8658''8804'_3094
                              (coe v2))
                         (coe
-                           MAlonzo.Code.Data.Nat.Properties.du_'8804''8658''8804''7495'_2866)
+                           MAlonzo.Code.Data.Nat.Properties.du_'8804''8658''8804''7495'_3106)
                         (coe
                            MAlonzo.Code.Relation.Nullary.Decidable.Core.d_T'63'_72
                            (coe
@@ -188,10 +188,10 @@ du_Dec'45'InBalanceInterval_984 v0 v1
                         MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
                         (\ v3 ->
                            coe
-                             MAlonzo.Code.Data.Nat.Properties.du_'8804''7495''8658''8804'_2854
+                             MAlonzo.Code.Data.Nat.Properties.du_'8804''7495''8658''8804'_3094
                              (coe addInt (coe (1 :: Integer)) (coe v0)))
                         (coe
-                           MAlonzo.Code.Data.Nat.Properties.du_'8804''8658''8804''7495'_2866)
+                           MAlonzo.Code.Data.Nat.Properties.du_'8804''8658''8804''7495'_3106)
                         (coe
                            MAlonzo.Code.Relation.Nullary.Decidable.Core.d_T'63'_72
                            (coe
@@ -254,7 +254,7 @@ du_DecEq'45'BalanceInterval_1108 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'BalanceInterval_1108
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (coe
          (\ v0 ->
             case coe v0 of
@@ -264,14 +264,14 @@ du_DecEq'45'BalanceInterval_1108
                         case coe v3 of
                           C_'10214'_'44'_'10630'_952 v4 v5
                             -> let v6
-                                     = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                     = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
                                          (coe v1) (coe v4) in
                                coe
                                  (case coe v6 of
                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v7 v8
                                       -> if coe v7
                                            then let v9
-                                                      = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                      = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
                                                           (coe v2) (coe v5) in
                                                 coe
                                                   (case coe v9 of
@@ -322,7 +322,7 @@ du_DecEq'45'BalanceInterval_1108
                                  (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
                           C_'10214'_'44''8734''10630'_954 v3
                             -> let v4
-                                     = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                     = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
                                          (coe v1) (coe v3) in
                                coe
                                  (case coe v4 of
@@ -367,7 +367,7 @@ du_DecEq'45'BalanceInterval_1108
                                  (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
                           C_'10214'0'44'_'10630'_956 v3
                             -> let v4
-                                     = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                     = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
                                          (coe v1) (coe v3) in
                                coe
                                  (case coe v4 of
@@ -412,7 +412,7 @@ du_DecEq'45'BalanceInterval_1108
                                  (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
                           C_Exact_958 v3
                             -> let v4
-                                     = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                     = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
                                          (coe v1) (coe v3) in
                                coe
                                  (case coe v4 of

@@ -52,7 +52,7 @@ du_cong'8345'_40 v0
       MAlonzo.Code.Data.Product.Nary.NonDependent.du_curry'8345'_150
       (coe v0)
       (coe
-         MAlonzo.Code.Function.Base.du__'8728''8242'__216 erased erased)
+         MAlonzo.Code.Function.Base.du__'8728''8242'__230 erased erased)
 -- Function.Nary.NonDependent._.g
 d_g_64 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->

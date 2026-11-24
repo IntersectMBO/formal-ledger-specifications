@@ -172,8 +172,7 @@ du_tail_158 v0
   = case coe v0 of
       C_'91'_'93'_32 v3
         -> coe
-             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-             erased
+             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
       C__'8759'__38 v3 v4 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Unary.First._.index

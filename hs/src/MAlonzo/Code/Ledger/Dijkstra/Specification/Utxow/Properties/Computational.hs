@@ -275,10 +275,10 @@ d_utxo_3048 v0
 d_Computational'45'SUBUTXOW_3068 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'SUBUTXOW_3068 v0 v1
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_486
       (d_computeProof_3146 (coe v0) (coe v1))
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.go.lift-step
 d_lift'45'step_3108 ::
@@ -388,7 +388,7 @@ d_computeProof'45'aux_3138 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3312 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3878 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_computeProof'45'aux_3138 v0 v1 v2 v3 v4 v5
   = case coe v5 of
       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v6 v7
@@ -396,13 +396,14 @@ d_computeProof'45'aux_3138 v0 v1 v2 v3 v4 v5
              then case coe v7 of
                     MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v8
                       -> coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            (coe
-                              MAlonzo.Code.Interface.ComputationalRelation.du_Functor'45'ComputationResult_138)
+                              MAlonzo.Code.Interface.ComputationalRelation.du_Functor'45'ComputationResult_148)
                            () erased () erased
                            (coe
-                              MAlonzo.Code.Class.Bifunctor.du_map'8322''8242'_54
-                              (coe MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45'Σ_74)
+                              MAlonzo.Code.Class.Bifunctor.du_map'8322''8242'_56
+                              (coe MAlonzo.Code.Class.Bifunctor.d_Bifunctor'45'Σ_76) (coe ())
+                              (coe ()) (coe ())
                               (\ v9 v10 -> coe du_lift'45'step_3108 (coe v8) v10))
                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.Properties.Computational.d_computeProof_3006
                               (coe v0) (coe v1) (coe v2) (coe v3) (coe v4))
@@ -410,7 +411,7 @@ d_computeProof'45'aux_3138 v0 v1 v2 v3 v4 v5
              else coe
                     seq (coe v7)
                     (coe
-                       MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
+                       MAlonzo.Code.Interface.ComputationalRelation.C_failure_48
                        (let v8
                               = coe
                                   MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_dec'45'de'45'morgan_10
@@ -951,7 +952,7 @@ d_computeProof'45'aux_3138 v0 v1 v2 v3 v4 v5
                                                                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                                     (\ v20 ->
                                                                                                        coe
-                                                                                                         MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                                                                                         MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                                                                                          MAlonzo.Code.Class.Monad.Instances.d_Monad'45'Maybe_18
                                                                                                          MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                          erased
@@ -967,7 +968,7 @@ d_computeProof'45'aux_3138 v0 v1 v2 v3 v4 v5
                                                                                                                      v20))))
                                                                                                          (\ v21 ->
                                                                                                             coe
-                                                                                                              MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                                                                                              MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                                                                                               MAlonzo.Code.Class.Monad.Instances.d_Monad'45'Maybe_18
                                                                                                               MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                               erased
@@ -1053,7 +1054,7 @@ d_computeProof'45'aux_3138 v0 v1 v2 v3 v4 v5
                                                                                                                              v2)))))
                                                                                                               (\ v22 ->
                                                                                                                  coe
-                                                                                                                   MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                                                                                                   MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                                                                                                    MAlonzo.Code.Class.Monad.Instances.d_Monad'45'Maybe_18
                                                                                                                    MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                                    erased
@@ -1158,7 +1159,7 @@ d_computeProof'45'aux_3138 v0 v1 v2 v3 v4 v5
                                                                                                                                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                                                          (\ v23 ->
                                                                                                                             coe
-                                                                                                                              MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                                                                                                              MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                                                                                                               MAlonzo.Code.Class.Monad.Instances.d_Monad'45'Maybe_18
                                                                                                                               MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                                               erased
@@ -1174,7 +1175,7 @@ d_computeProof'45'aux_3138 v0 v1 v2 v3 v4 v5
                                                                                                                                           v23))))
                                                                                                                               (\ v24 ->
                                                                                                                                  coe
-                                                                                                                                   MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                                                                                                                   MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                                                                                                                    MAlonzo.Code.Class.Monad.Instances.d_Monad'45'Maybe_18
                                                                                                                                    MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                                                    erased
@@ -1260,7 +1261,7 @@ d_computeProof'45'aux_3138 v0 v1 v2 v3 v4 v5
                                                                                                                                                   v2)))))
                                                                                                                                    (\ v25 ->
                                                                                                                                       coe
-                                                                                                                                        MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                                                                                                                        MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                                                                                                                         MAlonzo.Code.Class.Monad.Instances.d_Monad'45'Maybe_18
                                                                                                                                         MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                                                         erased
@@ -1881,7 +1882,7 @@ d_computeProof'45'aux_3138 v0 v1 v2 v3 v4 v5
                                                                                                                                                (coe
                                                                                                                                                   v4)))
                                                                                                                                          (coe
-                                                                                                                                            MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                                                            MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                                                                                             MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6
                                                                                                                                             MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                                                             erased
@@ -1930,7 +1931,7 @@ d_computeProof_3146 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_SubUTxOEnv_3276 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3312 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3878 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_computeProof_3146 v0 v1 v2 v3 v4
   = coe
       d_computeProof'45'aux_3138 (coe v0) (coe v1) (coe v2) (coe v3)
@@ -1969,10 +1970,10 @@ d_completeness_3190 = erased
 d_Computational'45'UTXOW_3192 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'UTXOW_3192 v0 v1
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_486
       (d_computeProof_3322 (coe v0) (coe v1))
 -- Ledger.Dijkstra.Specification.Utxow.Properties.Computational._.go.lift-legacy
 d_lift'45'legacy_3236 ::
@@ -2243,7 +2244,7 @@ d_computeProof'45'aux_3310 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3878 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_computeProof'45'aux_3310 v0 v1 v2 v3 v4 v5 v6
   = case coe v5 of
       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v7 v8
@@ -2251,13 +2252,14 @@ d_computeProof'45'aux_3310 v0 v1 v2 v3 v4 v5 v6
              then case coe v8 of
                     MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v9
                       -> coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            (coe
-                              MAlonzo.Code.Interface.ComputationalRelation.du_Functor'45'ComputationResult_138)
+                              MAlonzo.Code.Interface.ComputationalRelation.du_Functor'45'ComputationResult_148)
                            () erased () erased
                            (coe
-                              MAlonzo.Code.Class.Bifunctor.du_map'8322''8242'_54
-                              (coe MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45'Σ_74)
+                              MAlonzo.Code.Class.Bifunctor.du_map'8322''8242'_56
+                              (coe MAlonzo.Code.Class.Bifunctor.d_Bifunctor'45'Σ_76) (coe ())
+                              (coe ()) (coe ())
                               (\ v10 v11 -> coe du_lift'45'legacy_3236 (coe v9) v11))
                            (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.Properties.Computational.d_computeProof_3174
                               (coe v0) (coe v1) (coe v2) (coe v3) (coe v4))
@@ -2270,14 +2272,15 @@ d_computeProof'45'aux_3310 v0 v1 v2 v3 v4 v5 v6
                               then case coe v10 of
                                      MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v11
                                        -> coe
-                                            MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                            MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                             (coe
-                                               MAlonzo.Code.Interface.ComputationalRelation.du_Functor'45'ComputationResult_138)
+                                               MAlonzo.Code.Interface.ComputationalRelation.du_Functor'45'ComputationResult_148)
                                             () erased () erased
                                             (coe
-                                               MAlonzo.Code.Class.Bifunctor.du_map'8322''8242'_54
+                                               MAlonzo.Code.Class.Bifunctor.du_map'8322''8242'_56
                                                (coe
-                                                  MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45'Σ_74)
+                                                  MAlonzo.Code.Class.Bifunctor.d_Bifunctor'45'Σ_76)
+                                               (coe ()) (coe ()) (coe ())
                                                (\ v12 v13 ->
                                                   coe du_lift'45'normal_3274 (coe v11) v13))
                                             (MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.Properties.Computational.d_computeProof_3174
@@ -2286,7 +2289,7 @@ d_computeProof'45'aux_3310 v0 v1 v2 v3 v4 v5 v6
                               else coe
                                      seq (coe v10)
                                      (coe
-                                        MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
+                                        MAlonzo.Code.Interface.ComputationalRelation.C_failure_48
                                         (coe
                                            MAlonzo.Code.Data.String.Base.d__'43''43'__20
                                            (let v11
@@ -3138,7 +3141,7 @@ d_computeProof'45'aux_3310 v0 v1 v2 v3 v4 v5 v6
                                                                                                                                                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                                                                                       (\ v29 ->
                                                                                                                                                          coe
-                                                                                                                                                           MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                                                                                                                                           MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                                                                                                                                            MAlonzo.Code.Class.Monad.Instances.d_Monad'45'Maybe_18
                                                                                                                                                            MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                                                                            erased
@@ -3154,7 +3157,7 @@ d_computeProof'45'aux_3310 v0 v1 v2 v3 v4 v5 v6
                                                                                                                                                                        v29))))
                                                                                                                                                            (\ v30 ->
                                                                                                                                                               coe
-                                                                                                                                                                MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                                                                                                                                                MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                                                                                                                                                 MAlonzo.Code.Class.Monad.Instances.d_Monad'45'Maybe_18
                                                                                                                                                                 MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                                                                                 erased
@@ -3240,7 +3243,7 @@ d_computeProof'45'aux_3310 v0 v1 v2 v3 v4 v5 v6
                                                                                                                                                                                v2)))))
                                                                                                                                                                 (\ v31 ->
                                                                                                                                                                    coe
-                                                                                                                                                                     MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                                                                                                                                                     MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                                                                                                                                                      MAlonzo.Code.Class.Monad.Instances.d_Monad'45'Maybe_18
                                                                                                                                                                      MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                                                                                      erased
@@ -3345,7 +3348,7 @@ d_computeProof'45'aux_3310 v0 v1 v2 v3 v4 v5 v6
                                                                                                                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                                                                                                            (\ v32 ->
                                                                                                                                                                               coe
-                                                                                                                                                                                MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                                                                                                                                                                MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                                                                                                                                                                 MAlonzo.Code.Class.Monad.Instances.d_Monad'45'Maybe_18
                                                                                                                                                                                 MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                                                                                                 erased
@@ -3361,7 +3364,7 @@ d_computeProof'45'aux_3310 v0 v1 v2 v3 v4 v5 v6
                                                                                                                                                                                             v32))))
                                                                                                                                                                                 (\ v33 ->
                                                                                                                                                                                    coe
-                                                                                                                                                                                     MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                                                                                                                                                                     MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                                                                                                                                                                      MAlonzo.Code.Class.Monad.Instances.d_Monad'45'Maybe_18
                                                                                                                                                                                      MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                                                                                                      erased
@@ -3447,7 +3450,7 @@ d_computeProof'45'aux_3310 v0 v1 v2 v3 v4 v5 v6
                                                                                                                                                                                                     v2)))))
                                                                                                                                                                                      (\ v34 ->
                                                                                                                                                                                         coe
-                                                                                                                                                                                          MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                                                                                                                                                                          MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                                                                                                                                                                           MAlonzo.Code.Class.Monad.Instances.d_Monad'45'Maybe_18
                                                                                                                                                                                           MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                                                                                                           erased
@@ -4241,7 +4244,7 @@ d_computeProof'45'aux_3310 v0 v1 v2 v3 v4 v5 v6
                                                                                                                                                                                                            (coe
                                                                                                                                                                                                               v4)))
                                                                                                                                                                                                      (coe
-                                                                                                                                                                                                        MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                                                                                                                        MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                                                                                                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6
                                                                                                                                                                                                         MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                                                                                                                         erased
@@ -5139,7 +5142,7 @@ d_computeProof'45'aux_3310 v0 v1 v2 v3 v4 v5 v6
                                                                                                                                                                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                                                                                          (\ v29 ->
                                                                                                                                                             coe
-                                                                                                                                                              MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                                                                                                                                              MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                                                                                                                                               MAlonzo.Code.Class.Monad.Instances.d_Monad'45'Maybe_18
                                                                                                                                                               MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                                                                               erased
@@ -5155,7 +5158,7 @@ d_computeProof'45'aux_3310 v0 v1 v2 v3 v4 v5 v6
                                                                                                                                                                           v29))))
                                                                                                                                                               (\ v30 ->
                                                                                                                                                                  coe
-                                                                                                                                                                   MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                                                                                                                                                   MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                                                                                                                                                    MAlonzo.Code.Class.Monad.Instances.d_Monad'45'Maybe_18
                                                                                                                                                                    MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                                                                                    erased
@@ -5241,7 +5244,7 @@ d_computeProof'45'aux_3310 v0 v1 v2 v3 v4 v5 v6
                                                                                                                                                                                   v2)))))
                                                                                                                                                                    (\ v31 ->
                                                                                                                                                                       coe
-                                                                                                                                                                        MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                                                                                                                                                        MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                                                                                                                                                         MAlonzo.Code.Class.Monad.Instances.d_Monad'45'Maybe_18
                                                                                                                                                                         MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                                                                                         erased
@@ -5346,7 +5349,7 @@ d_computeProof'45'aux_3310 v0 v1 v2 v3 v4 v5 v6
                                                                                                                                                                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                                                                                                               (\ v32 ->
                                                                                                                                                                                  coe
-                                                                                                                                                                                   MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                                                                                                                                                                   MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                                                                                                                                                                    MAlonzo.Code.Class.Monad.Instances.d_Monad'45'Maybe_18
                                                                                                                                                                                    MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                                                                                                    erased
@@ -5362,7 +5365,7 @@ d_computeProof'45'aux_3310 v0 v1 v2 v3 v4 v5 v6
                                                                                                                                                                                                v32))))
                                                                                                                                                                                    (\ v33 ->
                                                                                                                                                                                       coe
-                                                                                                                                                                                        MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                                                                                                                                                                        MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                                                                                                                                                                         MAlonzo.Code.Class.Monad.Instances.d_Monad'45'Maybe_18
                                                                                                                                                                                         MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                                                                                                         erased
@@ -5448,7 +5451,7 @@ d_computeProof'45'aux_3310 v0 v1 v2 v3 v4 v5 v6
                                                                                                                                                                                                        v2)))))
                                                                                                                                                                                         (\ v34 ->
                                                                                                                                                                                            coe
-                                                                                                                                                                                             MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                                                                                                                                                                             MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                                                                                                                                                                              MAlonzo.Code.Class.Monad.Instances.d_Monad'45'Maybe_18
                                                                                                                                                                                              MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                                                                                                              erased
@@ -6057,7 +6060,7 @@ d_computeProof'45'aux_3310 v0 v1 v2 v3 v4 v5 v6
                                                                                                                                                                                                     (coe
                                                                                                                                                                                                        v4)))
                                                                                                                                                                                               (coe
-                                                                                                                                                                                                 MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                                                                                                                 MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                                                                                                                                                  MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6
                                                                                                                                                                                                  MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                                                                                                                  erased
@@ -6110,7 +6113,7 @@ d_computeProof_3322 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOEnv_3244 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Utxo.T_UTxOState_3312 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_Tx_3878 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_computeProof_3322 v0 v1 v2 v3 v4
   = coe
       d_computeProof'45'aux_3310 (coe v0) (coe v1) (coe v2) (coe v3)

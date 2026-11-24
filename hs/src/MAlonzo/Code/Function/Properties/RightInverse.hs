@@ -273,12 +273,12 @@ du_to'45'from_510 v0 v1 v2 v3 v4 v5
       MAlonzo.Code.Relation.Binary.Structures.d_trans_40
       (MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_62 (coe v0))
       (coe
-         MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+         MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
          (MAlonzo.Code.Function.Bundles.d_from_2050 (coe v2))
          (\ v6 v7 -> v6) v4
          (coe MAlonzo.Code.Function.Bundles.d_to_2048 v2 v3))
       (coe
-         MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+         MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
          (\ v6 v7 -> v7)
          (MAlonzo.Code.Function.Bundles.d_from_2050 (coe v2)) v4
          (coe MAlonzo.Code.Function.Bundles.d_to_2048 v2 v3))

@@ -166,8 +166,7 @@ du_as_90 v0 v1 v2 v3
         -> coe
              seq (coe v3)
              (coe
-                MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                erased)
+                MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68)
       MAlonzo.Code.Data.List.Relation.Binary.Lex.Core.C_next_74 v8 v9
         -> case coe v0 of
              (:) v10 v11
@@ -176,8 +175,7 @@ du_as_90 v0 v1 v2 v3
                       -> case coe v3 of
                            MAlonzo.Code.Data.List.Relation.Binary.Lex.Core.C_this_60 v18
                              -> coe
-                                  MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                  erased
+                                  MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
                            MAlonzo.Code.Data.List.Relation.Binary.Lex.Core.C_next_74 v18 v19
                              -> coe
                                   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.C__'8759'__62
@@ -636,10 +634,10 @@ du_decidable_260 v0 v1 v2 v3 v4
                     MAlonzo.Code.Relation.Nullary.Decidable.du_map_18
                     (coe du_'8759''60''8759''45''8660'_248)
                     (coe
-                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8846''45'dec__96
+                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8846''63'__96
                        (coe v2 v5 v7)
                        (coe
-                          MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+                          MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                           (coe v1 v5 v7)
                           (coe
                              du_decidable_260 (coe v0) (coe v1) (coe v2) (coe v6) (coe v8))))

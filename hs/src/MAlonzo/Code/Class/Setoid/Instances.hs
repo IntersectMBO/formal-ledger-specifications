@@ -36,23 +36,23 @@ du_Setoid'45'Maybe_6 ::
   MAlonzo.Code.Class.Setoid.Core.T_ISetoid_10
 du_Setoid'45'Maybe_6 v0
   = coe
-      MAlonzo.Code.Class.Setoid.Core.C_constructor_158
+      MAlonzo.Code.Class.Setoid.Core.C_constructor_160
       (MAlonzo.Code.Class.Setoid.Core.d_relℓ_18 (coe v0))
 -- Class.Setoid.Instances.SetoidLaws-Maybe
 d_SetoidLaws'45'Maybe_16 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Class.Setoid.Core.T_ISetoid_10 ->
-  MAlonzo.Code.Class.Setoid.Core.T_SetoidLaws_304 ->
-  MAlonzo.Code.Class.Setoid.Core.T_SetoidLaws_304
+  MAlonzo.Code.Class.Setoid.Core.T_SetoidLaws_308 ->
+  MAlonzo.Code.Class.Setoid.Core.T_SetoidLaws_308
 d_SetoidLaws'45'Maybe_16 ~v0 ~v1 ~v2 v3
   = du_SetoidLaws'45'Maybe_16 v3
 du_SetoidLaws'45'Maybe_16 ::
-  MAlonzo.Code.Class.Setoid.Core.T_SetoidLaws_304 ->
-  MAlonzo.Code.Class.Setoid.Core.T_SetoidLaws_304
+  MAlonzo.Code.Class.Setoid.Core.T_SetoidLaws_308 ->
+  MAlonzo.Code.Class.Setoid.Core.T_SetoidLaws_308
 du_SetoidLaws'45'Maybe_16 v0
   = coe
-      MAlonzo.Code.Class.Setoid.Core.C_constructor_368
+      MAlonzo.Code.Class.Setoid.Core.C_constructor_372
       (coe
          MAlonzo.Code.Relation.Binary.Structures.C_constructor_46
          (coe
@@ -61,7 +61,7 @@ du_SetoidLaws'45'Maybe_16 v0
                  MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v2
                    -> coe
                         MAlonzo.Code.Relation.Binary.Structures.d_refl_36
-                        (MAlonzo.Code.Class.Setoid.Core.d_isEquivalence_312 (coe v0)) v2
+                        (MAlonzo.Code.Class.Setoid.Core.d_isEquivalence_316 (coe v0)) v2
                  MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
                    -> coe
                         MAlonzo.Code.Level.C_lift_20
@@ -75,7 +75,7 @@ du_SetoidLaws'45'Maybe_16 v0
                         MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v4
                           -> coe
                                MAlonzo.Code.Relation.Binary.Structures.d_sym_38
-                               (MAlonzo.Code.Class.Setoid.Core.d_isEquivalence_312 (coe v0)) v3 v4
+                               (MAlonzo.Code.Class.Setoid.Core.d_isEquivalence_316 (coe v0)) v3 v4
                         MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18 -> coe (\ v4 -> v4)
                         _ -> MAlonzo.RTE.mazUnreachableError
                  MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
@@ -91,7 +91,7 @@ du_SetoidLaws'45'Maybe_16 v0
                                MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v8
                                  -> coe
                                       MAlonzo.Code.Relation.Binary.Structures.d_trans_40
-                                      (MAlonzo.Code.Class.Setoid.Core.d_isEquivalence_312 (coe v0))
+                                      (MAlonzo.Code.Class.Setoid.Core.d_isEquivalence_316 (coe v0))
                                       v6 v7 v8 v4 v5
                                _ -> MAlonzo.RTE.mazUnreachableError
                         _ -> MAlonzo.RTE.mazUnreachableError

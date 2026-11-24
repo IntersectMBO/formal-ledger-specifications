@@ -1588,7 +1588,7 @@ d_newEpochState_4532 v0 = coe d_newEpochState_4448 (coe v0)
 -- Ledger.Dijkstra.Specification.Chain._.bHeaderHash
 d_bHeaderHash_4540 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_28275 ->
+  T_GeneralizeTel_28313 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -1606,7 +1606,7 @@ du_bHeaderHash_4540 v0
 -- Ledger.Dijkstra.Specification.Chain._.bheader
 d_bheader_4542 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_28275 ->
+  T_GeneralizeTel_28313 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -1624,7 +1624,7 @@ du_bheader_4542 v0
 -- Ledger.Dijkstra.Specification.Chain._.ebCert
 d_ebCert_4544 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_28275 ->
+  T_GeneralizeTel_28313 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -1644,7 +1644,7 @@ du_ebCert_4544 v0
 -- Ledger.Dijkstra.Specification.Chain._.bhbody
 d_bhbody_4554 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_28275 ->
+  T_GeneralizeTel_28313 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -1664,7 +1664,7 @@ du_bhbody_4554 v0
 -- Ledger.Dijkstra.Specification.Chain._.announcedEB
 d_announcedEB_4560 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_28275 ->
+  T_GeneralizeTel_28313 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -1686,7 +1686,7 @@ du_announcedEB_4560 v0
 -- Ledger.Dijkstra.Specification.Chain._.slot
 d_slot_4572 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_28275 ->
+  T_GeneralizeTel_28313 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -1707,7 +1707,7 @@ du_slot_4572 v0
 -- Ledger.Dijkstra.Specification.Chain._.bcur
 d_bcur_4576 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_28275 ->
+  T_GeneralizeTel_28313 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -1724,7 +1724,7 @@ du_bcur_4576 v0
 -- Ledger.Dijkstra.Specification.Chain._.epochState
 d_epochState_4580 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_28275 ->
+  T_GeneralizeTel_28313 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -1743,7 +1743,7 @@ du_epochState_4580 v0
 -- Ledger.Dijkstra.Specification.Chain._.acnt
 d_acnt_4592 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_28275 ->
+  T_GeneralizeTel_28313 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -1763,7 +1763,7 @@ du_acnt_4592 v0
 -- Ledger.Dijkstra.Specification.Chain._.es
 d_es_4594 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_28275 ->
+  T_GeneralizeTel_28313 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -1783,7 +1783,7 @@ du_es_4594 v0
 -- Ledger.Dijkstra.Specification.Chain._.ls
 d_ls_4598 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_28275 ->
+  T_GeneralizeTel_28313 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -1803,7 +1803,7 @@ du_ls_4598 v0
 -- Ledger.Dijkstra.Specification.Chain._.lastApplied
 d_lastApplied_4626 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_50631 ->
+  T_GeneralizeTel_50669 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -1822,7 +1822,7 @@ du_lastApplied_4626 v0 = coe d_lastApplied_4450 (coe v0)
 -- Ledger.Dijkstra.Specification.Chain._.newEpochState
 d_newEpochState_4628 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_50631 ->
+  T_GeneralizeTel_50669 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -1842,7 +1842,7 @@ du_newEpochState_4628 v0 = coe d_newEpochState_4448 (coe v0)
 -- Ledger.Dijkstra.Specification.Chain._.bHeaderHash
 d_bHeaderHash_4636 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_50631 ->
+  T_GeneralizeTel_50669 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -1865,7 +1865,7 @@ du_bHeaderHash_4636 v0
 -- Ledger.Dijkstra.Specification.Chain._.bheader
 d_bheader_4638 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_50631 ->
+  T_GeneralizeTel_50669 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -1888,7 +1888,7 @@ du_bheader_4638 v0
 -- Ledger.Dijkstra.Specification.Chain._.ebCert
 d_ebCert_4640 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_50631 ->
+  T_GeneralizeTel_50669 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -1913,7 +1913,7 @@ du_ebCert_4640 v0
 -- Ledger.Dijkstra.Specification.Chain._.bhbody
 d_bhbody_4650 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_50631 ->
+  T_GeneralizeTel_50669 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -1938,7 +1938,7 @@ du_bhbody_4650 v0
 -- Ledger.Dijkstra.Specification.Chain._.announcedEB
 d_announcedEB_4656 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_50631 ->
+  T_GeneralizeTel_50669 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -1965,7 +1965,7 @@ du_announcedEB_4656 v0
 -- Ledger.Dijkstra.Specification.Chain._.slot
 d_slot_4668 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_50631 ->
+  T_GeneralizeTel_50669 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -1992,7 +1992,7 @@ du_slot_4668 v0
 -- Ledger.Dijkstra.Specification.Chain._.bcur
 d_bcur_4672 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_50631 ->
+  T_GeneralizeTel_50669 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -2015,7 +2015,7 @@ du_bcur_4672 v0
 -- Ledger.Dijkstra.Specification.Chain._.epochState
 d_epochState_4676 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_50631 ->
+  T_GeneralizeTel_50669 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -2038,7 +2038,7 @@ du_epochState_4676 v0
 -- Ledger.Dijkstra.Specification.Chain._.acnt
 d_acnt_4688 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_50631 ->
+  T_GeneralizeTel_50669 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -2063,7 +2063,7 @@ du_acnt_4688 v0
 -- Ledger.Dijkstra.Specification.Chain._.es
 d_es_4690 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_50631 ->
+  T_GeneralizeTel_50669 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -2088,7 +2088,7 @@ du_es_4690 v0
 -- Ledger.Dijkstra.Specification.Chain._.ls
 d_ls_4694 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_50631 ->
+  T_GeneralizeTel_50669 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -2113,7 +2113,7 @@ du_ls_4694 v0
 -- Ledger.Dijkstra.Specification.Chain._.slot
 d_slot_4700 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_50631 ->
+  T_GeneralizeTel_50669 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -2131,7 +2131,7 @@ du_slot_4700 v0 = coe d_slot_4434 (coe v0)
 -- Ledger.Dijkstra.Specification.Chain._.headerHash
 d_headerHash_4702 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_50631 ->
+  T_GeneralizeTel_50669 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -2149,7 +2149,7 @@ du_headerHash_4702 v0 = coe d_headerHash_4436 (coe v0)
 -- Ledger.Dijkstra.Specification.Chain._.closure
 d_closure_4706 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_50631 ->
+  T_GeneralizeTel_50669 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -2169,7 +2169,7 @@ du_closure_4706 v0 = coe d_closure_4484 (coe v0)
 -- Ledger.Dijkstra.Specification.Chain._.eb
 d_eb_4708 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_50631 ->
+  T_GeneralizeTel_50669 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -2189,7 +2189,7 @@ du_eb_4708 v0 = coe d_eb_4482 (coe v0)
 -- Ledger.Dijkstra.Specification.Chain._.resolvedEB
 d_resolvedEB_4712 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  T_GeneralizeTel_50631 ->
+  T_GeneralizeTel_50669 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_ChainEnv_4488 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.T_Block_3130 ->
@@ -2205,26 +2205,26 @@ d_resolvedEB_4712 ~v0 ~v1 ~v2 v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 ~v10
 du_resolvedEB_4712 :: T_ChainEnv_4488 -> Maybe T_ResolvedEB_4476
 du_resolvedEB_4712 v0 = coe d_resolvedEB_4492 (coe v0)
 -- Ledger.Dijkstra.Specification.Chain..generalizedField-ls'
-d_'46'generalizedField'45'ls''_28273 ::
-  T_GeneralizeTel_28275 ->
+d_'46'generalizedField'45'ls''_28311 ::
+  T_GeneralizeTel_28313 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3942
-d_'46'generalizedField'45'ls''_28273 v0
+d_'46'generalizedField'45'ls''_28311 v0
   = case coe v0 of
-      C_mkGeneralizeTel_28277 v1 -> coe v1
+      C_mkGeneralizeTel_28315 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Specification.Chain.GeneralizeTel
-d_GeneralizeTel_28275 a0 a1 = ()
-newtype T_GeneralizeTel_28275
-  = C_mkGeneralizeTel_28277 MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3942
+d_GeneralizeTel_28313 a0 a1 = ()
+newtype T_GeneralizeTel_28313
+  = C_mkGeneralizeTel_28315 MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3942
 -- Ledger.Dijkstra.Specification.Chain..generalizedField-ls'
-d_'46'generalizedField'45'ls''_50629 ::
-  T_GeneralizeTel_50631 ->
+d_'46'generalizedField'45'ls''_50667 ::
+  T_GeneralizeTel_50669 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3942
-d_'46'generalizedField'45'ls''_50629 v0
+d_'46'generalizedField'45'ls''_50667 v0
   = case coe v0 of
-      C_mkGeneralizeTel_50633 v1 -> coe v1
+      C_mkGeneralizeTel_50671 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Specification.Chain.GeneralizeTel
-d_GeneralizeTel_50631 a0 a1 = ()
-newtype T_GeneralizeTel_50631
-  = C_mkGeneralizeTel_50633 MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3942
+d_GeneralizeTel_50669 a0 a1 = ()
+newtype T_GeneralizeTel_50669
+  = C_mkGeneralizeTel_50671 MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.T_LedgerState_3942

@@ -34,25 +34,25 @@ import qualified MAlonzo.Code.Function.Base
 d_TC_4 :: MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> ()
 d_TC_4 = erased
 -- Reflection.TCI.Monad-TC
-d_Monad'45'TC_6 :: MAlonzo.Code.Class.Monad.Core.T_Monad_8
+d_Monad'45'TC_6 :: MAlonzo.Code.Class.Monad.Core.T_Monad_10
 d_Monad'45'TC_6
   = coe
-      MAlonzo.Code.Class.MonadReader.du_Monad'45'ReaderT_108
+      MAlonzo.Code.Class.MonadReader.du_Monad'45'ReaderT_112
       (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6)
 -- Reflection.TCI.MonadReader-TC
 d_MonadReader'45'TC_8 ::
-  MAlonzo.Code.Class.MonadReader.T_MonadReader_18
+  MAlonzo.Code.Class.MonadReader.T_MonadReader_22
 d_MonadReader'45'TC_8
   = coe
-      MAlonzo.Code.Class.MonadReader.du_MonadReader'45'ReaderT_122
+      MAlonzo.Code.Class.MonadReader.du_MonadReader'45'ReaderT_126
       (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6)
 -- Reflection.TCI.MonadError-TC
 d_MonadError'45'TC_12 ::
   MAlonzo.Code.Class.MonadError.T_MonadError_16
 d_MonadError'45'TC_12
   = coe
-      MAlonzo.Code.Class.MonadReader.du_MonadError'45'ReaderT_134
-      (coe MAlonzo.Code.Class.MonadError.d_MonadError'45'TC_32)
+      MAlonzo.Code.Class.MonadReader.du_MonadError'45'ReaderT_138
+      (coe MAlonzo.Code.Class.MonadError.d_MonadError'45'TC_40)
 -- Reflection.TCI.applyReductionOptions
 d_applyReductionOptions_14 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -478,7 +478,7 @@ d_getInstances_144
 d_MonadTC'45'TCI_146 :: MAlonzo.Code.Class.MonadTC.T_MonadTC_84
 d_MonadTC'45'TCI_146
   = coe
-      MAlonzo.Code.Class.MonadTC.C_constructor_398 (coe d_unify_98)
+      MAlonzo.Code.Class.MonadTC.C_constructor_400 (coe d_unify_98)
       (\ v0 v1 -> coe du_typeError_100 v0) (coe d_inferType_102)
       (coe d_checkType_104) (coe d_normalise_106) (coe d_reduce_108)
       (\ v0 v1 v2 -> coe du_quoteTC_110 v0 v2)

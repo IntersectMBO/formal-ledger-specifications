@@ -345,7 +345,7 @@ d_Conv'45'GovVotes_40
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                        (coe v5))))))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v4 ->
@@ -393,7 +393,7 @@ d_Conv'45'GovVotes_40
                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                        (coe v5))))))
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v4 ->
@@ -421,7 +421,7 @@ d_Conv'45'GovVotes_40
                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                         (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                         (coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                            () erased
                            (\ v4 ->
@@ -506,7 +506,7 @@ d_Conv'45'GovVoter_64 ::
   MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Conv'45'GovVoter_64
   = coe
-      MAlonzo.Code.Class.Convertible.Core.du__'10814'__76
+      MAlonzo.Code.Class.Convertible.Core.du__'10814'__82
       (coe d_mkGovVoter''_44)
       (coe
          MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
@@ -664,7 +664,7 @@ d_Conv'45'GovVote''_116
             case coe v0 of
               C_constructor_84 v1 v2 v3 v4
                 -> coe
-                     C_MkGovVote_5419
+                     C_MkGovVote_5435
                      (coe
                         MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
                         (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
@@ -723,7 +723,7 @@ d_Conv'45'GovVote''_116
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_to_20
                         (coe
-                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe d_Conv'45'Anchor_28))
                         v4)
@@ -731,7 +731,7 @@ d_Conv'45'GovVote''_116
       (coe
          (\ v0 ->
             case coe v0 of
-              C_MkGovVote_5419 v1 v2 v3 v4
+              C_MkGovVote_5435 v1 v2 v3 v4
                 -> coe
                      C_constructor_84
                      (coe
@@ -790,7 +790,7 @@ d_Conv'45'GovVote''_116
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
                         (coe
-                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                           MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe d_Conv'45'Anchor_28))
                         v4)
@@ -804,7 +804,7 @@ d_Conv'45'GovVote_120 ::
   MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 d_Conv'45'GovVote_120
   = coe
-      MAlonzo.Code.Class.Convertible.Core.du__'10814'__76
+      MAlonzo.Code.Class.Convertible.Core.du__'10814'__82
       (coe d_mkGovVote''_86) (coe d_Conv'45'GovVote''_116)
 -- Ledger.Dijkstra.Foreign.Gov.Core.Anchor
 d_Anchor_147 = ()
@@ -876,10 +876,10 @@ cover_GovVotes_1267 x
   = case x of
       GovVotes _ _ _ -> ()
 -- Ledger.Dijkstra.Foreign.Gov.Core.GovVote
-d_GovVote_5417 = ()
-type T_GovVote_5417 = GovVote
-pattern C_MkGovVote_5419 a0 a1 a2 a3 = MkGovVote a0 a1 a2 a3
-check_MkGovVote_5419 ::
+d_GovVote_5433 = ()
+type T_GovVote_5433 = GovVote
+pattern C_MkGovVote_5435 a0 a1 a2 a3 = MkGovVote a0 a1 a2 a3
+check_MkGovVote_5435 ::
   MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
     () () Integer Integer ->
   MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
@@ -887,9 +887,9 @@ check_MkGovVote_5419 ::
     MAlonzo.Code.Ledger.Core.Foreign.Address.T_Credential_615 ->
   T_Vote_1137 ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () T_Anchor_147 ->
-  T_GovVote_5417
-check_MkGovVote_5419 = MkGovVote
-cover_GovVote_5417 :: GovVote -> ()
-cover_GovVote_5417 x
+  T_GovVote_5433
+check_MkGovVote_5435 = MkGovVote
+cover_GovVote_5433 :: GovVote -> ()
+cover_GovVote_5433 x
   = case x of
       MkGovVote _ _ _ _ -> ()

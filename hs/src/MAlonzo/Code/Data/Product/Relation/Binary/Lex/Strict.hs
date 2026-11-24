@@ -187,16 +187,16 @@ du_trans_104 v0 v1 v2 v3 v4 v5 v6 v7 v8
                     (coe
                        v2
                        (coe
-                          MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+                          MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
                           (\ v11 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v11))
                           (\ v11 v12 -> v11) v4 v5)
                        (coe
-                          MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                          MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                           (\ v11 v12 -> v12)
                           (\ v11 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v11)) v4
                           v5)
                        (coe
-                          MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                          MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                           (\ v11 v12 -> v12)
                           (\ v11 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v11)) v5
                           v6)
@@ -207,15 +207,15 @@ du_trans_104 v0 v1 v2 v3 v4 v5 v6 v7 v8
                     (coe
                        MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 v1
                        (coe
-                          MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+                          MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
                           (\ v11 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v11))
                           (\ v11 v12 -> v11) v4 v5)
                        (coe
-                          MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+                          MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
                           (\ v11 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v11))
                           (\ v11 v12 -> v11) v5 v6)
                        (coe
-                          MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                          MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                           (\ v11 v12 -> v12)
                           (\ v11 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v11)) v5
                           v6)
@@ -229,27 +229,27 @@ du_trans_104 v0 v1 v2 v3 v4 v5 v6 v7 v8
                     (coe
                        MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 v1
                        (coe
-                          MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                          MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                           (\ v11 v12 -> v12)
                           (\ v11 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v11)) v5
                           v6)
                        (coe
-                          MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                          MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                           (\ v11 v12 -> v12)
                           (\ v11 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v11)) v4
                           v5)
                        (coe
-                          MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+                          MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
                           (\ v11 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v11))
                           (\ v11 v12 -> v11) v4 v5)
                        (coe
                           MAlonzo.Code.Relation.Binary.Structures.d_sym_38 v0
                           (coe
-                             MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+                             MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
                              (\ v11 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v11))
                              (\ v11 v12 -> v11) v4 v5)
                           (coe
-                             MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                             MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                              (\ v11 v12 -> v12)
                              (\ v11 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v11)) v4
                              v5)
@@ -263,16 +263,16 @@ du_trans_104 v0 v1 v2 v3 v4 v5 v6 v7 v8
                        (coe
                           MAlonzo.Code.Relation.Binary.Structures.d_trans_40 v0
                           (coe
-                             MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+                             MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
                              (\ v11 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v11))
                              (\ v11 v12 -> v11) v4 v5)
                           (coe
-                             MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                             MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                              (\ v11 v12 -> v12)
                              (\ v11 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v11)) v4
                              v5)
                           (coe
-                             MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                             MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                              (\ v11 v12 -> v12)
                              (\ v11 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v11)) v5
                              v6)
@@ -281,16 +281,16 @@ du_trans_104 v0 v1 v2 v3 v4 v5 v6 v7 v8
                        (coe
                           v3
                           (coe
-                             MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+                             MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
                              (\ v11 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v11))
                              (\ v11 v12 -> v11) v4 v5)
                           (coe
-                             MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                             MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                              (\ v11 v12 -> v12)
                              (\ v11 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v11)) v4
                              v5)
                           (coe
-                             MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                             MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                              (\ v11 v12 -> v12)
                              (\ v11 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v11)) v5
                              v6)
@@ -536,12 +536,12 @@ du_'215''45'decidable_268 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 du_'215''45'decidable_268 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8846''45'dec__96
+      MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8846''63'__96
       (coe
          v1 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v3))
          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v4)))
       (coe
-         MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+         MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
          (coe
             v0 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v3))
             (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v4)))
@@ -698,14 +698,12 @@ du_antisym_340 v0 v1 v2 v3 v4
         -> coe
              seq (coe v4)
              (coe
-                MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                erased)
+                MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68)
       MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v5
         -> case coe v4 of
              MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v6
                -> coe
-                    MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                    erased
+                    MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
              MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v6
                -> coe
                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -713,11 +711,11 @@ du_antisym_340 v0 v1 v2 v3 v4
                     (coe
                        v0
                        (coe
-                          MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+                          MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
                           (\ v7 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v7))
                           (\ v7 v8 -> v7) v1 v2)
                        (coe
-                          MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                          MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                           (\ v7 v8 -> v8)
                           (\ v7 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v7)) v1 v2)
                        (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v5))
@@ -768,7 +766,7 @@ du_'215''45'respects'691'_358 v0 v1 v2 v3 v4 v5 v6 v7
              (coe
                 v1
                 (coe
-                   MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+                   MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
                    (\ v9 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v9))
                    (\ v9 v10 -> v9) v3 v4)
                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v4))
@@ -782,11 +780,11 @@ du_'215''45'respects'691'_358 v0 v1 v2 v3 v4 v5 v6 v7
                 (coe
                    v0
                    (coe
-                      MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+                      MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
                       (\ v9 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v9))
                       (\ v9 v10 -> v9) v3 v4)
                    (coe
-                      MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                      MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                       (\ v9 v10 -> v10)
                       (\ v9 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v9)) v3 v4)
                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v5))
@@ -795,7 +793,7 @@ du_'215''45'respects'691'_358 v0 v1 v2 v3 v4 v5 v6 v7
                 (coe
                    v2
                    (coe
-                      MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+                      MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
                       (\ v9 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v9))
                       (\ v9 v10 -> v9) v3 v4)
                    (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v4))
@@ -849,7 +847,7 @@ du_'215''45'respects'737'_380 v0 v1 v2 v3 v4 v5 v6 v7 v8
              (coe
                 v2
                 (coe
-                   MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                   MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                    (\ v10 v11 -> v11)
                    (\ v10 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v10)) v5
                    v4)
@@ -865,7 +863,7 @@ du_'215''45'respects'737'_380 v0 v1 v2 v3 v4 v5 v6 v7 v8
                    v1 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v6))
                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v5))
                    (coe
-                      MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                      MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                       (\ v10 v11 -> v11)
                       (\ v10 -> MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v10)) v5
                       v4)
@@ -877,7 +875,7 @@ du_'215''45'respects'737'_380 v0 v1 v2 v3 v4 v5 v6 v7 v8
                 (coe
                    v3
                    (coe
-                      MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                      MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                       (\ v10 v11 -> v11)
                       (\ v10 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v10)) v5
                       v4)

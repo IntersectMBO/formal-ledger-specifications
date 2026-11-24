@@ -346,7 +346,7 @@ du_linked'63'_218 v0 v1
                        MAlonzo.Code.Data.Product.Base.du_'60'_'44'_'62'_112
                        (coe du_head_60) (coe du_tail_70))
                     (coe
-                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                        (coe v0 v2 v4) (coe du_linked'63'_218 (coe v0) (coe v3)))
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError

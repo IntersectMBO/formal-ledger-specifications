@@ -94,7 +94,7 @@ d_epoch_1048 v0
 d_Computational'45'BBODY_2676 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'BBODY_2676 v0 v1
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.Properties.Computational.d_Computational'45'BBODY_3244
@@ -346,12 +346,12 @@ d__'8866'_'8640''10631'_'44'TICK'10632'__3286 a0 a1 a2 a3 a4 a5
 d_Computational'45'TICK_3314 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'TICK_3314 v0 ~v1
   = du_Computational'45'TICK_3314 v0
 du_Computational'45'TICK_3314 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 du_Computational'45'TICK_3314 v0
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.RewardUpdate.Properties.Computational.du_Computational'45'TICK_3066
@@ -373,7 +373,7 @@ du_rbHeaderHashBytes_3318 v0
          (coe v0))
 -- Ledger.Dijkstra.Specification.Chain.Properties.Computational._.completeness
 d_completeness_3322 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
@@ -382,14 +382,14 @@ d_completeness_3322 ::
 d_completeness_3322 = erased
 -- Ledger.Dijkstra.Specification.Chain.Properties.Computational._.computeProof
 d_computeProof_3328 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_computeProof_3328 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_304
+      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_346
       (coe v0)
 -- Ledger.Dijkstra.Specification.Chain.Properties.Computational.pending?
 d_pending'63'_3344 ::
@@ -653,7 +653,7 @@ du_validCert'63'_3398 v0 v1 v2 v3
       (coe
          MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.du_toConjuncts_1788)
       (coe
-         MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+         MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
          (coe
             MAlonzo.Code.Class.Decidable.Core.d_dec_16
             (coe
@@ -685,7 +685,7 @@ du_validCert'63'_3398 v0 v1 v2 v3
                   MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.d_signers_1682
                   (coe v3))))
          (coe
-            MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+            MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
             (coe
                MAlonzo.Code.Class.Decidable.Core.d_dec_16
                (coe
@@ -709,7 +709,7 @@ du_validCert'63'_3398 v0 v1 v2 v3
                            (coe v1)))
                      (coe v3))))
             (coe
-               MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+               MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                (coe
                   MAlonzo.Code.Class.Decidable.Core.d_dec_16
                   (coe
@@ -770,7 +770,7 @@ du_validCert'63'_3398 v0 v1 v2 v3
                         (coe
                            MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                            (coe
-                              MAlonzo.Code.Data.Rational.Properties.d_'43''45'0'45'commutativeMonoid_4354))
+                              MAlonzo.Code.Data.Rational.Properties.d_'43''45'0'45'commutativeMonoid_4606))
                         (\ v4 ->
                            MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_fromUnitInterval_72
                              (coe
@@ -788,10 +788,10 @@ du_validCert'63'_3398 v0 v1 v2 v3
 d_Computational'45'CHAIN_3400 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.T_TransactionStructure_58 ->
   MAlonzo.Code.Ledger.Dijkstra.Specification.Abstract.T_AbstractFunctions_3264 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'CHAIN_3400 v0 v1
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_486
       (\ v2 v3 v4 ->
          let v5
                = MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.d_ebCert_3154
@@ -961,7 +961,7 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                                                                                               (coe
                                                                                                                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.du_toConjuncts_1788)
                                                                                                                                               (coe
-                                                                                                                                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+                                                                                                                                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                                                                                                                                                  (coe
                                                                                                                                                     MAlonzo.Code.Class.Decidable.Core.d_dec_16
                                                                                                                                                     (coe
@@ -998,7 +998,7 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                                                                                                           (coe
                                                                                                                                                              v6))))
                                                                                                                                                  (coe
-                                                                                                                                                    MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+                                                                                                                                                    MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                                                                                                                                                     (coe
                                                                                                                                                        MAlonzo.Code.Class.Decidable.Core.d_dec_16
                                                                                                                                                        (coe
@@ -1025,7 +1025,7 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                                                                                                              (coe
                                                                                                                                                                 v6))))
                                                                                                                                                     (coe
-                                                                                                                                                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+                                                                                                                                                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                                                                                                                                                        (coe
                                                                                                                                                           MAlonzo.Code.Class.Decidable.Core.d_dec_16
                                                                                                                                                           (coe
@@ -1094,7 +1094,7 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                                                                                                                 (coe
                                                                                                                                                                    MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                                                                                                                                                                    (coe
-                                                                                                                                                                      MAlonzo.Code.Data.Rational.Properties.d_'43''45'0'45'commutativeMonoid_4354))
+                                                                                                                                                                      MAlonzo.Code.Data.Rational.Properties.d_'43''45'0'45'commutativeMonoid_4606))
                                                                                                                                                                 (\ v27 ->
                                                                                                                                                                    MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_fromUnitInterval_72
                                                                                                                                                                      (coe
@@ -1121,9 +1121,9 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                                                                                                             v29 of
                                                                                                                                                        MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v30
                                                                                                                                                          -> coe
-                                                                                                                                                              MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                                                                                                                                              MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                                                                                                                                               (coe
-                                                                                                                                                                 MAlonzo.Code.Interface.ComputationalRelation.du_Monad'45'ComputationResult_162)
+                                                                                                                                                                 MAlonzo.Code.Interface.ComputationalRelation.du_Monad'45'ComputationResult_178)
                                                                                                                                                               ()
                                                                                                                                                               erased
                                                                                                                                                               ()
@@ -1143,7 +1143,7 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                                                                                                                   coe
                                                                                                                                                                     (let v33
                                                                                                                                                                            = coe
-                                                                                                                                                                               MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+                                                                                                                                                                               MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                                                                                                                                                                                (coe
                                                                                                                                                                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Leios.Validity.Properties.Computational.du_wellFormed'63'_2900
                                                                                                                                                                                   (coe
@@ -1153,13 +1153,15 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                                                                                                                                      (coe
                                                                                                                                                                                         v8)))
                                                                                                                                                                                (coe
-                                                                                                                                                                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+                                                                                                                                                                                  MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                                                                                                                                                                                   (coe
                                                                                                                                                                                      MAlonzo.Code.Class.Decidable.Core.d_dec_16
                                                                                                                                                                                      (coe
                                                                                                                                                                                         MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
                                                                                                                                                                                         (coe
                                                                                                                                                                                            MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'List_58
+                                                                                                                                                                                           (coe
+                                                                                                                                                                                              ())
                                                                                                                                                                                            (coe
                                                                                                                                                                                               MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4
                                                                                                                                                                                               ()
@@ -1182,7 +1184,7 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                                                                                                                                                = MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 in
                                                                                                                                                                                          coe
                                                                                                                                                                                            (coe
-                                                                                                                                                                                              MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                                                                                                              MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                                                                                                                                               v33
                                                                                                                                                                                               ()
                                                                                                                                                                                               erased
@@ -1203,7 +1205,7 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                                                                                                                                                  (coe
                                                                                                                                                                                                     v8))))))
                                                                                                                                                                                   (coe
-                                                                                                                                                                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+                                                                                                                                                                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                                                                                                                                                                                      (coe
                                                                                                                                                                                         MAlonzo.Code.Class.Decidable.Core.d_dec_16
                                                                                                                                                                                         (coe
@@ -1237,7 +1239,7 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                                                                                                                                               (coe
                                                                                                                                                                                                  MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                                                                                                                                                                                                  (coe
-                                                                                                                                                                                                    MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                                                                                                                                                                                                    MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                                                                                                                                                                                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_SizeOf_4202
                                                                                                                                                                                                  (coe
                                                                                                                                                                                                     MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.du_HasSize'45'Tx_4612))
@@ -1290,9 +1292,9 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                                                                                                                                                                      v41 of
                                                                                                                                                                                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v42 v43
                                                                                                                                                                                                                   -> coe
-                                                                                                                                                                                                                       MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                                                                                                                                                                                                       MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                                                                                                                                                                                                        (coe
-                                                                                                                                                                                                                          MAlonzo.Code.Interface.ComputationalRelation.du_Monad'45'ComputationResult_162)
+                                                                                                                                                                                                                          MAlonzo.Code.Interface.ComputationalRelation.du_Monad'45'ComputationResult_178)
                                                                                                                                                                                                                        ()
                                                                                                                                                                                                                        erased
                                                                                                                                                                                                                        ()
@@ -1335,7 +1337,7 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                                                                                                                                                                                  v44 of
                                                                                                                                                                                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v45 v46
                                                                                                                                                                                                                               -> coe
-                                                                                                                                                                                                                                   MAlonzo.Code.Interface.ComputationalRelation.C_success_42
+                                                                                                                                                                                                                                   MAlonzo.Code.Interface.ComputationalRelation.C_success_46
                                                                                                                                                                                                                                    (coe
                                                                                                                                                                                                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                                                                                                                                                       (coe
@@ -1370,7 +1372,7 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                                                                                                                                            (coe
                                                                                                                                                                                               v36)
                                                                                                                                                                                            (coe
-                                                                                                                                                                                              MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
+                                                                                                                                                                                              MAlonzo.Code.Interface.ComputationalRelation.C_failure_48
                                                                                                                                                                                               (coe
                                                                                                                                                                                                  ("EB: the references or size bounds do not hold"
                                                                                                                                                                                                   ::
@@ -1381,22 +1383,23 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                                                                                                                         v31 of
                                                                                                                                                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v32 v33
                                                                                                                                                                      -> coe
-                                                                                                                                                                          MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                                                                                                                                                          MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                                                                                                                                                           (coe
-                                                                                                                                                                             MAlonzo.Code.Interface.ComputationalRelation.du_Monad'45'ComputationResult_162)
+                                                                                                                                                                             MAlonzo.Code.Interface.ComputationalRelation.du_Monad'45'ComputationResult_178)
                                                                                                                                                                           ()
                                                                                                                                                                           erased
                                                                                                                                                                           ()
                                                                                                                                                                           erased
                                                                                                                                                                           (coe
                                                                                                                                                                              MAlonzo.Code.Class.Bifunctor.du_map'8321'_112
-                                                                                                                                                                             (coe
-                                                                                                                                                                                MAlonzo.Code.Interface.ComputationalRelation.du_Bifunctor'45'ComputationResult_126)
+                                                                                                                                                                             MAlonzo.Code.Interface.ComputationalRelation.d_Bifunctor'45'ComputationResult_134
+                                                                                                                                                                             ()
+                                                                                                                                                                             ()
                                                                                                                                                                              (\ v34 ->
                                                                                                                                                                                 coe
                                                                                                                                                                                   MAlonzo.Code.Data.Empty.du_'8869''45'elim_12)
                                                                                                                                                                              (coe
-                                                                                                                                                                                MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_304
+                                                                                                                                                                                MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_346
                                                                                                                                                                                 (coe
                                                                                                                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.RewardUpdate.Properties.Computational.du_Computational'45'TICK_3066
                                                                                                                                                                                    (coe
@@ -1493,15 +1496,15 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                                                                                                                                     v34 of
                                                                                                                                                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v35 v36
                                                                                                                                                                                  -> coe
-                                                                                                                                                                                      MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                                                                                                                                                                      MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                                                                                                                                                                       (coe
-                                                                                                                                                                                         MAlonzo.Code.Interface.ComputationalRelation.du_Monad'45'ComputationResult_162)
+                                                                                                                                                                                         MAlonzo.Code.Interface.ComputationalRelation.du_Monad'45'ComputationResult_178)
                                                                                                                                                                                       ()
                                                                                                                                                                                       erased
                                                                                                                                                                                       ()
                                                                                                                                                                                       erased
                                                                                                                                                                                       (coe
-                                                                                                                                                                                         MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_304
+                                                                                                                                                                                         MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_346
                                                                                                                                                                                          (MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.Properties.Computational.d_Computational'45'BBODY_3244
                                                                                                                                                                                             (coe
                                                                                                                                                                                                v0)
@@ -1541,7 +1544,7 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                                                                                                                                                        v38 of
                                                                                                                                                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v40 v41
                                                                                                                                                                                                     -> coe
-                                                                                                                                                                                                         MAlonzo.Code.Interface.ComputationalRelation.C_success_42
+                                                                                                                                                                                                         MAlonzo.Code.Interface.ComputationalRelation.C_success_46
                                                                                                                                                                                                          (coe
                                                                                                                                                                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                                                                                                                             (coe
@@ -1685,7 +1688,7 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                                                                                                        (coe
                                                                                                                                                           v29)
                                                                                                                                                        (coe
-                                                                                                                                                          MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
+                                                                                                                                                          MAlonzo.Code.Interface.ComputationalRelation.C_failure_48
                                                                                                                                                           (coe
                                                                                                                                                              ("the EB certificate is not valid against the announcing epoch's committee"
                                                                                                                                                               ::
@@ -1697,7 +1700,7 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                                                                                (coe
                                                                                                                                   v25)
                                                                                                                                (coe
-                                                                                                                                  MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
+                                                                                                                                  MAlonzo.Code.Interface.ComputationalRelation.C_failure_48
                                                                                                                                   (coe
                                                                                                                                      ("the certificate crosses an epoch boundary, so the announcement has been retired"
                                                                                                                                       ::
@@ -1709,7 +1712,7 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                                                        (coe
                                                                                                           v21)
                                                                                                        (coe
-                                                                                                          MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
+                                                                                                          MAlonzo.Code.Interface.ComputationalRelation.C_failure_48
                                                                                                           (coe
                                                                                                              ("the certificate comes before the certification delay has elapsed"
                                                                                                               ::
@@ -1719,7 +1722,7 @@ d_Computational'45'CHAIN_3400 v0 v1
                                                                         else coe
                                                                                seq (coe v17)
                                                                                (coe
-                                                                                  MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
+                                                                                  MAlonzo.Code.Interface.ComputationalRelation.C_failure_48
                                                                                   (coe
                                                                                      du_pendingFailure_3354
                                                                                      (coe v13)))
@@ -1729,7 +1732,7 @@ d_Computational'45'CHAIN_3400 v0 v1
                                          else coe
                                                 seq (coe v11)
                                                 (coe
-                                                   MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
+                                                   MAlonzo.Code.Interface.ComputationalRelation.C_failure_48
                                                    (coe
                                                       ("the chain has no last applied block, so no EB is pending"
                                                        ::
@@ -1737,7 +1740,7 @@ d_Computational'45'CHAIN_3400 v0 v1
                                   _ -> MAlonzo.RTE.mazUnreachableError)
                         MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
                           -> coe
-                               MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
+                               MAlonzo.Code.Interface.ComputationalRelation.C_failure_48
                                (coe
                                   ("the block carries an EB certificate but the environment resolves no EB"
                                    ::
@@ -1745,15 +1748,14 @@ d_Computational'45'CHAIN_3400 v0 v1
                         _ -> MAlonzo.RTE.mazUnreachableError)
               MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
                 -> coe
-                     MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                     MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                      (coe
-                        MAlonzo.Code.Interface.ComputationalRelation.du_Monad'45'ComputationResult_162)
+                        MAlonzo.Code.Interface.ComputationalRelation.du_Monad'45'ComputationResult_178)
                      () erased () erased
                      (coe
                         MAlonzo.Code.Class.Bifunctor.du_map'8321'_112
-                        (coe
-                           MAlonzo.Code.Interface.ComputationalRelation.du_Bifunctor'45'ComputationResult_126)
-                        (\ v6 -> coe MAlonzo.Code.Data.Empty.du_'8869''45'elim_12)
+                        MAlonzo.Code.Interface.ComputationalRelation.d_Bifunctor'45'ComputationResult_134
+                        () () (\ v6 -> coe MAlonzo.Code.Data.Empty.du_'8869''45'elim_12)
                         (let v6
                                = MAlonzo.Code.Ledger.Dijkstra.Specification.Chain.d_newEpochState_4448
                                    (coe v3) in
@@ -1787,12 +1789,12 @@ d_Computational'45'CHAIN_3400 v0 v1
                                  (case coe v8 of
                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v9 v10
                                       -> coe
-                                           MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                           MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                            (coe
-                                              MAlonzo.Code.Interface.ComputationalRelation.du_Monad'45'ComputationResult_162)
+                                              MAlonzo.Code.Interface.ComputationalRelation.du_Monad'45'ComputationResult_178)
                                            () erased () erased
                                            (coe
-                                              MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_304
+                                              MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_346
                                               (coe
                                                  MAlonzo.Code.Ledger.Dijkstra.Specification.RewardUpdate.Properties.Computational.du_Computational'45'RUPD_2986
                                                  (coe v0))
@@ -1811,7 +1813,7 @@ d_Computational'45'CHAIN_3400 v0 v1
                                               case coe v11 of
                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v12 v13
                                                   -> coe
-                                                       MAlonzo.Code.Interface.ComputationalRelation.C_success_42
+                                                       MAlonzo.Code.Interface.ComputationalRelation.C_success_46
                                                        (coe
                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                           (coe
@@ -1847,12 +1849,12 @@ d_Computational'45'CHAIN_3400 v0 v1
                         case coe v6 of
                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v7 v8
                             -> coe
-                                 MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                 MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                  (coe
-                                    MAlonzo.Code.Interface.ComputationalRelation.du_Monad'45'ComputationResult_162)
+                                    MAlonzo.Code.Interface.ComputationalRelation.du_Monad'45'ComputationResult_178)
                                  () erased () erased
                                  (coe
-                                    MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_304
+                                    MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_346
                                     (MAlonzo.Code.Ledger.Dijkstra.Specification.BlockBody.Properties.Computational.d_Computational'45'BBODY_3244
                                        (coe v0) (coe v1))
                                     (coe
@@ -1884,7 +1886,7 @@ d_Computational'45'CHAIN_3400 v0 v1
                                         -> case coe v10 of
                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v12 v13
                                                -> coe
-                                                    MAlonzo.Code.Interface.ComputationalRelation.C_success_42
+                                                    MAlonzo.Code.Interface.ComputationalRelation.C_success_46
                                                     (coe
                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                        (coe

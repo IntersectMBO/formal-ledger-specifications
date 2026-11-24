@@ -144,216 +144,224 @@ d_Cancellative_150 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
 d_Cancellative_150 = erased
+-- Class.Prelude.Alg._.Central
+d_Central_152 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> ()
+d_Central_152 = erased
 -- Class.Prelude.Alg._.Commutative
-d_Commutative_152 ::
+d_Commutative_154 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Commutative_152 = erased
+d_Commutative_154 = erased
 -- Class.Prelude.Alg._.Congruent₁
-d_Congruent'8321'_154 ::
+d_Congruent'8321'_156 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> (AgdaAny -> AgdaAny) -> ()
-d_Congruent'8321'_154 = erased
+d_Congruent'8321'_156 = erased
 -- Class.Prelude.Alg._.Congruent₂
-d_Congruent'8322'_156 ::
+d_Congruent'8322'_158 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Congruent'8322'_156 = erased
+d_Congruent'8322'_158 = erased
 -- Class.Prelude.Alg._.Conical
-d_Conical_158 ::
+d_Conical_160 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Conical_158 = erased
+d_Conical_160 = erased
 -- Class.Prelude.Alg._.Flexible
-d_Flexible_160 ::
+d_Flexible_162 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Flexible_160 = erased
+d_Flexible_162 = erased
 -- Class.Prelude.Alg._.Idempotent
-d_Idempotent_162 ::
+d_Idempotent_164 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Idempotent_162 = erased
+d_Idempotent_164 = erased
 -- Class.Prelude.Alg._.IdempotentFun
-d_IdempotentFun_164 ::
+d_IdempotentFun_166 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> (AgdaAny -> AgdaAny) -> ()
-d_IdempotentFun_164 = erased
+d_IdempotentFun_166 = erased
 -- Class.Prelude.Alg._.Identical
-d_Identical_166 ::
+d_Identical_168 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Identical_166 = erased
+d_Identical_168 = erased
 -- Class.Prelude.Alg._.Identity
-d_Identity_168 ::
+d_Identity_170 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Identity_168 = erased
+d_Identity_170 = erased
 -- Class.Prelude.Alg._.Interchangable
-d_Interchangable_170 ::
+d_Interchangable_172 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Interchangable_170 = erased
+d_Interchangable_172 = erased
 -- Class.Prelude.Alg._.Inverse
-d_Inverse_172 ::
+d_Inverse_174 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Inverse_172 = erased
+d_Inverse_174 = erased
 -- Class.Prelude.Alg._.Invertible
-d_Invertible_174 ::
+d_Invertible_176 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> ()
-d_Invertible_174 = erased
+d_Invertible_176 = erased
 -- Class.Prelude.Alg._.Involutive
-d_Involutive_176 ::
+d_Involutive_178 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> (AgdaAny -> AgdaAny) -> ()
-d_Involutive_176 = erased
+d_Involutive_178 = erased
 -- Class.Prelude.Alg._.LeftAlternative
-d_LeftAlternative_178 ::
+d_LeftAlternative_180 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftAlternative_178 = erased
+d_LeftAlternative_180 = erased
 -- Class.Prelude.Alg._.LeftBol
-d_LeftBol_180 ::
+d_LeftBol_182 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftBol_180 = erased
+d_LeftBol_182 = erased
 -- Class.Prelude.Alg._.LeftCancellative
-d_LeftCancellative_182 ::
+d_LeftCancellative_184 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftCancellative_182 = erased
+d_LeftCancellative_184 = erased
 -- Class.Prelude.Alg._.LeftCongruent
-d_LeftCongruent_184 ::
+d_LeftCongruent_186 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftCongruent_184 = erased
+d_LeftCongruent_186 = erased
 -- Class.Prelude.Alg._.LeftConical
-d_LeftConical_186 ::
+d_LeftConical_188 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftConical_186 = erased
+d_LeftConical_188 = erased
 -- Class.Prelude.Alg._.LeftDivides
-d_LeftDivides_188 ::
+d_LeftDivides_190 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftDivides_188 = erased
+d_LeftDivides_190 = erased
 -- Class.Prelude.Alg._.LeftDividesʳ
-d_LeftDivides'691'_190 ::
+d_LeftDivides'691'_192 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftDivides'691'_190 = erased
+d_LeftDivides'691'_192 = erased
 -- Class.Prelude.Alg._.LeftDividesˡ
-d_LeftDivides'737'_192 ::
+d_LeftDivides'737'_194 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftDivides'737'_192 = erased
+d_LeftDivides'737'_194 = erased
 -- Class.Prelude.Alg._.LeftIdentity
-d_LeftIdentity_194 ::
+d_LeftIdentity_196 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftIdentity_194 = erased
+d_LeftIdentity_196 = erased
 -- Class.Prelude.Alg._.LeftInverse
-d_LeftInverse_196 ::
+d_LeftInverse_198 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftInverse_196 = erased
+d_LeftInverse_198 = erased
 -- Class.Prelude.Alg._.LeftInvertible
-d_LeftInvertible_198 ::
+d_LeftInvertible_200 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> ()
-d_LeftInvertible_198 = erased
+d_LeftInvertible_200 = erased
 -- Class.Prelude.Alg._.LeftSemimedial
-d_LeftSemimedial_200 ::
+d_LeftSemimedial_202 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftSemimedial_200 = erased
+d_LeftSemimedial_202 = erased
 -- Class.Prelude.Alg._.LeftZero
-d_LeftZero_202 ::
+d_LeftZero_204 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftZero_202 = erased
+d_LeftZero_204 = erased
 -- Class.Prelude.Alg._.Medial
-d_Medial_204 ::
+d_Medial_206 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Medial_204 = erased
+d_Medial_206 = erased
 -- Class.Prelude.Alg._.MiddleBol
-d_MiddleBol_206 ::
+d_MiddleBol_208 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -361,142 +369,142 @@ d_MiddleBol_206 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_MiddleBol_206 = erased
+d_MiddleBol_208 = erased
 -- Class.Prelude.Alg._.RightAlternative
-d_RightAlternative_208 ::
+d_RightAlternative_210 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightAlternative_208 = erased
+d_RightAlternative_210 = erased
 -- Class.Prelude.Alg._.RightBol
-d_RightBol_210 ::
+d_RightBol_212 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightBol_210 = erased
+d_RightBol_212 = erased
 -- Class.Prelude.Alg._.RightCancellative
-d_RightCancellative_212 ::
+d_RightCancellative_214 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightCancellative_212 = erased
+d_RightCancellative_214 = erased
 -- Class.Prelude.Alg._.RightCongruent
-d_RightCongruent_214 ::
+d_RightCongruent_216 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightCongruent_214 = erased
+d_RightCongruent_216 = erased
 -- Class.Prelude.Alg._.RightConical
-d_RightConical_216 ::
+d_RightConical_218 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightConical_216 = erased
+d_RightConical_218 = erased
 -- Class.Prelude.Alg._.RightDivides
-d_RightDivides_218 ::
+d_RightDivides_220 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightDivides_218 = erased
+d_RightDivides_220 = erased
 -- Class.Prelude.Alg._.RightDividesʳ
-d_RightDivides'691'_220 ::
+d_RightDivides'691'_222 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightDivides'691'_220 = erased
+d_RightDivides'691'_222 = erased
 -- Class.Prelude.Alg._.RightDividesˡ
-d_RightDivides'737'_222 ::
+d_RightDivides'737'_224 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightDivides'737'_222 = erased
+d_RightDivides'737'_224 = erased
 -- Class.Prelude.Alg._.RightIdentity
-d_RightIdentity_224 ::
+d_RightIdentity_226 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightIdentity_224 = erased
+d_RightIdentity_226 = erased
 -- Class.Prelude.Alg._.RightInverse
-d_RightInverse_226 ::
+d_RightInverse_228 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightInverse_226 = erased
+d_RightInverse_228 = erased
 -- Class.Prelude.Alg._.RightInvertible
-d_RightInvertible_228 ::
+d_RightInvertible_230 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> ()
-d_RightInvertible_228 = erased
+d_RightInvertible_230 = erased
 -- Class.Prelude.Alg._.RightSemimedial
-d_RightSemimedial_230 ::
+d_RightSemimedial_232 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightSemimedial_230 = erased
+d_RightSemimedial_232 = erased
 -- Class.Prelude.Alg._.RightZero
-d_RightZero_232 ::
+d_RightZero_234 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightZero_232 = erased
+d_RightZero_234 = erased
 -- Class.Prelude.Alg._.Selective
-d_Selective_234 ::
+d_Selective_236 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Selective_234 = erased
+d_Selective_236 = erased
 -- Class.Prelude.Alg._.SelfInverse
-d_SelfInverse_236 ::
+d_SelfInverse_238 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> (AgdaAny -> AgdaAny) -> ()
-d_SelfInverse_236 = erased
+d_SelfInverse_238 = erased
 -- Class.Prelude.Alg._.Semimedial
-d_Semimedial_238 ::
+d_Semimedial_240 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Semimedial_238 = erased
+d_Semimedial_240 = erased
 -- Class.Prelude.Alg._.StarDestructive
-d_StarDestructive_240 ::
+d_StarDestructive_242 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> ()
-d_StarDestructive_240 = erased
+d_StarDestructive_242 = erased
 -- Class.Prelude.Alg._.StarExpansive
-d_StarExpansive_242 ::
+d_StarExpansive_244 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -504,18 +512,18 @@ d_StarExpansive_242 ::
   AgdaAny ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> ()
-d_StarExpansive_242 = erased
+d_StarExpansive_244 = erased
 -- Class.Prelude.Alg._.StarLeftDestructive
-d_StarLeftDestructive_244 ::
+d_StarLeftDestructive_246 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> ()
-d_StarLeftDestructive_244 = erased
+d_StarLeftDestructive_246 = erased
 -- Class.Prelude.Alg._.StarLeftExpansive
-d_StarLeftExpansive_246 ::
+d_StarLeftExpansive_248 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -523,18 +531,18 @@ d_StarLeftExpansive_246 ::
   AgdaAny ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> ()
-d_StarLeftExpansive_246 = erased
+d_StarLeftExpansive_248 = erased
 -- Class.Prelude.Alg._.StarRightDestructive
-d_StarRightDestructive_248 ::
+d_StarRightDestructive_250 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> ()
-d_StarRightDestructive_248 = erased
+d_StarRightDestructive_250 = erased
 -- Class.Prelude.Alg._.StarRightExpansive
-d_StarRightExpansive_250 ::
+d_StarRightExpansive_252 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -542,387 +550,392 @@ d_StarRightExpansive_250 ::
   AgdaAny ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> ()
-d_StarRightExpansive_250 = erased
+d_StarRightExpansive_252 = erased
 -- Class.Prelude.Alg._.Zero
-d_Zero_252 ::
+d_Zero_254 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Zero_252 = erased
+d_Zero_254 = erased
 -- Class.Prelude.Alg≡._Absorbs_
-d__Absorbs__260 ::
+d__Absorbs__262 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d__Absorbs__260 = erased
+d__Absorbs__262 = erased
 -- Class.Prelude.Alg≡._DistributesOver_
-d__DistributesOver__262 ::
+d__DistributesOver__264 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d__DistributesOver__262 = erased
+d__DistributesOver__264 = erased
 -- Class.Prelude.Alg≡._DistributesOverʳ_
-d__DistributesOver'691'__264 ::
+d__DistributesOver'691'__266 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d__DistributesOver'691'__264 = erased
+d__DistributesOver'691'__266 = erased
 -- Class.Prelude.Alg≡._DistributesOverˡ_
-d__DistributesOver'737'__266 ::
+d__DistributesOver'737'__268 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d__DistributesOver'737'__266 = erased
+d__DistributesOver'737'__268 = erased
 -- Class.Prelude.Alg≡._IdempotentOn_
-d__IdempotentOn__268 ::
+d__IdempotentOn__270 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> ()
-d__IdempotentOn__268 = erased
+d__IdempotentOn__270 = erased
 -- Class.Prelude.Alg≡._MiddleFourExchange_
-d__MiddleFourExchange__270 ::
+d__MiddleFourExchange__272 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d__MiddleFourExchange__270 = erased
+d__MiddleFourExchange__272 = erased
 -- Class.Prelude.Alg≡.Absorptive
-d_Absorptive_272 ::
+d_Absorptive_274 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Absorptive_272 = erased
+d_Absorptive_274 = erased
 -- Class.Prelude.Alg≡.AlmostCancellative
-d_AlmostCancellative_274 ::
+d_AlmostCancellative_276 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_AlmostCancellative_274 = erased
+d_AlmostCancellative_276 = erased
 -- Class.Prelude.Alg≡.AlmostLeftCancellative
-d_AlmostLeftCancellative_276 ::
+d_AlmostLeftCancellative_278 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_AlmostLeftCancellative_276 = erased
+d_AlmostLeftCancellative_278 = erased
 -- Class.Prelude.Alg≡.AlmostRightCancellative
-d_AlmostRightCancellative_278 ::
+d_AlmostRightCancellative_280 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_AlmostRightCancellative_278 = erased
+d_AlmostRightCancellative_280 = erased
 -- Class.Prelude.Alg≡.Alternative
-d_Alternative_280 ::
+d_Alternative_282 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Alternative_280 = erased
+d_Alternative_282 = erased
 -- Class.Prelude.Alg≡.Associative
-d_Associative_282 ::
+d_Associative_284 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Associative_282 = erased
+d_Associative_284 = erased
 -- Class.Prelude.Alg≡.Cancellative
-d_Cancellative_284 ::
+d_Cancellative_286 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Cancellative_284 = erased
+d_Cancellative_286 = erased
+-- Class.Prelude.Alg≡.Central
+d_Central_288 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () -> (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> ()
+d_Central_288 = erased
 -- Class.Prelude.Alg≡.Commutative
-d_Commutative_286 ::
+d_Commutative_290 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Commutative_286 = erased
+d_Commutative_290 = erased
 -- Class.Prelude.Alg≡.Congruent₁
-d_Congruent'8321'_288 ::
+d_Congruent'8321'_292 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny) -> ()
-d_Congruent'8321'_288 = erased
+d_Congruent'8321'_292 = erased
 -- Class.Prelude.Alg≡.Congruent₂
-d_Congruent'8322'_290 ::
+d_Congruent'8322'_294 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Congruent'8322'_290 = erased
+d_Congruent'8322'_294 = erased
 -- Class.Prelude.Alg≡.Conical
-d_Conical_292 ::
+d_Conical_296 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Conical_292 = erased
+d_Conical_296 = erased
 -- Class.Prelude.Alg≡.Flexible
-d_Flexible_294 ::
+d_Flexible_298 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Flexible_294 = erased
+d_Flexible_298 = erased
 -- Class.Prelude.Alg≡.Idempotent
-d_Idempotent_296 ::
+d_Idempotent_300 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Idempotent_296 = erased
+d_Idempotent_300 = erased
 -- Class.Prelude.Alg≡.IdempotentFun
-d_IdempotentFun_298 ::
+d_IdempotentFun_302 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny) -> ()
-d_IdempotentFun_298 = erased
+d_IdempotentFun_302 = erased
 -- Class.Prelude.Alg≡.Identical
-d_Identical_300 ::
+d_Identical_304 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Identical_300 = erased
+d_Identical_304 = erased
 -- Class.Prelude.Alg≡.Identity
-d_Identity_302 ::
+d_Identity_306 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Identity_302 = erased
+d_Identity_306 = erased
 -- Class.Prelude.Alg≡.Interchangable
-d_Interchangable_304 ::
+d_Interchangable_308 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Interchangable_304 = erased
+d_Interchangable_308 = erased
 -- Class.Prelude.Alg≡.Inverse
-d_Inverse_306 ::
+d_Inverse_310 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Inverse_306 = erased
+d_Inverse_310 = erased
 -- Class.Prelude.Alg≡.Invertible
-d_Invertible_308 ::
+d_Invertible_312 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> ()
-d_Invertible_308 = erased
+d_Invertible_312 = erased
 -- Class.Prelude.Alg≡.Involutive
-d_Involutive_310 ::
+d_Involutive_314 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny) -> ()
-d_Involutive_310 = erased
+d_Involutive_314 = erased
 -- Class.Prelude.Alg≡.LeftAlternative
-d_LeftAlternative_312 ::
+d_LeftAlternative_316 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftAlternative_312 = erased
+d_LeftAlternative_316 = erased
 -- Class.Prelude.Alg≡.LeftBol
-d_LeftBol_314 ::
+d_LeftBol_318 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftBol_314 = erased
+d_LeftBol_318 = erased
 -- Class.Prelude.Alg≡.LeftCancellative
-d_LeftCancellative_316 ::
+d_LeftCancellative_320 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftCancellative_316 = erased
+d_LeftCancellative_320 = erased
 -- Class.Prelude.Alg≡.LeftCongruent
-d_LeftCongruent_318 ::
+d_LeftCongruent_322 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftCongruent_318 = erased
+d_LeftCongruent_322 = erased
 -- Class.Prelude.Alg≡.LeftConical
-d_LeftConical_320 ::
+d_LeftConical_324 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftConical_320 = erased
+d_LeftConical_324 = erased
 -- Class.Prelude.Alg≡.LeftDivides
-d_LeftDivides_322 ::
+d_LeftDivides_326 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftDivides_322 = erased
+d_LeftDivides_326 = erased
 -- Class.Prelude.Alg≡.LeftDividesʳ
-d_LeftDivides'691'_324 ::
+d_LeftDivides'691'_328 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftDivides'691'_324 = erased
+d_LeftDivides'691'_328 = erased
 -- Class.Prelude.Alg≡.LeftDividesˡ
-d_LeftDivides'737'_326 ::
+d_LeftDivides'737'_330 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftDivides'737'_326 = erased
+d_LeftDivides'737'_330 = erased
 -- Class.Prelude.Alg≡.LeftIdentity
-d_LeftIdentity_328 ::
+d_LeftIdentity_332 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftIdentity_328 = erased
+d_LeftIdentity_332 = erased
 -- Class.Prelude.Alg≡.LeftInverse
-d_LeftInverse_330 ::
+d_LeftInverse_334 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftInverse_330 = erased
+d_LeftInverse_334 = erased
 -- Class.Prelude.Alg≡.LeftInvertible
-d_LeftInvertible_332 ::
+d_LeftInvertible_336 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> ()
-d_LeftInvertible_332 = erased
+d_LeftInvertible_336 = erased
 -- Class.Prelude.Alg≡.LeftSemimedial
-d_LeftSemimedial_334 ::
+d_LeftSemimedial_338 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftSemimedial_334 = erased
+d_LeftSemimedial_338 = erased
 -- Class.Prelude.Alg≡.LeftZero
-d_LeftZero_336 ::
+d_LeftZero_340 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftZero_336 = erased
+d_LeftZero_340 = erased
 -- Class.Prelude.Alg≡.Medial
-d_Medial_338 ::
+d_Medial_342 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Medial_338 = erased
+d_Medial_342 = erased
 -- Class.Prelude.Alg≡.MiddleBol
-d_MiddleBol_340 ::
+d_MiddleBol_344 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_MiddleBol_340 = erased
+d_MiddleBol_344 = erased
 -- Class.Prelude.Alg≡.RightAlternative
-d_RightAlternative_342 ::
+d_RightAlternative_346 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightAlternative_342 = erased
+d_RightAlternative_346 = erased
 -- Class.Prelude.Alg≡.RightBol
-d_RightBol_344 ::
+d_RightBol_348 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightBol_344 = erased
+d_RightBol_348 = erased
 -- Class.Prelude.Alg≡.RightCancellative
-d_RightCancellative_346 ::
+d_RightCancellative_350 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightCancellative_346 = erased
+d_RightCancellative_350 = erased
 -- Class.Prelude.Alg≡.RightCongruent
-d_RightCongruent_348 ::
+d_RightCongruent_352 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightCongruent_348 = erased
+d_RightCongruent_352 = erased
 -- Class.Prelude.Alg≡.RightConical
-d_RightConical_350 ::
+d_RightConical_354 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightConical_350 = erased
+d_RightConical_354 = erased
 -- Class.Prelude.Alg≡.RightDivides
-d_RightDivides_352 ::
+d_RightDivides_356 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightDivides_352 = erased
+d_RightDivides_356 = erased
 -- Class.Prelude.Alg≡.RightDividesʳ
-d_RightDivides'691'_354 ::
+d_RightDivides'691'_358 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightDivides'691'_354 = erased
+d_RightDivides'691'_358 = erased
 -- Class.Prelude.Alg≡.RightDividesˡ
-d_RightDivides'737'_356 ::
+d_RightDivides'737'_360 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightDivides'737'_356 = erased
+d_RightDivides'737'_360 = erased
 -- Class.Prelude.Alg≡.RightIdentity
-d_RightIdentity_358 ::
+d_RightIdentity_362 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightIdentity_358 = erased
+d_RightIdentity_362 = erased
 -- Class.Prelude.Alg≡.RightInverse
-d_RightInverse_360 ::
+d_RightInverse_364 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightInverse_360 = erased
+d_RightInverse_364 = erased
 -- Class.Prelude.Alg≡.RightInvertible
-d_RightInvertible_362 ::
+d_RightInvertible_366 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> ()
-d_RightInvertible_362 = erased
+d_RightInvertible_366 = erased
 -- Class.Prelude.Alg≡.RightSemimedial
-d_RightSemimedial_364 ::
+d_RightSemimedial_368 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightSemimedial_364 = erased
+d_RightSemimedial_368 = erased
 -- Class.Prelude.Alg≡.RightZero
-d_RightZero_366 ::
+d_RightZero_370 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightZero_366 = erased
+d_RightZero_370 = erased
 -- Class.Prelude.Alg≡.Selective
-d_Selective_368 ::
+d_Selective_372 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Selective_368 = erased
+d_Selective_372 = erased
 -- Class.Prelude.Alg≡.SelfInverse
-d_SelfInverse_370 ::
+d_SelfInverse_374 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny) -> ()
-d_SelfInverse_370 = erased
+d_SelfInverse_374 = erased
 -- Class.Prelude.Alg≡.Semimedial
-d_Semimedial_372 ::
+d_Semimedial_376 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Semimedial_372 = erased
+d_Semimedial_376 = erased
 -- Class.Prelude.Alg≡.StarDestructive
-d_StarDestructive_374 ::
+d_StarDestructive_378 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> ()
-d_StarDestructive_374 = erased
+d_StarDestructive_378 = erased
 -- Class.Prelude.Alg≡.StarExpansive
-d_StarExpansive_376 ::
+d_StarExpansive_380 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   AgdaAny ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> ()
-d_StarExpansive_376 = erased
+d_StarExpansive_380 = erased
 -- Class.Prelude.Alg≡.StarLeftDestructive
-d_StarLeftDestructive_378 ::
+d_StarLeftDestructive_382 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> ()
-d_StarLeftDestructive_378 = erased
+d_StarLeftDestructive_382 = erased
 -- Class.Prelude.Alg≡.StarLeftExpansive
-d_StarLeftExpansive_380 ::
+d_StarLeftExpansive_384 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   AgdaAny ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> ()
-d_StarLeftExpansive_380 = erased
+d_StarLeftExpansive_384 = erased
 -- Class.Prelude.Alg≡.StarRightDestructive
-d_StarRightDestructive_382 ::
+d_StarRightDestructive_386 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> ()
-d_StarRightDestructive_382 = erased
+d_StarRightDestructive_386 = erased
 -- Class.Prelude.Alg≡.StarRightExpansive
-d_StarRightExpansive_384 ::
+d_StarRightExpansive_388 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   AgdaAny ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> ()
-d_StarRightExpansive_384 = erased
+d_StarRightExpansive_388 = erased
 -- Class.Prelude.Alg≡.Zero
-d_Zero_386 ::
+d_Zero_390 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Zero_386 = erased
+d_Zero_390 = erased
 -- Class.Prelude.itω
-d_itω_390 :: () -> AgdaAny -> AgdaAny
-d_itω_390 ~v0 v1 = du_itω_390 v1
-du_itω_390 :: AgdaAny -> AgdaAny
-du_itω_390 v0 = coe v0
+d_itω_394 :: () -> AgdaAny -> AgdaAny
+d_itω_394 ~v0 v1 = du_itω_394 v1
+du_itω_394 :: AgdaAny -> AgdaAny
+du_itω_394 v0 = coe v0

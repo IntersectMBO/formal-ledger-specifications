@@ -412,7 +412,7 @@ du_isPreorder_410 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_76
 du_isPreorder_410
   = coe
-      MAlonzo.Code.Relation.Binary.Properties.Setoid.du_'8776''45'isPreorder_40
+      MAlonzo.Code.Relation.Binary.Properties.Setoid.du_'8776''45'isPreorder_44
       (coe du_setoid_402)
 -- Relation.Binary.PropositionalEquality.Properties.isPartialOrder
 d_isPartialOrder_412 ::
@@ -423,7 +423,7 @@ du_isPartialOrder_412 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_248
 du_isPartialOrder_412
   = coe
-      MAlonzo.Code.Relation.Binary.Properties.Setoid.du_'8776''45'isPartialOrder_42
+      MAlonzo.Code.Relation.Binary.Properties.Setoid.du_'8776''45'isPartialOrder_46
       (coe du_setoid_402)
 -- Relation.Binary.PropositionalEquality.Properties.preorder
 d_preorder_414 ::
@@ -434,7 +434,7 @@ du_preorder_414 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_142
 du_preorder_414
   = coe
-      MAlonzo.Code.Relation.Binary.Properties.Setoid.du_'8776''45'preorder_50
+      MAlonzo.Code.Relation.Binary.Properties.Setoid.du_'8776''45'preorder_54
       (coe du_setoid_402)
 -- Relation.Binary.PropositionalEquality.Properties.poset
 d_poset_418 ::
@@ -444,7 +444,7 @@ d_poset_418 ~v0 ~v1 = du_poset_418
 du_poset_418 :: MAlonzo.Code.Relation.Binary.Bundles.T_Poset_492
 du_poset_418
   = coe
-      MAlonzo.Code.Relation.Binary.Properties.Setoid.du_'8776''45'poset_52
+      MAlonzo.Code.Relation.Binary.Properties.Setoid.du_'8776''45'poset_56
       (coe du_setoid_402)
 -- Relation.Binary.PropositionalEquality.Properties.≡-Reasoning._.begin_
 d_begin__430 ::

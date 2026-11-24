@@ -2217,7 +2217,7 @@ d_addVote_2274 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_addVote_2274 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.Class.Functor.Core.du_fmap_22
+      MAlonzo.Code.Class.Functor.Core.du_fmap_24
       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
       () erased
       (coe du_modifyVotes_2288 (coe v0) (coe v2) (coe v3) (coe v4)) v1
@@ -2565,17 +2565,24 @@ d_hasParentE'63'_2442 v0 v1 v2 v3
       (case coe v4 of
          MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v5
            -> coe
-                MAlonzo.Code.Data.Product.Properties.du_'8801''45'dec_78
+                MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
+                erased
+                (\ v6 ->
+                   coe
+                     MAlonzo.Code.Data.Product.Properties.du_'215''45''8801''44''8801''8592''8801'_234)
                 (coe
-                   MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                   MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                    (coe
-                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_DecEq'45'TxId_744
-                      (coe v0)))
-                (coe
-                   (\ v6 ->
                       MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
-                        (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)))
-                (coe v5) (coe v2)
+                      (MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_DecEq'45'TxId_744
+                         (coe v0))
+                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v5))
+                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v2)))
+                   (coe
+                      MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                      MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
+                      (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v5))
+                      (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v2))))
          MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
            -> coe
                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
@@ -2600,26 +2607,35 @@ d_hasParent'63'_2476 v0 v1 v2 v3 v4
       (case coe v5 of
          MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v6
            -> coe
-                MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8846''45'dec__96
+                MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8846''63'__96
                 (coe d_hasParentE'63'_2442 (coe v0) (coe v1) (coe v6) (coe v3))
                 (coe
                    MAlonzo.Code.Data.List.Relation.Unary.Any.du_any'63'_138
                    (coe
                       (\ v7 ->
                          coe
-                           MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+                           MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                            (coe
-                              MAlonzo.Code.Data.Product.Properties.du_'8801''45'dec_78
+                              MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
+                              erased
+                              (\ v8 ->
+                                 coe
+                                   MAlonzo.Code.Data.Product.Properties.du_'215''45''8801''44''8801''8592''8801'_234)
                               (coe
-                                 MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_DecEq'45'TxId_744
-                                    (coe v0)))
-                              (coe
-                                 (\ v8 ->
                                     MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
-                                      (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)))
-                              (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v7)) (coe v6))
+                                    (MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_DecEq'45'TxId_744
+                                       (coe v0))
+                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+                                       (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v7)))
+                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v6)))
+                                 (coe
+                                    MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                    MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
+                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
+                                       (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v7)))
+                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v6)))))
                            (coe
                               du_Overlap'63'_2218
                               (coe
@@ -2671,36 +2687,50 @@ d_'91'_connects_to_'63''93'_2548 v0 v1 v2 v3
   = case coe v1 of
       []
         -> coe
-             MAlonzo.Code.Data.Product.Properties.du_'8801''45'dec_78
+             MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
+             erased
+             (\ v4 ->
+                coe
+                  MAlonzo.Code.Data.Product.Properties.du_'215''45''8801''44''8801''8592''8801'_234)
              (coe
-                MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                 (coe
-                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_DecEq'45'TxId_744
-                   (coe v0)))
-             (coe
-                (\ v4 ->
                    MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
-                     (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)))
-             (coe v2) (coe v3)
+                   (MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_DecEq'45'TxId_744
+                      (coe v0))
+                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v2))
+                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v3)))
+                (coe
+                   MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                   MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
+                   (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v2))
+                   (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3))))
       (:) v4 v5
         -> case coe v4 of
              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v6 v7
                -> coe
-                    MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8846''45'dec__96
+                    MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8846''63'__96
                     (coe
-                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                        (coe
-                          MAlonzo.Code.Data.Product.Properties.du_'8801''45'dec_78
+                          MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
+                          erased
+                          (\ v8 ->
+                             coe
+                               MAlonzo.Code.Data.Product.Properties.du_'215''45''8801''44''8801''8592''8801'_234)
                           (coe
-                             MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                             MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                              (coe
-                                MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_DecEq'45'TxId_744
-                                (coe v0)))
-                          (coe
-                             (\ v8 ->
                                 MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
-                                  (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)))
-                          (coe v6) (coe v2))
+                                (MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_DecEq'45'TxId_744
+                                   (coe v0))
+                                (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v6))
+                                (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v2)))
+                             (coe
+                                MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
+                                (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v6))
+                                (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v2)))))
                        (coe
                           d_'91'_connects_to_'63''93'_2548 (coe v0) (coe v5) (coe v7)
                           (coe v3)))
@@ -2722,7 +2752,7 @@ d_any'63''45'connecting'45'subperm_2572 v0 v1 v2 v3
       (coe
          (\ v4 ->
             coe
-              MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+              MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
               (coe
                  MAlonzo.Code.Data.List.Relation.Unary.Unique.DecSetoid.du_unique'63'_66
                  (coe
@@ -3021,14 +3051,14 @@ d_actionValid'63'_2774 v0 v1 v2 v3 v4 v5
                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_epochStructure_844
                                         (coe v0)))
                                   (coe
-                                     MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+                                     MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
                                      (MAlonzo.Code.Ledger.Core.Specification.Epoch.d_firstSlot_94
                                         (coe
                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.d_epochStructure_844
                                            (coe v0)))
                                      (\ v9 v10 -> v9) v4 v8)
                                   (coe
-                                     MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                                     MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                                      (\ v9 v10 -> v10)
                                      (MAlonzo.Code.Ledger.Core.Specification.Epoch.d_firstSlot_94
                                         (coe
