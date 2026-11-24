@@ -36,9 +36,8 @@ record GovEnv : Type where
     certState   : CertState
     rewardCreds : ℙ Credential
 
-instance
-  unquoteDecl HasCast-GovEnv = derive-HasCast
-    [ (quote GovEnv , HasCast-GovEnv) ]
+unquoteDecl HasCast-GovEnv = derive-HasCast
+  [ (quote GovEnv , HasCast-GovEnv) ]
 
 _⊢_⇀⦇_,GOVS⦈_ : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Type
 Γ ⊢ govSt ⇀⦇ gvps ,GOVS⦈ govSt'

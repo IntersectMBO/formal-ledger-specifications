@@ -234,11 +234,10 @@ must be *deliberately* designed to do so.
 
 <!--
 ```agda
-instance
-  unquoteDecl HasCast-StakeDistrs HasCast-RatifyEnv HasCast-RatifyState = derive-HasCast
-    (   (quote StakeDistrs , HasCast-StakeDistrs)
-    ∷   (quote RatifyEnv , HasCast-RatifyEnv)
-    ∷ [ (quote RatifyState , HasCast-RatifyState) ])
+unquoteDecl HasCast-StakeDistrs HasCast-RatifyEnv HasCast-RatifyState = derive-HasCast
+  (   (quote StakeDistrs , HasCast-StakeDistrs)
+  ∷   (quote RatifyEnv , HasCast-RatifyEnv)
+  ∷ [ (quote RatifyState , HasCast-RatifyState) ])
 ```
 -->
 
