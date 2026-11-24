@@ -63,6 +63,6 @@ instance
   pvCanFollowMinor? = ⁇ Dec-pvCanFollowMinor
 
 pvCanFollow? : ∀ {pv} {pv'} → Dec (pvCanFollow pv pv')
-pvCanFollow? = Dec-pvCanFollowMajor ⊎-dec Dec-pvCanFollowMinor
+pvCanFollow? = Dec-pvCanFollowMajor ⊎? Dec-pvCanFollowMinor
 ```
 -->

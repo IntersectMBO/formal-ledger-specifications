@@ -132,7 +132,7 @@ data HSComputationResult E A : Type where
 {-# COMPILE GHC HSComputationResult = data ComputationResult (Success | Failure) #-}
 
 instance
-  HsTy-ComputationResult : ∀ {l} {Err} {A : Type l}
+  HsTy-ComputationResult : ∀ {l} {Err : Type} {A : Type l}
                            → ⦃ HasHsType Err ⦄ → ⦃ HasHsType A ⦄
                            → HasHsType (ComputationResult Err A)
   HsTy-ComputationResult {Err = Err} {A} = mkHsType _ (HSComputationResult (HsType Err) (HsType A))

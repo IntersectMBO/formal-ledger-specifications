@@ -98,7 +98,7 @@ opaque
     validHFAction? {record { action = ⟦ UpdateCommittee     , _ ⟧ᵍᵃ}} = Dec-⊤
     validHFAction? {record { action = ⟦ NewConstitution     , _ ⟧ᵍᵃ}} = Dec-⊤
     validHFAction? {record { action = ⟦ TriggerHardFork     , v ⟧ᵍᵃ ; prevAction = prev }} {s} {record { pv = (v' , aid') }}
-      with aid' ≟ prev ×-dec pvCanFollow? {v} {v'} | any? (λ (aid , x) → aid ≟ prev ×-dec hasPrev x v' v) s
+      with aid' ≟ prev ×? pvCanFollow? {v} {v'} | any? (λ (aid , x) → aid ≟ prev ×? hasPrev x v' v) s
     ... | yes p' | _ = ⁇ yes (inj₁ p')
     ... | no _ | yes p' with ((aid , x) , x∈xs , (refl , v , h)) ← P.find p' = ⁇ yes (inj₂
       (x , v , to ∈-fromList x∈xs , h))

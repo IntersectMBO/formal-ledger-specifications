@@ -238,14 +238,14 @@ private variable
 ## A Computation Result Type
 
 ```agda
-data ComputationResult {a : Level} (Err : Type) (R : Type a) : Type a where
+data ComputationResult {e a : Level} (Err : Type e) (R : Type a) : Type (e ⊔ˡ a) where
   success : R   → ComputationResult Err R
   failure : Err → ComputationResult Err R
 
-isFailure : ∀ {A : Type a} → ComputationResult Err A → Type a
+isFailure : ∀ {e} {Err : Type e} {A : Type a} → ComputationResult Err A → Type (e ⊔ˡ a)
 isFailure x = ∃[ e ] x ≡ failure e
 
-module _ {a b} {E : Type} {A : Type a} {B : Type b} where
+module _ {e a b} {E : Type e} {A : Type a} {B : Type b} where
   caseCR_∣_∣_ : (ma : ComputationResult E A) → (∀ {a} → ma ≡ success a → B) → (isFailure ma → B) → B
   caseCR ma ∣ f ∣ g with ma
   ... | success _ = f refl
@@ -262,51 +262,51 @@ module _ {a b} {E : Type} {A : Type a} {B : Type b} where
   caseCR-failure (_ , refl) = refl
 
 instance
-  Bifunctor-ComputationResult : ∀ {a : Level} → Bifunctor {_} {a} ComputationResult
+  Bifunctor-ComputationResult : Bifunctor ComputationResult
   Bifunctor-ComputationResult .bimap _ f (success x) = success $ f x
   Bifunctor-ComputationResult .bimap f _ (failure x) = failure $ f x
 
-  Functor-ComputationResult : ∀ {E : Type} → Functor (ComputationResult E)
+  Functor-ComputationResult : ∀ {e} {E : Type e} → Functor (ComputationResult E)
   Functor-ComputationResult ._<$>_ f (success x) = success $ f x
   Functor-ComputationResult ._<$>_ _ (failure x) = failure x
 
-  FunctorLaws-ComputationResult : ∀ {E : Type} → FunctorLaws (ComputationResult E)
+  FunctorLaws-ComputationResult : ∀ {e} {E : Type e} → FunctorLaws (ComputationResult E)
   FunctorLaws-ComputationResult .fmap-id (success _) = refl
   FunctorLaws-ComputationResult .fmap-id (failure _) = refl
   FunctorLaws-ComputationResult .fmap-∘ (success _) = refl
   FunctorLaws-ComputationResult .fmap-∘ (failure _) = refl
 
-  Applicative-ComputationResult : ∀ {E : Type} → Applicative (ComputationResult E)
+  Applicative-ComputationResult : ∀ {e} {E : Type e} → Applicative (ComputationResult E)
   Applicative-ComputationResult .pure = success
   Applicative-ComputationResult ._<*>_ (success f) x = f <$> x
   Applicative-ComputationResult ._<*>_ (failure e) _ = failure e
 
-  Monad-ComputationResult : ∀ {E : Type} → Monad (ComputationResult E)
+  Monad-ComputationResult : ∀ {e} {E : Type e} → Monad (ComputationResult E)
   Monad-ComputationResult .return = success
   Monad-ComputationResult ._>>=_ (success a) m = m a
   Monad-ComputationResult ._>>=_ (failure e) _ = failure e
 
-map-failure : ∀ {A B C : Type} {f : A → B} {x : C} {ma} → ma ≡ failure x → map f ma ≡ failure x
+map-failure : ∀ {a b e} {A : Type a} {B : Type b} {C : Type e} {f : A → B} {x : C} {ma} → ma ≡ failure x → map f ma ≡ failure x
 map-failure refl = refl
 
 -- Completeness through one step of a computation: if the first computation succeeds
 -- with state a, the bind's result is the continuation's at a, whatever the proof.
-bind-complete : ∀ {E A B C : Type} {P : A → Type}
+bind-complete : ∀ {e} {E : Type e} {A B C : Type} {P : A → Type}
   (m : ComputationResult E (Σ A P)) {k : Σ A P → ComputationResult E B} {h : B → C} {a : A} {c : C}
   → (proj₁ <$> m) ≡ success a
   → (∀ p → (h <$> k (a , p)) ≡ success c)
   → (h <$> (m >>= k)) ≡ success c
 bind-complete (success (_ , p)) refl hk = hk p
 
-success-maybe : ∀ {R : Type} → ComputationResult Err R → Maybe R
+success-maybe : ∀ {e a} {Err : Type e} {R : Type a} → ComputationResult Err R → Maybe R
 success-maybe (success x) = just x
 success-maybe (failure _) = nothing
 
-failure-maybe : ∀ {R : Type} → ComputationResult Err R → Maybe Err
+failure-maybe : ∀ {e a} {Err : Type e} {R : Type a} → ComputationResult Err R → Maybe Err
 failure-maybe (success _) = nothing
 failure-maybe (failure x) = just x
 
-_≈ᶜʳ_ : ∀ {A} → ComputationResult Err A → ComputationResult Err A → Type
+_≈ᶜʳ_ : ∀ {e a} {Err : Type e} {A : Type a} → ComputationResult Err A → ComputationResult Err A → Type a
 x ≈ᶜʳ y = success-maybe x ≡ success-maybe y
 ```
 
