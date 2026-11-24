@@ -25,8 +25,10 @@ import qualified MAlonzo.Code.Class.Convertible.Foreign
 import qualified MAlonzo.Code.Class.Functor.Core
 import qualified MAlonzo.Code.Class.Functor.Instances
 import qualified MAlonzo.Code.Class.HasHsType.Core
+import qualified MAlonzo.Code.Class.Show.Core
 import qualified MAlonzo.Code.Data.Product.Base
 import qualified MAlonzo.Code.Data.Rational.Base
+import qualified MAlonzo.Code.Data.String.Base
 import qualified MAlonzo.Code.Foreign.Haskell.Coerce
 import qualified MAlonzo.Code.Foreign.Haskell.Pair
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.Script.Base
@@ -1506,9 +1508,16 @@ d_Conv'45'PParams_26
                            MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
                              -> coe
                                   MAlonzo.Code.Ledger.Prelude.Foreign.Util.d_error_10 erased
-                                  ("Formal Spec: rational outside of unit interval"
-                                   ::
-                                   Data.Text.Text)
+                                  (coe
+                                     MAlonzo.Code.Data.String.Base.d__'43''43'__20
+                                     ("Formal Spec: " :: Data.Text.Text)
+                                     (coe
+                                        MAlonzo.Code.Data.String.Base.d__'43''43'__20
+                                        (coe
+                                           MAlonzo.Code.Class.Show.Core.d_show_16
+                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Show'45'Rational_26
+                                           v13)
+                                        (" rational outside of unit interval" :: Data.Text.Text)))
                            _ -> MAlonzo.RTE.mazUnreachableError))
                      (let v36
                             = MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_toUnitInterval_74
@@ -1543,9 +1552,16 @@ d_Conv'45'PParams_26
                            MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
                              -> coe
                                   MAlonzo.Code.Ledger.Prelude.Foreign.Util.d_error_10 erased
-                                  ("Formal Spec: rational outside of unit interval"
-                                   ::
-                                   Data.Text.Text)
+                                  (coe
+                                     MAlonzo.Code.Data.String.Base.d__'43''43'__20
+                                     ("Formal Spec: " :: Data.Text.Text)
+                                     (coe
+                                        MAlonzo.Code.Data.String.Base.d__'43''43'__20
+                                        (coe
+                                           MAlonzo.Code.Class.Show.Core.d_show_16
+                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Show'45'Rational_26
+                                           v14)
+                                        (" rational outside of unit interval" :: Data.Text.Text)))
                            _ -> MAlonzo.RTE.mazUnreachableError))
                      (coe v15) (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                      (coe
@@ -2657,7 +2673,7 @@ d_Conv'45'PParamsUpdate_30
                            MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                         v13)
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2665,7 +2681,7 @@ d_Conv'45'PParamsUpdate_30
                            MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                         v14)
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2690,7 +2706,7 @@ d_Conv'45'PParamsUpdate_30
                            MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                         v17)
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2712,7 +2728,7 @@ d_Conv'45'PParamsUpdate_30
                            MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_150))
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_156))
                         v20)
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2720,7 +2736,7 @@ d_Conv'45'PParamsUpdate_30
                            MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                         v21)
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2735,7 +2751,7 @@ d_Conv'45'PParamsUpdate_30
                            MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                         v23)
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2927,7 +2943,7 @@ d_Conv'45'PParamsUpdate_30
                            MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                         v13)
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -2935,7 +2951,7 @@ d_Conv'45'PParamsUpdate_30
                            MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                         v14)
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -2960,7 +2976,7 @@ d_Conv'45'PParamsUpdate_30
                            MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                         v17)
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -2982,7 +2998,7 @@ d_Conv'45'PParamsUpdate_30
                            MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_150))
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_156))
                         v20)
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -2990,7 +3006,7 @@ d_Conv'45'PParamsUpdate_30
                            MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                         v21)
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -3005,7 +3021,7 @@ d_Conv'45'PParamsUpdate_30
                            MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                         v23)
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22

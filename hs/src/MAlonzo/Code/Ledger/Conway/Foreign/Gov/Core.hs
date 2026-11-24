@@ -276,7 +276,7 @@ d_Conv'45'GovVotes_40
                 -> coe
                      C_GovVotes_1269
                      (coe
-                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                            (coe
@@ -288,7 +288,7 @@ d_Conv'45'GovVotes_40
                                  (coe d_Conv'45'Vote_36)))
                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v1))))
                      (coe
-                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                            (coe
@@ -300,7 +300,7 @@ d_Conv'45'GovVotes_40
                                  (coe d_Conv'45'Vote_36)))
                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v2))))
                      (coe
-                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                            (coe
@@ -363,7 +363,7 @@ d_Conv'45'GovVotes_40
                                    MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased ()
                                    erased (coe MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                    v4))
-                           (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                           (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                               (coe v1))))
                      (coe
                         MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
@@ -411,7 +411,7 @@ d_Conv'45'GovVotes_40
                                    MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased ()
                                    erased (coe MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                    v4))
-                           (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                           (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                               (coe v2))))
                      (coe
                         MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
@@ -438,7 +438,7 @@ d_Conv'45'GovVotes_40
                                    MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased ()
                                    erased (coe MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                    v4))
-                           (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                           (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                               (coe v3))))
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Foreign.Gov.Core.GovVoter'
@@ -861,13 +861,13 @@ d_GovVotes_1267 = ()
 type T_GovVotes_1267 = GovVotes
 pattern C_GovVotes_1269 a0 a1 a2 = GovVotes a0 a1 a2
 check_GovVotes_1269 ::
-  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSMap_46
+  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSMap_52
     MAlonzo.Code.Ledger.Core.Foreign.Address.T_Credential_615
     T_Vote_1137 ->
-  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSMap_46
+  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSMap_52
     MAlonzo.Code.Ledger.Core.Foreign.Address.T_Credential_615
     T_Vote_1137 ->
-  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSMap_46
+  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSMap_52
     Integer T_Vote_1137 ->
   T_GovVotes_1267
 check_GovVotes_1269 = GovVotes

@@ -34,11 +34,13 @@ import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Class.Functor.Core
 import qualified MAlonzo.Code.Class.Functor.Instances
 import qualified MAlonzo.Code.Class.HasHsType.Core
+import qualified MAlonzo.Code.Class.Show.Core
 import qualified MAlonzo.Code.Data.List.Relation.Unary.All
 import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
 import qualified MAlonzo.Code.Data.Nat.Base
 import qualified MAlonzo.Code.Data.Product.Base
 import qualified MAlonzo.Code.Data.Rational.Base
+import qualified MAlonzo.Code.Data.String.Base
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Foreign.Haskell.Coerce
 import qualified MAlonzo.Code.Foreign.Haskell.Either
@@ -90,7 +92,7 @@ d__connects_to__10 ::
 d__connects_to__10 = erased
 -- Ledger.Dijkstra.Foreign.Gov.Gov._⊢_⇀⦇_,GOVS⦈_
 d__'8866'_'8640''10631'_'44'GOVS'10632'__12 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_GovEnv_2092 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_GovEnv_2096 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30] ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> ()
@@ -104,74 +106,74 @@ d_GovState_26 :: ()
 d_GovState_26 = erased
 -- Ledger.Dijkstra.Foreign.Gov.Gov.GovStateOf
 d_GovStateOf_28 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_HasGovState_2136 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_HasGovState_2140 ->
   AgdaAny -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_GovStateOf_28 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_GovStateOf_2144
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_GovStateOf_2148
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Gov.Gov.HasCast-GovEnv
 d_HasCast'45'GovEnv_30 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'GovEnv_30
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_HasCast'45'GovEnv_2182
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_HasCast'45'GovEnv_2186
 -- Ledger.Dijkstra.Foreign.Gov.Gov.HasCertState-GovEnv
 d_HasCertState'45'GovEnv_32 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasCertState_1938
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasCertState_1942
 d_HasCertState'45'GovEnv_32
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_HasCertState'45'GovEnv_2176
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_HasCertState'45'GovEnv_2180
 -- Ledger.Dijkstra.Foreign.Gov.Gov.HasEnactState-GovEnv
 d_HasEnactState'45'GovEnv_34 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_HasEnactState_1356
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_HasEnactState_1360
 d_HasEnactState'45'GovEnv_34
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_HasEnactState'45'GovEnv_2174
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_HasEnactState'45'GovEnv_2178
 -- Ledger.Dijkstra.Foreign.Gov.Gov.HasEpoch-GovEnv
 d_HasEpoch'45'GovEnv_36 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasEpoch_1958
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_HasEpoch_1962
 d_HasEpoch'45'GovEnv_36
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_HasEpoch'45'GovEnv_2178
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_HasEpoch'45'GovEnv_2182
 -- Ledger.Dijkstra.Foreign.Gov.Gov.HasGovState
 d_HasGovState_38 a0 a1 = ()
 -- Ledger.Dijkstra.Foreign.Gov.Gov.HasPParams-GovEnv
 d_HasPParams'45'GovEnv_42 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_736
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_HasPParams_748
 d_HasPParams'45'GovEnv_42
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_HasPParams'45'GovEnv_2172
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_HasPParams'45'GovEnv_2176
 -- Ledger.Dijkstra.Foreign.Gov.Gov.HasRewardCredentials
 d_HasRewardCredentials_46 a0 a1 = ()
 -- Ledger.Dijkstra.Foreign.Gov.Gov.HasRewardCredentials-GovEnv
 d_HasRewardCredentials'45'GovEnv_50 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_HasRewardCredentials_2156
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_HasRewardCredentials_2160
 d_HasRewardCredentials'45'GovEnv_50
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_HasRewardCredentials'45'GovEnv_2180
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_HasRewardCredentials'45'GovEnv_2184
 -- Ledger.Dijkstra.Foreign.Gov.Gov.Overlap
 d_Overlap_52 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_956 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_956 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_960 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_960 ->
   ()
 d_Overlap_52 = erased
 -- Ledger.Dijkstra.Foreign.Gov.Gov.Overlap?
 d_Overlap'63'_54 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_956 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_956 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_960 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_960 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_Overlap'63'_54
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_Overlap'63'_2214
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_Overlap'63'_2218
 -- Ledger.Dijkstra.Foreign.Gov.Gov.RewardCredentialsOf
 d_RewardCredentialsOf_56 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_HasRewardCredentials_2156 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_HasRewardCredentials_2160 ->
   AgdaAny ->
   [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
 d_RewardCredentialsOf_56 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_RewardCredentialsOf_2164
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_RewardCredentialsOf_2168
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Gov.Gov.[_connects_to_?]
 d_'91'_connects_to_'63''93'_58 ::
@@ -181,11 +183,11 @@ d_'91'_connects_to_'63''93'_58 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_'91'_connects_to_'63''93'_58
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_'91'_connects_to_'63''93'_2544
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_'91'_connects_to_'63''93'_2548
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2896
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2904
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
             (coe
                MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)))
 -- Ledger.Dijkstra.Foreign.Gov.Gov.actionValid
@@ -194,7 +196,7 @@ d_actionValid_62 ::
   Maybe Integer ->
   Maybe Integer ->
   Integer ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_974 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_978 ->
   ()
 d_actionValid_62 = erased
 -- Ledger.Dijkstra.Foreign.Gov.Gov.actionValid?
@@ -203,33 +205,33 @@ d_actionValid'63'_64 ::
   Maybe Integer ->
   Maybe Integer ->
   Integer ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_974 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_978 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_actionValid'63'_64
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_actionValid'63'_2770
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_actionValid'63'_2774
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2896
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2904
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
             (coe
                MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)))
 -- Ledger.Dijkstra.Foreign.Gov.Gov.actionWellFormed
 d_actionWellFormed_66 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_974 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_978 ->
   ()
 d_actionWellFormed_66 = erased
 -- Ledger.Dijkstra.Foreign.Gov.Gov.actionWellFormed?
 d_actionWellFormed'63'_68 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_974 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_978 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_actionWellFormed'63'_68
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_actionWellFormed'63'_2774
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_actionWellFormed'63'_2778
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2896
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2904
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
             (coe
                MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)))
 -- Ledger.Dijkstra.Foreign.Gov.Gov.addAction
@@ -238,60 +240,60 @@ d_addAction_70 ::
   Integer ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_116 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_974 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_978 ->
   AgdaAny -> Integer -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_addAction_70
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_addAction_2254
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_addAction_2258
 -- Ledger.Dijkstra.Foreign.Gov.Gov.addVote
 d_addVote_72 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_996 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Vote_988 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_1000 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Vote_992 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_addVote_72
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_addVote_2270
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_addVote_2274
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2896
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2904
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
             (coe
                MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)))
 -- Ledger.Dijkstra.Foreign.Gov.Gov.allEnactable
 d_allEnactable_74 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1328 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1332 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> ()
 d_allEnactable_74 = erased
 -- Ledger.Dijkstra.Foreign.Gov.Gov.allEnactable'
 d_allEnactable''_76 a0 a1 = ()
 -- Ledger.Dijkstra.Foreign.Gov.Gov.allEnactable?
 d_allEnactable'63'_78 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1328 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1332 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_allEnactable'63'_78
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_allEnactable'63'_2644
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_allEnactable'63'_2648
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2896
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2904
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
             (coe
                MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)))
 -- Ledger.Dijkstra.Foreign.Gov.Gov.allEnactable?'
 d_allEnactable'63'''_80 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1328 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1332 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_allEnactable'63'''_80
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_allEnactable'63'''_2664
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_allEnactable'63'''_2668
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2896
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2904
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
             (coe
                MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)))
 -- Ledger.Dijkstra.Foreign.Gov.Gov.any?-connecting-subperm
@@ -302,32 +304,32 @@ d_any'63''45'connecting'45'subperm_82 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_any'63''45'connecting'45'subperm_82
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_any'63''45'connecting'45'subperm_2568
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_any'63''45'connecting'45'subperm_2572
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2896
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2904
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
             (coe
                MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)))
 -- Ledger.Dijkstra.Foreign.Gov.Gov.enactable
 d_enactable_86 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1328 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1332 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> ()
 d_enactable_86 = erased
 -- Ledger.Dijkstra.Foreign.Gov.Gov.enactable?
 d_enactable'63'_88 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1328 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1332 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_enactable'63'_88
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_enactable'63'_2608
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_enactable'63'_2612
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2896
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2904
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
             (coe
                MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)))
 -- Ledger.Dijkstra.Foreign.Gov.Gov.getAidPairsList
@@ -336,73 +338,73 @@ d_getAidPairsList_90 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_getAidPairsList_90
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_getAidPairsList_2346
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_getAidPairsList_2350
 -- Ledger.Dijkstra.Foreign.Gov.Gov.govActionPriority
 d_govActionPriority_92 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_956 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_960 ->
   Integer
 d_govActionPriority_92
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_govActionPriority_2124
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_govActionPriority_2128
 -- Ledger.Dijkstra.Foreign.Gov.Gov.hasParent
 d_hasParent_94 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1328 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1332 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_956 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_960 ->
   AgdaAny -> ()
 d_hasParent_94 = erased
 -- Ledger.Dijkstra.Foreign.Gov.Gov.hasParent'
 d_hasParent''_96 a0 a1 a2 a3 = ()
 -- Ledger.Dijkstra.Foreign.Gov.Gov.hasParent?
 d_hasParent'63'_98 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1328 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1332 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_956 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_960 ->
   AgdaAny -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_hasParent'63'_98
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_hasParent'63'_2472
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_hasParent'63'_2476
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2896
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2904
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
             (coe
                MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)))
 -- Ledger.Dijkstra.Foreign.Gov.Gov.hasParent?'
 d_hasParent'63'''_100 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1328 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1332 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_956 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_960 ->
   AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_hasParent'63'''_100
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_hasParent'63'''_2532
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_hasParent'63'''_2536
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2896
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2904
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
             (coe
                MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)))
 -- Ledger.Dijkstra.Foreign.Gov.Gov.hasParentE
 d_hasParentE_102 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1328 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1332 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_956 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_960 ->
   ()
 d_hasParentE_102 = erased
 -- Ledger.Dijkstra.Foreign.Gov.Gov.hasParentE?
 d_hasParentE'63'_104 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1328 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1332 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_956 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_960 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_hasParentE'63'_104
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_hasParentE'63'_2438
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_hasParentE'63'_2442
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2896
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2904
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
             (coe
                MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)))
 -- Ledger.Dijkstra.Foreign.Gov.Gov.insertGovAction
@@ -412,25 +414,25 @@ d_insertGovAction_106 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_insertGovAction_106
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_insertGovAction_2216
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_insertGovAction_2220
 -- Ledger.Dijkstra.Foreign.Gov.Gov.isRegistered
 d_isRegistered_108 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_GovEnv_2092 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_996 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_GovEnv_2096 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_1000 ->
   ()
 d_isRegistered_108 = erased
 -- Ledger.Dijkstra.Foreign.Gov.Gov.maxAllEnactable
 d_maxAllEnactable_112 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1328 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1332 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   [[MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]]
 d_maxAllEnactable_112
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_maxAllEnactable_2670
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_maxAllEnactable_2674
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2896
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2904
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
             (coe
                MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)))
 -- Ledger.Dijkstra.Foreign.Gov.Gov.mkGovStatePair
@@ -438,16 +440,16 @@ d_mkGovStatePair_114 ::
   Integer ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_116 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_974 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovAction_978 ->
   AgdaAny -> Integer -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_mkGovStatePair_114
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_mkGovStatePair_2232
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_mkGovStatePair_2236
 -- Ledger.Dijkstra.Foreign.Gov.Gov.validHFAction
 d_validHFAction_116 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1074 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1078 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1328 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1332 ->
   ()
 d_validHFAction_116 = erased
 -- Ledger.Dijkstra.Foreign.Gov.Gov.∃?-connecting-subperm
@@ -458,11 +460,11 @@ d_'8707''63''45'connecting'45'subperm_118 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_'8707''63''45'connecting'45'subperm_118
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_'8707''63''45'connecting'45'subperm_2586
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_'8707''63''45'connecting'45'subperm_2590
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2896
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2904
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
             (coe
                MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)))
 -- Ledger.Dijkstra.Foreign.Gov.Gov.∃?-connecting-subset
@@ -473,32 +475,32 @@ d_'8707''63''45'connecting'45'subset_120 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_'8707''63''45'connecting'45'subset_120
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_'8707''63''45'connecting'45'subset_2598
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_'8707''63''45'connecting'45'subset_2602
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2896
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2904
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
             (coe
                MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)))
 -- Ledger.Dijkstra.Foreign.Gov.Gov.∈-maxAllEnactable→allEnactable
 d_'8712''45'maxAllEnactable'8594'allEnactable_122 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1328 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1332 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
   MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44
 d_'8712''45'maxAllEnactable'8594'allEnactable_122
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_'8712''45'maxAllEnactable'8594'allEnactable_2680
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_'8712''45'maxAllEnactable'8594'allEnactable_2684
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2896
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2904
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
             (coe
                MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)))
 -- Ledger.Dijkstra.Foreign.Gov.Gov.∈-maxAllEnactable→maxLength
 d_'8712''45'maxAllEnactable'8594'maxLength_124 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1328 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1332 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
@@ -508,94 +510,94 @@ d_'8712''45'maxAllEnactable'8594'maxLength_124 ::
   MAlonzo.Code.Data.Nat.Base.T__'8804'__22
 d_'8712''45'maxAllEnactable'8594'maxLength_124 v0 v1 v2 v3 v4 v5 v6
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_'8712''45'maxAllEnactable'8594'maxLength_2700
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.du_'8712''45'maxAllEnactable'8594'maxLength_2704
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2896
+         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_govStructure_2904
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+            MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
             (coe
                MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)))
       v0 v1 v4 v5
 -- Ledger.Dijkstra.Foreign.Gov.Gov.GovEnv.certState
 d_certState_134 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_GovEnv_2092 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1610
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_GovEnv_2096 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.T_CertState_1614
 d_certState_134 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_certState_2118
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_certState_2122
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Gov.Gov.GovEnv.enactState
 d_enactState_136 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_GovEnv_2092 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1328
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_GovEnv_2096 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1332
 d_enactState_136 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_enactState_2116
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_enactState_2120
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Gov.Gov.GovEnv.epoch
 d_epoch_138 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_GovEnv_2092 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_GovEnv_2096 ->
   Integer
 d_epoch_138 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_epoch_2110
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_epoch_2114
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Gov.Gov.GovEnv.pparams
 d_pparams_140 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_GovEnv_2092 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_318
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_GovEnv_2096 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320
 d_pparams_140 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_pparams_2112
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_pparams_2116
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Gov.Gov.GovEnv.ppolicy
 d_ppolicy_142 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_GovEnv_2092 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_GovEnv_2096 ->
   Maybe Integer
 d_ppolicy_142 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_ppolicy_2114
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_ppolicy_2118
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Gov.Gov.GovEnv.rewardCreds
 d_rewardCreds_144 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_GovEnv_2092 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_GovEnv_2096 ->
   [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
 d_rewardCreds_144 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_rewardCreds_2120
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_rewardCreds_2124
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Gov.Gov.GovEnv.txid
 d_txid_146 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_GovEnv_2092 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_GovEnv_2096 ->
   Integer
 d_txid_146 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_txid_2108 (coe v0)
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_txid_2112 (coe v0)
 -- Ledger.Dijkstra.Foreign.Gov.Gov.HasGovState.GovStateOf
 d_GovStateOf_150 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_HasGovState_2136 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_HasGovState_2140 ->
   AgdaAny -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_GovStateOf_150 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_GovStateOf_2144
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_GovStateOf_2148
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Gov.Gov.HasRewardCredentials.RewardCredentialsOf
 d_RewardCredentialsOf_154 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_HasRewardCredentials_2156 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_HasRewardCredentials_2160 ->
   AgdaAny ->
   [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
 d_RewardCredentialsOf_154 v0
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_RewardCredentialsOf_2164
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.d_RewardCredentialsOf_2168
       (coe v0)
 -- Ledger.Dijkstra.Foreign.Gov._.Computational-GOV
 d_Computational'45'GOV_166 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'GOV_166
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational.d_Computational'45'GOV_2484
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational.d_Computational'45'GOV_2488
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
          (coe
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
 -- Ledger.Dijkstra.Foreign.Gov._.Computational-GOVS
@@ -603,104 +605,104 @@ d_Computational'45'GOVS_168 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
 d_Computational'45'GOVS_168
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational.d_Computational'45'GOVS_2890
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational.d_Computational'45'GOVS_2896
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
          (coe
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
 -- Ledger.Dijkstra.Foreign.Gov._.allEnactable-singleton
 d_allEnactable'45'singleton_170 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionState_1102 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1328 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionState_1106 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1332 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44
 d_allEnactable'45'singleton_170 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational.du_allEnactable'45'singleton_2898
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational.du_allEnactable'45'singleton_2904
       v0 v1 v2
 -- Ledger.Dijkstra.Foreign.Gov._.isRegistered?
 d_isRegistered'63'_172 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_GovEnv_2092 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_996 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_GovEnv_2096 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVoter_1000 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_isRegistered'63'_172
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational.d_isRegistered'63'_2482
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational.d_isRegistered'63'_2486
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
          (coe
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
 -- Ledger.Dijkstra.Foreign.Gov._.lookupActionId
 d_lookupActionId_174 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_318 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovRole_946 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.T_PParams_320 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovRole_950 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   Integer ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_lookupActionId_174
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational.d_lookupActionId_2264
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational.d_lookupActionId_2268
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
          (coe
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
 -- Ledger.Dijkstra.Foreign.Gov._.validHFAction?
 d_validHFAction'63'_176 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1074 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovProposal_1078 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1328 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.T_EnactState_1332 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_validHFAction'63'_176
   = coe
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational.d_validHFAction'63'_2390
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational.d_validHFAction'63'_2394
       (coe
-         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+         MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
          (coe
             MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24))
 -- Ledger.Dijkstra.Foreign.Gov.toNeedsHash
 d_toNeedsHash_180 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_956 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_960 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> AgdaAny
 d_toNeedsHash_180 v0 v1
   = case coe v0 of
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_958
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_962
         -> coe v1
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_960
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_964
         -> coe v1
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_962
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_966
         -> coe v1
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_964
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_968
         -> coe v1
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_966
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_970
         -> coe v1
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_968
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_972
         -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_970
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_974
         -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Dijkstra.Foreign.Gov.fromNeedsHash
 d_fromNeedsHash_198 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_956 ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionType_960 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_fromNeedsHash_198 v0 v1
   = case coe v0 of
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_958
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_962
         -> coe v1
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_960
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_964
         -> coe v1
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_962
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_966
         -> coe v1
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_964
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_968
         -> coe v1
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_966
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_970
         -> coe v1
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_968
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_972
         -> coe
              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe (0 :: Integer))
              (coe (0 :: Integer))
-      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_970
+      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_974
         -> coe
              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe (0 :: Integer))
              (coe (0 :: Integer))
@@ -711,7 +713,7 @@ data T_GovProposal''_214
   = C_constructor_240 MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.T_GovAction''_10
                       MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 (Maybe Integer) Integer
                       MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_116
-                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Anchor_1008
+                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Anchor_1012
 -- Ledger.Dijkstra.Foreign.Gov.GovProposal'.action
 d_action_228 ::
   T_GovProposal''_214 ->
@@ -750,7 +752,7 @@ d_returnAddr_236 v0
 -- Ledger.Dijkstra.Foreign.Gov.GovProposal'.anchor
 d_anchor_238 ::
   T_GovProposal''_214 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Anchor_1008
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Anchor_1012
 d_anchor_238 v0
   = case coe v0 of
       C_constructor_240 v1 v2 v3 v4 v5 v6 -> coe v6
@@ -772,12 +774,12 @@ d_mkGovProposal''_242
                     (coe
                        (\ v1 ->
                           case coe v1 of
-                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984 v2 v3
+                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988 v2 v3
                               -> case coe v2 of
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_958
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_962
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_NoConfidence_12
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_960
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_964
                                      -> case coe v3 of
                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v4 v5
                                             -> case coe v5 of
@@ -787,26 +789,26 @@ d_mkGovProposal''_242
                                                         (coe v4) (coe v6) (coe v7)
                                                  _ -> MAlonzo.RTE.mazUnreachableError
                                           _ -> MAlonzo.RTE.mazUnreachableError
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_962
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_966
                                      -> case coe v3 of
                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v4 v5
                                             -> coe
                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_NewConstitution_16
                                                  (coe v4) (coe v5)
                                           _ -> MAlonzo.RTE.mazUnreachableError
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_964
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_968
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TriggerHardFork_18
                                           (coe v3)
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_966
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_970
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_ChangePParams_20
                                           (coe v3)
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_968
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_972
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TreasuryWithdrawal_22
                                           (coe v3)
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_970
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_974
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_Info_24
                                    _ -> MAlonzo.RTE.mazUnreachableError
@@ -816,15 +818,15 @@ d_mkGovProposal''_242
                           case coe v1 of
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_NoConfidence_12
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_958)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_962)
                                    (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_UpdateCommittee_14 v2 v3 v4
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_960)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_964)
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2)
                                       (coe
@@ -832,64 +834,64 @@ d_mkGovProposal''_242
                                          (coe v4)))
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_NewConstitution_16 v2 v3
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_962)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_966)
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2) (coe v3))
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TriggerHardFork_18 v2
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_964)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_968)
                                    (coe v2)
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_ChangePParams_20 v2
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_966)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_970)
                                    (coe v2)
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TreasuryWithdrawal_22 v2
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_968)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_972)
                                    (coe v2)
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_Info_24
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_970)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_974)
                                    (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                             _ -> MAlonzo.RTE.mazUnreachableError)))
-                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_action_1088
+                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_action_1092
                     (coe v0)))
               (coe
                  d_fromNeedsHash_198
                  (coe
-                    MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gaType_980
+                    MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gaType_984
                     (coe
-                       MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_action_1088
+                       MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_action_1092
                        (coe v0)))
                  (coe
-                    MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_prevAction_1090
+                    MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_prevAction_1094
                     (coe v0)))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_policy_1092
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_policy_1096
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_deposit_1094
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_deposit_1098
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_returnAddr_1096
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_returnAddr_1100
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_anchor_1098
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_anchor_1102
                  (coe v0))))
       (coe
          (\ v0 ->
             coe
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_constructor_1100
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_constructor_1104
               (coe
                  MAlonzo.Code.Class.Convertible.Core.d_from_22
                  (coe
@@ -897,12 +899,12 @@ d_mkGovProposal''_242
                     (coe
                        (\ v1 ->
                           case coe v1 of
-                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984 v2 v3
+                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988 v2 v3
                               -> case coe v2 of
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_958
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_962
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_NoConfidence_12
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_960
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_964
                                      -> case coe v3 of
                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v4 v5
                                             -> case coe v5 of
@@ -912,26 +914,26 @@ d_mkGovProposal''_242
                                                         (coe v4) (coe v6) (coe v7)
                                                  _ -> MAlonzo.RTE.mazUnreachableError
                                           _ -> MAlonzo.RTE.mazUnreachableError
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_962
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_966
                                      -> case coe v3 of
                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v4 v5
                                             -> coe
                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_NewConstitution_16
                                                  (coe v4) (coe v5)
                                           _ -> MAlonzo.RTE.mazUnreachableError
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_964
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_968
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TriggerHardFork_18
                                           (coe v3)
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_966
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_970
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_ChangePParams_20
                                           (coe v3)
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_968
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_972
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TreasuryWithdrawal_22
                                           (coe v3)
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_970
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_974
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_Info_24
                                    _ -> MAlonzo.RTE.mazUnreachableError
@@ -941,15 +943,15 @@ d_mkGovProposal''_242
                           case coe v1 of
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_NoConfidence_12
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_958)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_962)
                                    (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_UpdateCommittee_14 v2 v3 v4
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_960)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_964)
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2)
                                       (coe
@@ -957,41 +959,41 @@ d_mkGovProposal''_242
                                          (coe v4)))
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_NewConstitution_16 v2 v3
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_962)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_966)
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2) (coe v3))
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TriggerHardFork_18 v2
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_964)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_968)
                                    (coe v2)
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_ChangePParams_20 v2
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_966)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_970)
                                    (coe v2)
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TreasuryWithdrawal_22 v2
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_968)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_972)
                                    (coe v2)
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_Info_24
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_970)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_974)
                                    (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                             _ -> MAlonzo.RTE.mazUnreachableError)))
                  (d_action_228 (coe v0)))
               (coe
                  d_toNeedsHash_180
                  (coe
-                    MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gaType_980
+                    MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gaType_984
                     (coe
                        MAlonzo.Code.Class.Convertible.Core.d_from_22
                        (coe
@@ -999,12 +1001,12 @@ d_mkGovProposal''_242
                           (coe
                              (\ v1 ->
                                 case coe v1 of
-                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984 v2 v3
+                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988 v2 v3
                                     -> case coe v2 of
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_958
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_962
                                            -> coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_NoConfidence_12
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_960
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_964
                                            -> case coe v3 of
                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v4 v5
                                                   -> case coe v5 of
@@ -1014,26 +1016,26 @@ d_mkGovProposal''_242
                                                               (coe v4) (coe v6) (coe v7)
                                                        _ -> MAlonzo.RTE.mazUnreachableError
                                                 _ -> MAlonzo.RTE.mazUnreachableError
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_962
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_966
                                            -> case coe v3 of
                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v4 v5
                                                   -> coe
                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_NewConstitution_16
                                                        (coe v4) (coe v5)
                                                 _ -> MAlonzo.RTE.mazUnreachableError
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_964
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_968
                                            -> coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TriggerHardFork_18
                                                 (coe v3)
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_966
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_970
                                            -> coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_ChangePParams_20
                                                 (coe v3)
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_968
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_972
                                            -> coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TreasuryWithdrawal_22
                                                 (coe v3)
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_970
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_974
                                            -> coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_Info_24
                                          _ -> MAlonzo.RTE.mazUnreachableError
@@ -1043,15 +1045,15 @@ d_mkGovProposal''_242
                                 case coe v1 of
                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_NoConfidence_12
                                     -> coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_958)
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_962)
                                          (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_UpdateCommittee_14 v2 v3 v4
                                     -> coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_960)
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_964)
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2)
                                             (coe
@@ -1059,35 +1061,35 @@ d_mkGovProposal''_242
                                                (coe v4)))
                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_NewConstitution_16 v2 v3
                                     -> coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_962)
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_966)
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2)
                                             (coe v3))
                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TriggerHardFork_18 v2
                                     -> coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_964)
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_968)
                                          (coe v2)
                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_ChangePParams_20 v2
                                     -> coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_966)
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_970)
                                          (coe v2)
                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TreasuryWithdrawal_22 v2
                                     -> coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_968)
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_972)
                                          (coe v2)
                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_Info_24
                                     -> coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_970)
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_974)
                                          (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                                   _ -> MAlonzo.RTE.mazUnreachableError)))
                        (d_action_228 (coe v0))))
@@ -1102,7 +1104,7 @@ d_action_266 v0 = coe d_action_228 (coe v0)
 -- Ledger.Dijkstra.Foreign.Gov.p.anchor
 d_anchor_268 ::
   T_GovProposal''_214 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Anchor_1008
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_Anchor_1012
 d_anchor_268 v0 = coe d_anchor_238 (coe v0)
 -- Ledger.Dijkstra.Foreign.Gov.p.deposit
 d_deposit_270 :: T_GovProposal''_214 -> Integer
@@ -1149,7 +1151,7 @@ d_Conv'45'GovProposal''_280
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_UpdateCommittee_1111
                                           (coe
-                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
@@ -1163,7 +1165,7 @@ d_Conv'45'GovProposal''_280
                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                    (coe v8))))
                                           (coe
-                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_68
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_74
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
@@ -1235,7 +1237,7 @@ d_Conv'45'GovProposal''_280
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_ChangePParams_1451
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParamsUpdate_203805
+                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParamsUpdate_215257
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
@@ -1244,7 +1246,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockSize_880
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockSize_894
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1254,7 +1256,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxSize_882
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxSize_896
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1264,7 +1266,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxHeaderSize_884
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxHeaderSize_898
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1274,7 +1276,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxValSize_886
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxValSize_900
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1284,7 +1286,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxCollateralInputs_888
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxCollateralInputs_902
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1298,7 +1300,7 @@ d_Conv'45'GovProposal''_280
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxExUnits_890
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxExUnits_904
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1312,7 +1314,7 @@ d_Conv'45'GovProposal''_280
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockExUnits_892
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockExUnits_906
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1326,7 +1328,7 @@ d_Conv'45'GovProposal''_280
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_pv_894
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_pv_908
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1336,7 +1338,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosHeaderPeriod_896
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosHeaderPeriod_910
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1346,7 +1348,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosVotingPeriod_898
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosVotingPeriod_912
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1356,7 +1358,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosDiffusionPeriod_900
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosDiffusionPeriod_914
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1366,7 +1368,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBSize_902
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBSize_916
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1376,7 +1378,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBTxsSize_904
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBTxsSize_918
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1386,7 +1388,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosCommitteeSize_906
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosCommitteeSize_920
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1395,8 +1397,8 @@ d_Conv'45'GovProposal''_280
                                                    (coe
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosQuorumStakeThreshold_908
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosQuorumStakeThreshold_922
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1410,7 +1412,7 @@ d_Conv'45'GovProposal''_280
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBExUnits_910
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBExUnits_924
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1420,7 +1422,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxRefScriptSizePerEB_912
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxRefScriptSizePerEB_926
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1430,7 +1432,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a_914
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a_928
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1440,7 +1442,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_b_916
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_b_930
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1450,7 +1452,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_keyDeposit_918
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_keyDeposit_932
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1460,7 +1462,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolDeposit_920
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolDeposit_934
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1470,7 +1472,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minPoolCost_922
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minPoolCost_936
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1479,8 +1481,8 @@ d_Conv'45'GovProposal''_280
                                                    (coe
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_monetaryExpansion_924
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_monetaryExpansion_938
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1489,8 +1491,8 @@ d_Conv'45'GovProposal''_280
                                                    (coe
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasuryCut_926
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasuryCut_940
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1500,7 +1502,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_coinsPerUTxOByte_928
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_coinsPerUTxOByte_942
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1518,7 +1520,7 @@ d_Conv'45'GovProposal''_280
                                                          (\ v9 ->
                                                             coe
                                                               MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_prices_930
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_prices_944
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1527,18 +1529,8 @@ d_Conv'45'GovProposal''_280
                                                    (coe
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minFeeRefScriptCoinsPerByte_932
-                                                   (coe v8)))
-                                             (coe
-                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                                (coe
-                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
-                                                   (coe
-                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
-                                                   (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerTx_934
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minFeeRefScriptCoinsPerByte_946
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1548,27 +1540,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerBlock_936
-                                                   (coe v8)))
-                                             (coe
-                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                                (coe
-                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
-                                                   (coe
-                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
-                                                   (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_150))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostStride_938
-                                                   (coe v8)))
-                                             (coe
-                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                                (coe
-                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
-                                                   (coe
-                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
-                                                   (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostMultiplier_940
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerTx_948
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1578,7 +1550,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minUTxOValue_942
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerBlock_950
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1587,8 +1559,8 @@ d_Conv'45'GovProposal''_280
                                                    (coe
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a0_944
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_156))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostStride_952
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1597,18 +1569,8 @@ d_Conv'45'GovProposal''_280
                                                    (coe
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Emax_946
-                                                   (coe v8)))
-                                             (coe
-                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                                (coe
-                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
-                                                   (coe
-                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
-                                                   (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_nopt_948
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostMultiplier_954
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1618,7 +1580,59 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_collateralPercentage_950
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minUTxOValue_956
+                                                   (coe v8)))
+                                             (coe
+                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                (coe
+                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                   (coe
+                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a0_958
+                                                   (coe v8)))
+                                             (coe
+                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                (coe
+                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                   (coe
+                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                   (coe
+                                                      MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34)))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_960
+                                                   (coe v8)))
+                                             (coe
+                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                (coe
+                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                   (coe
+                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Emax_962
+                                                   (coe v8)))
+                                             (coe
+                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                (coe
+                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                   (coe
+                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_nopt_964
+                                                   (coe v8)))
+                                             (coe
+                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                (coe
+                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                   (coe
+                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_collateralPercentage_966
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1628,7 +1642,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'LanguageCostModels_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_costmdls_952
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_costmdls_968
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1638,7 +1652,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'DrepThresholds_14))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_954
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_970
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1648,7 +1662,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PoolThresholds_18))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolThresholds_956
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolThresholds_972
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1658,7 +1672,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionLifetime_958
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionLifetime_974
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1668,7 +1682,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionDeposit_960
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionDeposit_976
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1678,7 +1692,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepDeposit_962
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepDeposit_978
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1688,7 +1702,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepActivity_964
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepActivity_980
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1698,7 +1712,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMinSize_966
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMinSize_982
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -1708,13 +1722,13 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMaxTermLength_968
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMaxTermLength_984
                                                    (coe v8))))
                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TreasuryWithdrawal_22 v8
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TreasuryWithdrawal_1469
                                           (coe
-                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
@@ -1750,7 +1764,7 @@ d_Conv'45'GovProposal''_280
                                                     = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
                                               coe
                                                 (let v12
-                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
                                                            (coe v11) in
                                                  coe
                                                    (coe
@@ -1760,12 +1774,12 @@ d_Conv'45'GovProposal''_280
                                                          (coe
                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                (coe v12))))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v12))))))
                                              (coe
                                                 MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -1789,7 +1803,7 @@ d_Conv'45'GovProposal''_280
                                                         (coe
                                                            MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                         v11))
-                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                                                    (coe v8))))
                                           (coe
                                              MAlonzo.Code.Axiom.Set.du_fromList_456
@@ -1803,7 +1817,7 @@ d_Conv'45'GovProposal''_280
                                                    MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                    (coe
                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218))
-                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_elems_66
+                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_elems_72
                                                    (coe v9))))
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -1875,9 +1889,9 @@ d_Conv'45'GovProposal''_280
                                                 (coe
                                                    (\ v9 ->
                                                       case coe v9 of
-                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_970 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35 v36 v37 v38 v39 v40 v41 v42 v43 v44 v45 v46 v47 v48 v49 v50 v51 v52 v53 v54
+                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_986 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35 v36 v37 v38 v39 v40 v41 v42 v43 v44 v45 v46 v47 v48 v49 v50 v51 v52 v53 v54 v55
                                                           -> coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParamsUpdate_203805
+                                                               MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParamsUpdate_215257
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                   (coe
@@ -2023,7 +2037,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                                                                   v24)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2099,7 +2113,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                                                                   v32)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2108,7 +2122,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                                                                   v33)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2128,11 +2142,11 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                         (coe
-                                                                           (\ v55 ->
+                                                                           (\ v56 ->
                                                                               coe
                                                                                 MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
                                                                         (coe
-                                                                           (\ v55 ->
+                                                                           (\ v56 ->
                                                                               coe
                                                                                 MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))))
                                                                   v35)
@@ -2143,7 +2157,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                                                   v36)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2170,7 +2184,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_150))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_156))
                                                                   v39)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2179,7 +2193,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                                                   v40)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2197,7 +2211,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                                                   v42)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2206,7 +2220,9 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                        MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34)))
                                                                   v43)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2233,7 +2249,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'LanguageCostModels_10))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                                   v46)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2242,7 +2258,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'DrepThresholds_14))
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'LanguageCostModels_10))
                                                                   v47)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2251,7 +2267,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PoolThresholds_18))
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'DrepThresholds_14))
                                                                   v48)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2260,7 +2276,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PoolThresholds_18))
                                                                   v49)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2307,13 +2323,22 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                                   v54)
+                                                               (coe
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                                     (coe
+                                                                        MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                  v55)
                                                         _ -> MAlonzo.RTE.mazUnreachableError))
                                                 (coe
                                                    (\ v9 ->
                                                       case coe v9 of
-                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParamsUpdate_203805 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35 v36 v37 v38 v39 v40 v41 v42 v43 v44 v45 v46 v47 v48 v49 v50 v51 v52 v53 v54
+                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParamsUpdate_215257 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35 v36 v37 v38 v39 v40 v41 v42 v43 v44 v45 v46 v47 v48 v49 v50 v51 v52 v53 v54 v55
                                                           -> coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_970
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_986
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                   (coe
@@ -2459,7 +2484,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                                                                   v24)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -2535,7 +2560,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                                                                   v32)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -2544,7 +2569,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                                                                   v33)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -2564,11 +2589,11 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                         (coe
-                                                                           (\ v55 ->
+                                                                           (\ v56 ->
                                                                               coe
                                                                                 MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
                                                                         (coe
-                                                                           (\ v55 ->
+                                                                           (\ v56 ->
                                                                               coe
                                                                                 MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))))
                                                                   v35)
@@ -2579,7 +2604,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                                                   v36)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -2606,7 +2631,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_150))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_156))
                                                                   v39)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -2615,7 +2640,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                                                   v40)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -2633,7 +2658,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                                                   v42)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -2642,7 +2667,9 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                        MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34)))
                                                                   v43)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -2669,7 +2696,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'LanguageCostModels_10))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                                   v46)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -2678,7 +2705,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'DrepThresholds_14))
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'LanguageCostModels_10))
                                                                   v47)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -2687,7 +2714,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PoolThresholds_18))
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'DrepThresholds_14))
                                                                   v48)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -2696,7 +2723,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PoolThresholds_18))
                                                                   v49)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -2743,6 +2770,15 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                                   v54)
+                                                               (coe
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                  (coe
+                                                                     MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                                     (coe
+                                                                        MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                  v55)
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
                                              v8)
                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TreasuryWithdrawal_1469 v8
@@ -2758,7 +2794,7 @@ d_Conv'45'GovProposal''_280
                                                     = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
                                               coe
                                                 (let v10
-                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
                                                            (coe v9) in
                                                  coe
                                                    (coe
@@ -2766,19 +2802,19 @@ d_Conv'45'GovProposal''_280
                                                       (coe
                                                          MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_332
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_globalConstants_1422
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_globalConstants_1426
                                                             (coe v10)))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                          (coe
                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                (coe v10))))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v10))))))
                                              (coe
                                                 MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -2802,7 +2838,7 @@ d_Conv'45'GovProposal''_280
                                                         (coe
                                                            MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                         v9))
-                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                                                    (coe v8))))
                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_Info_1529
                                      -> coe
@@ -2867,10 +2903,10 @@ d_Conv'45'GovProposal''_280
                      (coe
                         MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.C_Anchor_149
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_url_1014
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_url_1018
                            (coe v6))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_hash_1016
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_hash_1020
                            (coe v6)))
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
@@ -2893,7 +2929,7 @@ d_Conv'45'GovProposal''_280
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_UpdateCommittee_1111
                                           (coe
-                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
@@ -2907,7 +2943,7 @@ d_Conv'45'GovProposal''_280
                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                    (coe v8))))
                                           (coe
-                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_68
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_74
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
@@ -2979,7 +3015,7 @@ d_Conv'45'GovProposal''_280
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_ChangePParams_1451
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParamsUpdate_203805
+                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParamsUpdate_215257
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
@@ -2988,7 +3024,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockSize_880
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockSize_894
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -2998,7 +3034,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxSize_882
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxSize_896
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3008,7 +3044,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxHeaderSize_884
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxHeaderSize_898
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3018,7 +3054,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxValSize_886
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxValSize_900
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3028,7 +3064,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxCollateralInputs_888
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxCollateralInputs_902
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3042,7 +3078,7 @@ d_Conv'45'GovProposal''_280
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxExUnits_890
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxExUnits_904
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3056,7 +3092,7 @@ d_Conv'45'GovProposal''_280
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockExUnits_892
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockExUnits_906
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3070,7 +3106,7 @@ d_Conv'45'GovProposal''_280
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_pv_894
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_pv_908
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3080,7 +3116,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosHeaderPeriod_896
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosHeaderPeriod_910
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3090,7 +3126,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosVotingPeriod_898
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosVotingPeriod_912
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3100,7 +3136,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosDiffusionPeriod_900
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosDiffusionPeriod_914
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3110,7 +3146,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBSize_902
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBSize_916
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3120,7 +3156,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBTxsSize_904
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBTxsSize_918
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3130,7 +3166,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosCommitteeSize_906
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosCommitteeSize_920
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3139,8 +3175,8 @@ d_Conv'45'GovProposal''_280
                                                    (coe
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosQuorumStakeThreshold_908
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosQuorumStakeThreshold_922
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3154,7 +3190,7 @@ d_Conv'45'GovProposal''_280
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBExUnits_910
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBExUnits_924
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3164,7 +3200,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxRefScriptSizePerEB_912
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxRefScriptSizePerEB_926
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3174,7 +3210,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a_914
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a_928
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3184,7 +3220,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_b_916
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_b_930
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3194,7 +3230,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_keyDeposit_918
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_keyDeposit_932
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3204,7 +3240,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolDeposit_920
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolDeposit_934
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3214,7 +3250,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minPoolCost_922
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minPoolCost_936
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3223,8 +3259,8 @@ d_Conv'45'GovProposal''_280
                                                    (coe
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_monetaryExpansion_924
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_monetaryExpansion_938
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3233,8 +3269,8 @@ d_Conv'45'GovProposal''_280
                                                    (coe
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasuryCut_926
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasuryCut_940
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3244,7 +3280,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_coinsPerUTxOByte_928
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_coinsPerUTxOByte_942
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3262,7 +3298,7 @@ d_Conv'45'GovProposal''_280
                                                          (\ v9 ->
                                                             coe
                                                               MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_prices_930
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_prices_944
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3271,18 +3307,8 @@ d_Conv'45'GovProposal''_280
                                                    (coe
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minFeeRefScriptCoinsPerByte_932
-                                                   (coe v8)))
-                                             (coe
-                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                                (coe
-                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
-                                                   (coe
-                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
-                                                   (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerTx_934
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minFeeRefScriptCoinsPerByte_946
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3292,27 +3318,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerBlock_936
-                                                   (coe v8)))
-                                             (coe
-                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                                (coe
-                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
-                                                   (coe
-                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
-                                                   (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_150))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostStride_938
-                                                   (coe v8)))
-                                             (coe
-                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                                (coe
-                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
-                                                   (coe
-                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
-                                                   (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostMultiplier_940
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerTx_948
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3322,7 +3328,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minUTxOValue_942
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerBlock_950
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3331,8 +3337,8 @@ d_Conv'45'GovProposal''_280
                                                    (coe
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a0_944
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_156))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostStride_952
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3341,18 +3347,8 @@ d_Conv'45'GovProposal''_280
                                                    (coe
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Emax_946
-                                                   (coe v8)))
-                                             (coe
-                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                                (coe
-                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
-                                                   (coe
-                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
-                                                   (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_nopt_948
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostMultiplier_954
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3362,7 +3358,59 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_collateralPercentage_950
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minUTxOValue_956
+                                                   (coe v8)))
+                                             (coe
+                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                (coe
+                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                   (coe
+                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a0_958
+                                                   (coe v8)))
+                                             (coe
+                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                (coe
+                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                   (coe
+                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                   (coe
+                                                      MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34)))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_960
+                                                   (coe v8)))
+                                             (coe
+                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                (coe
+                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                   (coe
+                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Emax_962
+                                                   (coe v8)))
+                                             (coe
+                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                (coe
+                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                   (coe
+                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_nopt_964
+                                                   (coe v8)))
+                                             (coe
+                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                (coe
+                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                   (coe
+                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_collateralPercentage_966
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3372,7 +3420,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'LanguageCostModels_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_costmdls_952
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_costmdls_968
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3382,7 +3430,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'DrepThresholds_14))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_954
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_970
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3392,7 +3440,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PoolThresholds_18))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolThresholds_956
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolThresholds_972
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3402,7 +3450,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionLifetime_958
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionLifetime_974
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3412,7 +3460,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionDeposit_960
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionDeposit_976
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3422,7 +3470,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepDeposit_962
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepDeposit_978
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3432,7 +3480,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepActivity_964
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepActivity_980
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3442,7 +3490,7 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMinSize_966
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMinSize_982
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3452,13 +3500,13 @@ d_Conv'45'GovProposal''_280
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMaxTermLength_968
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMaxTermLength_984
                                                    (coe v8))))
                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TreasuryWithdrawal_22 v8
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TreasuryWithdrawal_1469
                                           (coe
-                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
@@ -3494,7 +3542,7 @@ d_Conv'45'GovProposal''_280
                                                     = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
                                               coe
                                                 (let v12
-                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
                                                            (coe v11) in
                                                  coe
                                                    (coe
@@ -3504,12 +3552,12 @@ d_Conv'45'GovProposal''_280
                                                          (coe
                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                (coe v12))))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v12))))))
                                              (coe
                                                 MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -3533,7 +3581,7 @@ d_Conv'45'GovProposal''_280
                                                         (coe
                                                            MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                         v11))
-                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                                                    (coe v8))))
                                           (coe
                                              MAlonzo.Code.Axiom.Set.du_fromList_456
@@ -3547,7 +3595,7 @@ d_Conv'45'GovProposal''_280
                                                    MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                    (coe
                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218))
-                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_elems_66
+                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_elems_72
                                                    (coe v9))))
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -3619,9 +3667,9 @@ d_Conv'45'GovProposal''_280
                                                 (coe
                                                    (\ v9 ->
                                                       case coe v9 of
-                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_970 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35 v36 v37 v38 v39 v40 v41 v42 v43 v44 v45 v46 v47 v48 v49 v50 v51 v52 v53 v54
+                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_986 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35 v36 v37 v38 v39 v40 v41 v42 v43 v44 v45 v46 v47 v48 v49 v50 v51 v52 v53 v54 v55
                                                           -> coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParamsUpdate_203805
+                                                               MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParamsUpdate_215257
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                   (coe
@@ -3767,7 +3815,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                                                                   v24)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3843,7 +3891,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                                                                   v32)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3852,7 +3900,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                                                                   v33)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3872,11 +3920,11 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                         (coe
-                                                                           (\ v55 ->
+                                                                           (\ v56 ->
                                                                               coe
                                                                                 MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
                                                                         (coe
-                                                                           (\ v55 ->
+                                                                           (\ v56 ->
                                                                               coe
                                                                                 MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))))
                                                                   v35)
@@ -3887,7 +3935,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                                                   v36)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3914,7 +3962,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_150))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_156))
                                                                   v39)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3923,7 +3971,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                                                   v40)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3941,7 +3989,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                                                   v42)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3950,7 +3998,9 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                        MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34)))
                                                                   v43)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3977,7 +4027,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'LanguageCostModels_10))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                                   v46)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3986,7 +4036,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'DrepThresholds_14))
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'LanguageCostModels_10))
                                                                   v47)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -3995,7 +4045,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PoolThresholds_18))
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'DrepThresholds_14))
                                                                   v48)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -4004,7 +4054,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PoolThresholds_18))
                                                                   v49)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -4051,13 +4101,22 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                                   v54)
+                                                               (coe
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                                     (coe
+                                                                        MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                  v55)
                                                         _ -> MAlonzo.RTE.mazUnreachableError))
                                                 (coe
                                                    (\ v9 ->
                                                       case coe v9 of
-                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParamsUpdate_203805 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35 v36 v37 v38 v39 v40 v41 v42 v43 v44 v45 v46 v47 v48 v49 v50 v51 v52 v53 v54
+                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParamsUpdate_215257 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35 v36 v37 v38 v39 v40 v41 v42 v43 v44 v45 v46 v47 v48 v49 v50 v51 v52 v53 v54 v55
                                                           -> coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_970
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_986
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                   (coe
@@ -4203,7 +4262,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                                                                   v24)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -4279,7 +4338,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                                                                   v32)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -4288,7 +4347,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                                                                   v33)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -4308,11 +4367,11 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                         (coe
-                                                                           (\ v55 ->
+                                                                           (\ v56 ->
                                                                               coe
                                                                                 MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
                                                                         (coe
-                                                                           (\ v55 ->
+                                                                           (\ v56 ->
                                                                               coe
                                                                                 MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))))
                                                                   v35)
@@ -4323,7 +4382,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                                                   v36)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -4350,7 +4409,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_150))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_156))
                                                                   v39)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -4359,7 +4418,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                                                   v40)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -4377,7 +4436,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                                                   v42)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -4386,7 +4445,9 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                        MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34)))
                                                                   v43)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -4413,7 +4474,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'LanguageCostModels_10))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                                   v46)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -4422,7 +4483,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'DrepThresholds_14))
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'LanguageCostModels_10))
                                                                   v47)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -4431,7 +4492,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PoolThresholds_18))
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'DrepThresholds_14))
                                                                   v48)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -4440,7 +4501,7 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PoolThresholds_18))
                                                                   v49)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -4487,6 +4548,15 @@ d_Conv'45'GovProposal''_280
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                                   v54)
+                                                               (coe
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                  (coe
+                                                                     MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                                     (coe
+                                                                        MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                  v55)
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
                                              v8)
                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TreasuryWithdrawal_1469 v8
@@ -4502,7 +4572,7 @@ d_Conv'45'GovProposal''_280
                                                     = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
                                               coe
                                                 (let v10
-                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
                                                            (coe v9) in
                                                  coe
                                                    (coe
@@ -4510,19 +4580,19 @@ d_Conv'45'GovProposal''_280
                                                       (coe
                                                          MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_332
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_globalConstants_1422
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_globalConstants_1426
                                                             (coe v10)))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                          (coe
                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                (coe v10))))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v10))))))
                                              (coe
                                                 MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -4546,7 +4616,7 @@ d_Conv'45'GovProposal''_280
                                                         (coe
                                                            MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                         v9))
-                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                                                    (coe v8))))
                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_Info_1529
                                      -> coe
@@ -4659,7 +4729,7 @@ d_Conv'45'GovProposal''_280
                            (coe
                               (\ v7 ->
                                  case coe v7 of
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_constructor_1018 v8 v9
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_constructor_1022 v8 v9
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.C_Anchor_149
                                           (coe v8) (coe v9)
@@ -4669,7 +4739,7 @@ d_Conv'45'GovProposal''_280
                                  case coe v7 of
                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.C_Anchor_149 v8 v9
                                      -> coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_constructor_1018
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_constructor_1022
                                           (coe v8) (coe v9)
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v6)
@@ -4688,7 +4758,7 @@ d_Conv'45'GovProposal_284
 -- Ledger.Dijkstra.Foreign.Gov.GovActionState'
 d_GovActionState''_286 = ()
 data T_GovActionState''_286
-  = C_constructor_312 MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVotes_1040
+  = C_constructor_312 MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVotes_1044
                       MAlonzo.Code.Ledger.Core.Specification.Address.T_RewardAddress_116
                       Integer
                       MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.T_GovAction''_10
@@ -4696,7 +4766,7 @@ data T_GovActionState''_286
 -- Ledger.Dijkstra.Foreign.Gov.GovActionState'.votes
 d_votes_300 ::
   T_GovActionState''_286 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVotes_1040
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVotes_1044
 d_votes_300 v0
   = case coe v0 of
       C_constructor_312 v1 v2 v3 v4 v5 v6 -> coe v1
@@ -4747,13 +4817,13 @@ d_mkGovActionState''_314
             coe
               C_constructor_312
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_votes_1116
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_votes_1120
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_returnAddr_1118
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_returnAddr_1122
                  (coe v0))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_expiresIn_1120
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_expiresIn_1124
                  (coe v0))
               (coe
                  MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -4762,12 +4832,12 @@ d_mkGovActionState''_314
                     (coe
                        (\ v1 ->
                           case coe v1 of
-                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984 v2 v3
+                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988 v2 v3
                               -> case coe v2 of
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_958
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_962
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_NoConfidence_12
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_960
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_964
                                      -> case coe v3 of
                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v4 v5
                                             -> case coe v5 of
@@ -4777,26 +4847,26 @@ d_mkGovActionState''_314
                                                         (coe v4) (coe v6) (coe v7)
                                                  _ -> MAlonzo.RTE.mazUnreachableError
                                           _ -> MAlonzo.RTE.mazUnreachableError
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_962
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_966
                                      -> case coe v3 of
                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v4 v5
                                             -> coe
                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_NewConstitution_16
                                                  (coe v4) (coe v5)
                                           _ -> MAlonzo.RTE.mazUnreachableError
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_964
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_968
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TriggerHardFork_18
                                           (coe v3)
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_966
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_970
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_ChangePParams_20
                                           (coe v3)
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_968
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_972
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TreasuryWithdrawal_22
                                           (coe v3)
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_970
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_974
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_Info_24
                                    _ -> MAlonzo.RTE.mazUnreachableError
@@ -4806,15 +4876,15 @@ d_mkGovActionState''_314
                           case coe v1 of
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_NoConfidence_12
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_958)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_962)
                                    (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_UpdateCommittee_14 v2 v3 v4
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_960)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_964)
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2)
                                       (coe
@@ -4822,55 +4892,55 @@ d_mkGovActionState''_314
                                          (coe v4)))
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_NewConstitution_16 v2 v3
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_962)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_966)
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2) (coe v3))
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TriggerHardFork_18 v2
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_964)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_968)
                                    (coe v2)
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_ChangePParams_20 v2
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_966)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_970)
                                    (coe v2)
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TreasuryWithdrawal_22 v2
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_968)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_972)
                                    (coe v2)
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_Info_24
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_970)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_974)
                                    (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                             _ -> MAlonzo.RTE.mazUnreachableError)))
-                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_action_1122
+                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_action_1126
                     (coe v0)))
               (coe
                  d_fromNeedsHash_198
                  (coe
-                    MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gaType_980
+                    MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gaType_984
                     (coe
-                       MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_action_1122
+                       MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_action_1126
                        (coe v0)))
                  (coe
-                    MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_prevAction_1124
+                    MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_prevAction_1128
                     (coe v0)))
               (coe
-                 MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_deposit_1126
+                 MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_deposit_1130
                  (coe v0))))
       (coe
          (\ v0 ->
             coe
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_constructor_1128
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_constructor_1132
               (coe d_votes_300 (coe v0)) (coe d_returnAddr_302 (coe v0))
               (coe d_expiresIn_304 (coe v0))
               (coe
@@ -4880,12 +4950,12 @@ d_mkGovActionState''_314
                     (coe
                        (\ v1 ->
                           case coe v1 of
-                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984 v2 v3
+                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988 v2 v3
                               -> case coe v2 of
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_958
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_962
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_NoConfidence_12
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_960
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_964
                                      -> case coe v3 of
                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v4 v5
                                             -> case coe v5 of
@@ -4895,26 +4965,26 @@ d_mkGovActionState''_314
                                                         (coe v4) (coe v6) (coe v7)
                                                  _ -> MAlonzo.RTE.mazUnreachableError
                                           _ -> MAlonzo.RTE.mazUnreachableError
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_962
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_966
                                      -> case coe v3 of
                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v4 v5
                                             -> coe
                                                  MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_NewConstitution_16
                                                  (coe v4) (coe v5)
                                           _ -> MAlonzo.RTE.mazUnreachableError
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_964
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_968
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TriggerHardFork_18
                                           (coe v3)
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_966
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_970
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_ChangePParams_20
                                           (coe v3)
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_968
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_972
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TreasuryWithdrawal_22
                                           (coe v3)
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_970
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_974
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_Info_24
                                    _ -> MAlonzo.RTE.mazUnreachableError
@@ -4924,15 +4994,15 @@ d_mkGovActionState''_314
                           case coe v1 of
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_NoConfidence_12
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_958)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_962)
                                    (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_UpdateCommittee_14 v2 v3 v4
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_960)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_964)
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2)
                                       (coe
@@ -4940,41 +5010,41 @@ d_mkGovActionState''_314
                                          (coe v4)))
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_NewConstitution_16 v2 v3
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_962)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_966)
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2) (coe v3))
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TriggerHardFork_18 v2
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_964)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_968)
                                    (coe v2)
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_ChangePParams_20 v2
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_966)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_970)
                                    (coe v2)
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TreasuryWithdrawal_22 v2
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_968)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_972)
                                    (coe v2)
                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_Info_24
                               -> coe
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                    (coe
-                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_970)
+                                      MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_974)
                                    (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                             _ -> MAlonzo.RTE.mazUnreachableError)))
                  (d_action_306 (coe v0)))
               (coe
                  d_toNeedsHash_180
                  (coe
-                    MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gaType_980
+                    MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gaType_984
                     (coe
                        MAlonzo.Code.Class.Convertible.Core.d_from_22
                        (coe
@@ -4982,12 +5052,12 @@ d_mkGovActionState''_314
                           (coe
                              (\ v1 ->
                                 case coe v1 of
-                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984 v2 v3
+                                  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988 v2 v3
                                     -> case coe v2 of
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_958
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_962
                                            -> coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_NoConfidence_12
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_960
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_964
                                            -> case coe v3 of
                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v4 v5
                                                   -> case coe v5 of
@@ -4997,26 +5067,26 @@ d_mkGovActionState''_314
                                                               (coe v4) (coe v6) (coe v7)
                                                        _ -> MAlonzo.RTE.mazUnreachableError
                                                 _ -> MAlonzo.RTE.mazUnreachableError
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_962
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_966
                                            -> case coe v3 of
                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v4 v5
                                                   -> coe
                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_NewConstitution_16
                                                        (coe v4) (coe v5)
                                                 _ -> MAlonzo.RTE.mazUnreachableError
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_964
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_968
                                            -> coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TriggerHardFork_18
                                                 (coe v3)
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_966
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_970
                                            -> coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_ChangePParams_20
                                                 (coe v3)
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_968
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_972
                                            -> coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TreasuryWithdrawal_22
                                                 (coe v3)
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_970
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_974
                                            -> coe
                                                 MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_Info_24
                                          _ -> MAlonzo.RTE.mazUnreachableError
@@ -5026,15 +5096,15 @@ d_mkGovActionState''_314
                                 case coe v1 of
                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_NoConfidence_12
                                     -> coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_958)
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NoConfidence_962)
                                          (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_UpdateCommittee_14 v2 v3 v4
                                     -> coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_960)
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_UpdateCommittee_964)
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2)
                                             (coe
@@ -5042,35 +5112,35 @@ d_mkGovActionState''_314
                                                (coe v4)))
                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_NewConstitution_16 v2 v3
                                     -> coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_962)
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_NewConstitution_966)
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v2)
                                             (coe v3))
                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TriggerHardFork_18 v2
                                     -> coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_964)
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TriggerHardFork_968)
                                          (coe v2)
                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_ChangePParams_20 v2
                                     -> coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_966)
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_ChangePParams_970)
                                          (coe v2)
                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TreasuryWithdrawal_22 v2
                                     -> coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_968)
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_TreasuryWithdrawal_972)
                                          (coe v2)
                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_Info_24
                                     -> coe
-                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_984
+                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_'10214'_'44'_'10215''7501''7491'_988
                                          (coe
-                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_970)
+                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_Info_974)
                                          (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                                   _ -> MAlonzo.RTE.mazUnreachableError)))
                        (d_action_306 (coe v0))))
@@ -5099,7 +5169,7 @@ d_returnAddr_346 v0 = coe d_returnAddr_302 (coe v0)
 -- Ledger.Dijkstra.Foreign.Gov.s.votes
 d_votes_348 ::
   T_GovActionState''_286 ->
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVotes_1040
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovVotes_1044
 d_votes_348 v0 = coe d_votes_300 (coe v0)
 -- Ledger.Dijkstra.Foreign.Gov.HsTy-GovActionState'
 d_HsTy'45'GovActionState''_350 ::
@@ -5120,7 +5190,7 @@ d_Conv'45'GovActionState''_352
                      (coe
                         MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.C_GovVotes_1269
                         (coe
-                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                            (coe
                               MAlonzo.Code.Class.Convertible.Core.d_to_20
                               (coe
@@ -5133,10 +5203,10 @@ d_Conv'45'GovActionState''_352
                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.d_Conv'45'Vote_36)))
                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gvCC_1048
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gvCC_1052
                                     (coe v1)))))
                         (coe
-                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                            (coe
                               MAlonzo.Code.Class.Convertible.Core.d_to_20
                               (coe
@@ -5149,10 +5219,10 @@ d_Conv'45'GovActionState''_352
                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.d_Conv'45'Vote_36)))
                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gvDRep_1050
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gvDRep_1054
                                     (coe v1)))))
                         (coe
-                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                            (coe
                               MAlonzo.Code.Class.Convertible.Core.d_to_20
                               (coe
@@ -5164,7 +5234,7 @@ d_Conv'45'GovActionState''_352
                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.d_Conv'45'Vote_36)))
                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gvSPO_1052
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_gvSPO_1056
                                     (coe v1))))))
                      (coe
                         MAlonzo.Code.Ledger.Core.Foreign.Address.C_RewardAddress_3911
@@ -5215,7 +5285,7 @@ d_Conv'45'GovActionState''_352
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_UpdateCommittee_1111
                                           (coe
-                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
@@ -5229,7 +5299,7 @@ d_Conv'45'GovActionState''_352
                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                    (coe v8))))
                                           (coe
-                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_68
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_74
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
@@ -5301,7 +5371,7 @@ d_Conv'45'GovActionState''_352
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_ChangePParams_1451
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParamsUpdate_203805
+                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParamsUpdate_215257
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
@@ -5310,7 +5380,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockSize_880
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockSize_894
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5320,7 +5390,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxSize_882
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxSize_896
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5330,7 +5400,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxHeaderSize_884
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxHeaderSize_898
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5340,7 +5410,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxValSize_886
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxValSize_900
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5350,7 +5420,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxCollateralInputs_888
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxCollateralInputs_902
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5364,7 +5434,7 @@ d_Conv'45'GovActionState''_352
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxExUnits_890
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxExUnits_904
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5378,7 +5448,7 @@ d_Conv'45'GovActionState''_352
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockExUnits_892
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockExUnits_906
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5392,7 +5462,7 @@ d_Conv'45'GovActionState''_352
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_pv_894
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_pv_908
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5402,7 +5472,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosHeaderPeriod_896
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosHeaderPeriod_910
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5412,7 +5482,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosVotingPeriod_898
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosVotingPeriod_912
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5422,7 +5492,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosDiffusionPeriod_900
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosDiffusionPeriod_914
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5432,7 +5502,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBSize_902
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBSize_916
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5442,7 +5512,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBTxsSize_904
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBTxsSize_918
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5452,7 +5522,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosCommitteeSize_906
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosCommitteeSize_920
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5461,8 +5531,8 @@ d_Conv'45'GovActionState''_352
                                                    (coe
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosQuorumStakeThreshold_908
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosQuorumStakeThreshold_922
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5476,7 +5546,7 @@ d_Conv'45'GovActionState''_352
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBExUnits_910
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBExUnits_924
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5486,7 +5556,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxRefScriptSizePerEB_912
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxRefScriptSizePerEB_926
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5496,7 +5566,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a_914
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a_928
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5506,7 +5576,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_b_916
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_b_930
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5516,7 +5586,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_keyDeposit_918
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_keyDeposit_932
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5526,7 +5596,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolDeposit_920
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolDeposit_934
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5536,7 +5606,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minPoolCost_922
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minPoolCost_936
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5545,8 +5615,8 @@ d_Conv'45'GovActionState''_352
                                                    (coe
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_monetaryExpansion_924
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_monetaryExpansion_938
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5555,8 +5625,8 @@ d_Conv'45'GovActionState''_352
                                                    (coe
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasuryCut_926
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasuryCut_940
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5566,7 +5636,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_coinsPerUTxOByte_928
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_coinsPerUTxOByte_942
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5584,7 +5654,7 @@ d_Conv'45'GovActionState''_352
                                                          (\ v9 ->
                                                             coe
                                                               MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_prices_930
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_prices_944
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5593,18 +5663,8 @@ d_Conv'45'GovActionState''_352
                                                    (coe
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minFeeRefScriptCoinsPerByte_932
-                                                   (coe v8)))
-                                             (coe
-                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                                (coe
-                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
-                                                   (coe
-                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
-                                                   (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerTx_934
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minFeeRefScriptCoinsPerByte_946
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5614,27 +5674,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerBlock_936
-                                                   (coe v8)))
-                                             (coe
-                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                                (coe
-                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
-                                                   (coe
-                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
-                                                   (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_150))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostStride_938
-                                                   (coe v8)))
-                                             (coe
-                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                                (coe
-                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
-                                                   (coe
-                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
-                                                   (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostMultiplier_940
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerTx_948
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5644,7 +5684,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minUTxOValue_942
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerBlock_950
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5653,8 +5693,8 @@ d_Conv'45'GovActionState''_352
                                                    (coe
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a0_944
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_156))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostStride_952
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5663,18 +5703,8 @@ d_Conv'45'GovActionState''_352
                                                    (coe
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Emax_946
-                                                   (coe v8)))
-                                             (coe
-                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                                (coe
-                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
-                                                   (coe
-                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
-                                                   (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_nopt_948
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostMultiplier_954
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5684,7 +5714,59 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_collateralPercentage_950
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minUTxOValue_956
+                                                   (coe v8)))
+                                             (coe
+                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                (coe
+                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                   (coe
+                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a0_958
+                                                   (coe v8)))
+                                             (coe
+                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                (coe
+                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                   (coe
+                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                   (coe
+                                                      MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34)))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_960
+                                                   (coe v8)))
+                                             (coe
+                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                (coe
+                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                   (coe
+                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Emax_962
+                                                   (coe v8)))
+                                             (coe
+                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                (coe
+                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                   (coe
+                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_nopt_964
+                                                   (coe v8)))
+                                             (coe
+                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                (coe
+                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                   (coe
+                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_collateralPercentage_966
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5694,7 +5776,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'LanguageCostModels_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_costmdls_952
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_costmdls_968
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5704,7 +5786,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'DrepThresholds_14))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_954
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_970
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5714,7 +5796,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PoolThresholds_18))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolThresholds_956
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolThresholds_972
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5724,7 +5806,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionLifetime_958
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionLifetime_974
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5734,7 +5816,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionDeposit_960
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionDeposit_976
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5744,7 +5826,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepDeposit_962
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepDeposit_978
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5754,7 +5836,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepActivity_964
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepActivity_980
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5764,7 +5846,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMinSize_966
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMinSize_982
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -5774,13 +5856,13 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMaxTermLength_968
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMaxTermLength_984
                                                    (coe v8))))
                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TreasuryWithdrawal_22 v8
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TreasuryWithdrawal_1469
                                           (coe
-                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
@@ -5816,7 +5898,7 @@ d_Conv'45'GovActionState''_352
                                                     = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
                                               coe
                                                 (let v12
-                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
                                                            (coe v11) in
                                                  coe
                                                    (coe
@@ -5826,12 +5908,12 @@ d_Conv'45'GovActionState''_352
                                                          (coe
                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                (coe v12))))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v12))))))
                                              (coe
                                                 MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -5855,7 +5937,7 @@ d_Conv'45'GovActionState''_352
                                                         (coe
                                                            MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                         v11))
-                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                                                    (coe v8))))
                                           (coe
                                              MAlonzo.Code.Axiom.Set.du_fromList_456
@@ -5869,7 +5951,7 @@ d_Conv'45'GovActionState''_352
                                                    MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                    (coe
                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218))
-                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_elems_66
+                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_elems_72
                                                    (coe v9))))
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -5941,9 +6023,9 @@ d_Conv'45'GovActionState''_352
                                                 (coe
                                                    (\ v9 ->
                                                       case coe v9 of
-                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_970 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35 v36 v37 v38 v39 v40 v41 v42 v43 v44 v45 v46 v47 v48 v49 v50 v51 v52 v53 v54
+                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_986 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35 v36 v37 v38 v39 v40 v41 v42 v43 v44 v45 v46 v47 v48 v49 v50 v51 v52 v53 v54 v55
                                                           -> coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParamsUpdate_203805
+                                                               MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParamsUpdate_215257
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                   (coe
@@ -6089,7 +6171,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                                                                   v24)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -6165,7 +6247,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                                                                   v32)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -6174,7 +6256,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                                                                   v33)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -6194,11 +6276,11 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                         (coe
-                                                                           (\ v55 ->
+                                                                           (\ v56 ->
                                                                               coe
                                                                                 MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
                                                                         (coe
-                                                                           (\ v55 ->
+                                                                           (\ v56 ->
                                                                               coe
                                                                                 MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))))
                                                                   v35)
@@ -6209,7 +6291,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                                                   v36)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -6236,7 +6318,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_150))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_156))
                                                                   v39)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -6245,7 +6327,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                                                   v40)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -6263,7 +6345,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                                                   v42)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -6272,7 +6354,9 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                        MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34)))
                                                                   v43)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -6299,7 +6383,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'LanguageCostModels_10))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                                   v46)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -6308,7 +6392,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'DrepThresholds_14))
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'LanguageCostModels_10))
                                                                   v47)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -6317,7 +6401,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PoolThresholds_18))
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'DrepThresholds_14))
                                                                   v48)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -6326,7 +6410,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PoolThresholds_18))
                                                                   v49)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -6373,13 +6457,22 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                                   v54)
+                                                               (coe
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                                     (coe
+                                                                        MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                  v55)
                                                         _ -> MAlonzo.RTE.mazUnreachableError))
                                                 (coe
                                                    (\ v9 ->
                                                       case coe v9 of
-                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParamsUpdate_203805 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35 v36 v37 v38 v39 v40 v41 v42 v43 v44 v45 v46 v47 v48 v49 v50 v51 v52 v53 v54
+                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParamsUpdate_215257 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35 v36 v37 v38 v39 v40 v41 v42 v43 v44 v45 v46 v47 v48 v49 v50 v51 v52 v53 v54 v55
                                                           -> coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_970
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_986
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                   (coe
@@ -6525,7 +6618,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                                                                   v24)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -6601,7 +6694,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                                                                   v32)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -6610,7 +6703,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                                                                   v33)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -6630,11 +6723,11 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                         (coe
-                                                                           (\ v55 ->
+                                                                           (\ v56 ->
                                                                               coe
                                                                                 MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
                                                                         (coe
-                                                                           (\ v55 ->
+                                                                           (\ v56 ->
                                                                               coe
                                                                                 MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))))
                                                                   v35)
@@ -6645,7 +6738,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                                                   v36)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -6672,7 +6765,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_150))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_156))
                                                                   v39)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -6681,7 +6774,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                                                   v40)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -6699,7 +6792,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                                                   v42)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -6708,7 +6801,9 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                        MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34)))
                                                                   v43)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -6735,7 +6830,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'LanguageCostModels_10))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                                   v46)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -6744,7 +6839,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'DrepThresholds_14))
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'LanguageCostModels_10))
                                                                   v47)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -6753,7 +6848,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PoolThresholds_18))
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'DrepThresholds_14))
                                                                   v48)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -6762,7 +6857,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PoolThresholds_18))
                                                                   v49)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -6809,6 +6904,15 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                                   v54)
+                                                               (coe
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                  (coe
+                                                                     MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                                     (coe
+                                                                        MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                  v55)
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
                                              v8)
                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TreasuryWithdrawal_1469 v8
@@ -6824,7 +6928,7 @@ d_Conv'45'GovActionState''_352
                                                     = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
                                               coe
                                                 (let v10
-                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
                                                            (coe v9) in
                                                  coe
                                                    (coe
@@ -6832,19 +6936,19 @@ d_Conv'45'GovActionState''_352
                                                       (coe
                                                          MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_332
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_globalConstants_1422
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_globalConstants_1426
                                                             (coe v10)))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                          (coe
                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                (coe v10))))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v10))))))
                                              (coe
                                                 MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -6868,7 +6972,7 @@ d_Conv'45'GovActionState''_352
                                                         (coe
                                                            MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                         v9))
-                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                                                    (coe v8))))
                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_Info_1529
                                      -> coe
@@ -6903,11 +7007,11 @@ d_Conv'45'GovActionState''_352
                            (coe
                               (\ v7 ->
                                  case coe v7 of
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_constructor_1054 v8 v9 v10
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_constructor_1058 v8 v9 v10
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.C_GovVotes_1269
                                           (coe
-                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
@@ -6921,7 +7025,7 @@ d_Conv'45'GovActionState''_352
                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                    (coe v8))))
                                           (coe
-                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
@@ -6935,7 +7039,7 @@ d_Conv'45'GovActionState''_352
                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                    (coe v9))))
                                           (coe
-                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
@@ -6954,7 +7058,7 @@ d_Conv'45'GovActionState''_352
                                  case coe v7 of
                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.C_GovVotes_1269 v8 v9 v10
                                      -> coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_constructor_1054
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.C_constructor_1058
                                           (coe
                                              MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                              (coe
@@ -6965,7 +7069,7 @@ d_Conv'45'GovActionState''_352
                                                     = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
                                               coe
                                                 (let v12
-                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
                                                            (coe v11) in
                                                  coe
                                                    (coe
@@ -6975,12 +7079,12 @@ d_Conv'45'GovActionState''_352
                                                          (coe
                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                (coe v12))))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v12))))))
                                              (coe
                                                 MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -7004,7 +7108,7 @@ d_Conv'45'GovActionState''_352
                                                         (coe
                                                            MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                         v11))
-                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                                                    (coe v8))))
                                           (coe
                                              MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
@@ -7016,7 +7120,7 @@ d_Conv'45'GovActionState''_352
                                                     = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
                                               coe
                                                 (let v12
-                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
                                                            (coe v11) in
                                                  coe
                                                    (coe
@@ -7026,12 +7130,12 @@ d_Conv'45'GovActionState''_352
                                                          (coe
                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                (coe v12))))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v12))))))
                                              (coe
                                                 MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -7055,7 +7159,7 @@ d_Conv'45'GovActionState''_352
                                                         (coe
                                                            MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                         v11))
-                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                                                    (coe v9))))
                                           (coe
                                              MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
@@ -7087,7 +7191,7 @@ d_Conv'45'GovActionState''_352
                                                         (coe
                                                            MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                         v11))
-                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                                                    (coe v10))))
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v1)
@@ -7185,7 +7289,7 @@ d_Conv'45'GovActionState''_352
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_UpdateCommittee_1111
                                           (coe
-                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
@@ -7199,7 +7303,7 @@ d_Conv'45'GovActionState''_352
                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                    (coe v8))))
                                           (coe
-                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_68
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_74
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
@@ -7271,7 +7375,7 @@ d_Conv'45'GovActionState''_352
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_ChangePParams_1451
                                           (coe
-                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParamsUpdate_203805
+                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParamsUpdate_215257
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
@@ -7280,7 +7384,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockSize_880
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockSize_894
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7290,7 +7394,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxSize_882
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxSize_896
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7300,7 +7404,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxHeaderSize_884
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxHeaderSize_898
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7310,7 +7414,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxValSize_886
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxValSize_900
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7320,7 +7424,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxCollateralInputs_888
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxCollateralInputs_902
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7334,7 +7438,7 @@ d_Conv'45'GovActionState''_352
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxExUnits_890
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxExUnits_904
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7348,7 +7452,7 @@ d_Conv'45'GovActionState''_352
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockExUnits_892
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockExUnits_906
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7362,7 +7466,7 @@ d_Conv'45'GovActionState''_352
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_pv_894
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_pv_908
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7372,7 +7476,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosHeaderPeriod_896
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosHeaderPeriod_910
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7382,7 +7486,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosVotingPeriod_898
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosVotingPeriod_912
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7392,7 +7496,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosDiffusionPeriod_900
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosDiffusionPeriod_914
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7402,7 +7506,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBSize_902
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBSize_916
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7412,7 +7516,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBTxsSize_904
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBTxsSize_918
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7422,7 +7526,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosCommitteeSize_906
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosCommitteeSize_920
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7431,8 +7535,8 @@ d_Conv'45'GovActionState''_352
                                                    (coe
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosQuorumStakeThreshold_908
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosQuorumStakeThreshold_922
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7446,7 +7550,7 @@ d_Conv'45'GovActionState''_352
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)
                                                       (coe
                                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBExUnits_910
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBExUnits_924
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7456,7 +7560,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxRefScriptSizePerEB_912
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxRefScriptSizePerEB_926
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7466,7 +7570,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a_914
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a_928
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7476,7 +7580,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_b_916
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_b_930
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7486,7 +7590,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_keyDeposit_918
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_keyDeposit_932
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7496,7 +7600,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolDeposit_920
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolDeposit_934
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7506,7 +7610,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minPoolCost_922
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minPoolCost_936
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7515,8 +7619,8 @@ d_Conv'45'GovActionState''_352
                                                    (coe
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_monetaryExpansion_924
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_monetaryExpansion_938
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7525,8 +7629,8 @@ d_Conv'45'GovActionState''_352
                                                    (coe
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasuryCut_926
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasuryCut_940
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7536,7 +7640,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_coinsPerUTxOByte_928
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_coinsPerUTxOByte_942
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7554,7 +7658,7 @@ d_Conv'45'GovActionState''_352
                                                          (\ v9 ->
                                                             coe
                                                               MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_prices_930
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_prices_944
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7563,18 +7667,8 @@ d_Conv'45'GovActionState''_352
                                                    (coe
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minFeeRefScriptCoinsPerByte_932
-                                                   (coe v8)))
-                                             (coe
-                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                                (coe
-                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
-                                                   (coe
-                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
-                                                   (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerTx_934
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minFeeRefScriptCoinsPerByte_946
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7584,27 +7678,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerBlock_936
-                                                   (coe v8)))
-                                             (coe
-                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                                (coe
-                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
-                                                   (coe
-                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
-                                                   (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_150))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostStride_938
-                                                   (coe v8)))
-                                             (coe
-                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                                (coe
-                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
-                                                   (coe
-                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
-                                                   (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostMultiplier_940
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerTx_948
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7614,7 +7688,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minUTxOValue_942
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerBlock_950
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7623,8 +7697,8 @@ d_Conv'45'GovActionState''_352
                                                    (coe
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a0_944
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_156))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostStride_952
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7633,18 +7707,8 @@ d_Conv'45'GovActionState''_352
                                                    (coe
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Emax_946
-                                                   (coe v8)))
-                                             (coe
-                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                                (coe
-                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
-                                                   (coe
-                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
-                                                   (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_nopt_948
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostMultiplier_954
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7654,7 +7718,59 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_collateralPercentage_950
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minUTxOValue_956
+                                                   (coe v8)))
+                                             (coe
+                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                (coe
+                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                   (coe
+                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a0_958
+                                                   (coe v8)))
+                                             (coe
+                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                (coe
+                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                   (coe
+                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                   (coe
+                                                      MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
+                                                      (coe
+                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34)))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_960
+                                                   (coe v8)))
+                                             (coe
+                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                (coe
+                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                   (coe
+                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Emax_962
+                                                   (coe v8)))
+                                             (coe
+                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                (coe
+                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                   (coe
+                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_nopt_964
+                                                   (coe v8)))
+                                             (coe
+                                                MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                (coe
+                                                   MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                   (coe
+                                                      MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                   (coe
+                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_collateralPercentage_966
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7664,7 +7780,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'LanguageCostModels_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_costmdls_952
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_costmdls_968
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7674,7 +7790,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'DrepThresholds_14))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_954
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_970
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7684,7 +7800,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PoolThresholds_18))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolThresholds_956
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolThresholds_972
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7694,7 +7810,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionLifetime_958
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionLifetime_974
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7704,7 +7820,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionDeposit_960
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionDeposit_976
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7714,7 +7830,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepDeposit_962
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepDeposit_978
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7724,7 +7840,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepActivity_964
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepActivity_980
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7734,7 +7850,7 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMinSize_966
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMinSize_982
                                                    (coe v8)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -7744,13 +7860,13 @@ d_Conv'45'GovActionState''_352
                                                       MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMaxTermLength_968
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMaxTermLength_984
                                                    (coe v8))))
                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TreasuryWithdrawal_22 v8
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TreasuryWithdrawal_1469
                                           (coe
-                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
@@ -7786,7 +7902,7 @@ d_Conv'45'GovActionState''_352
                                                     = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
                                               coe
                                                 (let v12
-                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
                                                            (coe v11) in
                                                  coe
                                                    (coe
@@ -7796,12 +7912,12 @@ d_Conv'45'GovActionState''_352
                                                          (coe
                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                (coe v12))))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v12))))))
                                              (coe
                                                 MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -7825,7 +7941,7 @@ d_Conv'45'GovActionState''_352
                                                         (coe
                                                            MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                         v11))
-                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                                                    (coe v8))))
                                           (coe
                                              MAlonzo.Code.Axiom.Set.du_fromList_456
@@ -7839,7 +7955,7 @@ d_Conv'45'GovActionState''_352
                                                    MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                                                    (coe
                                                       MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218))
-                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_elems_66
+                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_elems_72
                                                    (coe v9))))
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -7911,9 +8027,9 @@ d_Conv'45'GovActionState''_352
                                                 (coe
                                                    (\ v9 ->
                                                       case coe v9 of
-                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_970 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35 v36 v37 v38 v39 v40 v41 v42 v43 v44 v45 v46 v47 v48 v49 v50 v51 v52 v53 v54
+                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_986 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35 v36 v37 v38 v39 v40 v41 v42 v43 v44 v45 v46 v47 v48 v49 v50 v51 v52 v53 v54 v55
                                                           -> coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParamsUpdate_203805
+                                                               MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParamsUpdate_215257
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                   (coe
@@ -8059,7 +8175,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                                                                   v24)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -8135,7 +8251,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                                                                   v32)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -8144,7 +8260,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                                                                   v33)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -8164,11 +8280,11 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                         (coe
-                                                                           (\ v55 ->
+                                                                           (\ v56 ->
                                                                               coe
                                                                                 MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
                                                                         (coe
-                                                                           (\ v55 ->
+                                                                           (\ v56 ->
                                                                               coe
                                                                                 MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))))
                                                                   v35)
@@ -8179,7 +8295,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                                                   v36)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -8206,7 +8322,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_150))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_156))
                                                                   v39)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -8215,7 +8331,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                                                   v40)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -8233,7 +8349,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                                                   v42)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -8242,7 +8358,9 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                        MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34)))
                                                                   v43)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -8269,7 +8387,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'LanguageCostModels_10))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                                   v46)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -8278,7 +8396,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'DrepThresholds_14))
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'LanguageCostModels_10))
                                                                   v47)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -8287,7 +8405,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PoolThresholds_18))
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'DrepThresholds_14))
                                                                   v48)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -8296,7 +8414,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PoolThresholds_18))
                                                                   v49)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -8343,13 +8461,22 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                                   v54)
+                                                               (coe
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                                     (coe
+                                                                        MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                  v55)
                                                         _ -> MAlonzo.RTE.mazUnreachableError))
                                                 (coe
                                                    (\ v9 ->
                                                       case coe v9 of
-                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParamsUpdate_203805 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35 v36 v37 v38 v39 v40 v41 v42 v43 v44 v45 v46 v47 v48 v49 v50 v51 v52 v53 v54
+                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParamsUpdate_215257 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35 v36 v37 v38 v39 v40 v41 v42 v43 v44 v45 v46 v47 v48 v49 v50 v51 v52 v53 v54 v55
                                                           -> coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_970
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_986
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                   (coe
@@ -8495,7 +8622,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                                                                   v24)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -8571,7 +8698,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                                                                   v32)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -8580,7 +8707,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_138))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'UnitInterval_144))
                                                                   v33)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -8600,11 +8727,11 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                         (coe
-                                                                           (\ v55 ->
+                                                                           (\ v56 ->
                                                                               coe
                                                                                 MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
                                                                         (coe
-                                                                           (\ v55 ->
+                                                                           (\ v56 ->
                                                                               coe
                                                                                 MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))))
                                                                   v35)
@@ -8615,7 +8742,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                                                   v36)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -8642,7 +8769,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_150))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'PosNat_156))
                                                                   v39)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -8651,7 +8778,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                                                   v40)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -8669,7 +8796,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
                                                                   v42)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -8678,7 +8805,9 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                        MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Maybe_16
+                                                                        (coe
+                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34)))
                                                                   v43)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -8705,7 +8834,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'LanguageCostModels_10))
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                                   v46)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -8714,7 +8843,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'DrepThresholds_14))
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'LanguageCostModels_10))
                                                                   v47)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -8723,7 +8852,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PoolThresholds_18))
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'DrepThresholds_14))
                                                                   v48)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -8732,7 +8861,7 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.d_Conv'45'PoolThresholds_18))
                                                                   v49)
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -8779,6 +8908,15 @@ d_Conv'45'GovActionState''_352
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                                   v54)
+                                                               (coe
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                  (coe
+                                                                     MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                                     (coe
+                                                                        MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                                     (coe
+                                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                                                                  v55)
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
                                              v8)
                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_TreasuryWithdrawal_1469 v8
@@ -8794,7 +8932,7 @@ d_Conv'45'GovActionState''_352
                                                     = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
                                               coe
                                                 (let v10
-                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
                                                            (coe v9) in
                                                  coe
                                                    (coe
@@ -8802,19 +8940,19 @@ d_Conv'45'GovActionState''_352
                                                       (coe
                                                          MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_332
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_globalConstants_1422
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_globalConstants_1426
                                                             (coe v10)))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                          (coe
                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                (coe v10))))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v10))))))
                                              (coe
                                                 MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -8838,7 +8976,7 @@ d_Conv'45'GovActionState''_352
                                                         (coe
                                                            MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                         v9))
-                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                                                    (coe v8))))
                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Actions.C_Info_1529
                                      -> coe
@@ -8883,57 +9021,19 @@ d_Conv'45'GovEnv_360
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.C_constructor_2122 v1 v2 v3 v4 v5 v6 v7
+              MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.C_constructor_2126 v1 v2 v3 v4 v5 v6 v7
                 -> coe
                      C_MkGovEnv_10129 (coe v1) (coe v2)
                      (coe
                         MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParams_12423
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockSize_410
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockSize_414
                            (coe v3))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxSize_412
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxSize_416
                            (coe v3))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxHeaderSize_414
-                           (coe v3))
-                        (coe
-                           MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
-                           (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
-                           (coe
-                              MAlonzo.Code.Data.Product.Base.du_map_128
-                              (coe
-                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                 (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                              (coe
-                                 (\ v8 ->
-                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                      (coe
-                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
-                              (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxExUnits_416
-                                 (coe v3))))
-                        (coe
-                           MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
-                           (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
-                           (coe
-                              MAlonzo.Code.Data.Product.Base.du_map_128
-                              (coe
-                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                 (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
-                              (coe
-                                 (\ v8 ->
-                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                      (coe
-                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
-                              (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockExUnits_418
-                                 (coe v3))))
-                        (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxValSize_420
-                           (coe v3))
-                        (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxCollateralInputs_422
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxHeaderSize_418
                            (coe v3))
                         (coe
                            MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
@@ -8949,25 +9049,63 @@ d_Conv'45'GovEnv_360
                                       (coe
                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_pv_424
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxTxExUnits_420
                                  (coe v3))))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosHeaderPeriod_426
+                           MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
+                           (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                           (coe
+                              MAlonzo.Code.Data.Product.Base.du_map_128
+                              (coe
+                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                 (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                              (coe
+                                 (\ v8 ->
+                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                      (coe
+                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                              (coe
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxBlockExUnits_422
+                                 (coe v3))))
+                        (coe
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxValSize_424
                            (coe v3))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosVotingPeriod_428
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxCollateralInputs_426
                            (coe v3))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosDiffusionPeriod_430
+                           MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
+                           (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
+                           (coe
+                              MAlonzo.Code.Data.Product.Base.du_map_128
+                              (coe
+                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                 (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
+                              (coe
+                                 (\ v8 ->
+                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                      (coe
+                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
+                              (coe
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_pv_428
+                                 (coe v3))))
+                        (coe
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosHeaderPeriod_430
                            (coe v3))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBSize_432
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosVotingPeriod_432
                            (coe v3))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBTxsSize_434
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosDiffusionPeriod_434
                            (coe v3))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosCommitteeSize_436
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBSize_436
+                           (coe v3))
+                        (coe
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBTxsSize_438
+                           (coe v3))
+                        (coe
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosCommitteeSize_440
                            (coe v3))
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -8993,7 +9131,7 @@ d_Conv'45'GovEnv_360
                                       _ -> MAlonzo.RTE.mazUnreachableError)))
                            (MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_fromUnitInterval_72
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosQuorumStakeThreshold_438
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosQuorumStakeThreshold_442
                                  (coe v3))))
                         (coe
                            MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
@@ -9009,25 +9147,25 @@ d_Conv'45'GovEnv_360
                                       (coe
                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBExUnits_440
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxEBExUnits_444
                                  (coe v3))))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxRefScriptSizePerEB_442
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_leiosMaxRefScriptSizePerEB_446
                            (coe v3))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a_444
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a_448
                            (coe v3))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_b_446
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_b_450
                            (coe v3))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_keyDeposit_448
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_keyDeposit_452
                            (coe v3))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolDeposit_450
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolDeposit_454
                            (coe v3))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minPoolCost_452
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minPoolCost_456
                            (coe v3))
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -9053,7 +9191,7 @@ d_Conv'45'GovEnv_360
                                       _ -> MAlonzo.RTE.mazUnreachableError)))
                            (MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_fromUnitInterval_72
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_monetaryExpansion_454
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_monetaryExpansion_458
                                  (coe v3))))
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -9079,10 +9217,10 @@ d_Conv'45'GovEnv_360
                                       _ -> MAlonzo.RTE.mazUnreachableError)))
                            (MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_fromUnitInterval_72
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasuryCut_456
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_treasuryCut_460
                                  (coe v3))))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_coinsPerUTxOByte_458
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_coinsPerUTxOByte_462
                            (coe v3))
                         (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                         (coe
@@ -9107,18 +9245,18 @@ d_Conv'45'GovEnv_360
                                                     MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                     (coe v9) (coe v10)
                                       _ -> MAlonzo.RTE.mazUnreachableError)))
-                           (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minFeeRefScriptCoinsPerByte_462
+                           (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minFeeRefScriptCoinsPerByte_466
                               (coe v3)))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerTx_464
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerTx_468
                            (coe v3))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerBlock_466
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxRefScriptSizePerBlock_470
                            (coe v3))
                         (coe
                            MAlonzo.Code.Ledger.Prelude.Numeric.PositiveNat.d_fromPosNat_16
                            (coe
-                              MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostStride_468
+                              MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostStride_472
                               (coe v3)))
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -9142,16 +9280,16 @@ d_Conv'45'GovEnv_360
                                                     MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                     (coe v9) (coe v10)
                                       _ -> MAlonzo.RTE.mazUnreachableError)))
-                           (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostMultiplier_470
+                           (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_refScriptCostMultiplier_474
                               (coe v3)))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minUTxOValue_472
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_minUTxOValue_476
                            (coe v3))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Emax_474
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Emax_478
                            (coe v3))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_nopt_476
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_nopt_480
                            (coe v3))
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -9175,10 +9313,19 @@ d_Conv'45'GovEnv_360
                                                     MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                     (coe v9) (coe v10)
                                       _ -> MAlonzo.RTE.mazUnreachableError)))
-                           (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a0_478
+                           (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_a0_482
                               (coe v3)))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_collateralPercentage_480
+                           MAlonzo.Code.Class.Convertible.Core.d_to_20
+                           (coe
+                              MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                              (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                              (coe
+                                 MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
+                           (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_maxPledgeLeverage_484
+                              (coe v3)))
+                        (coe
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_collateralPercentage_486
                            (coe v3))
                         (coe
                            MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkLanguageCostModels_39
@@ -9197,7 +9344,7 @@ d_Conv'45'GovEnv_360
                                        (coe (\ v8 -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))))
                               (MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_languageCostModels_694
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_costmdlsAssoc_482
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_costmdlsAssoc_488
                                     (coe v3)))))
                         (coe
                            MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPoolThresholds_9265
@@ -9223,9 +9370,9 @@ d_Conv'45'GovEnv_360
                                                        MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                        (coe v9) (coe v10)
                                          _ -> MAlonzo.RTE.mazUnreachableError)))
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Q1_306
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Q1_308
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolThresholds_484
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolThresholds_490
                                     (coe v3))))
                            (coe
                               MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -9249,9 +9396,9 @@ d_Conv'45'GovEnv_360
                                                        MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                        (coe v9) (coe v10)
                                          _ -> MAlonzo.RTE.mazUnreachableError)))
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Q2a_308
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Q2a_310
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolThresholds_484
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolThresholds_490
                                     (coe v3))))
                            (coe
                               MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -9275,9 +9422,9 @@ d_Conv'45'GovEnv_360
                                                        MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                        (coe v9) (coe v10)
                                          _ -> MAlonzo.RTE.mazUnreachableError)))
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Q2b_310
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Q2b_312
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolThresholds_484
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolThresholds_490
                                     (coe v3))))
                            (coe
                               MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -9301,9 +9448,9 @@ d_Conv'45'GovEnv_360
                                                        MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                        (coe v9) (coe v10)
                                          _ -> MAlonzo.RTE.mazUnreachableError)))
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Q4_312
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Q4_314
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolThresholds_484
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolThresholds_490
                                     (coe v3))))
                            (coe
                               MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -9327,9 +9474,9 @@ d_Conv'45'GovEnv_360
                                                        MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                        (coe v9) (coe v10)
                                          _ -> MAlonzo.RTE.mazUnreachableError)))
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Q5_314
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Q5_316
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolThresholds_484
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_poolThresholds_490
                                     (coe v3)))))
                         (coe
                            MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkDrepThresholds_1075
@@ -9355,9 +9502,9 @@ d_Conv'45'GovEnv_360
                                                        MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                        (coe v9) (coe v10)
                                          _ -> MAlonzo.RTE.mazUnreachableError)))
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P1_272
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P1_274
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_486
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_492
                                     (coe v3))))
                            (coe
                               MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -9381,9 +9528,9 @@ d_Conv'45'GovEnv_360
                                                        MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                        (coe v9) (coe v10)
                                          _ -> MAlonzo.RTE.mazUnreachableError)))
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P2a_274
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P2a_276
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_486
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_492
                                     (coe v3))))
                            (coe
                               MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -9407,9 +9554,9 @@ d_Conv'45'GovEnv_360
                                                        MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                        (coe v9) (coe v10)
                                          _ -> MAlonzo.RTE.mazUnreachableError)))
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P2b_276
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P2b_278
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_486
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_492
                                     (coe v3))))
                            (coe
                               MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -9433,9 +9580,9 @@ d_Conv'45'GovEnv_360
                                                        MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                        (coe v9) (coe v10)
                                          _ -> MAlonzo.RTE.mazUnreachableError)))
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P3_278
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P3_280
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_486
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_492
                                     (coe v3))))
                            (coe
                               MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -9459,9 +9606,9 @@ d_Conv'45'GovEnv_360
                                                        MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                        (coe v9) (coe v10)
                                          _ -> MAlonzo.RTE.mazUnreachableError)))
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P4_280
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P4_282
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_486
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_492
                                     (coe v3))))
                            (coe
                               MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -9485,9 +9632,9 @@ d_Conv'45'GovEnv_360
                                                        MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                        (coe v9) (coe v10)
                                          _ -> MAlonzo.RTE.mazUnreachableError)))
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P5a_282
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P5a_284
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_486
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_492
                                     (coe v3))))
                            (coe
                               MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -9511,9 +9658,9 @@ d_Conv'45'GovEnv_360
                                                        MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                        (coe v9) (coe v10)
                                          _ -> MAlonzo.RTE.mazUnreachableError)))
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P5b_284
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P5b_286
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_486
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_492
                                     (coe v3))))
                            (coe
                               MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -9537,9 +9684,9 @@ d_Conv'45'GovEnv_360
                                                        MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                        (coe v9) (coe v10)
                                          _ -> MAlonzo.RTE.mazUnreachableError)))
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P5c_286
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P5c_288
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_486
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_492
                                     (coe v3))))
                            (coe
                               MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -9563,9 +9710,9 @@ d_Conv'45'GovEnv_360
                                                        MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                        (coe v9) (coe v10)
                                          _ -> MAlonzo.RTE.mazUnreachableError)))
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P5d_288
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P5d_290
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_486
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_492
                                     (coe v3))))
                            (coe
                               MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -9589,27 +9736,27 @@ d_Conv'45'GovEnv_360
                                                        MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                        (coe v9) (coe v10)
                                          _ -> MAlonzo.RTE.mazUnreachableError)))
-                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P6_290
+                              (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P6_292
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_486
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepThresholds_492
                                     (coe v3)))))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMinSize_488
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMinSize_494
                            (coe v3))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMaxTermLength_490
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_ccMaxTermLength_496
                            (coe v3))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionLifetime_492
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionLifetime_498
                            (coe v3))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionDeposit_494
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_govActionDeposit_500
                            (coe v3))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepDeposit_496
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepDeposit_502
                            (coe v3))
                         (coe
-                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepActivity_498
+                           MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_drepActivity_504
                            (coe v3)))
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -9632,12 +9779,12 @@ d_Conv'45'GovEnv_360
                                     (coe
                                        MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                        (coe
-                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
+                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_108
                                           (let v8
                                                  = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
                                            coe
                                              (let v9
-                                                    = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+                                                    = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
                                                         (coe v8) in
                                               coe
                                                 (coe
@@ -9647,19 +9794,19 @@ d_Conv'45'GovEnv_360
                                                       (coe
                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v9))))
                                                    (coe
                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                          (coe v9))))))
                                           (coe
                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218)
                                           (coe
                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                        (coe
-                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
+                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))))
                               (coe
                                  (\ v8 ->
                                     MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -9670,7 +9817,7 @@ d_Conv'45'GovEnv_360
                                          (coe
                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1340
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_cc_1344
                                  (coe v5))))
                         (coe
                            MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
@@ -9696,7 +9843,7 @@ d_Conv'45'GovEnv_360
                                          (coe
                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1342
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_constitution_1346
                                  (coe v5))))
                         (coe
                            MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
@@ -9720,7 +9867,7 @@ d_Conv'45'GovEnv_360
                                          (coe
                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1344
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pv_1348
                                  (coe v5))))
                         (coe
                            MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
@@ -9741,10 +9888,10 @@ d_Conv'45'GovEnv_360
                                          (coe
                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                               (coe
-                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1346
+                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_pparams_1350
                                  (coe v5))))
                         (coe
-                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                            (coe
                               MAlonzo.Code.Class.Convertible.Core.d_to_20
                               (coe
@@ -9757,14 +9904,14 @@ d_Conv'45'GovEnv_360
                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                  (coe
-                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1348
+                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.d_withdrawals_1352
                                     (coe v5))))))
                      (coe
                         MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkCertState_37147
                         (coe
                            MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_26909
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                               (coe
                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                  (coe
@@ -9777,12 +9924,12 @@ d_Conv'45'GovEnv_360
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.d_Conv'45'VDeleg_32)))
                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_voteDelegs_1564
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_voteDelegs_1568
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1618
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1622
                                           (coe v6))))))
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                               (coe
                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                  (coe
@@ -9795,12 +9942,12 @@ d_Conv'45'GovEnv_360
                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_stakeDelegs_1566
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_stakeDelegs_1570
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1618
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1622
                                           (coe v6))))))
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                               (coe
                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                  (coe
@@ -9813,12 +9960,12 @@ d_Conv'45'GovEnv_360
                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewards_1568
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewards_1572
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1618
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1622
                                           (coe v6))))))
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                               (coe
                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                  (coe
@@ -9831,14 +9978,14 @@ d_Conv'45'GovEnv_360
                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1570
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1574
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1618
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dState_1622
                                           (coe v6)))))))
                         (coe
                            MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkPState_22495
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                               (coe
                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                  (coe
@@ -9851,12 +9998,12 @@ d_Conv'45'GovEnv_360
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolState_22)))
                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1584
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1588
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1620
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1624
                                           (coe v6))))))
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                               (coe
                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                  (coe
@@ -9869,12 +10016,12 @@ d_Conv'45'GovEnv_360
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolParams_18)))
                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_fPools_1586
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_fPools_1590
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1620
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1624
                                           (coe v6))))))
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                               (coe
                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                  (coe
@@ -9887,12 +10034,12 @@ d_Conv'45'GovEnv_360
                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1588
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1592
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1620
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1624
                                           (coe v6))))))
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                               (coe
                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                  (coe
@@ -9905,14 +10052,14 @@ d_Conv'45'GovEnv_360
                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1590
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1594
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1620
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pState_1624
                                           (coe v6)))))))
                         (coe
                            MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkGState_31571
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                               (coe
                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                  (coe
@@ -9925,12 +10072,12 @@ d_Conv'45'GovEnv_360
                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dreps_1602
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dreps_1606
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1622
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1626
                                           (coe v6))))))
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                               (coe
                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                  (coe
@@ -9945,12 +10092,12 @@ d_Conv'45'GovEnv_360
                                              MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218))))
                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_ccHotKeys_1604
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_ccHotKeys_1608
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1622
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1626
                                           (coe v6))))))
                            (coe
-                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                               (coe
                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
                                  (coe
@@ -9963,12 +10110,12 @@ d_Conv'45'GovEnv_360
                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                     (coe
-                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1606
+                                       MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1610
                                        (coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1622
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_gState_1626
                                           (coe v6))))))))
                      (coe
-                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_68
+                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_74
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                            (coe
@@ -9982,7 +10129,7 @@ d_Conv'45'GovEnv_360
             case coe v0 of
               C_MkGovEnv_10129 v1 v2 v3 v4 v5 v6 v7
                 -> coe
-                     MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.C_constructor_2122
+                     MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.C_constructor_2126
                      (coe v1) (coe v2)
                      (coe
                         MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -9991,7 +10138,7 @@ d_Conv'45'GovEnv_360
                            (coe
                               (\ v8 ->
                                  case coe v8 of
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_502 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35 v36 v37 v38 v39 v40 v41 v42 v43 v44 v45 v46 v47 v48 v49 v50 v51 v52 v53
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_508 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35 v36 v37 v38 v39 v40 v41 v42 v43 v44 v45 v46 v47 v48 v49 v50 v51 v52 v53 v54
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParams_12423
                                           (coe v9) (coe v10) (coe v11)
@@ -10007,7 +10154,7 @@ d_Conv'45'GovEnv_360
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                 (coe
-                                                   (\ v54 ->
+                                                   (\ v55 ->
                                                       MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                         (coe
                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
@@ -10024,7 +10171,7 @@ d_Conv'45'GovEnv_360
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                 (coe
-                                                   (\ v54 ->
+                                                   (\ v55 ->
                                                       MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                         (coe
                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
@@ -10042,7 +10189,7 @@ d_Conv'45'GovEnv_360
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                 (coe
-                                                   (\ v54 ->
+                                                   (\ v55 ->
                                                       MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                         (coe
                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
@@ -10054,26 +10201,26 @@ d_Conv'45'GovEnv_360
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                 (coe
-                                                   (\ v54 ->
-                                                      case coe v54 of
-                                                        MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                   (\ v55 ->
+                                                      case coe v55 of
+                                                        MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                               (coe v55)
+                                                               (coe v56)
                                                                (coe
                                                                   addInt (coe (1 :: Integer))
-                                                                  (coe v56))
+                                                                  (coe v57))
                                                         _ -> MAlonzo.RTE.mazUnreachableError))
                                                 (coe
-                                                   (\ v54 ->
-                                                      case coe v54 of
-                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                          -> case coe v56 of
+                                                   (\ v55 ->
+                                                      case coe v55 of
+                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                          -> case coe v57 of
                                                                0 -> coe
                                                                       MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                _ -> coe
                                                                       MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                      (coe v55) (coe v56)
+                                                                      (coe v56) (coe v57)
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
                                              (MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_fromUnitInterval_72
                                                 (coe v23)))
@@ -10089,7 +10236,7 @@ d_Conv'45'GovEnv_360
                                                    (coe
                                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                 (coe
-                                                   (\ v54 ->
+                                                   (\ v55 ->
                                                       MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                         (coe
                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
@@ -10101,26 +10248,26 @@ d_Conv'45'GovEnv_360
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                 (coe
-                                                   (\ v54 ->
-                                                      case coe v54 of
-                                                        MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                   (\ v55 ->
+                                                      case coe v55 of
+                                                        MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                               (coe v55)
+                                                               (coe v56)
                                                                (coe
                                                                   addInt (coe (1 :: Integer))
-                                                                  (coe v56))
+                                                                  (coe v57))
                                                         _ -> MAlonzo.RTE.mazUnreachableError))
                                                 (coe
-                                                   (\ v54 ->
-                                                      case coe v54 of
-                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                          -> case coe v56 of
+                                                   (\ v55 ->
+                                                      case coe v55 of
+                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                          -> case coe v57 of
                                                                0 -> coe
                                                                       MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                _ -> coe
                                                                       MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                      (coe v55) (coe v56)
+                                                                      (coe v56) (coe v57)
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
                                              (MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_fromUnitInterval_72
                                                 (coe v31)))
@@ -10129,26 +10276,26 @@ d_Conv'45'GovEnv_360
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                 (coe
-                                                   (\ v54 ->
-                                                      case coe v54 of
-                                                        MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                   (\ v55 ->
+                                                      case coe v55 of
+                                                        MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                               (coe v55)
+                                                               (coe v56)
                                                                (coe
                                                                   addInt (coe (1 :: Integer))
-                                                                  (coe v56))
+                                                                  (coe v57))
                                                         _ -> MAlonzo.RTE.mazUnreachableError))
                                                 (coe
-                                                   (\ v54 ->
-                                                      case coe v54 of
-                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                          -> case coe v56 of
+                                                   (\ v55 ->
+                                                      case coe v55 of
+                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                          -> case coe v57 of
                                                                0 -> coe
                                                                       MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                _ -> coe
                                                                       MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                      (coe v55) (coe v56)
+                                                                      (coe v56) (coe v57)
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
                                              (MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_fromUnitInterval_72
                                                 (coe v32)))
@@ -10158,26 +10305,26 @@ d_Conv'45'GovEnv_360
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                 (coe
-                                                   (\ v54 ->
-                                                      case coe v54 of
-                                                        MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                   (\ v55 ->
+                                                      case coe v55 of
+                                                        MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                               (coe v55)
+                                                               (coe v56)
                                                                (coe
                                                                   addInt (coe (1 :: Integer))
-                                                                  (coe v56))
+                                                                  (coe v57))
                                                         _ -> MAlonzo.RTE.mazUnreachableError))
                                                 (coe
-                                                   (\ v54 ->
-                                                      case coe v54 of
-                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                          -> case coe v56 of
+                                                   (\ v55 ->
+                                                      case coe v55 of
+                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                          -> case coe v57 of
                                                                0 -> coe
                                                                       MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                _ -> coe
                                                                       MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                      (coe v55) (coe v56)
+                                                                      (coe v56) (coe v57)
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
                                              v35)
                                           (coe v36) (coe v37)
@@ -10189,26 +10336,26 @@ d_Conv'45'GovEnv_360
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                 (coe
-                                                   (\ v54 ->
-                                                      case coe v54 of
-                                                        MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                   (\ v55 ->
+                                                      case coe v55 of
+                                                        MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                               (coe v55)
+                                                               (coe v56)
                                                                (coe
                                                                   addInt (coe (1 :: Integer))
-                                                                  (coe v56))
+                                                                  (coe v57))
                                                         _ -> MAlonzo.RTE.mazUnreachableError))
                                                 (coe
-                                                   (\ v54 ->
-                                                      case coe v54 of
-                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                          -> case coe v56 of
+                                                   (\ v55 ->
+                                                      case coe v55 of
+                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                          -> case coe v57 of
                                                                0 -> coe
                                                                       MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                _ -> coe
                                                                       MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                      (coe v55) (coe v56)
+                                                                      (coe v56) (coe v57)
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
                                              v39)
                                           (coe v40) (coe v41) (coe v42)
@@ -10217,29 +10364,38 @@ d_Conv'45'GovEnv_360
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                 (coe
-                                                   (\ v54 ->
-                                                      case coe v54 of
-                                                        MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                   (\ v55 ->
+                                                      case coe v55 of
+                                                        MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                               (coe v55)
+                                                               (coe v56)
                                                                (coe
                                                                   addInt (coe (1 :: Integer))
-                                                                  (coe v56))
+                                                                  (coe v57))
                                                         _ -> MAlonzo.RTE.mazUnreachableError))
                                                 (coe
-                                                   (\ v54 ->
-                                                      case coe v54 of
-                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                          -> case coe v56 of
+                                                   (\ v55 ->
+                                                      case coe v55 of
+                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                          -> case coe v57 of
                                                                0 -> coe
                                                                       MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                _ -> coe
                                                                       MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                      (coe v55) (coe v56)
+                                                                      (coe v56) (coe v57)
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
                                              v43)
-                                          (coe v44)
+                                          (coe
+                                             MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                             (coe
+                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                (coe
+                                                   MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                (coe
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
+                                             v44)
+                                          (coe v45)
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkLanguageCostModels_39
                                              (coe
@@ -10254,15 +10410,15 @@ d_Conv'45'GovEnv_360
                                                       (coe
                                                          MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                          (coe
-                                                            (\ v54 ->
+                                                            (\ v55 ->
                                                                coe
                                                                  MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
                                                          (coe
-                                                            (\ v54 ->
+                                                            (\ v55 ->
                                                                coe
                                                                  MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))))
                                                 (MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.d_languageCostModels_694
-                                                   (coe v45))))
+                                                   (coe v46))))
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPoolThresholds_9265
                                              (coe
@@ -10270,141 +10426,141 @@ d_Conv'45'GovEnv_360
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                  (coe v55)
+                                                                  (coe v56)
                                                                   (coe
                                                                      addInt (coe (1 :: Integer))
-                                                                     (coe v56))
+                                                                     (coe v57))
                                                            _ -> MAlonzo.RTE.mazUnreachableError))
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                             -> case coe v56 of
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                             -> case coe v57 of
                                                                   0 -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                   _ -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                         (coe v55) (coe v56)
+                                                                         (coe v56) (coe v57)
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Q1_306
-                                                   (coe v46)))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Q1_308
+                                                   (coe v47)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                  (coe v55)
+                                                                  (coe v56)
                                                                   (coe
                                                                      addInt (coe (1 :: Integer))
-                                                                     (coe v56))
+                                                                     (coe v57))
                                                            _ -> MAlonzo.RTE.mazUnreachableError))
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                             -> case coe v56 of
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                             -> case coe v57 of
                                                                   0 -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                   _ -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                         (coe v55) (coe v56)
+                                                                         (coe v56) (coe v57)
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Q2a_308
-                                                   (coe v46)))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Q2a_310
+                                                   (coe v47)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                  (coe v55)
+                                                                  (coe v56)
                                                                   (coe
                                                                      addInt (coe (1 :: Integer))
-                                                                     (coe v56))
+                                                                     (coe v57))
                                                            _ -> MAlonzo.RTE.mazUnreachableError))
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                             -> case coe v56 of
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                             -> case coe v57 of
                                                                   0 -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                   _ -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                         (coe v55) (coe v56)
+                                                                         (coe v56) (coe v57)
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Q2b_310
-                                                   (coe v46)))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Q2b_312
+                                                   (coe v47)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                  (coe v55)
+                                                                  (coe v56)
                                                                   (coe
                                                                      addInt (coe (1 :: Integer))
-                                                                     (coe v56))
+                                                                     (coe v57))
                                                            _ -> MAlonzo.RTE.mazUnreachableError))
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                             -> case coe v56 of
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                             -> case coe v57 of
                                                                   0 -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                   _ -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                         (coe v55) (coe v56)
+                                                                         (coe v56) (coe v57)
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Q4_312
-                                                   (coe v46)))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Q4_314
+                                                   (coe v47)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                  (coe v55)
+                                                                  (coe v56)
                                                                   (coe
                                                                      addInt (coe (1 :: Integer))
-                                                                     (coe v56))
+                                                                     (coe v57))
                                                            _ -> MAlonzo.RTE.mazUnreachableError))
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                             -> case coe v56 of
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                             -> case coe v57 of
                                                                   0 -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                   _ -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                         (coe v55) (coe v56)
+                                                                         (coe v56) (coe v57)
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Q5_314
-                                                   (coe v46))))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_Q5_316
+                                                   (coe v47))))
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkDrepThresholds_1075
                                              (coe
@@ -10412,290 +10568,290 @@ d_Conv'45'GovEnv_360
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                  (coe v55)
+                                                                  (coe v56)
                                                                   (coe
                                                                      addInt (coe (1 :: Integer))
-                                                                     (coe v56))
+                                                                     (coe v57))
                                                            _ -> MAlonzo.RTE.mazUnreachableError))
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                             -> case coe v56 of
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                             -> case coe v57 of
                                                                   0 -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                   _ -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                         (coe v55) (coe v56)
+                                                                         (coe v56) (coe v57)
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P1_272
-                                                   (coe v47)))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P1_274
+                                                   (coe v48)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                  (coe v55)
+                                                                  (coe v56)
                                                                   (coe
                                                                      addInt (coe (1 :: Integer))
-                                                                     (coe v56))
+                                                                     (coe v57))
                                                            _ -> MAlonzo.RTE.mazUnreachableError))
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                             -> case coe v56 of
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                             -> case coe v57 of
                                                                   0 -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                   _ -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                         (coe v55) (coe v56)
+                                                                         (coe v56) (coe v57)
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P2a_274
-                                                   (coe v47)))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P2a_276
+                                                   (coe v48)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                  (coe v55)
+                                                                  (coe v56)
                                                                   (coe
                                                                      addInt (coe (1 :: Integer))
-                                                                     (coe v56))
+                                                                     (coe v57))
                                                            _ -> MAlonzo.RTE.mazUnreachableError))
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                             -> case coe v56 of
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                             -> case coe v57 of
                                                                   0 -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                   _ -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                         (coe v55) (coe v56)
+                                                                         (coe v56) (coe v57)
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P2b_276
-                                                   (coe v47)))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P2b_278
+                                                   (coe v48)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                  (coe v55)
+                                                                  (coe v56)
                                                                   (coe
                                                                      addInt (coe (1 :: Integer))
-                                                                     (coe v56))
+                                                                     (coe v57))
                                                            _ -> MAlonzo.RTE.mazUnreachableError))
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                             -> case coe v56 of
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                             -> case coe v57 of
                                                                   0 -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                   _ -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                         (coe v55) (coe v56)
+                                                                         (coe v56) (coe v57)
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P3_278
-                                                   (coe v47)))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P3_280
+                                                   (coe v48)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                  (coe v55)
+                                                                  (coe v56)
                                                                   (coe
                                                                      addInt (coe (1 :: Integer))
-                                                                     (coe v56))
+                                                                     (coe v57))
                                                            _ -> MAlonzo.RTE.mazUnreachableError))
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                             -> case coe v56 of
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                             -> case coe v57 of
                                                                   0 -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                   _ -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                         (coe v55) (coe v56)
+                                                                         (coe v56) (coe v57)
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P4_280
-                                                   (coe v47)))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P4_282
+                                                   (coe v48)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                  (coe v55)
+                                                                  (coe v56)
                                                                   (coe
                                                                      addInt (coe (1 :: Integer))
-                                                                     (coe v56))
+                                                                     (coe v57))
                                                            _ -> MAlonzo.RTE.mazUnreachableError))
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                             -> case coe v56 of
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                             -> case coe v57 of
                                                                   0 -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                   _ -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                         (coe v55) (coe v56)
+                                                                         (coe v56) (coe v57)
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P5a_282
-                                                   (coe v47)))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P5a_284
+                                                   (coe v48)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                  (coe v55)
+                                                                  (coe v56)
                                                                   (coe
                                                                      addInt (coe (1 :: Integer))
-                                                                     (coe v56))
+                                                                     (coe v57))
                                                            _ -> MAlonzo.RTE.mazUnreachableError))
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                             -> case coe v56 of
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                             -> case coe v57 of
                                                                   0 -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                   _ -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                         (coe v55) (coe v56)
+                                                                         (coe v56) (coe v57)
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P5b_284
-                                                   (coe v47)))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P5b_286
+                                                   (coe v48)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                  (coe v55)
+                                                                  (coe v56)
                                                                   (coe
                                                                      addInt (coe (1 :: Integer))
-                                                                     (coe v56))
+                                                                     (coe v57))
                                                            _ -> MAlonzo.RTE.mazUnreachableError))
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                             -> case coe v56 of
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                             -> case coe v57 of
                                                                   0 -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                   _ -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                         (coe v55) (coe v56)
+                                                                         (coe v56) (coe v57)
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P5c_286
-                                                   (coe v47)))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P5c_288
+                                                   (coe v48)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                  (coe v55)
+                                                                  (coe v56)
                                                                   (coe
                                                                      addInt (coe (1 :: Integer))
-                                                                     (coe v56))
+                                                                     (coe v57))
                                                            _ -> MAlonzo.RTE.mazUnreachableError))
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                             -> case coe v56 of
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                             -> case coe v57 of
                                                                   0 -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                   _ -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                         (coe v55) (coe v56)
+                                                                         (coe v56) (coe v57)
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P5d_288
-                                                   (coe v47)))
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P5d_290
+                                                   (coe v48)))
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                              -> coe
                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                  (coe v55)
+                                                                  (coe v56)
                                                                   (coe
                                                                      addInt (coe (1 :: Integer))
-                                                                     (coe v56))
+                                                                     (coe v57))
                                                            _ -> MAlonzo.RTE.mazUnreachableError))
                                                    (coe
-                                                      (\ v54 ->
-                                                         case coe v54 of
-                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                             -> case coe v56 of
+                                                      (\ v55 ->
+                                                         case coe v55 of
+                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                             -> case coe v57 of
                                                                   0 -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                   _ -> coe
                                                                          MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                         (coe v55) (coe v56)
+                                                                         (coe v56) (coe v57)
                                                            _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P6_290
-                                                   (coe v47))))
-                                          (coe v48) (coe v49) (coe v50) (coe v51) (coe v52)
-                                          (coe v53)
+                                                (MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.d_P6_292
+                                                   (coe v48))))
+                                          (coe v49) (coe v50) (coe v51) (coe v52) (coe v53)
+                                          (coe v54)
                                    _ -> MAlonzo.RTE.mazUnreachableError))
                            (coe
                               (\ v8 ->
                                  case coe v8 of
-                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParams_12423 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35 v36 v37 v38 v39 v40 v41 v42 v43 v44 v45 v46 v47 v48 v49 v50 v51 v52 v53
+                                   MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPParams_12423 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35 v36 v37 v38 v39 v40 v41 v42 v43 v44 v45 v46 v47 v48 v49 v50 v51 v52 v53 v54
                                      -> coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_502
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_508
                                           (coe v9) (coe v10) (coe v11)
                                           (coe
                                              MAlonzo.Code.Data.Product.Base.du_map_128
@@ -10704,7 +10860,7 @@ d_Conv'45'GovEnv_360
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                              (coe
-                                                (\ v54 ->
+                                                (\ v55 ->
                                                    MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                      (coe
                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
@@ -10721,7 +10877,7 @@ d_Conv'45'GovEnv_360
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                              (coe
-                                                (\ v54 ->
+                                                (\ v55 ->
                                                    MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                      (coe
                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
@@ -10739,7 +10895,7 @@ d_Conv'45'GovEnv_360
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                              (coe
-                                                (\ v54 ->
+                                                (\ v55 ->
                                                    MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                      (coe
                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
@@ -10751,47 +10907,56 @@ d_Conv'45'GovEnv_360
                                                 v16))
                                           (coe v17) (coe v18) (coe v19) (coe v20) (coe v21)
                                           (coe v22)
-                                          (let v54
+                                          (let v55
                                                  = MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_toUnitInterval_74
                                                      (coe
                                                         MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                         (coe
                                                            MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                            (coe
-                                                              (\ v54 ->
-                                                                 case coe v54 of
-                                                                   MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                              (\ v55 ->
+                                                                 case coe v55 of
+                                                                   MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                                      -> coe
                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                          (coe v55)
+                                                                          (coe v56)
                                                                           (coe
                                                                              addInt
                                                                              (coe (1 :: Integer))
-                                                                             (coe v56))
+                                                                             (coe v57))
                                                                    _ -> MAlonzo.RTE.mazUnreachableError))
                                                            (coe
-                                                              (\ v54 ->
-                                                                 case coe v54 of
-                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                                     -> case coe v56 of
+                                                              (\ v55 ->
+                                                                 case coe v55 of
+                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                                     -> case coe v57 of
                                                                           0 -> coe
                                                                                  MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                           _ -> coe
                                                                                  MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                 (coe v55) (coe v56)
+                                                                                 (coe v56) (coe v57)
                                                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                                                         v23) in
                                            coe
-                                             (case coe v54 of
-                                                MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v55
-                                                  -> coe v55
+                                             (case coe v55 of
+                                                MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v56
+                                                  -> coe v56
                                                 MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
                                                   -> coe
                                                        MAlonzo.Code.Ledger.Prelude.Foreign.Util.d_error_10
                                                        erased
-                                                       ("Formal Spec: rational outside of unit interval"
-                                                        ::
-                                                        Data.Text.Text)
+                                                       (coe
+                                                          MAlonzo.Code.Data.String.Base.d__'43''43'__20
+                                                          ("Formal Spec: " :: Data.Text.Text)
+                                                          (coe
+                                                             MAlonzo.Code.Data.String.Base.d__'43''43'__20
+                                                             (coe
+                                                                MAlonzo.Code.Class.Show.Core.d_show_16
+                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Show'45'Rational_26
+                                                                v23)
+                                                             (" rational outside of unit interval"
+                                                              ::
+                                                              Data.Text.Text)))
                                                 _ -> MAlonzo.RTE.mazUnreachableError))
                                           (coe
                                              MAlonzo.Code.Data.Product.Base.du_map_128
@@ -10800,7 +10965,7 @@ d_Conv'45'GovEnv_360
                                                 (coe
                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                              (coe
-                                                (\ v54 ->
+                                                (\ v55 ->
                                                    MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                      (coe
                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
@@ -10812,89 +10977,107 @@ d_Conv'45'GovEnv_360
                                                 v24))
                                           (coe v25) (coe v26) (coe v27) (coe v28) (coe v29)
                                           (coe v30)
-                                          (let v54
+                                          (let v55
                                                  = MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_toUnitInterval_74
                                                      (coe
                                                         MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                         (coe
                                                            MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                            (coe
-                                                              (\ v54 ->
-                                                                 case coe v54 of
-                                                                   MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                              (\ v55 ->
+                                                                 case coe v55 of
+                                                                   MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                                      -> coe
                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                          (coe v55)
+                                                                          (coe v56)
                                                                           (coe
                                                                              addInt
                                                                              (coe (1 :: Integer))
-                                                                             (coe v56))
+                                                                             (coe v57))
                                                                    _ -> MAlonzo.RTE.mazUnreachableError))
                                                            (coe
-                                                              (\ v54 ->
-                                                                 case coe v54 of
-                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                                     -> case coe v56 of
+                                                              (\ v55 ->
+                                                                 case coe v55 of
+                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                                     -> case coe v57 of
                                                                           0 -> coe
                                                                                  MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                           _ -> coe
                                                                                  MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                 (coe v55) (coe v56)
+                                                                                 (coe v56) (coe v57)
                                                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                                                         v31) in
                                            coe
-                                             (case coe v54 of
-                                                MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v55
-                                                  -> coe v55
+                                             (case coe v55 of
+                                                MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v56
+                                                  -> coe v56
                                                 MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
                                                   -> coe
                                                        MAlonzo.Code.Ledger.Prelude.Foreign.Util.d_error_10
                                                        erased
-                                                       ("Formal Spec: rational outside of unit interval"
-                                                        ::
-                                                        Data.Text.Text)
+                                                       (coe
+                                                          MAlonzo.Code.Data.String.Base.d__'43''43'__20
+                                                          ("Formal Spec: " :: Data.Text.Text)
+                                                          (coe
+                                                             MAlonzo.Code.Data.String.Base.d__'43''43'__20
+                                                             (coe
+                                                                MAlonzo.Code.Class.Show.Core.d_show_16
+                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Show'45'Rational_26
+                                                                v31)
+                                                             (" rational outside of unit interval"
+                                                              ::
+                                                              Data.Text.Text)))
                                                 _ -> MAlonzo.RTE.mazUnreachableError))
-                                          (let v54
+                                          (let v55
                                                  = MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_toUnitInterval_74
                                                      (coe
                                                         MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                         (coe
                                                            MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                            (coe
-                                                              (\ v54 ->
-                                                                 case coe v54 of
-                                                                   MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                              (\ v55 ->
+                                                                 case coe v55 of
+                                                                   MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                                      -> coe
                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                          (coe v55)
+                                                                          (coe v56)
                                                                           (coe
                                                                              addInt
                                                                              (coe (1 :: Integer))
-                                                                             (coe v56))
+                                                                             (coe v57))
                                                                    _ -> MAlonzo.RTE.mazUnreachableError))
                                                            (coe
-                                                              (\ v54 ->
-                                                                 case coe v54 of
-                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                                     -> case coe v56 of
+                                                              (\ v55 ->
+                                                                 case coe v55 of
+                                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                                     -> case coe v57 of
                                                                           0 -> coe
                                                                                  MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                           _ -> coe
                                                                                  MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                 (coe v55) (coe v56)
+                                                                                 (coe v56) (coe v57)
                                                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                                                         v32) in
                                            coe
-                                             (case coe v54 of
-                                                MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v55
-                                                  -> coe v55
+                                             (case coe v55 of
+                                                MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v56
+                                                  -> coe v56
                                                 MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
                                                   -> coe
                                                        MAlonzo.Code.Ledger.Prelude.Foreign.Util.d_error_10
                                                        erased
-                                                       ("Formal Spec: rational outside of unit interval"
-                                                        ::
-                                                        Data.Text.Text)
+                                                       (coe
+                                                          MAlonzo.Code.Data.String.Base.d__'43''43'__20
+                                                          ("Formal Spec: " :: Data.Text.Text)
+                                                          (coe
+                                                             MAlonzo.Code.Data.String.Base.d__'43''43'__20
+                                                             (coe
+                                                                MAlonzo.Code.Class.Show.Core.d_show_16
+                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Show'45'Rational_26
+                                                                v32)
+                                                             (" rational outside of unit interval"
+                                                              ::
+                                                              Data.Text.Text)))
                                                 _ -> MAlonzo.RTE.mazUnreachableError))
                                           (coe v33) (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                                           (coe
@@ -10902,36 +11085,36 @@ d_Conv'45'GovEnv_360
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                 (coe
-                                                   (\ v54 ->
-                                                      case coe v54 of
-                                                        MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                   (\ v55 ->
+                                                      case coe v55 of
+                                                        MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                               (coe v55)
+                                                               (coe v56)
                                                                (coe
                                                                   addInt (coe (1 :: Integer))
-                                                                  (coe v56))
+                                                                  (coe v57))
                                                         _ -> MAlonzo.RTE.mazUnreachableError))
                                                 (coe
-                                                   (\ v54 ->
-                                                      case coe v54 of
-                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                          -> case coe v56 of
+                                                   (\ v55 ->
+                                                      case coe v55 of
+                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                          -> case coe v57 of
                                                                0 -> coe
                                                                       MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                _ -> coe
                                                                       MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                      (coe v55) (coe v56)
+                                                                      (coe v56) (coe v57)
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
                                              v35)
                                           (coe v36) (coe v37)
-                                          (let v54
+                                          (let v55
                                                  = MAlonzo.Code.Ledger.Prelude.Numeric.PositiveNat.d_toPosNat_18
                                                      (coe v38) in
                                            coe
-                                             (case coe v54 of
-                                                MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v55
-                                                  -> coe v55
+                                             (case coe v55 of
+                                                MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v56
+                                                  -> coe v56
                                                 MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
                                                   -> coe
                                                        MAlonzo.Code.Ledger.Prelude.Foreign.Util.d_error_10
@@ -10945,26 +11128,26 @@ d_Conv'45'GovEnv_360
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                 (coe
-                                                   (\ v54 ->
-                                                      case coe v54 of
-                                                        MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                   (\ v55 ->
+                                                      case coe v55 of
+                                                        MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                               (coe v55)
+                                                               (coe v56)
                                                                (coe
                                                                   addInt (coe (1 :: Integer))
-                                                                  (coe v56))
+                                                                  (coe v57))
                                                         _ -> MAlonzo.RTE.mazUnreachableError))
                                                 (coe
-                                                   (\ v54 ->
-                                                      case coe v54 of
-                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                          -> case coe v56 of
+                                                   (\ v55 ->
+                                                      case coe v55 of
+                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                          -> case coe v57 of
                                                                0 -> coe
                                                                       MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                _ -> coe
                                                                       MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                      (coe v55) (coe v56)
+                                                                      (coe v56) (coe v57)
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
                                              v39)
                                           (coe v40) (coe v41) (coe v42)
@@ -10973,37 +11156,46 @@ d_Conv'45'GovEnv_360
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                 (coe
-                                                   (\ v54 ->
-                                                      case coe v54 of
-                                                        MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v55 v56
+                                                   (\ v55 ->
+                                                      case coe v55 of
+                                                        MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v56 v57
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                               (coe v55)
+                                                               (coe v56)
                                                                (coe
                                                                   addInt (coe (1 :: Integer))
-                                                                  (coe v56))
+                                                                  (coe v57))
                                                         _ -> MAlonzo.RTE.mazUnreachableError))
                                                 (coe
-                                                   (\ v54 ->
-                                                      case coe v54 of
-                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v55 v56
-                                                          -> case coe v56 of
+                                                   (\ v55 ->
+                                                      case coe v55 of
+                                                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v56 v57
+                                                          -> case coe v57 of
                                                                0 -> coe
                                                                       MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                _ -> coe
                                                                       MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                      (coe v55) (coe v56)
+                                                                      (coe v56) (coe v57)
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
                                              v43)
-                                          (coe v44)
+                                          (coe
+                                             MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                             (coe
+                                                MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+                                                (coe
+                                                   MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
+                                                (coe
+                                                   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))
+                                             v44)
+                                          (coe v45)
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_from_22
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                 (coe
-                                                   (\ v54 ->
-                                                      case coe v54 of
-                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_mkLanguageCostModels_696 v55
+                                                   (\ v55 ->
+                                                      case coe v55 of
+                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_mkLanguageCostModels_696 v56
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkLanguageCostModels_39
                                                                (coe
@@ -11018,19 +11210,19 @@ d_Conv'45'GovEnv_360
                                                                         (coe
                                                                            MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                            (coe
-                                                                              (\ v56 ->
+                                                                              (\ v57 ->
                                                                                  coe
                                                                                    MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
                                                                            (coe
-                                                                              (\ v56 ->
+                                                                              (\ v57 ->
                                                                                  coe
                                                                                    MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))))
-                                                                  v55)
+                                                                  v56)
                                                         _ -> MAlonzo.RTE.mazUnreachableError))
                                                 (coe
-                                                   (\ v54 ->
-                                                      case coe v54 of
-                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkLanguageCostModels_39 v55
+                                                   (\ v55 ->
+                                                      case coe v55 of
+                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkLanguageCostModels_39 v56
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Base.C_mkLanguageCostModels_696
                                                                (coe
@@ -11045,343 +11237,14 @@ d_Conv'45'GovEnv_360
                                                                         (coe
                                                                            MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                            (coe
-                                                                              (\ v56 ->
+                                                                              (\ v57 ->
                                                                                  coe
                                                                                    MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
                                                                            (coe
-                                                                              (\ v56 ->
+                                                                              (\ v57 ->
                                                                                  coe
                                                                                    MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))))
-                                                                  v55)
-                                                        _ -> MAlonzo.RTE.mazUnreachableError)))
-                                             v45)
-                                          (coe
-                                             MAlonzo.Code.Class.Convertible.Core.d_from_22
-                                             (coe
-                                                MAlonzo.Code.Class.Convertible.Core.C_constructor_24
-                                                (coe
-                                                   (\ v54 ->
-                                                      case coe v54 of
-                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_316 v55 v56 v57 v58 v59
-                                                          -> coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPoolThresholds_9265
-                                                               (coe
-                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                                                  (coe
-                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
-                                                                     (coe
-                                                                        (\ v60 ->
-                                                                           case coe v60 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v61 v62
-                                                                               -> coe
-                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v61)
-                                                                                    (coe
-                                                                                       addInt
-                                                                                       (coe
-                                                                                          (1 ::
-                                                                                             Integer))
-                                                                                       (coe v62))
-                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
-                                                                     (coe
-                                                                        (\ v60 ->
-                                                                           case coe v60 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v61 v62
-                                                                               -> case coe v62 of
-                                                                                    0 -> coe
-                                                                                           MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
-                                                                                    _ -> coe
-                                                                                           MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v61)
-                                                                                           (coe v62)
-                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                                  v55)
-                                                               (coe
-                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                                                  (coe
-                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
-                                                                     (coe
-                                                                        (\ v60 ->
-                                                                           case coe v60 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v61 v62
-                                                                               -> coe
-                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v61)
-                                                                                    (coe
-                                                                                       addInt
-                                                                                       (coe
-                                                                                          (1 ::
-                                                                                             Integer))
-                                                                                       (coe v62))
-                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
-                                                                     (coe
-                                                                        (\ v60 ->
-                                                                           case coe v60 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v61 v62
-                                                                               -> case coe v62 of
-                                                                                    0 -> coe
-                                                                                           MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
-                                                                                    _ -> coe
-                                                                                           MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v61)
-                                                                                           (coe v62)
-                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                   v56)
-                                                               (coe
-                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                                                  (coe
-                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
-                                                                     (coe
-                                                                        (\ v60 ->
-                                                                           case coe v60 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v61 v62
-                                                                               -> coe
-                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v61)
-                                                                                    (coe
-                                                                                       addInt
-                                                                                       (coe
-                                                                                          (1 ::
-                                                                                             Integer))
-                                                                                       (coe v62))
-                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
-                                                                     (coe
-                                                                        (\ v60 ->
-                                                                           case coe v60 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v61 v62
-                                                                               -> case coe v62 of
-                                                                                    0 -> coe
-                                                                                           MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
-                                                                                    _ -> coe
-                                                                                           MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v61)
-                                                                                           (coe v62)
-                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                                  v57)
-                                                               (coe
-                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                                                  (coe
-                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
-                                                                     (coe
-                                                                        (\ v60 ->
-                                                                           case coe v60 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v61 v62
-                                                                               -> coe
-                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v61)
-                                                                                    (coe
-                                                                                       addInt
-                                                                                       (coe
-                                                                                          (1 ::
-                                                                                             Integer))
-                                                                                       (coe v62))
-                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
-                                                                     (coe
-                                                                        (\ v60 ->
-                                                                           case coe v60 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v61 v62
-                                                                               -> case coe v62 of
-                                                                                    0 -> coe
-                                                                                           MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
-                                                                                    _ -> coe
-                                                                                           MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v61)
-                                                                                           (coe v62)
-                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                                  v58)
-                                                               (coe
-                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                                                  (coe
-                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
-                                                                     (coe
-                                                                        (\ v60 ->
-                                                                           case coe v60 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v61 v62
-                                                                               -> coe
-                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v61)
-                                                                                    (coe
-                                                                                       addInt
-                                                                                       (coe
-                                                                                          (1 ::
-                                                                                             Integer))
-                                                                                       (coe v62))
-                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
-                                                                     (coe
-                                                                        (\ v60 ->
-                                                                           case coe v60 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v61 v62
-                                                                               -> case coe v62 of
-                                                                                    0 -> coe
-                                                                                           MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
-                                                                                    _ -> coe
-                                                                                           MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v61)
-                                                                                           (coe v62)
-                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                                  v59)
-                                                        _ -> MAlonzo.RTE.mazUnreachableError))
-                                                (coe
-                                                   (\ v54 ->
-                                                      case coe v54 of
-                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPoolThresholds_9265 v55 v56 v57 v58 v59
-                                                          -> coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_316
-                                                               (coe
-                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
-                                                                  (coe
-                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
-                                                                     (coe
-                                                                        (\ v60 ->
-                                                                           case coe v60 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v61 v62
-                                                                               -> coe
-                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v61)
-                                                                                    (coe
-                                                                                       addInt
-                                                                                       (coe
-                                                                                          (1 ::
-                                                                                             Integer))
-                                                                                       (coe v62))
-                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
-                                                                     (coe
-                                                                        (\ v60 ->
-                                                                           case coe v60 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v61 v62
-                                                                               -> case coe v62 of
-                                                                                    0 -> coe
-                                                                                           MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
-                                                                                    _ -> coe
-                                                                                           MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v61)
-                                                                                           (coe v62)
-                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                                  v55)
-                                                               (coe
-                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
-                                                                  (coe
-                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
-                                                                     (coe
-                                                                        (\ v60 ->
-                                                                           case coe v60 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v61 v62
-                                                                               -> coe
-                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v61)
-                                                                                    (coe
-                                                                                       addInt
-                                                                                       (coe
-                                                                                          (1 ::
-                                                                                             Integer))
-                                                                                       (coe v62))
-                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
-                                                                     (coe
-                                                                        (\ v60 ->
-                                                                           case coe v60 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v61 v62
-                                                                               -> case coe v62 of
-                                                                                    0 -> coe
-                                                                                           MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
-                                                                                    _ -> coe
-                                                                                           MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v61)
-                                                                                           (coe v62)
-                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                                  v56)
-                                                               (coe
-                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
-                                                                  (coe
-                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
-                                                                     (coe
-                                                                        (\ v60 ->
-                                                                           case coe v60 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v61 v62
-                                                                               -> coe
-                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v61)
-                                                                                    (coe
-                                                                                       addInt
-                                                                                       (coe
-                                                                                          (1 ::
-                                                                                             Integer))
-                                                                                       (coe v62))
-                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
-                                                                     (coe
-                                                                        (\ v60 ->
-                                                                           case coe v60 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v61 v62
-                                                                               -> case coe v62 of
-                                                                                    0 -> coe
-                                                                                           MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
-                                                                                    _ -> coe
-                                                                                           MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v61)
-                                                                                           (coe v62)
-                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                                  v57)
-                                                               (coe
-                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
-                                                                  (coe
-                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
-                                                                     (coe
-                                                                        (\ v60 ->
-                                                                           case coe v60 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v61 v62
-                                                                               -> coe
-                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v61)
-                                                                                    (coe
-                                                                                       addInt
-                                                                                       (coe
-                                                                                          (1 ::
-                                                                                             Integer))
-                                                                                       (coe v62))
-                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
-                                                                     (coe
-                                                                        (\ v60 ->
-                                                                           case coe v60 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v61 v62
-                                                                               -> case coe v62 of
-                                                                                    0 -> coe
-                                                                                           MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
-                                                                                    _ -> coe
-                                                                                           MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v61)
-                                                                                           (coe v62)
-                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                                  v58)
-                                                               (coe
-                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
-                                                                  (coe
-                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
-                                                                     (coe
-                                                                        (\ v60 ->
-                                                                           case coe v60 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v61 v62
-                                                                               -> coe
-                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v61)
-                                                                                    (coe
-                                                                                       addInt
-                                                                                       (coe
-                                                                                          (1 ::
-                                                                                             Integer))
-                                                                                       (coe v62))
-                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
-                                                                     (coe
-                                                                        (\ v60 ->
-                                                                           case coe v60 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v61 v62
-                                                                               -> case coe v62 of
-                                                                                    0 -> coe
-                                                                                           MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
-                                                                                    _ -> coe
-                                                                                           MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v61)
-                                                                                           (coe v62)
-                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                                  v59)
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
                                              v46)
                                           (coe
@@ -11389,9 +11252,338 @@ d_Conv'45'GovEnv_360
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                 (coe
-                                                   (\ v54 ->
-                                                      case coe v54 of
-                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_292 v55 v56 v57 v58 v59 v60 v61 v62 v63 v64
+                                                   (\ v55 ->
+                                                      case coe v55 of
+                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_318 v56 v57 v58 v59 v60
+                                                          -> coe
+                                                               MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPoolThresholds_9265
+                                                               (coe
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
+                                                                     (coe
+                                                                        (\ v61 ->
+                                                                           case coe v61 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v62 v63
+                                                                               -> coe
+                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
+                                                                                    (coe v62)
+                                                                                    (coe
+                                                                                       addInt
+                                                                                       (coe
+                                                                                          (1 ::
+                                                                                             Integer))
+                                                                                       (coe v63))
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                     (coe
+                                                                        (\ v61 ->
+                                                                           case coe v61 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v62 v63
+                                                                               -> case coe v63 of
+                                                                                    0 -> coe
+                                                                                           MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
+                                                                                    _ -> coe
+                                                                                           MAlonzo.Code.Data.Rational.Base.du__'47'__156
+                                                                                           (coe v62)
+                                                                                           (coe v63)
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                                  v56)
+                                                               (coe
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
+                                                                     (coe
+                                                                        (\ v61 ->
+                                                                           case coe v61 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v62 v63
+                                                                               -> coe
+                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
+                                                                                    (coe v62)
+                                                                                    (coe
+                                                                                       addInt
+                                                                                       (coe
+                                                                                          (1 ::
+                                                                                             Integer))
+                                                                                       (coe v63))
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                     (coe
+                                                                        (\ v61 ->
+                                                                           case coe v61 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v62 v63
+                                                                               -> case coe v63 of
+                                                                                    0 -> coe
+                                                                                           MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
+                                                                                    _ -> coe
+                                                                                           MAlonzo.Code.Data.Rational.Base.du__'47'__156
+                                                                                           (coe v62)
+                                                                                           (coe v63)
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                                  v57)
+                                                               (coe
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
+                                                                     (coe
+                                                                        (\ v61 ->
+                                                                           case coe v61 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v62 v63
+                                                                               -> coe
+                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
+                                                                                    (coe v62)
+                                                                                    (coe
+                                                                                       addInt
+                                                                                       (coe
+                                                                                          (1 ::
+                                                                                             Integer))
+                                                                                       (coe v63))
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                     (coe
+                                                                        (\ v61 ->
+                                                                           case coe v61 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v62 v63
+                                                                               -> case coe v63 of
+                                                                                    0 -> coe
+                                                                                           MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
+                                                                                    _ -> coe
+                                                                                           MAlonzo.Code.Data.Rational.Base.du__'47'__156
+                                                                                           (coe v62)
+                                                                                           (coe v63)
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                                  v58)
+                                                               (coe
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
+                                                                     (coe
+                                                                        (\ v61 ->
+                                                                           case coe v61 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v62 v63
+                                                                               -> coe
+                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
+                                                                                    (coe v62)
+                                                                                    (coe
+                                                                                       addInt
+                                                                                       (coe
+                                                                                          (1 ::
+                                                                                             Integer))
+                                                                                       (coe v63))
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                     (coe
+                                                                        (\ v61 ->
+                                                                           case coe v61 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v62 v63
+                                                                               -> case coe v63 of
+                                                                                    0 -> coe
+                                                                                           MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
+                                                                                    _ -> coe
+                                                                                           MAlonzo.Code.Data.Rational.Base.du__'47'__156
+                                                                                           (coe v62)
+                                                                                           (coe v63)
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                                  v59)
+                                                               (coe
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
+                                                                     (coe
+                                                                        (\ v61 ->
+                                                                           case coe v61 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v62 v63
+                                                                               -> coe
+                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
+                                                                                    (coe v62)
+                                                                                    (coe
+                                                                                       addInt
+                                                                                       (coe
+                                                                                          (1 ::
+                                                                                             Integer))
+                                                                                       (coe v63))
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                     (coe
+                                                                        (\ v61 ->
+                                                                           case coe v61 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v62 v63
+                                                                               -> case coe v63 of
+                                                                                    0 -> coe
+                                                                                           MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
+                                                                                    _ -> coe
+                                                                                           MAlonzo.Code.Data.Rational.Base.du__'47'__156
+                                                                                           (coe v62)
+                                                                                           (coe v63)
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                                  v60)
+                                                        _ -> MAlonzo.RTE.mazUnreachableError))
+                                                (coe
+                                                   (\ v55 ->
+                                                      case coe v55 of
+                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkPoolThresholds_9265 v56 v57 v58 v59 v60
+                                                          -> coe
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_318
+                                                               (coe
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                  (coe
+                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
+                                                                     (coe
+                                                                        (\ v61 ->
+                                                                           case coe v61 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v62 v63
+                                                                               -> coe
+                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
+                                                                                    (coe v62)
+                                                                                    (coe
+                                                                                       addInt
+                                                                                       (coe
+                                                                                          (1 ::
+                                                                                             Integer))
+                                                                                       (coe v63))
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                     (coe
+                                                                        (\ v61 ->
+                                                                           case coe v61 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v62 v63
+                                                                               -> case coe v63 of
+                                                                                    0 -> coe
+                                                                                           MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
+                                                                                    _ -> coe
+                                                                                           MAlonzo.Code.Data.Rational.Base.du__'47'__156
+                                                                                           (coe v62)
+                                                                                           (coe v63)
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                                  v56)
+                                                               (coe
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                  (coe
+                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
+                                                                     (coe
+                                                                        (\ v61 ->
+                                                                           case coe v61 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v62 v63
+                                                                               -> coe
+                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
+                                                                                    (coe v62)
+                                                                                    (coe
+                                                                                       addInt
+                                                                                       (coe
+                                                                                          (1 ::
+                                                                                             Integer))
+                                                                                       (coe v63))
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                     (coe
+                                                                        (\ v61 ->
+                                                                           case coe v61 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v62 v63
+                                                                               -> case coe v63 of
+                                                                                    0 -> coe
+                                                                                           MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
+                                                                                    _ -> coe
+                                                                                           MAlonzo.Code.Data.Rational.Base.du__'47'__156
+                                                                                           (coe v62)
+                                                                                           (coe v63)
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                                  v57)
+                                                               (coe
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                  (coe
+                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
+                                                                     (coe
+                                                                        (\ v61 ->
+                                                                           case coe v61 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v62 v63
+                                                                               -> coe
+                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
+                                                                                    (coe v62)
+                                                                                    (coe
+                                                                                       addInt
+                                                                                       (coe
+                                                                                          (1 ::
+                                                                                             Integer))
+                                                                                       (coe v63))
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                     (coe
+                                                                        (\ v61 ->
+                                                                           case coe v61 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v62 v63
+                                                                               -> case coe v63 of
+                                                                                    0 -> coe
+                                                                                           MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
+                                                                                    _ -> coe
+                                                                                           MAlonzo.Code.Data.Rational.Base.du__'47'__156
+                                                                                           (coe v62)
+                                                                                           (coe v63)
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                                  v58)
+                                                               (coe
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                  (coe
+                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
+                                                                     (coe
+                                                                        (\ v61 ->
+                                                                           case coe v61 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v62 v63
+                                                                               -> coe
+                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
+                                                                                    (coe v62)
+                                                                                    (coe
+                                                                                       addInt
+                                                                                       (coe
+                                                                                          (1 ::
+                                                                                             Integer))
+                                                                                       (coe v63))
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                     (coe
+                                                                        (\ v61 ->
+                                                                           case coe v61 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v62 v63
+                                                                               -> case coe v63 of
+                                                                                    0 -> coe
+                                                                                           MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
+                                                                                    _ -> coe
+                                                                                           MAlonzo.Code.Data.Rational.Base.du__'47'__156
+                                                                                           (coe v62)
+                                                                                           (coe v63)
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                                  v59)
+                                                               (coe
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                  (coe
+                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
+                                                                     (coe
+                                                                        (\ v61 ->
+                                                                           case coe v61 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v62 v63
+                                                                               -> coe
+                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
+                                                                                    (coe v62)
+                                                                                    (coe
+                                                                                       addInt
+                                                                                       (coe
+                                                                                          (1 ::
+                                                                                             Integer))
+                                                                                       (coe v63))
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                     (coe
+                                                                        (\ v61 ->
+                                                                           case coe v61 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v62 v63
+                                                                               -> case coe v63 of
+                                                                                    0 -> coe
+                                                                                           MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
+                                                                                    _ -> coe
+                                                                                           MAlonzo.Code.Data.Rational.Base.du__'47'__156
+                                                                                           (coe v62)
+                                                                                           (coe v63)
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                                  v60)
+                                                        _ -> MAlonzo.RTE.mazUnreachableError)))
+                                             v47)
+                                          (coe
+                                             MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                             (coe
+                                                MAlonzo.Code.Class.Convertible.Core.C_constructor_24
+                                                (coe
+                                                   (\ v55 ->
+                                                      case coe v55 of
+                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_294 v56 v57 v58 v59 v60 v61 v62 v63 v64 v65
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkDrepThresholds_1075
                                                                (coe
@@ -11399,61 +11591,30 @@ d_Conv'45'GovEnv_360
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v66 v67
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v67 v68
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v66)
+                                                                                    (coe v67)
                                                                                     (coe
                                                                                        addInt
                                                                                        (coe
                                                                                           (1 ::
                                                                                              Integer))
-                                                                                       (coe v67))
+                                                                                       (coe v68))
                                                                              _ -> MAlonzo.RTE.mazUnreachableError))
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v66 v67
-                                                                               -> case coe v67 of
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v67 v68
+                                                                               -> case coe v68 of
                                                                                     0 -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                                     _ -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v66)
                                                                                            (coe v67)
-                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                                  v55)
-                                                               (coe
-                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
-                                                                  (coe
-                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
-                                                                     (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v66 v67
-                                                                               -> coe
-                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v66)
-                                                                                    (coe
-                                                                                       addInt
-                                                                                       (coe
-                                                                                          (1 ::
-                                                                                             Integer))
-                                                                                       (coe v67))
-                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
-                                                                     (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v66 v67
-                                                                               -> case coe v67 of
-                                                                                    0 -> coe
-                                                                                           MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
-                                                                                    _ -> coe
-                                                                                           MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v66)
-                                                                                           (coe v67)
+                                                                                           (coe v68)
                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                   v56)
                                                                (coe
@@ -11461,30 +11622,30 @@ d_Conv'45'GovEnv_360
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v66 v67
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v67 v68
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v66)
+                                                                                    (coe v67)
                                                                                     (coe
                                                                                        addInt
                                                                                        (coe
                                                                                           (1 ::
                                                                                              Integer))
-                                                                                       (coe v67))
+                                                                                       (coe v68))
                                                                              _ -> MAlonzo.RTE.mazUnreachableError))
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v66 v67
-                                                                               -> case coe v67 of
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v67 v68
+                                                                               -> case coe v68 of
                                                                                     0 -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                                     _ -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v66)
                                                                                            (coe v67)
+                                                                                           (coe v68)
                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                   v57)
                                                                (coe
@@ -11492,30 +11653,30 @@ d_Conv'45'GovEnv_360
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v66 v67
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v67 v68
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v66)
+                                                                                    (coe v67)
                                                                                     (coe
                                                                                        addInt
                                                                                        (coe
                                                                                           (1 ::
                                                                                              Integer))
-                                                                                       (coe v67))
+                                                                                       (coe v68))
                                                                              _ -> MAlonzo.RTE.mazUnreachableError))
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v66 v67
-                                                                               -> case coe v67 of
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v67 v68
+                                                                               -> case coe v68 of
                                                                                     0 -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                                     _ -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v66)
                                                                                            (coe v67)
+                                                                                           (coe v68)
                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                   v58)
                                                                (coe
@@ -11523,30 +11684,30 @@ d_Conv'45'GovEnv_360
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v66 v67
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v67 v68
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v66)
+                                                                                    (coe v67)
                                                                                     (coe
                                                                                        addInt
                                                                                        (coe
                                                                                           (1 ::
                                                                                              Integer))
-                                                                                       (coe v67))
+                                                                                       (coe v68))
                                                                              _ -> MAlonzo.RTE.mazUnreachableError))
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v66 v67
-                                                                               -> case coe v67 of
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v67 v68
+                                                                               -> case coe v68 of
                                                                                     0 -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                                     _ -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v66)
                                                                                            (coe v67)
+                                                                                           (coe v68)
                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                   v59)
                                                                (coe
@@ -11554,30 +11715,30 @@ d_Conv'45'GovEnv_360
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v66 v67
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v67 v68
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v66)
+                                                                                    (coe v67)
                                                                                     (coe
                                                                                        addInt
                                                                                        (coe
                                                                                           (1 ::
                                                                                              Integer))
-                                                                                       (coe v67))
+                                                                                       (coe v68))
                                                                              _ -> MAlonzo.RTE.mazUnreachableError))
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v66 v67
-                                                                               -> case coe v67 of
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v67 v68
+                                                                               -> case coe v68 of
                                                                                     0 -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                                     _ -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v66)
                                                                                            (coe v67)
+                                                                                           (coe v68)
                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                   v60)
                                                                (coe
@@ -11585,30 +11746,30 @@ d_Conv'45'GovEnv_360
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v66 v67
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v67 v68
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v66)
+                                                                                    (coe v67)
                                                                                     (coe
                                                                                        addInt
                                                                                        (coe
                                                                                           (1 ::
                                                                                              Integer))
-                                                                                       (coe v67))
+                                                                                       (coe v68))
                                                                              _ -> MAlonzo.RTE.mazUnreachableError))
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v66 v67
-                                                                               -> case coe v67 of
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v67 v68
+                                                                               -> case coe v68 of
                                                                                     0 -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                                     _ -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v66)
                                                                                            (coe v67)
+                                                                                           (coe v68)
                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                   v61)
                                                                (coe
@@ -11616,30 +11777,30 @@ d_Conv'45'GovEnv_360
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v66 v67
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v67 v68
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v66)
+                                                                                    (coe v67)
                                                                                     (coe
                                                                                        addInt
                                                                                        (coe
                                                                                           (1 ::
                                                                                              Integer))
-                                                                                       (coe v67))
+                                                                                       (coe v68))
                                                                              _ -> MAlonzo.RTE.mazUnreachableError))
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v66 v67
-                                                                               -> case coe v67 of
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v67 v68
+                                                                               -> case coe v68 of
                                                                                     0 -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                                     _ -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v66)
                                                                                            (coe v67)
+                                                                                           (coe v68)
                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                   v62)
                                                                (coe
@@ -11647,30 +11808,30 @@ d_Conv'45'GovEnv_360
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v66 v67
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v67 v68
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v66)
+                                                                                    (coe v67)
                                                                                     (coe
                                                                                        addInt
                                                                                        (coe
                                                                                           (1 ::
                                                                                              Integer))
-                                                                                       (coe v67))
+                                                                                       (coe v68))
                                                                              _ -> MAlonzo.RTE.mazUnreachableError))
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v66 v67
-                                                                               -> case coe v67 of
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v67 v68
+                                                                               -> case coe v68 of
                                                                                     0 -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                                     _ -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v66)
                                                                                            (coe v67)
+                                                                                           (coe v68)
                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                   v63)
                                                                (coe
@@ -11678,99 +11839,99 @@ d_Conv'45'GovEnv_360
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v66 v67
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v67 v68
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v66)
+                                                                                    (coe v67)
                                                                                     (coe
                                                                                        addInt
                                                                                        (coe
                                                                                           (1 ::
                                                                                              Integer))
-                                                                                       (coe v67))
+                                                                                       (coe v68))
                                                                              _ -> MAlonzo.RTE.mazUnreachableError))
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v66 v67
-                                                                               -> case coe v67 of
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v67 v68
+                                                                               -> case coe v68 of
                                                                                     0 -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                                     _ -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v66)
                                                                                            (coe v67)
+                                                                                           (coe v68)
                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                   v64)
+                                                               (coe
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
+                                                                  (coe
+                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
+                                                                     (coe
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v67 v68
+                                                                               -> coe
+                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
+                                                                                    (coe v67)
+                                                                                    (coe
+                                                                                       addInt
+                                                                                       (coe
+                                                                                          (1 ::
+                                                                                             Integer))
+                                                                                       (coe v68))
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                     (coe
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v67 v68
+                                                                               -> case coe v68 of
+                                                                                    0 -> coe
+                                                                                           MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
+                                                                                    _ -> coe
+                                                                                           MAlonzo.Code.Data.Rational.Base.du__'47'__156
+                                                                                           (coe v67)
+                                                                                           (coe v68)
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                                  v65)
                                                         _ -> MAlonzo.RTE.mazUnreachableError))
                                                 (coe
-                                                   (\ v54 ->
-                                                      case coe v54 of
-                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkDrepThresholds_1075 v55 v56 v57 v58 v59 v60 v61 v62 v63 v64
+                                                   (\ v55 ->
+                                                      case coe v55 of
+                                                        MAlonzo.Code.Ledger.Dijkstra.Foreign.PParams.C_MkDrepThresholds_1075 v56 v57 v58 v59 v60 v61 v62 v63 v64 v65
                                                           -> coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_292
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.PParams.C_constructor_294
                                                                (coe
                                                                   MAlonzo.Code.Class.Convertible.Core.d_from_22
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v66 v67
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v67 v68
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v66)
+                                                                                    (coe v67)
                                                                                     (coe
                                                                                        addInt
                                                                                        (coe
                                                                                           (1 ::
                                                                                              Integer))
-                                                                                       (coe v67))
+                                                                                       (coe v68))
                                                                              _ -> MAlonzo.RTE.mazUnreachableError))
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v66 v67
-                                                                               -> case coe v67 of
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v67 v68
+                                                                               -> case coe v68 of
                                                                                     0 -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                                     _ -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v66)
                                                                                            (coe v67)
-                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
-                                                                  v55)
-                                                               (coe
-                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
-                                                                  (coe
-                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
-                                                                     (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v66 v67
-                                                                               -> coe
-                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v66)
-                                                                                    (coe
-                                                                                       addInt
-                                                                                       (coe
-                                                                                          (1 ::
-                                                                                             Integer))
-                                                                                       (coe v67))
-                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
-                                                                     (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v66 v67
-                                                                               -> case coe v67 of
-                                                                                    0 -> coe
-                                                                                           MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
-                                                                                    _ -> coe
-                                                                                           MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v66)
-                                                                                           (coe v67)
+                                                                                           (coe v68)
                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                   v56)
                                                                (coe
@@ -11778,30 +11939,30 @@ d_Conv'45'GovEnv_360
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v66 v67
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v67 v68
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v66)
+                                                                                    (coe v67)
                                                                                     (coe
                                                                                        addInt
                                                                                        (coe
                                                                                           (1 ::
                                                                                              Integer))
-                                                                                       (coe v67))
+                                                                                       (coe v68))
                                                                              _ -> MAlonzo.RTE.mazUnreachableError))
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v66 v67
-                                                                               -> case coe v67 of
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v67 v68
+                                                                               -> case coe v68 of
                                                                                     0 -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                                     _ -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v66)
                                                                                            (coe v67)
+                                                                                           (coe v68)
                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                   v57)
                                                                (coe
@@ -11809,30 +11970,30 @@ d_Conv'45'GovEnv_360
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v66 v67
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v67 v68
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v66)
+                                                                                    (coe v67)
                                                                                     (coe
                                                                                        addInt
                                                                                        (coe
                                                                                           (1 ::
                                                                                              Integer))
-                                                                                       (coe v67))
+                                                                                       (coe v68))
                                                                              _ -> MAlonzo.RTE.mazUnreachableError))
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v66 v67
-                                                                               -> case coe v67 of
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v67 v68
+                                                                               -> case coe v68 of
                                                                                     0 -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                                     _ -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v66)
                                                                                            (coe v67)
+                                                                                           (coe v68)
                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                   v58)
                                                                (coe
@@ -11840,30 +12001,30 @@ d_Conv'45'GovEnv_360
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v66 v67
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v67 v68
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v66)
+                                                                                    (coe v67)
                                                                                     (coe
                                                                                        addInt
                                                                                        (coe
                                                                                           (1 ::
                                                                                              Integer))
-                                                                                       (coe v67))
+                                                                                       (coe v68))
                                                                              _ -> MAlonzo.RTE.mazUnreachableError))
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v66 v67
-                                                                               -> case coe v67 of
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v67 v68
+                                                                               -> case coe v68 of
                                                                                     0 -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                                     _ -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v66)
                                                                                            (coe v67)
+                                                                                           (coe v68)
                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                   v59)
                                                                (coe
@@ -11871,30 +12032,30 @@ d_Conv'45'GovEnv_360
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v66 v67
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v67 v68
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v66)
+                                                                                    (coe v67)
                                                                                     (coe
                                                                                        addInt
                                                                                        (coe
                                                                                           (1 ::
                                                                                              Integer))
-                                                                                       (coe v67))
+                                                                                       (coe v68))
                                                                              _ -> MAlonzo.RTE.mazUnreachableError))
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v66 v67
-                                                                               -> case coe v67 of
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v67 v68
+                                                                               -> case coe v68 of
                                                                                     0 -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                                     _ -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v66)
                                                                                            (coe v67)
+                                                                                           (coe v68)
                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                   v60)
                                                                (coe
@@ -11902,30 +12063,30 @@ d_Conv'45'GovEnv_360
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v66 v67
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v67 v68
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v66)
+                                                                                    (coe v67)
                                                                                     (coe
                                                                                        addInt
                                                                                        (coe
                                                                                           (1 ::
                                                                                              Integer))
-                                                                                       (coe v67))
+                                                                                       (coe v68))
                                                                              _ -> MAlonzo.RTE.mazUnreachableError))
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v66 v67
-                                                                               -> case coe v67 of
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v67 v68
+                                                                               -> case coe v68 of
                                                                                     0 -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                                     _ -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v66)
                                                                                            (coe v67)
+                                                                                           (coe v68)
                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                   v61)
                                                                (coe
@@ -11933,30 +12094,30 @@ d_Conv'45'GovEnv_360
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v66 v67
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v67 v68
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v66)
+                                                                                    (coe v67)
                                                                                     (coe
                                                                                        addInt
                                                                                        (coe
                                                                                           (1 ::
                                                                                              Integer))
-                                                                                       (coe v67))
+                                                                                       (coe v68))
                                                                              _ -> MAlonzo.RTE.mazUnreachableError))
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v66 v67
-                                                                               -> case coe v67 of
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v67 v68
+                                                                               -> case coe v68 of
                                                                                     0 -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                                     _ -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v66)
                                                                                            (coe v67)
+                                                                                           (coe v68)
                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                   v62)
                                                                (coe
@@ -11964,30 +12125,30 @@ d_Conv'45'GovEnv_360
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v66 v67
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v67 v68
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v66)
+                                                                                    (coe v67)
                                                                                     (coe
                                                                                        addInt
                                                                                        (coe
                                                                                           (1 ::
                                                                                              Integer))
-                                                                                       (coe v67))
+                                                                                       (coe v68))
                                                                              _ -> MAlonzo.RTE.mazUnreachableError))
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v66 v67
-                                                                               -> case coe v67 of
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v67 v68
+                                                                               -> case coe v68 of
                                                                                     0 -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                                     _ -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v66)
                                                                                            (coe v67)
+                                                                                           (coe v68)
                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                   v63)
                                                                (coe
@@ -11995,36 +12156,67 @@ d_Conv'45'GovEnv_360
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.C_constructor_24
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v66 v67
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v67 v68
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
-                                                                                    (coe v66)
+                                                                                    (coe v67)
                                                                                     (coe
                                                                                        addInt
                                                                                        (coe
                                                                                           (1 ::
                                                                                              Integer))
-                                                                                       (coe v67))
+                                                                                       (coe v68))
                                                                              _ -> MAlonzo.RTE.mazUnreachableError))
                                                                      (coe
-                                                                        (\ v65 ->
-                                                                           case coe v65 of
-                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v66 v67
-                                                                               -> case coe v67 of
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v67 v68
+                                                                               -> case coe v68 of
                                                                                     0 -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
                                                                                     _ -> coe
                                                                                            MAlonzo.Code.Data.Rational.Base.du__'47'__156
-                                                                                           (coe v66)
                                                                                            (coe v67)
+                                                                                           (coe v68)
                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
                                                                   v64)
+                                                               (coe
+                                                                  MAlonzo.Code.Class.Convertible.Core.d_from_22
+                                                                  (coe
+                                                                     MAlonzo.Code.Class.Convertible.Core.C_constructor_24
+                                                                     (coe
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v67 v68
+                                                                               -> coe
+                                                                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24
+                                                                                    (coe v67)
+                                                                                    (coe
+                                                                                       addInt
+                                                                                       (coe
+                                                                                          (1 ::
+                                                                                             Integer))
+                                                                                       (coe v68))
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError))
+                                                                     (coe
+                                                                        (\ v66 ->
+                                                                           case coe v66 of
+                                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C__'44'__24 v67 v68
+                                                                               -> case coe v68 of
+                                                                                    0 -> coe
+                                                                                           MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
+                                                                                    _ -> coe
+                                                                                           MAlonzo.Code.Data.Rational.Base.du__'47'__156
+                                                                                           (coe v67)
+                                                                                           (coe v68)
+                                                                             _ -> MAlonzo.RTE.mazUnreachableError)))
+                                                                  v65)
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
-                                             v47)
-                                          (coe v48) (coe v49) (coe v50) (coe v51) (coe v52)
-                                          (coe v53)
+                                             v48)
+                                          (coe v49) (coe v50) (coe v51) (coe v52) (coe v53)
+                                          (coe v54)
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v3)
                      (coe
@@ -12041,7 +12233,7 @@ d_Conv'45'GovEnv_360
                            (coe
                               (\ v8 ->
                                  case coe v8 of
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1350 v9 v10 v11 v12 v13
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1354 v9 v10 v11 v12 v13
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1623
                                           (coe
@@ -12058,12 +12250,12 @@ d_Conv'45'GovEnv_360
                                                       (coe
                                                          MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
+                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_108
                                                             (let v14
                                                                    = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
                                                              coe
                                                                (let v15
-                                                                      = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+                                                                      = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
                                                                           (coe v14) in
                                                                 coe
                                                                   (coe
@@ -12073,19 +12265,19 @@ d_Conv'45'GovEnv_360
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                                              MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                               (coe v15))))
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                            (coe v15))))))
                                                             (coe
                                                                MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218)
                                                             (coe
                                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
+                                                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))))
                                                 (coe
                                                    (\ v14 ->
                                                       MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -12170,7 +12362,7 @@ d_Conv'45'GovEnv_360
                                                               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                                                 (coe v12)))
                                           (coe
-                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                              (coe
                                                 MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                 (coe
@@ -12189,7 +12381,7 @@ d_Conv'45'GovEnv_360
                                  case coe v8 of
                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.C_MkEnactState_1623 v9 v10 v11 v12 v13
                                      -> coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1350
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Enact.C_constructor_1354
                                           (coe
                                              MAlonzo.Code.Data.Product.Base.du_map_128
                                              (coe
@@ -12199,12 +12391,12 @@ d_Conv'45'GovEnv_360
                                                    (coe
                                                       MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
+                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_108
                                                          (let v14
                                                                 = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
                                                           coe
                                                             (let v15
-                                                                   = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+                                                                   = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
                                                                        (coe v14) in
                                                              coe
                                                                (coe
@@ -12214,19 +12406,19 @@ d_Conv'45'GovEnv_360
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                                           MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                            (coe v15))))
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                         (coe v15))))))
                                                          (coe
                                                             MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218)
                                                          (coe
                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
+                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))))
                                              (coe
                                                 (\ v14 ->
                                                    MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -12325,7 +12517,7 @@ d_Conv'45'GovEnv_360
                                                     = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
                                               coe
                                                 (let v15
-                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+                                                       = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
                                                            (coe v14) in
                                                  coe
                                                    (coe
@@ -12333,19 +12525,19 @@ d_Conv'45'GovEnv_360
                                                       (coe
                                                          MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_332
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_globalConstants_1422
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_globalConstants_1426
                                                             (coe v15)))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                          (coe
                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                (coe v15))))
                                                       (coe
                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                            MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                             (coe v15))))))
                                              (coe
                                                 MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -12369,7 +12561,7 @@ d_Conv'45'GovEnv_360
                                                         (coe
                                                            MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                         v14))
-                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                                                    (coe v13))))
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v5)
@@ -12380,13 +12572,13 @@ d_Conv'45'GovEnv_360
                            (coe
                               (\ v8 ->
                                  case coe v8 of
-                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_1624 v9 v10 v11
+                                   MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_1628 v9 v10 v11
                                      -> coe
                                           MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkCertState_37147
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_26909
                                              (coe
-                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                    (coe
@@ -12399,10 +12591,10 @@ d_Conv'45'GovEnv_360
                                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.d_Conv'45'VDeleg_32)))
                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_voteDelegs_1564
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_voteDelegs_1568
                                                          (coe v9)))))
                                              (coe
-                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                    (coe
@@ -12415,10 +12607,10 @@ d_Conv'45'GovEnv_360
                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_stakeDelegs_1566
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_stakeDelegs_1570
                                                          (coe v9)))))
                                              (coe
-                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                    (coe
@@ -12431,10 +12623,10 @@ d_Conv'45'GovEnv_360
                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewards_1568
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_rewards_1572
                                                          (coe v9)))))
                                              (coe
-                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                    (coe
@@ -12447,12 +12639,12 @@ d_Conv'45'GovEnv_360
                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1570
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1574
                                                          (coe v9))))))
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkPState_22495
                                              (coe
-                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                    (coe
@@ -12465,10 +12657,10 @@ d_Conv'45'GovEnv_360
                                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolState_22)))
                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1584
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_pools_1588
                                                          (coe v10)))))
                                              (coe
-                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                    (coe
@@ -12481,10 +12673,10 @@ d_Conv'45'GovEnv_360
                                                             MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.d_Conv'45'StakePoolParams_18)))
                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_fPools_1586
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_fPools_1590
                                                          (coe v10)))))
                                              (coe
-                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                    (coe
@@ -12497,10 +12689,10 @@ d_Conv'45'GovEnv_360
                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1588
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_retiring_1592
                                                          (coe v10)))))
                                              (coe
-                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                    (coe
@@ -12513,12 +12705,12 @@ d_Conv'45'GovEnv_360
                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1590
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1594
                                                          (coe v10))))))
                                           (coe
                                              MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkGState_31571
                                              (coe
-                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                    (coe
@@ -12531,10 +12723,10 @@ d_Conv'45'GovEnv_360
                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dreps_1602
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_dreps_1606
                                                          (coe v11)))))
                                              (coe
-                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                    (coe
@@ -12549,10 +12741,10 @@ d_Conv'45'GovEnv_360
                                                                MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218))))
                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_ccHotKeys_1604
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_ccHotKeys_1608
                                                          (coe v11)))))
                                              (coe
-                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                                 (coe
                                                    MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                    (coe
@@ -12565,7 +12757,7 @@ d_Conv'45'GovEnv_360
                                                             MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10)))
                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1606
+                                                         MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.d_deposits_1610
                                                          (coe v11))))))
                                    _ -> MAlonzo.RTE.mazUnreachableError))
                            (coe
@@ -12573,7 +12765,7 @@ d_Conv'45'GovEnv_360
                                  case coe v8 of
                                    MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkCertState_37147 v9 v10 v11
                                      -> coe
-                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_1624
+                                          MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7580''738'_1628
                                           (coe
                                              MAlonzo.Code.Class.Convertible.Core.d_from_22
                                              (coe
@@ -12581,11 +12773,11 @@ d_Conv'45'GovEnv_360
                                                 (coe
                                                    (\ v12 ->
                                                       case coe v12 of
-                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1572 v13 v14 v15 v16
+                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1576 v13 v14 v15 v16
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_26909
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                      (coe
@@ -12599,7 +12791,7 @@ d_Conv'45'GovEnv_360
                                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                         (coe v13))))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                      (coe
@@ -12613,7 +12805,7 @@ d_Conv'45'GovEnv_360
                                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                         (coe v14))))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                      (coe
@@ -12627,7 +12819,7 @@ d_Conv'45'GovEnv_360
                                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                         (coe v15))))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                      (coe
@@ -12646,7 +12838,7 @@ d_Conv'45'GovEnv_360
                                                       case coe v12 of
                                                         MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkDState_26909 v13 v14 v15 v16
                                                           -> coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1572
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1576
                                                                (coe
                                                                   MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                   (coe
@@ -12657,7 +12849,7 @@ d_Conv'45'GovEnv_360
                                                                          = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
                                                                    coe
                                                                      (let v18
-                                                                            = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+                                                                            = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
                                                                                 (coe v17) in
                                                                       coe
                                                                         (coe
@@ -12667,12 +12859,12 @@ d_Conv'45'GovEnv_360
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                     (coe v18))))
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                  (coe v18))))))
                                                                   (coe
                                                                      MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -12696,7 +12888,7 @@ d_Conv'45'GovEnv_360
                                                                              (coe
                                                                                 MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                                              v17))
-                                                                     (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                     (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                                                                         (coe v13))))
                                                                (coe
                                                                   MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
@@ -12708,7 +12900,7 @@ d_Conv'45'GovEnv_360
                                                                          = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
                                                                    coe
                                                                      (let v18
-                                                                            = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+                                                                            = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
                                                                                 (coe v17) in
                                                                       coe
                                                                         (coe
@@ -12718,12 +12910,12 @@ d_Conv'45'GovEnv_360
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                     (coe v18))))
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                  (coe v18))))))
                                                                   (coe
                                                                      MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -12747,7 +12939,7 @@ d_Conv'45'GovEnv_360
                                                                              (coe
                                                                                 MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                                              v17))
-                                                                     (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                     (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                                                                         (coe v14))))
                                                                (coe
                                                                   MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
@@ -12759,7 +12951,7 @@ d_Conv'45'GovEnv_360
                                                                          = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
                                                                    coe
                                                                      (let v18
-                                                                            = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+                                                                            = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
                                                                                 (coe v17) in
                                                                       coe
                                                                         (coe
@@ -12769,12 +12961,12 @@ d_Conv'45'GovEnv_360
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                     (coe v18))))
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                  (coe v18))))))
                                                                   (coe
                                                                      MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -12798,7 +12990,7 @@ d_Conv'45'GovEnv_360
                                                                              (coe
                                                                                 MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                                              v17))
-                                                                     (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                     (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                                                                         (coe v15))))
                                                                (coe
                                                                   MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
@@ -12810,7 +13002,7 @@ d_Conv'45'GovEnv_360
                                                                          = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
                                                                    coe
                                                                      (let v18
-                                                                            = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+                                                                            = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
                                                                                 (coe v17) in
                                                                       coe
                                                                         (coe
@@ -12820,12 +13012,12 @@ d_Conv'45'GovEnv_360
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                     (coe v18))))
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                  (coe v18))))))
                                                                   (coe
                                                                      MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -12849,7 +13041,7 @@ d_Conv'45'GovEnv_360
                                                                              (coe
                                                                                 MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                                              v17))
-                                                                     (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                     (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                                                                         (coe v16))))
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
                                              v9)
@@ -12860,11 +13052,11 @@ d_Conv'45'GovEnv_360
                                                 (coe
                                                    (\ v12 ->
                                                       case coe v12 of
-                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_constructor_1592 v13 v14 v15 v16
+                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_constructor_1596 v13 v14 v15 v16
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkPState_22495
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                      (coe
@@ -12878,7 +13070,7 @@ d_Conv'45'GovEnv_360
                                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                         (coe v13))))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                      (coe
@@ -12892,7 +13084,7 @@ d_Conv'45'GovEnv_360
                                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                         (coe v14))))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                      (coe
@@ -12906,7 +13098,7 @@ d_Conv'45'GovEnv_360
                                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                         (coe v15))))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                      (coe
@@ -12925,7 +13117,7 @@ d_Conv'45'GovEnv_360
                                                       case coe v12 of
                                                         MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkPState_22495 v13 v14 v15 v16
                                                           -> coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_constructor_1592
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_constructor_1596
                                                                (coe
                                                                   MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                   (coe
@@ -12956,7 +13148,7 @@ d_Conv'45'GovEnv_360
                                                                              (coe
                                                                                 MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                                              v17))
-                                                                     (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                     (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                                                                         (coe v13))))
                                                                (coe
                                                                   MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
@@ -12988,7 +13180,7 @@ d_Conv'45'GovEnv_360
                                                                              (coe
                                                                                 MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                                              v17))
-                                                                     (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                     (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                                                                         (coe v14))))
                                                                (coe
                                                                   MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
@@ -13020,7 +13212,7 @@ d_Conv'45'GovEnv_360
                                                                              (coe
                                                                                 MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                                              v17))
-                                                                     (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                     (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                                                                         (coe v15))))
                                                                (coe
                                                                   MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
@@ -13052,7 +13244,7 @@ d_Conv'45'GovEnv_360
                                                                              (coe
                                                                                 MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                                              v17))
-                                                                     (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                     (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                                                                         (coe v16))))
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
                                              v10)
@@ -13063,11 +13255,11 @@ d_Conv'45'GovEnv_360
                                                 (coe
                                                    (\ v12 ->
                                                       case coe v12 of
-                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7515'_1608 v13 v14 v15
+                                                        MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7515'_1612 v13 v14 v15
                                                           -> coe
                                                                MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkGState_31571
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                      (coe
@@ -13081,7 +13273,7 @@ d_Conv'45'GovEnv_360
                                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                         (coe v13))))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                      (coe
@@ -13097,7 +13289,7 @@ d_Conv'45'GovEnv_360
                                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                         (coe v14))))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                                                                  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                                                                   (coe
                                                                      MAlonzo.Code.Class.Convertible.Core.d_to_20
                                                                      (coe
@@ -13116,7 +13308,7 @@ d_Conv'45'GovEnv_360
                                                       case coe v12 of
                                                         MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.C_MkGState_31571 v13 v14 v15
                                                           -> coe
-                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7515'_1608
+                                                               MAlonzo.Code.Ledger.Dijkstra.Specification.Certs.C_'10214'_'44'_'44'_'10215''7515'_1612
                                                                (coe
                                                                   MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
                                                                   (coe
@@ -13127,7 +13319,7 @@ d_Conv'45'GovEnv_360
                                                                          = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
                                                                    coe
                                                                      (let v17
-                                                                            = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+                                                                            = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
                                                                                 (coe v16) in
                                                                       coe
                                                                         (coe
@@ -13137,12 +13329,12 @@ d_Conv'45'GovEnv_360
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                     (coe v17))))
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                  (coe v17))))))
                                                                   (coe
                                                                      MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -13166,7 +13358,7 @@ d_Conv'45'GovEnv_360
                                                                              (coe
                                                                                 MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                                              v16))
-                                                                     (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                     (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                                                                         (coe v13))))
                                                                (coe
                                                                   MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
@@ -13178,7 +13370,7 @@ d_Conv'45'GovEnv_360
                                                                          = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
                                                                    coe
                                                                      (let v17
-                                                                            = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+                                                                            = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
                                                                                 (coe v16) in
                                                                       coe
                                                                         (coe
@@ -13188,12 +13380,12 @@ d_Conv'45'GovEnv_360
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                     (coe v17))))
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                  (coe v17))))))
                                                                   (coe
                                                                      MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -13219,7 +13411,7 @@ d_Conv'45'GovEnv_360
                                                                              (coe
                                                                                 MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                                              v16))
-                                                                     (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                     (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                                                                         (coe v14))))
                                                                (coe
                                                                   MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_612
@@ -13231,7 +13423,7 @@ d_Conv'45'GovEnv_360
                                                                          = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
                                                                    coe
                                                                      (let v17
-                                                                            = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+                                                                            = MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
                                                                                 (coe v16) in
                                                                       coe
                                                                         (coe
@@ -13241,12 +13433,12 @@ d_Conv'45'GovEnv_360
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                                                    MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                     (coe v17))))
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_224
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1424
+                                                                                 MAlonzo.Code.Ledger.Dijkstra.Specification.Transaction.d_cryptoStructure_1428
                                                                                  (coe v17))))))
                                                                   (coe
                                                                      MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -13270,7 +13462,7 @@ d_Conv'45'GovEnv_360
                                                                              (coe
                                                                                 MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                                                              v16))
-                                                                     (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                                                                     (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                                                                         (coe v15))))
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
                                              v11)
@@ -13288,7 +13480,7 @@ d_Conv'45'GovEnv_360
                               MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                               (coe
                                  MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218))
-                           (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_elems_66 (coe v7))))
+                           (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_elems_72 (coe v7))))
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Dijkstra.Foreign.Gov.gov-step
 govStep ::
@@ -13303,7 +13495,7 @@ govStep ::
   MAlonzo.Code.Foreign.Haskell.Either.T_Either_22
     () () MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.T_GovVote_5417
     T_GovProposal_1393 ->
-  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
+  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_116
     MAlonzo.Code.Agda.Builtin.String.T_String_6
     (MAlonzo.Code.Agda.Builtin.List.T_List_10
        ()
@@ -13324,7 +13516,7 @@ d_gov'45'step_362 ::
     AgdaAny AgdaAny
     MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.T_GovVote_5417
     T_GovProposal_1393 ->
-  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
+  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_116
     MAlonzo.Code.Agda.Builtin.String.T_String_6
     [MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
        AgdaAny AgdaAny
@@ -13353,7 +13545,7 @@ d_gov'45'step_362 v0
                   MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.d_Conv'45'GovVote_120)
                (coe d_Conv'45'GovProposal_284))
             (coe
-               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSComputationResult_134
+               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSComputationResult_140
                (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvString_12)
                (coe
                   MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
@@ -13367,9 +13559,9 @@ d_gov'45'step_362 v0
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational.d_Computational'45'GOV_2484
+            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational.d_Computational'45'GOV_2488
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+               MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
                (coe
                   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)))
          (coe
@@ -13393,7 +13585,7 @@ govsStep ::
     (MAlonzo.Code.Foreign.Haskell.Either.T_Either_22
        () () MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.T_GovVote_5417
        T_GovProposal_1393) ->
-  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
+  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_116
     MAlonzo.Code.Agda.Builtin.String.T_String_6
     (MAlonzo.Code.Agda.Builtin.List.T_List_10
        ()
@@ -13413,7 +13605,7 @@ d_govs'45'step_364 ::
      AgdaAny AgdaAny
      MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.T_GovVote_5417
      T_GovProposal_1393] ->
-  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
+  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_116
     MAlonzo.Code.Agda.Builtin.String.T_String_6
     [MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
        AgdaAny AgdaAny
@@ -13444,7 +13636,7 @@ d_govs'45'step_364 v0
                      MAlonzo.Code.Ledger.Dijkstra.Foreign.Gov.Core.d_Conv'45'GovVote_120)
                   (coe d_Conv'45'GovProposal_284)))
             (coe
-               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSComputationResult_134
+               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSComputationResult_140
                (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvString_12)
                (coe
                   MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
@@ -13458,9 +13650,9 @@ d_govs'45'step_364 v0
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_compute_306
          (coe
-            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational.d_Computational'45'GOVS_2890
+            MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Properties.Computational.d_Computational'45'GOVS_2896
             (coe
-               MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_748
+               MAlonzo.Code.Ledger.Dijkstra.Foreign.ExternalStructures.d_HSTransactionStructure_752
                (coe
                   MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24)))
          (coe
@@ -13512,7 +13704,7 @@ check_MkGovEnv_10129 ::
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer ->
   MAlonzo.Code.Ledger.Dijkstra.Foreign.Enact.T_EnactState_1621 ->
   MAlonzo.Code.Ledger.Dijkstra.Foreign.Certs.T_CertState_37145 ->
-  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSSet_60
+  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSSet_66
     MAlonzo.Code.Ledger.Core.Foreign.Address.T_Credential_615 ->
   T_GovEnv_10127
 check_MkGovEnv_10129 = MkGovEnv

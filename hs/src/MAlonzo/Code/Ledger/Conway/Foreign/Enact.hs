@@ -244,7 +244,7 @@ d_Conv'45'EnactState_102
                                  (coe
                                     MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                     (coe
-                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
+                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_108
                                        (let v6
                                               = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
                                         coe
@@ -271,7 +271,7 @@ d_Conv'45'EnactState_102
                                        (coe
                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                     (coe
-                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
+                                       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))))
                            (coe
                               (\ v6 ->
                                  MAlonzo.Code.Class.Convertible.Core.d_to_20
@@ -347,7 +347,7 @@ d_Conv'45'EnactState_102
                                          MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))))
                            (coe v4)))
                      (coe
-                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_56
+                        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_62
                         (coe
                            MAlonzo.Code.Class.Convertible.Core.d_to_20
                            (coe
@@ -374,7 +374,7 @@ d_Conv'45'EnactState_102
                               (coe
                                  MAlonzo.Code.Class.Convertible.Foreign.du_Convertible'45'Pair_6
                                  (coe
-                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_102
+                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSMap_108
                                     (let v6
                                            = MAlonzo.Code.Ledger.Core.Foreign.ExternalFunctions.d_dummyExternalFunctions_24 in
                                      coe
@@ -400,7 +400,7 @@ d_Conv'45'EnactState_102
                                        MAlonzo.Code.Ledger.Core.Foreign.Address.d_Conv'45'Credential_218)
                                     (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvNat_10))
                                  (coe
-                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_28))))
+                                    MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_Conv'45'Rational_34))))
                         (coe
                            (\ v6 ->
                               MAlonzo.Code.Class.Convertible.Core.d_from_22
@@ -521,7 +521,7 @@ d_Conv'45'EnactState_102
                                    MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased ()
                                    erased (coe MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40)
                                    v6))
-                           (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_54
+                           (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_60
                               (coe v5))))
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Foreign.Enact.HsTy-EnactEnv
@@ -580,14 +580,14 @@ enactStep ::
   T_EnactEnv_12123 ->
   T_EnactState_159 ->
   MAlonzo.Code.Ledger.Conway.Foreign.Gov.Actions.T_GovAction_1109 ->
-  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
+  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_116
     MAlonzo.Code.Agda.Builtin.String.T_String_6 T_EnactState_159
 enactStep = coe d_enact'45'step_108
 d_enact'45'step_108 ::
   T_EnactEnv_12123 ->
   T_EnactState_159 ->
   MAlonzo.Code.Ledger.Conway.Foreign.Gov.Actions.T_GovAction_1109 ->
-  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
+  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_116
     MAlonzo.Code.Agda.Builtin.String.T_String_6 T_EnactState_159
 d_enact'45'step_108 v0
   = coe
@@ -600,7 +600,7 @@ d_enact'45'step_108 v0
             (coe
                MAlonzo.Code.Ledger.Conway.Foreign.Gov.Actions.d_Conv'45'GovAction_82)
             (coe
-               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSComputationResult_134
+               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSComputationResult_140
                (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvString_12)
                (coe d_Conv'45'EnactState_102))))
       (coe
@@ -627,7 +627,7 @@ check_MkEnactState_161 ::
        ()
        (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
           () ()
-          (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSMap_46
+          (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSMap_52
              MAlonzo.Code.Ledger.Core.Foreign.Address.T_Credential_615 Integer)
           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_Rational_22))
     (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
@@ -648,7 +648,7 @@ check_MkEnactState_161 ::
     () () MAlonzo.Code.Ledger.Conway.Foreign.PParams.T_PParams_11885
     (MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
        () () Integer Integer) ->
-  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSMap_46
+  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSMap_52
     MAlonzo.Code.Ledger.Core.Foreign.Address.T_RewardAddress_3909
     Integer ->
   T_EnactState_159

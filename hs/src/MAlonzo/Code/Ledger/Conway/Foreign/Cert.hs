@@ -895,7 +895,7 @@ certsStep ::
   MAlonzo.Code.Ledger.Conway.Foreign.Certs.T_CertState_28429 ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     () MAlonzo.Code.Ledger.Conway.Foreign.Certs.T_DCert_17767 ->
-  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
+  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_116
     MAlonzo.Code.Agda.Builtin.String.T_String_6
     MAlonzo.Code.Ledger.Conway.Foreign.Certs.T_CertState_28429
 certsStep = coe d_certs'45'step_474
@@ -903,7 +903,7 @@ d_certs'45'step_474 ::
   MAlonzo.Code.Ledger.Conway.Foreign.Certs.T_CertEnv_9009 ->
   MAlonzo.Code.Ledger.Conway.Foreign.Certs.T_CertState_28429 ->
   [MAlonzo.Code.Ledger.Conway.Foreign.Certs.T_DCert_17767] ->
-  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
+  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_116
     MAlonzo.Code.Agda.Builtin.String.T_String_6
     MAlonzo.Code.Ledger.Conway.Foreign.Certs.T_CertState_28429
 d_certs'45'step_474 v0
@@ -919,7 +919,7 @@ d_certs'45'step_474 v0
                MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'List_22
                (coe MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DCert_164))
             (coe
-               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSComputationResult_134
+               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSComputationResult_140
                (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvString_12)
                (coe
                   MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'CertState_172))))
@@ -941,7 +941,7 @@ certStep ::
   MAlonzo.Code.Ledger.Conway.Foreign.Certs.T_CertEnv_9009 ->
   MAlonzo.Code.Ledger.Conway.Foreign.Certs.T_CertState_28429 ->
   MAlonzo.Code.Ledger.Conway.Foreign.Certs.T_DCert_17767 ->
-  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
+  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_116
     MAlonzo.Code.Agda.Builtin.String.T_String_6
     MAlonzo.Code.Ledger.Conway.Foreign.Certs.T_CertState_28429
 certStep = coe d_cert'45'step_476
@@ -949,7 +949,7 @@ d_cert'45'step_476 ::
   MAlonzo.Code.Ledger.Conway.Foreign.Certs.T_CertEnv_9009 ->
   MAlonzo.Code.Ledger.Conway.Foreign.Certs.T_CertState_28429 ->
   MAlonzo.Code.Ledger.Conway.Foreign.Certs.T_DCert_17767 ->
-  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_110
+  MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSComputationResult_116
     MAlonzo.Code.Agda.Builtin.String.T_String_6
     MAlonzo.Code.Ledger.Conway.Foreign.Certs.T_CertState_28429
 d_cert'45'step_476 v0
@@ -963,7 +963,7 @@ d_cert'45'step_476 v0
             MAlonzo.Code.Class.Convertible.Instances.du_Convertible'45'Fun_34
             (coe MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'DCert_164)
             (coe
-               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSComputationResult_134
+               MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.du_Conv'45'HSComputationResult_140
                (coe MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_iConvString_12)
                (coe
                   MAlonzo.Code.Ledger.Conway.Foreign.Certs.d_Conv'45'CertState_172))))
