@@ -1,8 +1,13 @@
 {
   lib,
+  stdenv,
+  glibcLocales,
   mkDerivation,
 }:
 mkDerivation {
+  LANG = "en_US.UTF-8";
+  LC_ALL = "en_US.UTF-8";
+  LOCALE_ARCHIVE = lib.optionalString stdenv.hostPlatform.isLinux "${glibcLocales}/lib/locale/locale-archive";
   pname = "hs-src";
   src = lib.fileset.toSource {
     root = ../../.;
