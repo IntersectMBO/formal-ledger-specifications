@@ -49,23 +49,23 @@ initState' = fromList' (createInitUtxoState 5 startValue)
 
 data Tx' : Set where
     start      : ℕ → Value → Q.ℚ → Tx'
-    close      : ℕ → Tx'
+    stop       : ℕ → Tx'
     updatetx   : ℕ → Value → Q.ℚ → Tx'
     exchange   : ℕ → Value → Tx'
 
 
 makeTx : UTxOState → PlutusScript → Tx' → (id : ℕ) → Maybe Tx
 makeTx s script (start w v r) id = just (startTx id w 999 v r script)
-makeTx s script (close w) id = makeCloseTx id s script w
+makeTx s script (stop w) id = makeStopTx id s script w
 makeTx s script (updatetx w v r) id = makeUpdateTx id s script w v r
 makeTx s script (exchange w v) id = makeExchangeTx id s script w v
 
-evalTransanctions : UTxOEnv → ComputationResult String UTxOState → List Tx' → ℕ → ComputationResult String UTxOState
-evalTransanctions env s [] id = s
-evalTransanctions env state@(failure s) (x ∷ xs) id = state
-evalTransanctions env (success s) (tx' ∷ txs') id =
+evalTransactions : UTxOEnv → ComputationResult String UTxOState → List Tx' → ℕ → ComputationResult String UTxOState
+evalTransactions env s [] id = s
+evalTransactions env state@(failure s) (x ∷ xs) id = state
+evalTransactions env (success s) (tx' ∷ txs') id =
   maybe
-    (λ tx → evalTransanctions
+    (λ tx → evalTransactions
               initEnv
               (UTXO-step initEnv s tx)
               txs'
@@ -73,12 +73,12 @@ evalTransanctions env (success s) (tx' ∷ txs') id =
     (failure "failed to generate tx")
     (makeTx s multiSigScript tx' id)
 
-evalTransanctionsW : UTxOEnv → ComputationResult String UTxOState → List Tx' → ℕ → ComputationResult String UTxOState
-evalTransanctionsW env s [] id = s
-evalTransanctionsW env state@(failure s) (x ∷ xs) id = state
-evalTransanctionsW env (success s) (tx' ∷ txs') id =
+evalTransactionsW : UTxOEnv → ComputationResult String UTxOState → List Tx' → ℕ → ComputationResult String UTxOState
+evalTransactionsW env s [] id = s
+evalTransactionsW env state@(failure s) (x ∷ xs) id = state
+evalTransactionsW env (success s) (tx' ∷ txs') id =
   maybe
-    (λ tx → evalTransanctions
+    (λ tx → evalTransactions
               initEnv
               (UTXO-step initEnv s tx)
               txs'
@@ -104,7 +104,7 @@ rate3 = (Q.mkℚ (ℤ.pos (suc (suc (suc zero)))) (zero) (λ { (fst , snd) → p
 validTrace : List Tx'
 validTrace = start 5 (adaValueOf 80000000) rate
              ∷ updatetx 5 (adaValueOf 70000000) rate
-             ∷ close 5
+             ∷ stop 5
              ∷ []
 
 
@@ -127,13 +127,13 @@ opaque
   unfolding outs
 
   evalValidTrace : ComputationResult String UTxOState
-  evalValidTrace = evalTransanctionsW initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) validTrace 6
+  evalValidTrace = evalTransactionsW initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) validTrace 6
 
   evalValidTrace2 : ComputationResult String UTxOState
-  evalValidTrace2 = evalTransanctionsW initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) validTrace2 6
+  evalValidTrace2 = evalTransactionsW initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) validTrace2 6
 
   evalFailingTrace : ComputationResult String UTxOState
-  evalFailingTrace = evalTransanctionsW initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) failingTrace 6
+  evalFailingTrace = evalTransactionsW initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) failingTrace 6
 
   _ : isSuccess evalValidTrace ≡ true
   _ = refl
