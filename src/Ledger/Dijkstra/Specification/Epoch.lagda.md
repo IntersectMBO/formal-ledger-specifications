@@ -658,9 +658,12 @@ module Pre-POOLREAPUpdate (e  : Epoch)
   pState' : PState
   pState' = ⟦ applyFPools e pools fPools , ∅ , retiring , deposits ⟧
 
+  activeGovSt : GovState
+  activeGovSt = filter (λ (_ , gaSt) → ¬ expired e gaSt) govSt'
+
   gState' : GState
   gState' =
-    ⟦ (if null govSt' then mapValues sucᵉ (DRepsOf gState) else DRepsOf gState)
+    ⟦ (if null activeGovSt then mapValues sucᵉ (DRepsOf gState) else DRepsOf gState)
     , CCHotKeysOf gState ∣ ccCreds (EnactState.cc es)
     , DepositsOf gState 
     ⟧

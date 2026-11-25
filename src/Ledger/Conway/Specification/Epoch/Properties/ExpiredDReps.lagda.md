@@ -402,8 +402,8 @@ module Pre-POOLREAP-update
   where
 
   module lSt≈lSt' = LState-[_]_≈_ lSt≈lSt'
-  module pPRUpd₁  = Pre-POOLREAPUpdate lSt eSt govUpd
-  module pPRUpd₂  = Pre-POOLREAPUpdate lSt' eSt' govUpd'
+  module pPRUpd₁  = Pre-POOLREAPUpdate e lSt eSt govUpd
+  module pPRUpd₂  = Pre-POOLREAPUpdate e lSt' eSt' govUpd'
 
   gState' : GState-[ sucᵉ e ] pPRUpd₁.gState' ≈ pPRUpd₂.gState'
   gState' = record {R}
@@ -416,7 +416,7 @@ module Pre-POOLREAP-update
 
         dreps : DReps-[ sucᵉ e ] GState.dreps pPRUpd₁.gState' ≈ GState.dreps pPRUpd₂.gState'
         dreps with P.cong Governance-Update.govSt' govUpd≡govUpd'
-        ... | refl with null (Governance-Update.govSt' govUpd')
+        ... | refl with null pPRUpd₂.activeGovSt
         ... | false = DReps-≈-mono e {dreps₁ = DRepsOf lSt} {dreps₂ = DRepsOf lSt'} (GState-[_]_≈_.dreps (CertState-[_]_≈_.gState lSt≈lSt'.certState))
         ... | true  = DReps-≈-sucᵉ e {dreps₁ = DRepsOf lSt} {dreps₂ = DRepsOf lSt'} (GState-[_]_≈_.dreps (CertState-[_]_≈_.gState lSt≈lSt'.certState))
 
@@ -636,7 +636,7 @@ module EPOCH {epSt epSt' : EpochState} (e : Epoch) (epSt≈epSt' : EpochState-[ 
 
         module Γ≈Γ' where
           stakeDistrs   = mkStakeDistrs.cong (P.cong Snapshots.mark ss''≡ss''') e prPRUpd₁≈prPRUpd₂.utxoSt' (P.cong Governance-Update.govSt' govUpd₁≡govUpd₂)
-                                             cSt≈cSt'.gState cSt≈cSt'.dState
+                                             cSt≈cSt'.gState poPRUpd₁≈poPRUpd₂.dState''
           currentEpoch  = refl
           dreps         = gSt≈gSt'.dreps
           ccHotKeys     = gSt≈gSt'.ccHotKeys

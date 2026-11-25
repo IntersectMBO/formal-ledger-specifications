@@ -78,7 +78,7 @@ module _ {eps : EpochState} {e : Epoch} where
          ss'₁≡ss'₂ : ss'₁ ≡ ss'₂
          ss'₁≡ss'₂ = SNAP-deterministic p₁ p₁'
 
-         module pPRUpd =  Pre-POOLREAP-Update (Pre-POOLREAPUpdate.updates ls es govUpd)
+         module pPRUpd =  Pre-POOLREAP-Update (Pre-POOLREAPUpdate.updates e ls es govUpd)
 
          pPRUpd₁ = Post-POOLREAPUpdate.updates es ls dState'₁ acnt'₁ govUpd
          module pPRUpd₁ = Post-POOLREAP-Update pPRUpd₁
@@ -96,9 +96,11 @@ module _ {eps : EpochState} {e : Epoch} where
                  (cong PoolReapState.dState prs'≡prs'')
                  (cong PoolReapState.acnt prs'≡prs'')
 
-         stakeDistrs₁≡stakeDistrs₂ : mkStakeDistrs (Snapshots.mark ss'₁) e pPRUpd.utxoSt' govSt' (GStateOf ls) (DStateOf ls)
-                                     ≡ mkStakeDistrs (Snapshots.mark ss'₂) e pPRUpd.utxoSt' govSt' (GStateOf ls) (DStateOf ls)
-         stakeDistrs₁≡stakeDistrs₂ = cong (λ ss' → mkStakeDistrs (Snapshots.mark ss') e pPRUpd.utxoSt' govSt' (GStateOf ls) (DStateOf ls)) ss'₁≡ss'₂
+         stakeDistrs₁≡stakeDistrs₂ : mkStakeDistrs (Snapshots.mark ss'₁) e pPRUpd.utxoSt' govSt' (GStateOf ls) pPRUpd₁.dState''
+                                     ≡ mkStakeDistrs (Snapshots.mark ss'₂) e pPRUpd.utxoSt' govSt' (GStateOf ls) pPRUpd₂.dState''
+         stakeDistrs₁≡stakeDistrs₂ =
+           cong₂ (λ ss' upd → mkStakeDistrs (Snapshots.mark ss') e pPRUpd.utxoSt' govSt' (GStateOf ls) (Post-POOLREAP-Update.dState'' upd))
+                 ss'₁≡ss'₂ pPRUpd₁≡pPRUpd₂
 
          Γ≡Γ' = cong₂ (λ sd acnt → ⟦ sd , e , DRepsOf ls , CCHotKeysOf ls , TreasuryOf acnt , PoolsOf ls , VoteDelegsOf ls ⟧)
                       stakeDistrs₁≡stakeDistrs₂ (cong Post-POOLREAP-Update.acnt'' pPRUpd₁≡pPRUpd₂)
