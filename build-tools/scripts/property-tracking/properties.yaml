@@ -456,14 +456,16 @@ properties:
     notes: "Port of conway-epoch-expired-dreps."
 
   - id: dijkstra-certs-pov
-    title: "CERT and CERTS preserve value"
+    title: "CERT and CERTS reward and deposit accounting"
     era: dijkstra
     sts: CERTS
     module: Ledger.Dijkstra.Specification.Certs.Properties.PoV
-    anchor: thm:CERTS-PoV
-    defs: [CERTS-pov]
+    anchor: sec:certs-pov
+    defs: [CERTS-rewards-pov, CERTS-deposits-pov]
     issues: [1185]
-    notes: "Covers both thm:CERT-PoV and thm:CERTS-PoV."
+    notes: >
+      Covers rewards preservation and the deposit equation with certificate
+      charges and refunds. The deposit equation assumes PoolDepositsRegistered.
 
   - id: dijkstra-utxo-pov
     title: "UTXO value accounting for LEDGER-pov"
