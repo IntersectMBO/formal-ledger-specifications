@@ -406,6 +406,7 @@ collateralCheck pp tx utxo =
   All (λ (addr , _) → isVKeyAddr addr) (range (utxo ∣ collateralInputs))
   × isAdaOnly balance′
   × coin balance′ * 100 ≥ txFee * pp .collateralPercentage
+  × totalCollateral ~ just (coin balance′)
   × collateralInputs ≢ ∅
   where
     open Tx tx; open TxBody body

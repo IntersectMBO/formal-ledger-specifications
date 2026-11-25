@@ -31,6 +31,7 @@ defaultTxBody = record
                   { txIns = ∅
                   ; refInputs = ∅
                   ; collateralInputs = ∅
+                  ; totalCollateral = nothing
                   ; txOuts =  ∅
                   ; txFee = 10000000000
                   ; mint = 0
