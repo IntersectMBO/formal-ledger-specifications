@@ -704,30 +704,23 @@ prefer not to use Nix.
     Follow the [Agda installation instructions][].  The version must match the
     `Agda ==` bound in `build-tools/agda/fls-agda.cabal`.
 
-2.  **Find the pinned library revisions**.
+2.  **Check out the five Agda libraries**.
 
-    Use the locked `nixpkgs` and `agda-nix` revisions in `flake.lock` to
-    find each library's source tag or commit.  The
-    [pin locations](#where-each-version-is-pinned) list the package definitions.
-
-3.  **Clone the required Agda libraries**.
-
-    Run the following from the repository root:
+    From the repository root, fetch the revisions used by this specification.
+    The [pin locations](#where-each-version-is-pinned) identify their sources.
 
     ```bash
     mkdir -p LIB
-    git clone https://github.com/agda/agda-stdlib.git LIB/agda-stdlib
-    git clone https://github.com/agda/agda-stdlib-classes.git LIB/agda-stdlib-classes
-    git clone https://github.com/agda/agda-stdlib-meta.git LIB/agda-stdlib-meta
+    git clone --branch v2.4 --depth 1 https://github.com/agda/agda-stdlib.git LIB/agda-stdlib
+    git clone --branch v2.4 --depth 1 https://github.com/agda/agda-stdlib-classes.git LIB/agda-stdlib-classes
+    git clone --branch v2.4 --depth 1 https://github.com/agda/agda-stdlib-meta.git LIB/agda-stdlib-meta
     git clone https://github.com/input-output-hk/agda-sets.git LIB/agda-sets
+    git -C LIB/agda-sets checkout --detach 83288a9b3f0f03244ebd1d884a761b65f64ebbea
     git clone https://github.com/input-output-hk/iog-agda-prelude.git LIB/iog-agda-prelude
+    git -C LIB/iog-agda-prelude checkout --detach 2c752d5ec3b454885cd5aa692d973a254fdc89dd
     ```
 
-    Check out each recorded tag or commit with `git -C LIB/<directory> checkout
-    <revision>`, replacing both placeholders.  The default branches may have
-    incompatible APIs; use the pinned sources.
-
-4.  **Create a library configuration**.
+3.  **Create a library configuration**.
 
     From the repository root, create `LIB/libraries` with absolute paths, as
     follows:
@@ -746,7 +739,7 @@ prefer not to use Nix.
     `formal-ledger.agda-lib` to the registry and run Agda from
     `formal-ledger-test/`.
 
-5.  **Use Agda with the libraries**.
+4.  **Use Agda with the libraries**.
 
     ```bash
     agda --library-file=LIB/libraries src/Ledger.lagda.md
