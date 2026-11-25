@@ -124,6 +124,7 @@ open import Ledger.Dijkstra.Specification.Ledger txs abs
 open import Ledger.Dijkstra.Specification.Utxo txs abs
 open import Ledger.Dijkstra.Specification.Utxow txs abs
 
+open import Ledger.Dijkstra.Specification.Certs.Properties.PoV govStructure
 open import Ledger.Dijkstra.Specification.Entities.Properties.PoV txs
 open import Ledger.Dijkstra.Specification.Utxo.Properties.PoV txs abs
   using ( noMintingSubTxs; batchTxIds; FreshTxIds; FreshTxIds-tail
@@ -157,16 +158,15 @@ which are organized into the following groups:
 +  the set/map identities consumed by `ApplyToRewards-PoV`{.AgdaModule}
    (`∪ˡ-lookup-preserve`{.AgdaFunction}, `sum-map-proj₂≡getCoin`{.AgdaFunction},
    `setToList-Unique`{.AgdaFunction});
-+  Cert facts: value accounting for a single `CERTS`{.AgdaDatatype} run
-   (`CERTS-rewards-pov`{.AgdaFunction}, `CERTS-deposits-pov`{.AgdaFunction},
-   `CERTS-deposits-registered`{.AgdaFunction}, `CERTS-new-thread`{.AgdaFunction},
-   `refundCertDeposits-++`{.AgdaFunction});
 +  Gov deposit facts (`rmOrphanDRepVotes-coinFromGovDeposit`{.AgdaFunction},
    `GOVS-coinFromGovDeposit`{.AgdaFunction});
 +  no-truncation withdrawal bounds (`ENTITIES-wdrls-bounded`{.AgdaFunction},
    `SUBENTITIES-wdrls-bounded`{.AgdaFunction}); see
    `Entities.Properties.PoV`{.AgdaModule} for why these are not consequences of
    the rules' own premises.
+
+The certificate accounting facts are imported from
+`Certs.Properties.PoV`{.AgdaModule}.
 
 The UTxO-side coin equations and batch-threading facts are imported from
 `Utxow.Properties.PoV`{.AgdaModule}.  The running UTxO agrees with the pre-batch
@@ -194,39 +194,6 @@ module LEDGER-PoV
       (m : RewardAddress ⇀ Coin)
       → ∀[ a ∈ dom (m ˢ) ] NetworkIdOf a ≡ NetworkId
       → Unique (map (stake ∘ proj₁) (setToList (m ˢ))) )
-
-  -- Value accounting for a single CERTS run (consumed via `ENTITIES-PoV`):
-  -- rewards preservation; closed-form deposit accounting (which needs the
-  -- pool-deposit registration invariant, see `PoolDepositsRegistered` in `Certs`);
-  -- preservation of that invariant; and the `newCertDeposits` split at a CERTS-run
-  -- boundary, against the run's final pool set, so per-step accounting composes
-  -- across a batch.
-  ( CERTS-rewards-pov : {Γ : CertEnv} {s s' : CertState} {dCerts : List DCert}
-      → Γ ⊢ s ⇀⦇ dCerts ,CERTS⦈ s' → coinFromRewards s ≡ coinFromRewards s' )
-
-  ( CERTS-deposits-pov : {Γ : CertEnv} {s s' : CertState} {dCerts : List DCert}
-      → PoolDepositsRegistered s
-      → Γ ⊢ s ⇀⦇ dCerts ,CERTS⦈ s'
-      → coinFromDeposits s  + newCertDeposits (PParamsOf Γ) (dom (PoolsOf s)) dCerts
-      ≡ coinFromDeposits s' + refundCertDeposits (PParamsOf Γ) dCerts )
-
-  ( CERTS-deposits-registered : {Γ : CertEnv} {s s' : CertState} {dCerts : List DCert}
-      → PoolDepositsRegistered s
-      → Γ ⊢ s ⇀⦇ dCerts ,CERTS⦈ s'
-      → PoolDepositsRegistered s' )
-
-  ( CERTS-new-thread : {Γ : CertEnv} {s s' : CertState} {dCerts : List DCert}
-      → Γ ⊢ s ⇀⦇ dCerts ,CERTS⦈ s'
-      → (ys : List DCert)
-      → newCertDeposits (PParamsOf Γ) (dom (PoolsOf s)) (dCerts ++ ys)
-      ≡ newCertDeposits (PParamsOf Γ) (dom (PoolsOf s)) dCerts
-        + newCertDeposits (PParamsOf Γ) (dom (PoolsOf s')) ys )
-
-  -- `refundCertDeposits` is a plain fold over the certificate list; it distributes
-  -- over concatenation.
-  ( refundCertDeposits-++ : (pp' : PParams) (xs ys : List DCert)
-      → refundCertDeposits pp' (xs ++ ys)
-      ≡ refundCertDeposits pp' xs + refundCertDeposits pp' ys )
 
   -- No-truncation withdrawal bounds; see `Entities.Properties.PoV` for why these
   -- are hypotheses rather than consequences of the rules' own premises.
