@@ -36,6 +36,7 @@
 
 ## Conway spec
 
+- Check the optional total collateral amount when the transaction has redeemers
 - Remove POST-CERT; delegated stake for voting is now removed by GOVCERT at the moment of deregistration
 - Move `txIns ∩ refInputs ≡ ∅` precondition to `allowedLanguages` to allow non-disjoint tx and ref. inputs for Plutus V1-V2
 - Require collateral inputs to be present in the UTxO set in the UTXO rule

@@ -76,6 +76,7 @@ succeedTx = record { body = record
                          ; currentTreasury = nothing
                          ; txId = 7
                          ; collateralInputs = Ledger.Prelude.fromList ((5 , 5) ∷ [])
+                         ; totalCollateral = nothing
                          ; reqSignerHashes = ∅
                          ; scriptIntegrityHash = nothing
                          } ;
@@ -107,6 +108,7 @@ failTx = record { body = record
                          ; currentTreasury = nothing
                          ; txId = 7
                          ; collateralInputs = ∅
+                         ; totalCollateral = nothing
                          ; reqSignerHashes = ∅
                          ; scriptIntegrityHash = nothing
                          } ;
@@ -153,11 +155,41 @@ opaque
   _ = refl
 
   -- Compute the result of running the UTXO rules on the succeedTx transaction
+  runExample : Tx → ComputationResult String UTxOState
+  runExample = UTXO-step initEnv ⟦ initState , 0 , ∅ , 0 ⟧
+
   succeedExample : ComputationResult String UTxOState
-  succeedExample = UTXO-step initEnv ⟦ initState , 0 , ∅ , 0 ⟧  succeedTx
+  succeedExample = runExample succeedTx
 
   _ : isSuccess succeedExample ≡ true
   _  = refl
+
+  withTotalCollateral : Coin → Tx
+  withTotalCollateral c =
+    record succeedTx { body = record (Tx.body succeedTx) { totalCollateral = just c } }
+
+  _ : isSuccess (runExample (withTotalCollateral 1000000000000)) ≡ true
+  _ = refl
+
+  _ : isFailure (runExample (withTotalCollateral 1))
+  _ = _ , refl
+
+  -- A key-only spend exercises the rule without redeemers.
+  withoutRedeemers : Tx
+  withoutRedeemers = record mismatch
+    { body = record body
+      { txIns = ❴ (5 , 5) ❵
+      ; txOuts = TxBody.txOuts body ∣ ❴ 5 ❵
+      }
+    ; wits = record wits { scripts = ∅ ; txrdmrs = ∅ }
+    }
+    where
+      mismatch : Tx
+      mismatch = withTotalCollateral 1
+      open Tx mismatch using (body; wits)
+
+  _ : isSuccess (runExample withoutRedeemers) ≡ true
+  _ = refl
 
   -- Compute the result of running the UTXO rules on the failTx transaction
   failExample : ComputationResult String UTxOState
