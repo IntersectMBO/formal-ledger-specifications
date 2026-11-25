@@ -93,7 +93,7 @@ d_ltabulate_90 v0 v1
                 (coe
                    d_ltabulate_90 (coe v2)
                    (coe
-                      MAlonzo.Code.Function.Base.du__'8728''8242'__216 (coe v1)
+                      MAlonzo.Code.Function.Base.du__'8728''8242'__230 (coe v1)
                       (coe MAlonzo.Code.Data.Fin.Base.C_suc_16))))
 -- Function.Nary.NonDependent.Base.lreplicate
 d_lreplicate_100 ::
@@ -202,7 +202,7 @@ du_map'8345'_198 v0 v1 v2
       _ -> let v3 = subInt (coe v0) (coe (1 :: Integer)) in
            coe
              (coe
-                MAlonzo.Code.Function.Base.du__'8728''8242'__216
+                MAlonzo.Code.Function.Base.du__'8728''8242'__230
                 (coe du_map'8345'_198 (coe v3) (coe v1)) (coe v2))
 -- Function.Nary.NonDependent.Base._%=_⊢_
 d__'37''61'_'8866'__216 ::
@@ -224,7 +224,7 @@ du__'37''61'_'8866'__216 v0 v1 v2
       (coe
          (\ v3 ->
             coe
-              MAlonzo.Code.Function.Base.du__'8728''8242'__216 (coe v3)
+              MAlonzo.Code.Function.Base.du__'8728''8242'__230 (coe v3)
               (coe v1)))
       (coe v2)
 -- Function.Nary.NonDependent.Base._∷=_⊢_
@@ -256,7 +256,7 @@ du_hole'8345'_248 v0 v1
       _ -> let v2 = subInt (coe v0) (coe (1 :: Integer)) in
            coe
              (coe
-                MAlonzo.Code.Function.Base.du__'8728''8242'__216
+                MAlonzo.Code.Function.Base.du__'8728''8242'__230
                 (coe du_hole'8345'_248 (coe v2)) (coe (\ v3 v4 -> coe v1 v4 v3)))
 -- Function.Nary.NonDependent.Base.constₙ
 d_const'8345'_266 ::

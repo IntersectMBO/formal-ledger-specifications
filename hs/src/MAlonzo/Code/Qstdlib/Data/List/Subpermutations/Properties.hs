@@ -71,14 +71,14 @@ du_maxlen'8804''8759'_30 v0 v1
       [] -> coe MAlonzo.Code.Data.Nat.Base.C_z'8804'n_26
       (:) v2 v3
         -> coe
-             MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_x'8851'y'8804'y_2950
+             MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_x'8851'y'8804'y_3186
              (coe
                 MAlonzo.Code.Relation.Binary.Construct.Flip.EqAndOrd.du_totalPreorder_760
                 (coe
-                   MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalPreorder_2962))
+                   MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalPreorder_3202))
              (coe
                 MAlonzo.Code.Algebra.Construct.NaturalChoice.Base.du_MaxOp'8658'MinOp_186
-                (coe MAlonzo.Code.Data.Nat.Properties.d_'8852''45'operator_4582))
+                (coe MAlonzo.Code.Data.Nat.Properties.d_'8852''45'operator_4852))
              (coe MAlonzo.Code.Data.List.Base.du_length_268 v1)
              (coe du_maxlen_18 (coe v0))
       _ -> MAlonzo.RTE.mazUnreachableError
@@ -102,19 +102,19 @@ du_'8712''45'maxlen'45''8804'_44 v0 v1
         -> case coe v1 of
              MAlonzo.Code.Data.List.Relation.Unary.Any.C_here_46 v6
                -> coe
-                    MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_x'8851'y'8804'x_2924
+                    MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_x'8851'y'8804'x_3160
                     (coe
                        MAlonzo.Code.Relation.Binary.Construct.Flip.EqAndOrd.du_totalPreorder_760
                        (coe
-                          MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalPreorder_2962))
+                          MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalPreorder_3202))
                     (coe
                        MAlonzo.Code.Algebra.Construct.NaturalChoice.Base.du_MaxOp'8658'MinOp_186
-                       (coe MAlonzo.Code.Data.Nat.Properties.d_'8852''45'operator_4582))
+                       (coe MAlonzo.Code.Data.Nat.Properties.d_'8852''45'operator_4852))
                     (coe MAlonzo.Code.Data.List.Base.du_length_268 v2)
                     (coe du_maxlen_18 (coe v3))
              MAlonzo.Code.Data.List.Relation.Unary.Any.C_there_54 v6
                -> coe
-                    MAlonzo.Code.Data.Nat.Properties.du_'8804''45'trans_2908
+                    MAlonzo.Code.Data.Nat.Properties.du_'8804''45'trans_3148
                     (coe du_'8712''45'maxlen'45''8804'_44 (coe v3) (coe v6))
                     (coe du_maxlen'8804''8759'_30 (coe v3) (coe v2))
              _ -> MAlonzo.RTE.mazUnreachableError
@@ -1596,7 +1596,7 @@ du_maxsublists'8871'P_758 v0 v1
       MAlonzo.Code.Data.List.Base.du_filter_648
       (coe
          (\ v2 ->
-            MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+            MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
               (coe MAlonzo.Code.Data.List.Base.du_length_268 v2)
               (coe du_maxlen_18 (coe du_sublists'8871'P_752 (coe v0) (coe v1)))))
       (coe du_sublists'8871'P_752 (coe v0) (coe v1))

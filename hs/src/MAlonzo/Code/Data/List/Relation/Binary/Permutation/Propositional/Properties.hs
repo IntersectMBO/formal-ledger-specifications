@@ -1604,52 +1604,52 @@ du_'43''43''45'comm_738 v0 v1
 -- Data.List.Relation.Binary.Permutation.Propositional.Properties.++-isMagma
 d_'43''43''45'isMagma_752 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  () -> MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 d_'43''43''45'isMagma_752 ~v0 ~v1 = du_'43''43''45'isMagma_752
 du_'43''43''45'isMagma_752 ::
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 du_'43''43''45'isMagma_752
   = coe
-      MAlonzo.Code.Algebra.Structures.C_constructor_210
+      MAlonzo.Code.Algebra.Structures.C_constructor_212
       (coe
          MAlonzo.Code.Data.List.Relation.Binary.Permutation.Propositional.du_'8621''45'isEquivalence_94)
       (\ v0 v1 v2 v3 v4 v5 -> coe du_'43''43''8314'_422 v0 v1 v2 v4 v5)
 -- Data.List.Relation.Binary.Permutation.Propositional.Properties.++-isSemigroup
 d_'43''43''45'isSemigroup_754 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  () -> MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 d_'43''43''45'isSemigroup_754 ~v0 ~v1
   = du_'43''43''45'isSemigroup_754
 du_'43''43''45'isSemigroup_754 ::
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 du_'43''43''45'isSemigroup_754
   = coe
-      MAlonzo.Code.Algebra.Structures.C_constructor_522
+      MAlonzo.Code.Algebra.Structures.C_constructor_524
       (coe du_'43''43''45'isMagma_752)
       (\ v0 v1 v2 -> coe du_'43''43''45'assoc_730)
 -- Data.List.Relation.Binary.Permutation.Propositional.Properties.++-isMonoid
 d_'43''43''45'isMonoid_756 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  () -> MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 d_'43''43''45'isMonoid_756 ~v0 ~v1 = du_'43''43''45'isMonoid_756
 du_'43''43''45'isMonoid_756 ::
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 du_'43''43''45'isMonoid_756
   = coe
-      MAlonzo.Code.Algebra.Structures.C_constructor_758
+      MAlonzo.Code.Algebra.Structures.C_constructor_760
       (coe du_'43''43''45'isSemigroup_754)
       (coe du_'43''43''45'identity_728)
 -- Data.List.Relation.Binary.Permutation.Propositional.Properties.++-isCommutativeMonoid
 d_'43''43''45'isCommutativeMonoid_758 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  () -> MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 d_'43''43''45'isCommutativeMonoid_758 ~v0 ~v1
   = du_'43''43''45'isCommutativeMonoid_758
 du_'43''43''45'isCommutativeMonoid_758 ::
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 du_'43''43''45'isCommutativeMonoid_758
   = coe
-      MAlonzo.Code.Algebra.Structures.C_constructor_820
+      MAlonzo.Code.Algebra.Structures.C_constructor_822
       (coe du_'43''43''45'isMonoid_756) (coe du_'43''43''45'comm_738)
 -- Data.List.Relation.Binary.Permutation.Propositional.Properties._.++-magma
 d_'43''43''45'magma_768 ::

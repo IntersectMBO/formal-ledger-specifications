@@ -1040,7 +1040,7 @@ du_map'45''8746'_460 v0 v1 v2 v3
                  MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
                  (\ v5 v6 v7 ->
                     coe
-                      MAlonzo.Code.Function.Base.du__'8728''8242'__216
+                      MAlonzo.Code.Function.Base.du__'8728''8242'__230
                       (coe
                          MAlonzo.Code.Function.Related.Propositional.du_K'45'trans_164
                          (coe MAlonzo.Code.Function.Related.Propositional.C_equivalence_12))
@@ -1053,7 +1053,7 @@ du_map'45''8746'_460 v0 v1 v2 v3
                     MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
                     (\ v5 v6 v7 ->
                        coe
-                         MAlonzo.Code.Function.Base.du__'8728''8242'__216
+                         MAlonzo.Code.Function.Base.du__'8728''8242'__230
                          (coe
                             MAlonzo.Code.Function.Related.Propositional.du_K'45'trans_164
                             (coe MAlonzo.Code.Function.Related.Propositional.C_equivalence_12))
@@ -1623,7 +1623,7 @@ du_filter'45''8838'_782 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_filter'45''8838'_782 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Function.Base.du__'8728''8242'__216
+      MAlonzo.Code.Function.Base.du__'8728''8242'__230
       (coe (\ v4 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v4)))
       (coe
          du_'8712''45'filter'8315'''_198 (coe v0) (coe v2) (coe v1)
@@ -2244,7 +2244,7 @@ du_'8746''45''8838''737'_956 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'8746''45''8838''737'_956 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Function.Base.du__'8728''8242'__216
+      MAlonzo.Code.Function.Base.du__'8728''8242'__230
       (coe
          du_'8712''45''8746''8314'_216 (coe v0) (coe v1) (coe v2) (coe v3))
       (coe MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38)
@@ -2260,7 +2260,7 @@ du_'8746''45''8838''691'_958 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'8746''45''8838''691'_958 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Function.Base.du__'8728''8242'__216
+      MAlonzo.Code.Function.Base.du__'8728''8242'__230
       (coe
          du_'8712''45''8746''8314'_216 (coe v0) (coe v2) (coe v1) (coe v3))
       (coe MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42)
@@ -2363,11 +2363,11 @@ du_'8746''45'cong'45''8838'_986 ::
   (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
 du_'8746''45'cong'45''8838'_986 v0 v1 v2 v3 v4 v5 v6 v7
   = coe
-      MAlonzo.Code.Function.Base.du__'8728''8242'__216
+      MAlonzo.Code.Function.Base.du__'8728''8242'__230
       (coe
          du_'8712''45''8746''8314'_216 (coe v0) (coe v2) (coe v4) (coe v7))
       (coe
-         MAlonzo.Code.Function.Base.du__'8728''8242'__216
+         MAlonzo.Code.Function.Base.du__'8728''8242'__230
          (coe MAlonzo.Code.Data.Sum.Base.du_map_84 (coe v5 v7) (coe v6 v7))
          (coe
             du_'8712''45''8746''8315'_214 (coe v0) (coe v1) (coe v3) (coe v7)))
@@ -2640,7 +2640,7 @@ du_'8746''45'assoc_1070 ::
   AgdaAny -> AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_'8746''45'assoc_1070 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Lattice.Properties.JoinSemilattice.du_'8744''45'assoc_258
+      MAlonzo.Code.Relation.Binary.Lattice.Properties.JoinSemilattice.du_'8744''45'assoc_260
       (coe
          MAlonzo.Code.Relation.Binary.Lattice.Bundles.du_joinSemilattice_188
          (coe du_Set'45'BddSemilattice_1022 (coe v0)))
@@ -3409,17 +3409,17 @@ d_'8745''45'OrderHomomorphism'691'_1250 ::
   () ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsOrderHomomorphism_144
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsOrderHomomorphism_136
 d_'8745''45'OrderHomomorphism'691'_1250 ~v0 v1 ~v2 v3 v4
   = du_'8745''45'OrderHomomorphism'691'_1250 v1 v3 v4
 du_'8745''45'OrderHomomorphism'691'_1250 ::
   MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsOrderHomomorphism_144
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsOrderHomomorphism_136
 du_'8745''45'OrderHomomorphism'691'_1250 v0 v1 v2
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.C_constructor_170
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.C_constructor_162
       (coe
          (\ v3 v4 ->
             coe
@@ -3440,17 +3440,17 @@ d_'8745''45'OrderHomomorphism'737'_1256 ::
   () ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsOrderHomomorphism_144
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsOrderHomomorphism_136
 d_'8745''45'OrderHomomorphism'737'_1256 ~v0 v1 ~v2 v3 v4
   = du_'8745''45'OrderHomomorphism'737'_1256 v1 v3 v4
 du_'8745''45'OrderHomomorphism'737'_1256 ::
   MAlonzo.Code.Axiom.Set.T_Theory_118 ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsOrderHomomorphism_144
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsOrderHomomorphism_136
 du_'8745''45'OrderHomomorphism'737'_1256 v0 v1 v2
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.C_constructor_170
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.C_constructor_162
       (coe
          (\ v3 v4 v5 ->
             coe

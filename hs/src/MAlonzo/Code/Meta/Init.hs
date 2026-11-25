@@ -24,7 +24,7 @@ import qualified MAlonzo.Code.Class.MonadTC
 import qualified MAlonzo.Code.Reflection.TCI
 
 -- Meta.Init.iMonad-TC
-d_iMonad'45'TC_4 :: MAlonzo.Code.Class.Monad.Core.T_Monad_8
+d_iMonad'45'TC_4 :: MAlonzo.Code.Class.Monad.Core.T_Monad_10
 d_iMonad'45'TC_4 = coe MAlonzo.Code.Reflection.TCI.d_Monad'45'TC_6
 -- Meta.Init.iMonadTC-TCI
 d_iMonadTC'45'TCI_6 :: MAlonzo.Code.Class.MonadTC.T_MonadTC_84
@@ -32,7 +32,7 @@ d_iMonadTC'45'TCI_6
   = coe MAlonzo.Code.Reflection.TCI.d_MonadTC'45'TCI_146
 -- Meta.Init.iMonadReader-TC
 d_iMonadReader'45'TC_8 ::
-  MAlonzo.Code.Class.MonadReader.T_MonadReader_18
+  MAlonzo.Code.Class.MonadReader.T_MonadReader_22
 d_iMonadReader'45'TC_8
   = coe MAlonzo.Code.Reflection.TCI.d_MonadReader'45'TC_8
 -- Meta.Init.iMonadError-TC

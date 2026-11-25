@@ -129,7 +129,7 @@ du_fromVec_74 v0
       MAlonzo.Code.Data.Vec.Base.C__'8759'__38 v2 v3
         -> coe
              C__'8759'__34 (coe v2)
-             (coe MAlonzo.Code.Data.Vec.Base.du_toList_592 (coe v3))
+             (coe MAlonzo.Code.Data.Vec.Base.du_toList_584 (coe v3))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.NonEmpty.Base.toVec
 d_toVec_82 ::
@@ -143,7 +143,7 @@ du_toVec_82 v0
       C__'8759'__34 v1 v2
         -> coe
              MAlonzo.Code.Data.Vec.Base.C__'8759'__38 v1
-             (coe MAlonzo.Code.Data.Vec.Base.du_fromList_600 (coe v2))
+             (coe MAlonzo.Code.Data.Vec.Base.du_fromList_592 (coe v2))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.NonEmpty.Base.lift
 d_lift_92 ::
@@ -378,7 +378,7 @@ du_concatMap_208 ::
   (AgdaAny -> T_List'8314'_22) -> T_List'8314'_22 -> T_List'8314'_22
 du_concatMap_208 v0
   = coe
-      MAlonzo.Code.Function.Base.du__'8728''8242'__216
+      MAlonzo.Code.Function.Base.du__'8728''8242'__230
       (coe du_concat_202) (coe du_map_98 (coe v0))
 -- Data.List.NonEmpty.Base.ap
 d_ap_212 ::
@@ -422,9 +422,9 @@ du_reverse_228
       (coe
          (\ v0 ->
             coe
-              MAlonzo.Code.Function.Base.du__'8728''8242'__216
+              MAlonzo.Code.Function.Base.du__'8728''8242'__230
               (coe MAlonzo.Code.Data.Product.Base.du_'45''44'__92 (coe v0))
-              (coe MAlonzo.Code.Data.Vec.Base.du_reverse_616)))
+              (coe MAlonzo.Code.Data.Vec.Base.du_reverse_608)))
 -- Data.List.NonEmpty.Base.alignWith
 d_alignWith_230 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -500,13 +500,13 @@ du_unalignWith_254 v0
   = coe
       du_foldr_132
       (coe
-         MAlonzo.Code.Function.Base.du__'8728''8242'__216
+         MAlonzo.Code.Function.Base.du__'8728''8242'__230
          (coe
             MAlonzo.Code.Data.These.Base.du_alignWith_130 (coe du_mcons_266)
             (coe du_mcons_266))
          (coe v0))
       (coe
-         MAlonzo.Code.Function.Base.du__'8728''8242'__216
+         MAlonzo.Code.Function.Base.du__'8728''8242'__230
          (coe
             MAlonzo.Code.Data.These.Base.du_map_60 (coe du_'91'_'93'_42)
             (coe du_'91'_'93'_42))

@@ -373,8 +373,8 @@ du_antisymmetric_208 v0 v1 v2 v3 v4
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
--- Relation.Binary.Construct.Intersection._.decidable
-d_decidable_238 ::
+-- Relation.Binary.Construct.Intersection._._∩?_
+d__'8745''63'__238 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -391,9 +391,9 @@ d_decidable_238 ::
    MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-d_decidable_238 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 v9 v10 v11
-  = du_decidable_238 v8 v9 v10 v11
-du_decidable_238 ::
+d__'8745''63'__238 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 v9 v10 v11
+  = du__'8745''63'__238 v8 v9 v10 v11
+du__'8745''63'__238 ::
   (AgdaAny ->
    AgdaAny ->
    MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->
@@ -402,9 +402,9 @@ du_decidable_238 ::
    MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-du_decidable_238 v0 v1 v2 v3
+du__'8745''63'__238 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+      MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
       (coe v0 v2 v3) (coe v1 v2 v3)
 -- Relation.Binary.Construct.Intersection.isEquivalence
 d_isEquivalence_248 ::
@@ -467,7 +467,7 @@ du_isDecEquivalence_286 v0 v1
             MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_54
             (coe v1)))
       (coe
-         du_decidable_238
+         du__'8745''63'__238
          (coe
             MAlonzo.Code.Relation.Binary.Structures.d__'8799'__56 (coe v0))
          (coe
@@ -644,3 +644,23 @@ du_isStrictPartialOrder'691'_634 v0 v1 v2
          (coe
             MAlonzo.Code.Relation.Binary.Structures.d_'60''45'resp'45''8776'_388
             (coe v2)))
+-- Relation.Binary.Construct.Intersection.decidable
+d_decidable_680 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny ->
+   AgdaAny ->
+   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->
+  (AgdaAny ->
+   AgdaAny ->
+   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->
+  AgdaAny ->
+  AgdaAny -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
+d_decidable_680 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
+  = coe du__'8745''63'__238 v8 v9 v10 v11

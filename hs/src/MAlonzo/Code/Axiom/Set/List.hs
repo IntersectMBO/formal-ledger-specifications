@@ -126,12 +126,12 @@ d_'46'extendedlambda0_12
                       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''10518'_406
                       (\ v5 v6 v7 ->
                          coe
-                           MAlonzo.Code.Function.Base.du__'8728''8242'__216
+                           MAlonzo.Code.Function.Base.du__'8728''8242'__230
                            (coe
                               MAlonzo.Code.Function.Related.Propositional.du_K'45'trans_164
                               (coe MAlonzo.Code.Function.Related.Propositional.C_equivalence_12))
                            (coe
-                              MAlonzo.Code.Function.Base.du__'8728''8242'__216
+                              MAlonzo.Code.Function.Base.du__'8728''8242'__230
                               (coe
                                  MAlonzo.Code.Function.Related.Propositional.du_'8596''8658'_82
                                  (coe MAlonzo.Code.Function.Related.Propositional.C_equivalence_12))
@@ -210,7 +210,8 @@ du_DecEq'45'Set_210 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'Set_210 v0
   = coe
-      MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'List_58 (coe v0)
+      MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'List_58 (coe ())
+      (coe v0)
 -- Axiom.Set.List.List-Modelᵈ
 d_List'45'Model'7496'_212 ::
   MAlonzo.Code.Axiom.Set.T_Theory'7496'_1362

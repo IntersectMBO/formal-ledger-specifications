@@ -31,4 +31,4 @@ d_negative_12 :: MAlonzo.Code.Agda.Builtin.FromNeg.T_Negative_10
 d_negative_12
   = coe
       MAlonzo.Code.Agda.Builtin.FromNeg.C_constructor_32
-      (\ v0 v1 -> MAlonzo.Code.Data.Integer.Base.d_'45'__260 (coe v0))
+      (\ v0 v1 -> MAlonzo.Code.Data.Integer.Base.d_'45'__278 (coe v0))

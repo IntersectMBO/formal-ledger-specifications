@@ -37,7 +37,7 @@ du_poset_162 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Poset_492
 du_poset_162 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Construct.NaturalOrder.Left.du_poset_3898
+      MAlonzo.Code.Relation.Binary.Construct.NaturalOrder.Left.du_poset_4134
       (coe MAlonzo.Code.Algebra.Lattice.Bundles.d__'8729'__28 (coe v0))
       (coe
          MAlonzo.Code.Algebra.Lattice.Bundles.d_isSemilattice_30 (coe v0))
@@ -73,7 +73,7 @@ du_'8743''45'isOrderTheoreticMeetSemilattice_176 v0
          MAlonzo.Code.Relation.Binary.Bundles.d_isPartialOrder_514
          (coe du_poset_162 (coe v0)))
       (coe
-         MAlonzo.Code.Relation.Binary.Construct.NaturalOrder.Left.du_infimum_3754
+         MAlonzo.Code.Relation.Binary.Construct.NaturalOrder.Left.du_infimum_3990
          (coe MAlonzo.Code.Algebra.Lattice.Bundles.d__'8729'__28 (coe v0))
          (coe
             MAlonzo.Code.Algebra.Lattice.Bundles.d_isSemilattice_30 (coe v0)))
@@ -95,7 +95,7 @@ du_'8743''45'isOrderTheoreticJoinSemilattice_178 v0
          MAlonzo.Code.Relation.Binary.Properties.Poset.du_'8805''45'isPartialOrder_150
          (coe du_poset_162 (coe v0)))
       (coe
-         MAlonzo.Code.Relation.Binary.Construct.NaturalOrder.Left.du_infimum_3754
+         MAlonzo.Code.Relation.Binary.Construct.NaturalOrder.Left.du_infimum_3990
          (coe MAlonzo.Code.Algebra.Lattice.Bundles.d__'8729'__28 (coe v0))
          (coe
             MAlonzo.Code.Algebra.Lattice.Bundles.d_isSemilattice_30 (coe v0)))

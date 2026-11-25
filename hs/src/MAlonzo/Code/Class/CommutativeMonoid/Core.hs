@@ -28,7 +28,7 @@ d_CommutativeMonoid_12 a0 a1 a2 = ()
 data T_CommutativeMonoid_12
   = C_constructor_36 MAlonzo.Code.Class.Semigroup.Core.T_Semigroup_10
                      MAlonzo.Code.Class.Monoid.Core.T_Monoid_12
-                     MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+                     MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 -- Class.CommutativeMonoid.Core.CommutativeMonoid._≈_
 d__'8776'__28 :: T_CommutativeMonoid_12 -> AgdaAny -> AgdaAny -> ()
 d__'8776'__28 = erased
@@ -51,7 +51,7 @@ d_monoid_32 v0
 -- Class.CommutativeMonoid.Core.CommutativeMonoid.isCommutativeMonoid
 d_isCommutativeMonoid_34 ::
   T_CommutativeMonoid_12 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 d_isCommutativeMonoid_34 v0
   = case coe v0 of
       C_constructor_36 v2 v3 v4 -> coe v4
@@ -80,7 +80,7 @@ d__'8776'__54 = erased
 -- Class.CommutativeMonoid.Core.Conversion._.isCommutativeMonoid
 d_isCommutativeMonoid_56 ::
   T_CommutativeMonoid_12 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 d_isCommutativeMonoid_56 v0 = coe d_isCommutativeMonoid_34 (coe v0)
 -- Class.CommutativeMonoid.Core.Conversion._.monoid
 d_monoid_58 ::

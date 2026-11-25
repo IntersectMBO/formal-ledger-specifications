@@ -22,12 +22,9 @@ import qualified MAlonzo.Code.Agda.Builtin.Maybe
 import qualified MAlonzo.Code.Agda.Builtin.Nat
 import qualified MAlonzo.Code.Agda.Builtin.Reflection
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
-import qualified MAlonzo.Code.Class.Applicative.Core
-import qualified MAlonzo.Code.Class.Applicative.Instances
-import qualified MAlonzo.Code.Class.Functor.Core
 import qualified MAlonzo.Code.Class.Functor.Instances
 import qualified MAlonzo.Code.Class.Monad.Core
-import qualified MAlonzo.Code.Class.MonadError
+import qualified MAlonzo.Code.Class.Monad.Instances
 import qualified MAlonzo.Code.Class.MonadReader
 import qualified MAlonzo.Code.Class.MonadTC
 import qualified MAlonzo.Code.Class.Traversable.Core
@@ -45,17 +42,30 @@ import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Tactic.ClauseBuilder
 import qualified MAlonzo.Code.Tactic.Derive
 
+-- Tactic.Derive.DecEq._.TransEntry
+d_TransEntry_8 :: ()
+d_TransEntry_8 = erased
+-- Tactic.Derive.DecEq._.WrapperChain
+d_WrapperChain_10 :: ()
+d_WrapperChain_10 = erased
+-- Tactic.Derive.DecEq._.applyChain
+d_applyChain_12 ::
+  [AgdaAny] ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154
+d_applyChain_12 = coe MAlonzo.Code.Tactic.Derive.du_applyChain_18
 -- Tactic.Derive.DecEq._.derive-Class
-d_derive'45'Class_8 ::
+d_derive'45'Class_14 ::
   Integer ->
-  ((AgdaAny -> Maybe AgdaAny) ->
+  ((MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
+    Maybe AgdaAny) ->
    [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
    [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]) ->
   MAlonzo.Code.Class.MonadTC.T_TCOptions_12 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> AgdaAny
-d_derive'45'Class_8
+d_derive'45'Class_14
   = coe
-      MAlonzo.Code.Tactic.Derive.d_derive'45'Class_184
+      MAlonzo.Code.Tactic.Derive.d_derive'45'Class_340
       (coe
          (MAlonzo.RTE.QName
             (10 :: Integer) (11870211246910590228 :: Integer)
@@ -63,21 +73,22 @@ d_derive'45'Class_8
             (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
       (coe
          (MAlonzo.RTE.QName
-            (38 :: Integer) (11870211246910590228 :: Integer)
+            (32 :: Integer) (11870211246910590228 :: Integer)
             "Class.DecEq.Core._._\8799_"
             (MAlonzo.RTE.Fixity
                MAlonzo.RTE.NonAssoc (MAlonzo.RTE.Related (4.0 :: Double)))))
--- Tactic.Derive.DecEq._.deriveMulti
-d_deriveMulti_10 ::
+-- Tactic.Derive.DecEq._.deriveGroup
+d_deriveGroup_16 ::
   Integer ->
-  ((AgdaAny -> Maybe AgdaAny) ->
+  ((MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
+    Maybe AgdaAny) ->
    [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
    [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]) ->
-  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Class.MonadTC.T_TCEnv_26 -> AgdaAny
-d_deriveMulti_10
+d_deriveGroup_16
   = coe
-      MAlonzo.Code.Tactic.Derive.d_deriveMulti_172
+      MAlonzo.Code.Tactic.Derive.d_deriveGroup_280
       (coe
          (MAlonzo.RTE.QName
             (10 :: Integer) (11870211246910590228 :: Integer)
@@ -85,23 +96,24 @@ d_deriveMulti_10
             (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
       (coe
          (MAlonzo.RTE.QName
-            (38 :: Integer) (11870211246910590228 :: Integer)
+            (32 :: Integer) (11870211246910590228 :: Integer)
             "Class.DecEq.Core._._\8799_"
             (MAlonzo.RTE.Fixity
                MAlonzo.RTE.NonAssoc (MAlonzo.RTE.Related (4.0 :: Double)))))
 -- Tactic.Derive.DecEq._.deriveSingle
-d_deriveSingle_12 ::
+d_deriveSingle_18 ::
   Integer ->
-  ((AgdaAny -> Maybe AgdaAny) ->
+  ((MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
+    Maybe AgdaAny) ->
    [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
    [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]) ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   AgdaAny ->
   AgdaAny ->
-  Maybe AgdaAny -> MAlonzo.Code.Class.MonadTC.T_TCEnv_26 -> AgdaAny
-d_deriveSingle_12
+  Maybe [AgdaAny] -> MAlonzo.Code.Class.MonadTC.T_TCEnv_26 -> AgdaAny
+d_deriveSingle_18
   = coe
-      MAlonzo.Code.Tactic.Derive.d_deriveSingle_152
+      MAlonzo.Code.Tactic.Derive.d_deriveSingle_252
       (coe
          (MAlonzo.RTE.QName
             (10 :: Integer) (11870211246910590228 :: Integer)
@@ -109,45 +121,88 @@ d_deriveSingle_12
             (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
       (coe
          (MAlonzo.RTE.QName
-            (38 :: Integer) (11870211246910590228 :: Integer)
+            (32 :: Integer) (11870211246910590228 :: Integer)
             "Class.DecEq.Core._._\8799_"
             (MAlonzo.RTE.Fixity
                MAlonzo.RTE.NonAssoc (MAlonzo.RTE.Related (4.0 :: Double)))))
 -- Tactic.Derive.DecEq._.genClassType
-d_genClassType_14 ::
+d_genClassType_20 ::
   Integer ->
   AgdaAny ->
-  Maybe AgdaAny -> MAlonzo.Code.Class.MonadTC.T_TCEnv_26 -> AgdaAny
-d_genClassType_14
+  Maybe [AgdaAny] -> MAlonzo.Code.Class.MonadTC.T_TCEnv_26 -> AgdaAny
+d_genClassType_20
   = coe
-      MAlonzo.Code.Tactic.Derive.du_genClassType_14
+      MAlonzo.Code.Tactic.Derive.du_genClassType_48
       (coe
          (MAlonzo.RTE.QName
             (10 :: Integer) (11870211246910590228 :: Integer)
             "Class.DecEq.Core.DecEq"
             (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
 -- Tactic.Derive.DecEq._.genMutualHelpers
-d_genMutualHelpers_16 ::
-  AgdaAny -> MAlonzo.Code.Class.MonadTC.T_TCEnv_26 -> AgdaAny
-d_genMutualHelpers_16
-  = coe MAlonzo.Code.Tactic.Derive.du_genMutualHelpers_124
--- Tactic.Derive.DecEq._.lookupName
-d_lookupName_18 ::
+d_genMutualHelpers_22 ::
+  [AgdaAny] -> MAlonzo.Code.Class.MonadTC.T_TCEnv_26 -> AgdaAny
+d_genMutualHelpers_22
+  = coe
+      MAlonzo.Code.Tactic.Derive.d_genMutualHelpers_236
+      (coe
+         (MAlonzo.RTE.QName
+            (10 :: Integer) (11870211246910590228 :: Integer)
+            "Class.DecEq.Core.DecEq"
+            (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
+      (coe
+         (MAlonzo.RTE.QName
+            (32 :: Integer) (11870211246910590228 :: Integer)
+            "Class.DecEq.Core._._\8799_"
+            (MAlonzo.RTE.Fixity
+               MAlonzo.RTE.NonAssoc (MAlonzo.RTE.Related (4.0 :: Double)))))
+-- Tactic.Derive.DecEq._.lookupByTerm
+d_lookupByTerm_24 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
-  AgdaAny -> Maybe AgdaAny
-d_lookupName_18 = coe MAlonzo.Code.Tactic.Derive.du_lookupName_118
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> Maybe AgdaAny
+d_lookupByTerm_24
+  = coe
+      MAlonzo.Code.Tactic.Derive.d_lookupByTerm_154
+      (coe
+         (MAlonzo.RTE.QName
+            (10 :: Integer) (11870211246910590228 :: Integer)
+            "Class.DecEq.Core.DecEq"
+            (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
+      (coe
+         (MAlonzo.RTE.QName
+            (32 :: Integer) (11870211246910590228 :: Integer)
+            "Class.DecEq.Core._._\8799_"
+            (MAlonzo.RTE.Fixity
+               MAlonzo.RTE.NonAssoc (MAlonzo.RTE.Related (4.0 :: Double)))))
+-- Tactic.Derive.DecEq._.matchesChain
+d_matchesChain_26 ::
+  [AgdaAny] ->
+  AgdaAny -> MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> Bool
+d_matchesChain_26
+  = coe
+      MAlonzo.Code.Tactic.Derive.d_matchesChain_28
+      (coe
+         (MAlonzo.RTE.QName
+            (10 :: Integer) (11870211246910590228 :: Integer)
+            "Class.DecEq.Core.DecEq"
+            (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
+      (coe
+         (MAlonzo.RTE.QName
+            (32 :: Integer) (11870211246910590228 :: Integer)
+            "Class.DecEq.Core._._\8799_"
+            (MAlonzo.RTE.Fixity
+               MAlonzo.RTE.NonAssoc (MAlonzo.RTE.Related (4.0 :: Double)))))
 -- Tactic.Derive.DecEq.`case_returning_of_
-d_'96'case_returning_of__20 ::
+d_'96'case_returning_of__28 ::
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154
-d_'96'case_returning_of__20 v0 v1 v2
+d_'96'case_returning_of__28 v0 v1 v2
   = coe
       MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
       (coe
          (MAlonzo.RTE.QName
-            (234 :: Integer) (10779521135412943468 :: Integer)
+            (248 :: Integer) (10779521135412943468 :: Integer)
             "Function.Base.case_of_"
             (MAlonzo.RTE.Fixity
                MAlonzo.RTE.NonAssoc (MAlonzo.RTE.Related (0.0 :: Double)))))
@@ -225,19 +280,20 @@ d_'96'case_returning_of__20 v0 v1 v2
                            (coe v2))
                         (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
 -- Tactic.Derive.DecEq._.eqFromTerm
-d_eqFromTerm_44 ::
-  (AgdaAny -> Maybe AgdaAny) ->
+d_eqFromTerm_52 ::
+  (MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
+   Maybe AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154
-d_eqFromTerm_44 v0 v1 v2 v3
+d_eqFromTerm_52 v0 v1 v2 v3
   = let v4
           = coe
               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
               (coe
                  (MAlonzo.RTE.QName
-                    (38 :: Integer) (11870211246910590228 :: Integer)
+                    (32 :: Integer) (11870211246910590228 :: Integer)
                     "Class.DecEq.Core._._\8799_"
                     (MAlonzo.RTE.Fixity
                        MAlonzo.RTE.NonAssoc (MAlonzo.RTE.Related (4.0 :: Double)))))
@@ -269,7 +325,7 @@ d_eqFromTerm_44 v0 v1 v2 v3
     coe
       (case coe v1 of
          MAlonzo.Code.Agda.Builtin.Reflection.C_def_184 v5 v6
-           -> let v7 = coe v0 v5 in
+           -> let v7 = coe v0 v1 in
               coe
                 (case coe v7 of
                    MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v8
@@ -277,7 +333,7 @@ d_eqFromTerm_44 v0 v1 v2 v3
                           MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                           (coe
                              (MAlonzo.RTE.QName
-                                (38 :: Integer) (11870211246910590228 :: Integer)
+                                (32 :: Integer) (11870211246910590228 :: Integer)
                                 "Class.DecEq.Core._._\8799_"
                                 (MAlonzo.RTE.Fixity
                                    MAlonzo.RTE.NonAssoc (MAlonzo.RTE.Related (4.0 :: Double)))))
@@ -328,7 +384,7 @@ d_eqFromTerm_44 v0 v1 v2 v3
                           MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                           (coe
                              (MAlonzo.RTE.QName
-                                (38 :: Integer) (11870211246910590228 :: Integer)
+                                (32 :: Integer) (11870211246910590228 :: Integer)
                                 "Class.DecEq.Core._._\8799_"
                                 (MAlonzo.RTE.Fixity
                                    MAlonzo.RTE.NonAssoc (MAlonzo.RTE.Related (4.0 :: Double)))))
@@ -362,11 +418,12 @@ d_eqFromTerm_44 v0 v1 v2 v3
                    _ -> MAlonzo.RTE.mazUnreachableError)
          _ -> coe v4)
 -- Tactic.Derive.DecEq._.genBranch
-d_genBranch_74 ::
-  (AgdaAny -> Maybe AgdaAny) ->
+d_genBranch_82 ::
+  (MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
+   Maybe AgdaAny) ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Class.MonadTC.T_TCEnv_26 -> AgdaAny
-d_genBranch_74 v0 v1
+d_genBranch_82 v0 v1
   = case coe v1 of
       MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v2
         -> case coe v2 of
@@ -393,30 +450,27 @@ d_genBranch_74 v0 v1
                                        (\ v10 ->
                                           let v11
                                                 = coe
-                                                    MAlonzo.Code.Class.MonadError.d_error_26
-                                                    MAlonzo.Code.Meta.Init.d_iMonadError'45'TC_10 ()
-                                                    erased
+                                                    MAlonzo.Code.Class.MonadTC.du_error1_736
                                                     (coe
-                                                       MAlonzo.Code.Reflection.Debug.du__'8759''7496'__38
-                                                       (coe ("BUG: genBranch" :: Data.Text.Text))
-                                                       (coe
-                                                          MAlonzo.Code.Reflection.Debug.d_IsErrorPart'45'String_20)
-                                                       (coe
-                                                          MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)) in
+                                                       MAlonzo.Code.Meta.Init.d_iMonadError'45'TC_10)
+                                                    (coe ())
+                                                    (coe
+                                                       MAlonzo.Code.Reflection.Debug.d_IsErrorPart'45'String_20)
+                                                    (coe ("BUG: genBranch" :: Data.Text.Text)) in
                                           coe
                                             (case coe v10 of
                                                MAlonzo.Code.Agda.Builtin.Reflection.C_con_244 v12 v13
                                                  -> coe
-                                                      MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__22
+                                                      MAlonzo.Code.Class.Monad.Core.d__'62''62''61'__24
                                                       MAlonzo.Code.Meta.Init.d_iMonad'45'TC_4 ()
                                                       erased () erased
                                                       (coe
-                                                         MAlonzo.Code.Class.Traversable.Core.du_traverse_46
+                                                         MAlonzo.Code.Class.Traversable.Core.du_traverse_50
                                                          (coe
                                                             MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92)
                                                          (coe
                                                             MAlonzo.Code.Class.Traversable.Instances.d_TraversableM'45'List_28)
-                                                         (coe ()) (coe ())
+                                                         (coe (\ v14 -> v14)) (coe ()) (coe ())
                                                          (coe
                                                             MAlonzo.Code.Meta.Init.d_iMonad'45'TC_4)
                                                          (coe
@@ -444,7 +498,7 @@ d_genBranch_74 v0 v1
                                                               (coe
                                                                  (\ v16 v17 ->
                                                                     coe
-                                                                      du_genCase_94 (coe v6)
+                                                                      du_genCase_102 (coe v6)
                                                                       (coe
                                                                          MAlonzo.Code.Reflection.AST.DeBruijn.d_weaken_96
                                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
@@ -540,12 +594,12 @@ d_genBranch_74 v0 v1
                                                                                (coe
                                                                                   MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
                                                                       (coe
-                                                                         d_eqFromTerm_44 (coe v0)
+                                                                         d_eqFromTerm_52 (coe v0)
                                                                          (coe
                                                                             MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                             (coe v17)))
                                                                       (coe v16)))
-                                                              (coe du_genTrueCase_102 (coe v6))
+                                                              (coe du_genTrueCase_110 (coe v6))
                                                               (coe
                                                                  MAlonzo.Code.Data.List.Base.du_zip_182
                                                                  v14
@@ -608,31 +662,33 @@ d_genBranch_74 v0 v1
                         (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Tactic.Derive.DecEq._._.k
-d_k_90 ::
-  (AgdaAny -> Maybe AgdaAny) ->
+d_k_98 ::
+  (MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
+   Maybe AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_ArgInfo_76 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Pattern_158 -> Integer
-d_k_90 ~v0 ~v1 v2 ~v3 ~v4 = du_k_90 v2
-du_k_90 :: [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> Integer
-du_k_90 v0
+d_k_98 ~v0 ~v1 v2 ~v3 ~v4 = du_k_98 v2
+du_k_98 :: [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> Integer
+du_k_98 v0
   = coe
       addInt (coe (1 :: Integer))
       (coe MAlonzo.Code.Data.List.Base.du_length_268 v0)
 -- Tactic.Derive.DecEq._._.vars
-d_vars_92 ::
-  (AgdaAny -> Maybe AgdaAny) ->
+d_vars_100 ::
+  (MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
+   Maybe AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_ArgInfo_76 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Pattern_158 ->
   MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22
-d_vars_92 ~v0 ~v1 v2 ~v3 ~v4 = du_vars_92 v2
-du_vars_92 ::
+d_vars_100 ~v0 ~v1 v2 ~v3 ~v4 = du_vars_100 v2
+du_vars_100 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22
-du_vars_92 v0
+du_vars_100 v0
   = coe
       MAlonzo.Code.Data.List.NonEmpty.Base.C__'8759'__34
       (coe (0 :: Integer))
@@ -641,8 +697,9 @@ du_vars_92 v0
          (coe (\ v1 -> addInt (coe (1 :: Integer)) (coe v1)))
          (coe MAlonzo.Code.Data.List.Base.du_length_268 v0))
 -- Tactic.Derive.DecEq._._.genCase
-d_genCase_94 ::
-  (AgdaAny -> Maybe AgdaAny) ->
+d_genCase_102 ::
+  (MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
+   Maybe AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_ArgInfo_76 ->
@@ -653,9 +710,9 @@ d_genCase_94 ::
    MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154) ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154
-d_genCase_94 ~v0 ~v1 v2 ~v3 ~v4 v5 v6 v7
-  = du_genCase_94 v2 v5 v6 v7
-du_genCase_94 ::
+d_genCase_102 ~v0 ~v1 v2 ~v3 ~v4 v5 v6 v7
+  = du_genCase_102 v2 v5 v6 v7
+du_genCase_102 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
   (MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
@@ -663,22 +720,22 @@ du_genCase_94 ::
    MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154) ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154
-du_genCase_94 v0 v1 v2 v3
+du_genCase_102 v0 v1 v2 v3
   = coe
-      d_'96'case_returning_of__20
+      d_'96'case_returning_of__28
       (coe
          v2
          (coe
             MAlonzo.Code.Agda.Builtin.Reflection.C_var_172
             (coe
                MAlonzo.Code.Agda.Builtin.Nat.d__'45'__22
-               (mulInt (coe (2 :: Integer)) (coe du_k_90 (coe v0)))
+               (mulInt (coe (2 :: Integer)) (coe du_k_98 (coe v0)))
                (1 :: Integer))
             (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))
          (coe
             MAlonzo.Code.Agda.Builtin.Reflection.C_var_172
             (coe
-               MAlonzo.Code.Agda.Builtin.Nat.d__'45'__22 (coe du_k_90 (coe v0))
+               MAlonzo.Code.Agda.Builtin.Nat.d__'45'__22 (coe du_k_98 (coe v0))
                (1 :: Integer))
             (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
       (coe v1)
@@ -932,18 +989,19 @@ du_genCase_94 v0 v1 v2 v3
                                                             MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))))))))
                   (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
 -- Tactic.Derive.DecEq._._.genTrueCase
-d_genTrueCase_102 ::
-  (AgdaAny -> Maybe AgdaAny) ->
+d_genTrueCase_110 ::
+  (MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
+   Maybe AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_ArgInfo_76 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Pattern_158 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154
-d_genTrueCase_102 ~v0 ~v1 v2 ~v3 ~v4 = du_genTrueCase_102 v2
-du_genTrueCase_102 ::
+d_genTrueCase_110 ~v0 ~v1 v2 ~v3 ~v4 = du_genTrueCase_110 v2
+du_genTrueCase_110 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154
-du_genTrueCase_102 v0
+du_genTrueCase_110 v0
   = coe
       MAlonzo.Code.Reflection.QQuotedDefinitions.d_'96'yes_26
       (coe
@@ -991,7 +1049,7 @@ du_genTrueCase_102 v0
                      coe
                        MAlonzo.Code.Agda.Builtin.Reflection.C_var_172 (coe v1)
                        (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
-               (coe du_vars_92 (coe v0))))
+               (coe du_vars_100 (coe v0))))
          (coe
             MAlonzo.Code.Tactic.ClauseBuilder.d_clauseExprToPatLam_436
             (coe
@@ -1092,7 +1150,7 @@ du_genTrueCase_102 v0
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
                                             (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
-                                 (coe du_vars_92 (coe v0))))))
+                                 (coe du_vars_100 (coe v0))))))
                      (coe
                         MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42
                         (coe
@@ -1100,12 +1158,13 @@ du_genTrueCase_102 v0
                            (coe
                               MAlonzo.Code.Reflection.QQuotedDefinitions.d_'96'refl_16))))))))
 -- Tactic.Derive.DecEq._.toMapDiag
-d_toMapDiag_136 ::
-  (AgdaAny -> Maybe AgdaAny) ->
+d_toMapDiag_144 ::
+  (MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
+   Maybe AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_toMapDiag_136 v0 v1 v2
+d_toMapDiag_144 v0 v1 v2
   = case coe v1 of
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v3 v4
         -> case coe v4 of
@@ -1120,16 +1179,10 @@ d_toMapDiag_136 v0 v1 v2
                                      MAlonzo.Code.Data.List.NonEmpty.Base.C__'8759'__34 (coe v1)
                                      (coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_270 (coe v2)))
                                   (coe
-                                     MAlonzo.Code.Class.Functor.Core.d__'60''36''62'__20
-                                     (MAlonzo.Code.Class.Applicative.Core.d_super_18
-                                        (coe
-                                           MAlonzo.Code.Class.MonadReader.du___106
-                                           MAlonzo.Code.Class.Applicative.Instances.d_Applicative'45'TC_50))
-                                     () erased () erased
-                                     (\ v11 ->
-                                        coe
-                                          MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42
-                                          (coe MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 (coe v11)))
+                                     MAlonzo.Code.Tactic.ClauseBuilder.du_finishMatch_728
+                                     (coe
+                                        MAlonzo.Code.Class.MonadReader.du_Monad'45'ReaderT_112
+                                        (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6))
                                      (coe
                                         MAlonzo.Code.Data.Bool.Base.du_if_then_else__44
                                         (coe
@@ -1138,22 +1191,22 @@ d_toMapDiag_136 v0 v1 v2
                                            (MAlonzo.Code.Reflection.AST.Term.d__'8799''45'Pattern__230
                                               (coe v6) (coe v10)))
                                         (coe
-                                           d_genBranch_74 (coe v0)
+                                           d_genBranch_82 (coe v0)
                                            (coe MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 (coe v1)))
                                         (coe
-                                           d_genBranch_74 (coe v0)
+                                           d_genBranch_82 (coe v0)
                                            (coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18))))
                            _ -> MAlonzo.RTE.mazUnreachableError
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Tactic.Derive.DecEq._.derive-DecEq
-d_derive'45'DecEq_152 ::
+d_derive'45'DecEq_160 ::
   MAlonzo.Code.Class.MonadTC.T_TCOptions_12 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> AgdaAny
-d_derive'45'DecEq_152 v0
+d_derive'45'DecEq_160 v0
   = coe
-      MAlonzo.Code.Tactic.Derive.d_derive'45'Class_184
+      MAlonzo.Code.Tactic.Derive.d_derive'45'Class_340
       (coe
          (MAlonzo.RTE.QName
             (10 :: Integer) (11870211246910590228 :: Integer)
@@ -1161,7 +1214,7 @@ d_derive'45'DecEq_152 v0
             (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
       (coe
          (MAlonzo.RTE.QName
-            (38 :: Integer) (11870211246910590228 :: Integer)
+            (32 :: Integer) (11870211246910590228 :: Integer)
             "Class.DecEq.Core._._\8799_"
             (MAlonzo.RTE.Fixity
                MAlonzo.RTE.NonAssoc (MAlonzo.RTE.Related (4.0 :: Double)))))
@@ -1170,5 +1223,5 @@ d_derive'45'DecEq_152 v0
          (\ v1 v2 ->
             coe
               MAlonzo.Code.Data.List.Base.du_cartesianProductWith_70
-              (coe d_toMapDiag_136 (coe v1)) (coe v2) (coe v2)))
+              (coe d_toMapDiag_144 (coe v1)) (coe v2) (coe v2)))
       (coe v0)

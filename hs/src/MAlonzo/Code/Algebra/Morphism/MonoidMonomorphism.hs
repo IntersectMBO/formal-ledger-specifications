@@ -127,7 +127,7 @@ d_assoc_72 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_assoc_72 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 = du_assoc_72 v4 v5 v6 v7
@@ -136,7 +136,7 @@ du_assoc_72 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_assoc_72 v0 v1 v2 v3
@@ -158,7 +158,7 @@ d_cancel_74 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_cancel_74 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 = du_cancel_74 v4 v5 v6 v7
@@ -167,7 +167,7 @@ du_cancel_74 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_cancel_74 v0 v1 v2 v3
@@ -189,7 +189,7 @@ d_cancel'691'_76 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cancel'691'_76 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7
@@ -199,7 +199,7 @@ du_cancel'691'_76 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_cancel'691'_76 v0 v1 v2 v3
@@ -221,7 +221,7 @@ d_cancel'737'_78 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cancel'737'_78 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7
@@ -231,7 +231,7 @@ du_cancel'737'_78 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_cancel'737'_78 v0 v1 v2 v3
@@ -253,7 +253,7 @@ d_comm_80 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
 d_comm_80 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 = du_comm_80 v4 v5 v6 v7
 du_comm_80 ::
@@ -261,7 +261,7 @@ du_comm_80 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
 du_comm_80 v0 v1 v2 v3
   = coe
@@ -282,7 +282,7 @@ d_cong_82 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_82 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 = du_cong_82 v4 v5 v6 v7
@@ -291,7 +291,7 @@ du_cong_82 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_cong_82 v0 v1 v2 v3
@@ -313,7 +313,7 @@ d_idem_84 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
 d_idem_84 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 = du_idem_84 v4 v5 v6 v7
 du_idem_84 ::
@@ -321,7 +321,7 @@ du_idem_84 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
 du_idem_84 v0 v1 v2 v3
   = coe
@@ -342,16 +342,16 @@ d_isBand_86 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsBand_526 ->
-  MAlonzo.Code.Algebra.Structures.T_IsBand_526
+  MAlonzo.Code.Algebra.Structures.T_IsBand_528 ->
+  MAlonzo.Code.Algebra.Structures.T_IsBand_528
 d_isBand_86 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 = du_isBand_86 v4 v5 v6 v7
 du_isBand_86 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsBand_526 ->
-  MAlonzo.Code.Algebra.Structures.T_IsBand_526
+  MAlonzo.Code.Algebra.Structures.T_IsBand_528 ->
+  MAlonzo.Code.Algebra.Structures.T_IsBand_528
 du_isBand_86 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Algebra.Morphism.MagmaMonomorphism.du_isBand_302
@@ -371,8 +371,8 @@ d_isMagma_88 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 d_isMagma_88 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7
   = du_isMagma_88 v4 v5 v6 v7
 du_isMagma_88 ::
@@ -380,8 +380,8 @@ du_isMagma_88 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 du_isMagma_88 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Algebra.Morphism.MagmaMonomorphism.du_isMagma_238
@@ -401,8 +401,8 @@ d_isSelectiveMagma_90 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSelectiveMagma_450 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSelectiveMagma_450
+  MAlonzo.Code.Algebra.Structures.T_IsSelectiveMagma_452 ->
+  MAlonzo.Code.Algebra.Structures.T_IsSelectiveMagma_452
 d_isSelectiveMagma_90 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7
   = du_isSelectiveMagma_90 v4 v5 v6 v7
 du_isSelectiveMagma_90 ::
@@ -410,8 +410,8 @@ du_isSelectiveMagma_90 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSelectiveMagma_450 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSelectiveMagma_450
+  MAlonzo.Code.Algebra.Structures.T_IsSelectiveMagma_452 ->
+  MAlonzo.Code.Algebra.Structures.T_IsSelectiveMagma_452
 du_isSelectiveMagma_90 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Algebra.Morphism.MagmaMonomorphism.du_isSelectiveMagma_340
@@ -431,8 +431,8 @@ d_isSemigroup_92 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490 ->
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 d_isSemigroup_92 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7
   = du_isSemigroup_92 v4 v5 v6 v7
 du_isSemigroup_92 ::
@@ -440,8 +440,8 @@ du_isSemigroup_92 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490 ->
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 du_isSemigroup_92 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Algebra.Morphism.MagmaMonomorphism.du_isSemigroup_268
@@ -461,7 +461,7 @@ d_sel_94 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   (AgdaAny -> AgdaAny -> MAlonzo.Code.Data.Sum.Base.T__'8846'__30) ->
   AgdaAny -> AgdaAny -> MAlonzo.Code.Data.Sum.Base.T__'8846'__30
 d_sel_94 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 = du_sel_94 v4 v5 v6 v7
@@ -470,7 +470,7 @@ du_sel_94 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   (AgdaAny -> AgdaAny -> MAlonzo.Code.Data.Sum.Base.T__'8846'__30) ->
   AgdaAny -> AgdaAny -> MAlonzo.Code.Data.Sum.Base.T__'8846'__30
 du_sel_94 v0 v1 v2 v3
@@ -492,7 +492,7 @@ d_identity'737'_164 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
 d_identity'737'_164 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8 v9 v10
   = du_identity'737'_164 v4 v5 v6 v7 v8 v9 v10
@@ -501,7 +501,7 @@ du_identity'737'_164 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
 du_identity'737'_164 v0 v1 v2 v3 v4 v5 v6
   = coe
@@ -528,7 +528,7 @@ du_identity'737'_164 v0 v1 v2 v3 v4 v5 v6
                (coe
                   MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v4))))
+                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v4))))
             (coe
                v2
                (coe
@@ -546,7 +546,7 @@ du_identity'737'_164 v0 v1 v2 v3 v4 v5 v6
                   (coe
                      MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v4))))
+                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v4))))
                (coe
                   MAlonzo.Code.Algebra.Bundles.Raw.d__'8729'__92 v1
                   (coe v2 (MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v0)))
@@ -562,7 +562,7 @@ du_identity'737'_164 v0 v1 v2 v3 v4 v5 v6
                      (coe
                         MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v4))))
+                           MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v4))))
                   (coe
                      MAlonzo.Code.Algebra.Bundles.Raw.d__'8729'__92 v1
                      (MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v1)) (coe v2 v6))
@@ -574,11 +574,11 @@ du_identity'737'_164 v0 v1 v2 v3 v4 v5 v6
                         (coe
                            MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v4))))
+                              MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v4))))
                      (coe v2 v6))
                   (coe v5 (coe v2 v6)))
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188 v4
+                  MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190 v4
                   (coe v2 (MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v0)))
                   (MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v1)) (coe v2 v6)
                   (coe v2 v6)
@@ -588,7 +588,7 @@ du_identity'737'_164 v0 v1 v2 v3 v4 v5 v6
                         (coe v3)))
                   (coe
                      MAlonzo.Code.Relation.Binary.Structures.d_refl_36
-                     (MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v4))
+                     (MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v4))
                      (coe v2 v6))))
             (coe
                MAlonzo.Code.Algebra.Morphism.Structures.d_homo_204
@@ -607,7 +607,7 @@ d_identity'691'_170 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
 d_identity'691'_170 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8 v9 v10
   = du_identity'691'_170 v4 v5 v6 v7 v8 v9 v10
@@ -616,7 +616,7 @@ du_identity'691'_170 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
 du_identity'691'_170 v0 v1 v2 v3 v4 v5 v6
   = coe
@@ -643,7 +643,7 @@ du_identity'691'_170 v0 v1 v2 v3 v4 v5 v6
                (coe
                   MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v4))))
+                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v4))))
             (coe
                v2
                (coe
@@ -660,7 +660,7 @@ du_identity'691'_170 v0 v1 v2 v3 v4 v5 v6
                   (coe
                      MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v4))))
+                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v4))))
                (coe
                   MAlonzo.Code.Algebra.Bundles.Raw.d__'8729'__92 v1 (coe v2 v6)
                   (coe v2 (MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v0))))
@@ -675,7 +675,7 @@ du_identity'691'_170 v0 v1 v2 v3 v4 v5 v6
                      (coe
                         MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v4))))
+                           MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v4))))
                   (coe
                      MAlonzo.Code.Algebra.Bundles.Raw.d__'8729'__92 v1 (coe v2 v6)
                      (MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v1)))
@@ -687,17 +687,17 @@ du_identity'691'_170 v0 v1 v2 v3 v4 v5 v6
                         (coe
                            MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v4))))
+                              MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v4))))
                      (coe v2 v6))
                   (coe v5 (coe v2 v6)))
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188 v4 (coe v2 v6)
+                  MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190 v4 (coe v2 v6)
                   (coe v2 v6)
                   (coe v2 (MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v0)))
                   (MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v1))
                   (coe
                      MAlonzo.Code.Relation.Binary.Structures.d_refl_36
-                     (MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v4))
+                     (MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v4))
                      (coe v2 v6))
                   (MAlonzo.Code.Algebra.Morphism.Structures.d_ε'45'homo_390
                      (coe
@@ -720,7 +720,7 @@ d_identity_176 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_identity_176 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8
@@ -730,7 +730,7 @@ du_identity_176 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_identity_176 v0 v1 v2 v3 v4
@@ -752,7 +752,7 @@ d_zero'737'_178 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
 d_zero'737'_178 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8 v9 v10
   = du_zero'737'_178 v4 v5 v6 v7 v8 v9 v10
@@ -761,7 +761,7 @@ du_zero'737'_178 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
 du_zero'737'_178 v0 v1 v2 v3 v4 v5 v6
   = coe
@@ -788,7 +788,7 @@ du_zero'737'_178 v0 v1 v2 v3 v4 v5 v6
                (coe
                   MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v4))))
+                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v4))))
             (coe
                v2
                (coe
@@ -806,7 +806,7 @@ du_zero'737'_178 v0 v1 v2 v3 v4 v5 v6
                   (coe
                      MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v4))))
+                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v4))))
                (coe
                   MAlonzo.Code.Algebra.Bundles.Raw.d__'8729'__92 v1
                   (coe v2 (MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v0)))
@@ -822,7 +822,7 @@ du_zero'737'_178 v0 v1 v2 v3 v4 v5 v6
                      (coe
                         MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v4))))
+                           MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v4))))
                   (coe
                      MAlonzo.Code.Algebra.Bundles.Raw.d__'8729'__92 v1
                      (MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v1)) (coe v2 v6))
@@ -835,9 +835,9 @@ du_zero'737'_178 v0 v1 v2 v3 v4 v5 v6
                         (coe
                            MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v4))))
+                              MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v4))))
                      (MAlonzo.Code.Relation.Binary.Structures.d_sym_38
-                        (coe MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v4)))
+                        (coe MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v4)))
                      (MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v1))
                      (coe v2 (MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v0)))
                      (coe v2 (MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v0)))
@@ -848,7 +848,7 @@ du_zero'737'_178 v0 v1 v2 v3 v4 v5 v6
                            (coe
                               MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v4))))
+                                 MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v4))))
                         (coe v2 (MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v0))))
                      (MAlonzo.Code.Algebra.Morphism.Structures.d_ε'45'homo_390
                         (coe
@@ -856,7 +856,7 @@ du_zero'737'_178 v0 v1 v2 v3 v4 v5 v6
                            (coe v3))))
                   (coe v5 (coe v2 v6)))
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188 v4
+                  MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190 v4
                   (coe v2 (MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v0)))
                   (MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v1)) (coe v2 v6)
                   (coe v2 v6)
@@ -866,7 +866,7 @@ du_zero'737'_178 v0 v1 v2 v3 v4 v5 v6
                         (coe v3)))
                   (coe
                      MAlonzo.Code.Relation.Binary.Structures.d_refl_36
-                     (MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v4))
+                     (MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v4))
                      (coe v2 v6))))
             (coe
                MAlonzo.Code.Algebra.Morphism.Structures.d_homo_204
@@ -885,7 +885,7 @@ d_zero'691'_184 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
 d_zero'691'_184 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8 v9 v10
   = du_zero'691'_184 v4 v5 v6 v7 v8 v9 v10
@@ -894,7 +894,7 @@ du_zero'691'_184 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
 du_zero'691'_184 v0 v1 v2 v3 v4 v5 v6
   = coe
@@ -921,7 +921,7 @@ du_zero'691'_184 v0 v1 v2 v3 v4 v5 v6
                (coe
                   MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v4))))
+                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v4))))
             (coe
                v2
                (coe
@@ -938,7 +938,7 @@ du_zero'691'_184 v0 v1 v2 v3 v4 v5 v6
                   (coe
                      MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v4))))
+                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v4))))
                (coe
                   MAlonzo.Code.Algebra.Bundles.Raw.d__'8729'__92 v1 (coe v2 v6)
                   (coe v2 (MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v0))))
@@ -953,7 +953,7 @@ du_zero'691'_184 v0 v1 v2 v3 v4 v5 v6
                      (coe
                         MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v4))))
+                           MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v4))))
                   (coe
                      MAlonzo.Code.Algebra.Bundles.Raw.d__'8729'__92 v1 (coe v2 v6)
                      (MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v1)))
@@ -966,9 +966,9 @@ du_zero'691'_184 v0 v1 v2 v3 v4 v5 v6
                         (coe
                            MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v4))))
+                              MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v4))))
                      (MAlonzo.Code.Relation.Binary.Structures.d_sym_38
-                        (coe MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v4)))
+                        (coe MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v4)))
                      (MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v1))
                      (coe v2 (MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v0)))
                      (coe v2 (MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v0)))
@@ -979,7 +979,7 @@ du_zero'691'_184 v0 v1 v2 v3 v4 v5 v6
                            (coe
                               MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v4))))
+                                 MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v4))))
                         (coe v2 (MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v0))))
                      (MAlonzo.Code.Algebra.Morphism.Structures.d_ε'45'homo_390
                         (coe
@@ -987,13 +987,13 @@ du_zero'691'_184 v0 v1 v2 v3 v4 v5 v6
                            (coe v3))))
                   (coe v5 (coe v2 v6)))
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188 v4 (coe v2 v6)
+                  MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190 v4 (coe v2 v6)
                   (coe v2 v6)
                   (coe v2 (MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v0)))
                   (MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v1))
                   (coe
                      MAlonzo.Code.Relation.Binary.Structures.d_refl_36
-                     (MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v4))
+                     (MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v4))
                      (coe v2 v6))
                   (MAlonzo.Code.Algebra.Morphism.Structures.d_ε'45'homo_390
                      (coe
@@ -1016,7 +1016,7 @@ d_zero_190 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_zero_190 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8
@@ -1026,7 +1026,7 @@ du_zero_190 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_zero_190 v0 v1 v2 v3 v4
@@ -1046,8 +1046,8 @@ d_isMonoid_192 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 d_isMonoid_192 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8
   = du_isMonoid_192 v4 v5 v6 v7 v8
 du_isMonoid_192 ::
@@ -1055,11 +1055,11 @@ du_isMonoid_192 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 du_isMonoid_192 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.Algebra.Structures.C_constructor_758
+      MAlonzo.Code.Algebra.Structures.C_constructor_760
       (coe
          MAlonzo.Code.Algebra.Morphism.MagmaMonomorphism.du_isSemigroup_268
          (coe MAlonzo.Code.Algebra.Bundles.Raw.du_rawMagma_96 (coe v0))
@@ -1068,12 +1068,12 @@ du_isMonoid_192 v0 v1 v2 v3 v4
          (coe
             MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaMonomorphism_428
             (coe v3))
-         (coe MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v4)))
+         (coe MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v4)))
       (coe
          du_identity_176 v0 v1 v2 v3
-         (MAlonzo.Code.Algebra.Structures.d_isMagma_496
-            (coe MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v4)))
-         (MAlonzo.Code.Algebra.Structures.d_identity_724 (coe v4)))
+         (MAlonzo.Code.Algebra.Structures.d_isMagma_498
+            (coe MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v4)))
+         (MAlonzo.Code.Algebra.Structures.d_identity_726 (coe v4)))
 -- Algebra.Morphism.MonoidMonomorphism.isCommutativeMonoid
 d_isCommutativeMonoid_236 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -1084,8 +1084,8 @@ d_isCommutativeMonoid_236 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766 ->
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 d_isCommutativeMonoid_236 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8
   = du_isCommutativeMonoid_236 v4 v5 v6 v7 v8
 du_isCommutativeMonoid_236 ::
@@ -1093,14 +1093,14 @@ du_isCommutativeMonoid_236 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766 ->
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 du_isCommutativeMonoid_236 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.Algebra.Structures.C_constructor_820
+      MAlonzo.Code.Algebra.Structures.C_constructor_822
       (coe
          du_isMonoid_192 (coe v0) (coe v1) (coe v2) (coe v3)
-         (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v4)))
+         (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v4)))
       (coe
          MAlonzo.Code.Algebra.Morphism.MagmaMonomorphism.du_comm_170
          (coe MAlonzo.Code.Algebra.Bundles.Raw.du_rawMagma_96 (coe v0))
@@ -1110,8 +1110,8 @@ du_isCommutativeMonoid_236 v0 v1 v2 v3 v4
             MAlonzo.Code.Algebra.Morphism.Structures.du_isMagmaMonomorphism_428
             (coe v3))
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+            MAlonzo.Code.Algebra.Structures.d_isMagma_498
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
-               (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v4))))
-         (coe MAlonzo.Code.Algebra.Structures.d_comm_776 (coe v4)))
+               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
+               (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v4))))
+         (coe MAlonzo.Code.Algebra.Structures.d_comm_778 (coe v4)))

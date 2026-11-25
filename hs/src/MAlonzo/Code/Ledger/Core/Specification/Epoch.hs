@@ -193,13 +193,13 @@ d_preoEpoch_114 v0
                  MAlonzo.Code.Class.HasOrder.Core.d_hasPartialOrder_270
                  (coe d_DecPo'45'Slot_88 (coe v0)))
               (coe
-                 MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+                 MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
                  (d_firstSlot_94 (coe v0)) (\ v4 v5 -> v4) v1 v2)
               (coe
-                 MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                 MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                  (\ v4 v5 -> v5) (d_firstSlot_94 (coe v0)) v1 v2)
               (coe
-                 MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                 MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                  (\ v4 v5 -> v5) (d_firstSlot_94 (coe v0)) v2 v3))
          (coe
             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -271,7 +271,7 @@ data T_GlobalConstants_296
                       MAlonzo.Code.Class.Show.Core.T_Show_10 Integer
                       MAlonzo.Code.Data.Nat.Base.T_NonZero_112
                       MAlonzo.Code.Data.Rational.Base.T_ℚ_6
-                      MAlonzo.Code.Data.Integer.Base.T_Positive_134 Integer Integer
+                      MAlonzo.Code.Data.Integer.Base.T_Positive_174 Integer Integer
                       Integer Integer AgdaAny Integer Integer Integer
                       MAlonzo.Code.Data.Nat.Base.T_NonZero_112
 -- Ledger.Core.Specification.Epoch.GlobalConstants.Network
@@ -319,7 +319,7 @@ d_ActiveSlotCoeff_340 v0
 -- Ledger.Core.Specification.Epoch.GlobalConstants.Positive-ActiveSlotCoeff
 d_Positive'45'ActiveSlotCoeff_342 ::
   T_GlobalConstants_296 ->
-  MAlonzo.Code.Data.Integer.Base.T_Positive_134
+  MAlonzo.Code.Data.Integer.Base.T_Positive_174
 d_Positive'45'ActiveSlotCoeff_342 v0
   = case coe v0 of
       C_constructor_398 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16
@@ -395,10 +395,10 @@ d_NonZero'45'ActiveSlotCoeff_362 ::
   T_GlobalConstants_296 -> MAlonzo.Code.Data.Nat.Base.T_NonZero_112
 d_NonZero'45'ActiveSlotCoeff_362 v0
   = coe
-      MAlonzo.Code.Data.Rational.Base.d_'62''45'nonZero_224
+      MAlonzo.Code.Data.Rational.Base.d_'62''45'nonZero_230
       (coe d_ActiveSlotCoeff_340 (coe v0))
       (coe
-         MAlonzo.Code.Data.Rational.Properties.du_positive'8315''185'_3986
+         MAlonzo.Code.Data.Rational.Properties.du_positive'8315''185'_4232
          (coe d_ActiveSlotCoeff_340 (coe v0)))
 -- Ledger.Core.Specification.Epoch.GlobalConstants.ℕ+ᵉ≡+ᵉ'
 d_ℕ'43''7497''8801''43''7497'''_368 ::
@@ -416,7 +416,7 @@ d_'46'extendedlambda0_382 ::
 d_'46'extendedlambda0_382 v0
   = coe
       C_constructor_294
-      MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'semiring_3886
+      MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'semiring_4134
       MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
       MAlonzo.Code.Class.Show.Instances.d_Show'45'ℕ_36
       MAlonzo.Code.Class.HasOrder.Instances.d_ℕ'45'hasDecPartialOrder_18
@@ -435,7 +435,7 @@ d_'46'extendedlambda0_382 v0
       (\ v1 -> addInt (coe (1 :: Integer)) (coe v1)) addInt
       (\ v1 ->
          coe
-           MAlonzo.Code.Data.Nat.Properties.d_'43''45'mono'737''45''8804'_3682
+           MAlonzo.Code.Data.Nat.Properties.d_'43''45'mono'737''45''8804'_3922
            (mulInt (coe v1) (coe d_SlotsPerEpoch'7580'_336 (coe v0)))
            (1 :: Integer) (d_SlotsPerEpoch'7580'_336 (coe v0))
            (coe MAlonzo.Code.Data.Nat.Base.du_'62''45'nonZero'8315''185'_148))
@@ -446,6 +446,6 @@ d_'46'extendedlambda0_382 v0
               coe
                 MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38
                 (coe
-                   MAlonzo.Code.Data.Nat.Properties.du_'43''45'cancel'737''45''60'_3576
+                   MAlonzo.Code.Data.Nat.Properties.du_'43''45'cancel'737''45''60'_3816
                    (coe d_SlotsPerEpoch'7580'_336 (coe v0)) (coe v3)))
            (\ v3 -> coe MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 erased))

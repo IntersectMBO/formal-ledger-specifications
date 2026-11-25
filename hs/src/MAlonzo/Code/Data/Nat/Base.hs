@@ -25,7 +25,7 @@ import qualified MAlonzo.Code.Algebra.Bundles.Raw
 import qualified MAlonzo.Code.Algebra.Definitions.RawMagma
 import qualified MAlonzo.Code.Data.Irrelevant
 import qualified MAlonzo.Code.Data.Parity.Base
-import qualified MAlonzo.Code.Relation.Nullary.Negation.Core
+import qualified MAlonzo.Code.Relation.Binary.PropositionalEquality.Core
 
 -- Data.Nat.Base._≤ᵇ_
 d__'8804''7495'__14 :: Integer -> Integer -> Bool
@@ -102,7 +102,7 @@ du_'8802''45'nonZero_128 :: Integer -> T_NonZero_112
 du_'8802''45'nonZero_128 v0
   = case coe v0 of
       0 -> coe
-             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
+             MAlonzo.Code.Relation.Binary.PropositionalEquality.Core.du_'172''91'x'8802'x'93'_178
              erased
       _ -> coe
              C_constructor_120 (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)

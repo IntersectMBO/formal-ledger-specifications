@@ -40,27 +40,27 @@ d_Associative_104 ::
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
 d_Associative_104 = erased
 -- Relation.Binary.Lattice.Properties.JoinSemilattice._.Commutative
-d_Commutative_108 ::
+d_Commutative_110 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_JoinSemilattice_14 ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Commutative_108 = erased
+d_Commutative_110 = erased
 -- Relation.Binary.Lattice.Properties.JoinSemilattice._.Idempotent
-d_Idempotent_118 ::
+d_Idempotent_120 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_JoinSemilattice_14 ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Idempotent_118 = erased
+d_Idempotent_120 = erased
 -- Relation.Binary.Lattice.Properties.JoinSemilattice.∨-monotonic
-d_'8744''45'monotonic_214 ::
+d_'8744''45'monotonic_216 ::
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_JoinSemilattice_14 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8744''45'monotonic_214 v0 v1 v2 v3 v4 v5 v6
+d_'8744''45'monotonic_216 v0 v1 v2 v3 v4 v5 v6
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
       (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
@@ -113,11 +113,11 @@ d_'8744''45'monotonic_214 v0 v1 v2 v3 v4 v5 v6
                      (coe v0))
                   v2 v4))))
 -- Relation.Binary.Lattice.Properties.JoinSemilattice.∨-cong
-d_'8744''45'cong_234 ::
+d_'8744''45'cong_236 ::
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_JoinSemilattice_14 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8744''45'cong_234 v0 v1 v2 v3 v4 v5 v6
+d_'8744''45'cong_236 v0 v1 v2 v3 v4 v5 v6
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_antisym_258
       (MAlonzo.Code.Relation.Binary.Lattice.Structures.d_isPartialOrder_30
@@ -287,10 +287,10 @@ d_'8744''45'cong_234 v0 v1 v2 v3 v4 v5 v6
                         (coe v0))
                      v1 v3)))))
 -- Relation.Binary.Lattice.Properties.JoinSemilattice.∨-comm
-d_'8744''45'comm_240 ::
+d_'8744''45'comm_242 ::
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_JoinSemilattice_14 ->
   AgdaAny -> AgdaAny -> AgdaAny
-d_'8744''45'comm_240 v0 v1 v2
+d_'8744''45'comm_242 v0 v1 v2
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_antisym_258
       (MAlonzo.Code.Relation.Binary.Lattice.Structures.d_isPartialOrder_30
@@ -354,18 +354,18 @@ d_'8744''45'comm_240 v0 v1 v2
                   (coe v0))
                v1 v2)))
 -- Relation.Binary.Lattice.Properties.JoinSemilattice.∨-assoc
-d_'8744''45'assoc_258 ::
+d_'8744''45'assoc_260 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_JoinSemilattice_14 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8744''45'assoc_258 ~v0 ~v1 ~v2 v3 v4 v5 v6
-  = du_'8744''45'assoc_258 v3 v4 v5 v6
-du_'8744''45'assoc_258 ::
+d_'8744''45'assoc_260 ~v0 ~v1 ~v2 v3 v4 v5 v6
+  = du_'8744''45'assoc_260 v3 v4 v5 v6
+du_'8744''45'assoc_260 ::
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_JoinSemilattice_14 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8744''45'assoc_258 v0 v1 v2 v3
+du_'8744''45'assoc_260 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_antisym_258
       (MAlonzo.Code.Relation.Binary.Lattice.Structures.d_isPartialOrder_30
@@ -651,18 +651,18 @@ du_'8744''45'assoc_258 v0 v1 v2 v3
                            v2)
                         v3))))))
 -- Relation.Binary.Lattice.Properties.JoinSemilattice.∨-idempotent
-d_'8744''45'idempotent_286 ::
+d_'8744''45'idempotent_288 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_JoinSemilattice_14 ->
   AgdaAny -> AgdaAny
-d_'8744''45'idempotent_286 ~v0 ~v1 ~v2 v3 v4
-  = du_'8744''45'idempotent_286 v3 v4
-du_'8744''45'idempotent_286 ::
+d_'8744''45'idempotent_288 ~v0 ~v1 ~v2 v3 v4
+  = du_'8744''45'idempotent_288 v3 v4
+du_'8744''45'idempotent_288 ::
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_JoinSemilattice_14 ->
   AgdaAny -> AgdaAny
-du_'8744''45'idempotent_286 v0 v1
+du_'8744''45'idempotent_288 v0 v1
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_antisym_258
       (MAlonzo.Code.Relation.Binary.Lattice.Structures.d_isPartialOrder_30
@@ -709,18 +709,18 @@ du_'8744''45'idempotent_286 v0 v1
                (coe v0))
             v1 v1))
 -- Relation.Binary.Lattice.Properties.JoinSemilattice.x≤y⇒x∨y≈y
-d_x'8804'y'8658'x'8744'y'8776'y_298 ::
+d_x'8804'y'8658'x'8744'y'8776'y_300 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_JoinSemilattice_14 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_x'8804'y'8658'x'8744'y'8776'y_298 ~v0 ~v1 ~v2 v3 v4 v5 v6
-  = du_x'8804'y'8658'x'8744'y'8776'y_298 v3 v4 v5 v6
-du_x'8804'y'8658'x'8744'y'8776'y_298 ::
+d_x'8804'y'8658'x'8744'y'8776'y_300 ~v0 ~v1 ~v2 v3 v4 v5 v6
+  = du_x'8804'y'8658'x'8744'y'8776'y_300 v3 v4 v5 v6
+du_x'8804'y'8658'x'8744'y'8776'y_300 ::
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_JoinSemilattice_14 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_x'8804'y'8658'x'8744'y'8776'y_298 v0 v1 v2 v3
+du_x'8804'y'8658'x'8744'y'8776'y_300 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_antisym_258
       (MAlonzo.Code.Relation.Binary.Lattice.Structures.d_isPartialOrder_30
@@ -842,7 +842,7 @@ du_x'8804'y'8658'x'8744'y'8776'y_298 v0 v1 v2 v3
                               MAlonzo.Code.Relation.Binary.Lattice.Bundles.d_isJoinSemilattice_40
                               (coe v0)))))
                   (coe v2))
-               (coe du_'8744''45'idempotent_286 (coe v0) (coe v2)))
+               (coe du_'8744''45'idempotent_288 (coe v0) (coe v2)))
             (coe
                MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
@@ -910,25 +910,25 @@ du_x'8804'y'8658'x'8744'y'8776'y_298 v0 v1 v2 v3
             (coe v0))
          (coe v1) (coe v2))
 -- Relation.Binary.Lattice.Properties.JoinSemilattice.isAlgSemilattice
-d_isAlgSemilattice_400 ::
+d_isAlgSemilattice_402 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_JoinSemilattice_14 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeBand_612
-d_isAlgSemilattice_400 ~v0 ~v1 ~v2 v3 = du_isAlgSemilattice_400 v3
-du_isAlgSemilattice_400 ::
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeBand_614
+d_isAlgSemilattice_402 ~v0 ~v1 ~v2 v3 = du_isAlgSemilattice_402 v3
+du_isAlgSemilattice_402 ::
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_JoinSemilattice_14 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeBand_612
-du_isAlgSemilattice_400 v0
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeBand_614
+du_isAlgSemilattice_402 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.C_constructor_660
+      MAlonzo.Code.Algebra.Structures.C_constructor_662
       (coe
-         MAlonzo.Code.Algebra.Structures.C_constructor_564
+         MAlonzo.Code.Algebra.Structures.C_constructor_566
          (coe
-            MAlonzo.Code.Algebra.Structures.C_constructor_522
+            MAlonzo.Code.Algebra.Structures.C_constructor_524
             (coe
-               MAlonzo.Code.Algebra.Structures.C_constructor_210
+               MAlonzo.Code.Algebra.Structures.C_constructor_212
                (coe
                   MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_86
                   (coe
@@ -1108,8 +1108,8 @@ du_isAlgSemilattice_400 v0
                                       (MAlonzo.Code.Relation.Binary.Lattice.Bundles.d_isJoinSemilattice_40
                                          (coe v0))
                                       v1 v3))))))))
-            (coe du_'8744''45'assoc_258 (coe v0)))
-         (coe du_'8744''45'idempotent_286 (coe v0)))
+            (coe du_'8744''45'assoc_260 (coe v0)))
+         (coe du_'8744''45'idempotent_288 (coe v0)))
       (coe
          (\ v1 v2 ->
             coe
@@ -1175,35 +1175,35 @@ du_isAlgSemilattice_400 v0
                           (coe v0))
                        v1 v2)))))
 -- Relation.Binary.Lattice.Properties.JoinSemilattice.algSemilattice
-d_algSemilattice_402 ::
+d_algSemilattice_404 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_JoinSemilattice_14 ->
   MAlonzo.Code.Algebra.Lattice.Bundles.T_Semilattice_10
-d_algSemilattice_402 ~v0 ~v1 ~v2 v3 = du_algSemilattice_402 v3
-du_algSemilattice_402 ::
+d_algSemilattice_404 ~v0 ~v1 ~v2 v3 = du_algSemilattice_404 v3
+du_algSemilattice_404 ::
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_JoinSemilattice_14 ->
   MAlonzo.Code.Algebra.Lattice.Bundles.T_Semilattice_10
-du_algSemilattice_402 v0
+du_algSemilattice_404 v0
   = coe
       MAlonzo.Code.Algebra.Lattice.Bundles.C_constructor_84
       (MAlonzo.Code.Relation.Binary.Lattice.Bundles.d__'8744'__38
          (coe v0))
-      (coe du_isAlgSemilattice_400 (coe v0))
+      (coe du_isAlgSemilattice_402 (coe v0))
 -- Relation.Binary.Lattice.Properties.JoinSemilattice.dualIsMeetSemilattice
-d_dualIsMeetSemilattice_404 ::
+d_dualIsMeetSemilattice_406 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_JoinSemilattice_14 ->
   MAlonzo.Code.Relation.Binary.Lattice.Structures.T_IsMeetSemilattice_184
-d_dualIsMeetSemilattice_404 ~v0 ~v1 ~v2 v3
-  = du_dualIsMeetSemilattice_404 v3
-du_dualIsMeetSemilattice_404 ::
+d_dualIsMeetSemilattice_406 ~v0 ~v1 ~v2 v3
+  = du_dualIsMeetSemilattice_406 v3
+du_dualIsMeetSemilattice_406 ::
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_JoinSemilattice_14 ->
   MAlonzo.Code.Relation.Binary.Lattice.Structures.T_IsMeetSemilattice_184
-du_dualIsMeetSemilattice_404 v0
+du_dualIsMeetSemilattice_406 v0
   = coe
       MAlonzo.Code.Relation.Binary.Lattice.Structures.C_constructor_274
       (coe
@@ -1216,25 +1216,25 @@ du_dualIsMeetSemilattice_404 v0
             MAlonzo.Code.Relation.Binary.Lattice.Bundles.d_isJoinSemilattice_40
             (coe v0)))
 -- Relation.Binary.Lattice.Properties.JoinSemilattice.dualMeetSemilattice
-d_dualMeetSemilattice_406 ::
+d_dualMeetSemilattice_408 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_JoinSemilattice_14 ->
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_MeetSemilattice_204
-d_dualMeetSemilattice_406 ~v0 ~v1 ~v2 v3
-  = du_dualMeetSemilattice_406 v3
-du_dualMeetSemilattice_406 ::
+d_dualMeetSemilattice_408 ~v0 ~v1 ~v2 v3
+  = du_dualMeetSemilattice_408 v3
+du_dualMeetSemilattice_408 ::
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_JoinSemilattice_14 ->
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_MeetSemilattice_204
-du_dualMeetSemilattice_406 v0
+du_dualMeetSemilattice_408 v0
   = coe
       MAlonzo.Code.Relation.Binary.Lattice.Bundles.C_constructor_286
       (MAlonzo.Code.Relation.Binary.Lattice.Bundles.d__'8744'__38
          (coe v0))
-      (coe du_dualIsMeetSemilattice_404 (coe v0))
+      (coe du_dualIsMeetSemilattice_406 (coe v0))
 -- Relation.Binary.Lattice.Properties.JoinSemilattice.≈-dec⇒≤-dec
-d_'8776''45'dec'8658''8804''45'dec_408 ::
+d_'8776''45'dec'8658''8804''45'dec_410 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -1244,16 +1244,16 @@ d_'8776''45'dec'8658''8804''45'dec_408 ::
    MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-d_'8776''45'dec'8658''8804''45'dec_408 ~v0 ~v1 ~v2 v3 v4 v5 v6
-  = du_'8776''45'dec'8658''8804''45'dec_408 v3 v4 v5 v6
-du_'8776''45'dec'8658''8804''45'dec_408 ::
+d_'8776''45'dec'8658''8804''45'dec_410 ~v0 ~v1 ~v2 v3 v4 v5 v6
+  = du_'8776''45'dec'8658''8804''45'dec_410 v3 v4 v5 v6
+du_'8776''45'dec'8658''8804''45'dec_410 ::
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_JoinSemilattice_14 ->
   (AgdaAny ->
    AgdaAny ->
    MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-du_'8776''45'dec'8658''8804''45'dec_408 v0 v1 v2 v3
+du_'8776''45'dec'8658''8804''45'dec_410 v0 v1 v2 v3
   = let v4
           = coe
               v1
@@ -1312,7 +1312,7 @@ du_'8776''45'dec'8658''8804''45'dec_408 v0 v1 v2 v3
                           (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26))
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Relation.Binary.Lattice.Properties.JoinSemilattice.≈-dec⇒isDecPartialOrder
-d_'8776''45'dec'8658'isDecPartialOrder_436 ::
+d_'8776''45'dec'8658'isDecPartialOrder_438 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -1321,15 +1321,15 @@ d_'8776''45'dec'8658'isDecPartialOrder_436 ::
    AgdaAny ->
    MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsDecPartialOrder_300
-d_'8776''45'dec'8658'isDecPartialOrder_436 ~v0 ~v1 ~v2 v3 v4
-  = du_'8776''45'dec'8658'isDecPartialOrder_436 v3 v4
-du_'8776''45'dec'8658'isDecPartialOrder_436 ::
+d_'8776''45'dec'8658'isDecPartialOrder_438 ~v0 ~v1 ~v2 v3 v4
+  = du_'8776''45'dec'8658'isDecPartialOrder_438 v3 v4
+du_'8776''45'dec'8658'isDecPartialOrder_438 ::
   MAlonzo.Code.Relation.Binary.Lattice.Bundles.T_JoinSemilattice_14 ->
   (AgdaAny ->
    AgdaAny ->
    MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsDecPartialOrder_300
-du_'8776''45'dec'8658'isDecPartialOrder_436 v0 v1
+du_'8776''45'dec'8658'isDecPartialOrder_438 v0 v1
   = coe
       MAlonzo.Code.Relation.Binary.Structures.C_constructor_364
       (coe
@@ -1338,4 +1338,4 @@ du_'8776''45'dec'8658'isDecPartialOrder_436 v0 v1
             MAlonzo.Code.Relation.Binary.Lattice.Bundles.d_isJoinSemilattice_40
             (coe v0)))
       (coe v1)
-      (coe du_'8776''45'dec'8658''8804''45'dec_408 (coe v0) (coe v1))
+      (coe du_'8776''45'dec'8658''8804''45'dec_410 (coe v0) (coe v1))

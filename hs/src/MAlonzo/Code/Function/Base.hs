@@ -138,18 +138,26 @@ d_λ'45'_194 ::
 d_λ'45'_194 ~v0 ~v1 ~v2 ~v3 v4 v5 = du_λ'45'_194 v4 v5
 du_λ'45'_194 :: (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
 du_λ'45'_194 v0 v1 = coe v0 v1
+-- Function.Base.λ∙
+d_λ'8729'_208 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () -> (AgdaAny -> ()) -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
+d_λ'8729'_208 ~v0 ~v1 ~v2 ~v3 v4 ~v5 = du_λ'8729'_208 v4
+du_λ'8729'_208 :: (AgdaAny -> AgdaAny) -> AgdaAny
+du_λ'8729'_208 v0 = coe v0 erased
 -- Function.Base.case_returning_of_
-d_case_returning_of__208 ::
+d_case_returning_of__222 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> AgdaAny -> (AgdaAny -> ()) -> (AgdaAny -> AgdaAny) -> AgdaAny
-d_case_returning_of__208 ~v0 ~v1 ~v2 v3 ~v4 v5
-  = du_case_returning_of__208 v3 v5
-du_case_returning_of__208 ::
+d_case_returning_of__222 ~v0 ~v1 ~v2 v3 ~v4 v5
+  = du_case_returning_of__222 v3 v5
+du_case_returning_of__222 ::
   AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny
-du_case_returning_of__208 v0 v1 = coe v1 v0
+du_case_returning_of__222 v0 v1 = coe v1 v0
 -- Function.Base._∘′_
-d__'8728''8242'__216 ::
+d__'8728''8242'__230 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -157,13 +165,13 @@ d__'8728''8242'__216 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d__'8728''8242'__216 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8
-  = du__'8728''8242'__216 v6 v7 v8
-du__'8728''8242'__216 ::
+d__'8728''8242'__230 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8
+  = du__'8728''8242'__230 v6 v7 v8
+du__'8728''8242'__230 ::
   (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-du__'8728''8242'__216 v0 v1 v2 = coe v0 (coe v1 v2)
+du__'8728''8242'__230 v0 v1 v2 = coe v0 (coe v1 v2)
 -- Function.Base._∘₂′_
-d__'8728''8322''8242'__222 ::
+d__'8728''8322''8242'__236 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -174,15 +182,15 @@ d__'8728''8322''8242'__222 ::
   () ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-d__'8728''8322''8242'__222 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 v9
-  = du__'8728''8322''8242'__222 v8 v9
-du__'8728''8322''8242'__222 ::
+d__'8728''8322''8242'__236 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 v9
+  = du__'8728''8322''8242'__236 v8 v9
+du__'8728''8322''8242'__236 ::
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-du__'8728''8322''8242'__222 v0 v1
+du__'8728''8322''8242'__236 v0 v1
   = coe du__'8728''8322'__92 (coe (\ v2 v3 -> v0)) (coe v1)
 -- Function.Base.flip′
-d_flip'8242'_228 ::
+d_flip'8242'_242 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -190,42 +198,42 @@ d_flip'8242'_228 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-d_flip'8242'_228 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8
-  = du_flip'8242'_228 v6 v7 v8
-du_flip'8242'_228 ::
+d_flip'8242'_242 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8
+  = du_flip'8242'_242 v6 v7 v8
+du_flip'8242'_242 ::
   (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-du_flip'8242'_228 v0 v1 v2 = coe v0 v2 v1
+du_flip'8242'_242 v0 v1 v2 = coe v0 v2 v1
 -- Function.Base._$′_
-d__'36''8242'__230 ::
+d__'36''8242'__244 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d__'36''8242'__230 ~v0 ~v1 ~v2 ~v3 v4 = du__'36''8242'__230 v4
-du__'36''8242'__230 :: (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-du__'36''8242'__230 v0 = coe v0
+d__'36''8242'__244 ~v0 ~v1 ~v2 ~v3 v4 = du__'36''8242'__244 v4
+du__'36''8242'__244 :: (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
+du__'36''8242'__244 v0 = coe v0
 -- Function.Base._|>′_
-d__'124''62''8242'__232 ::
+d__'124''62''8242'__246 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny
-d__'124''62''8242'__232 ~v0 ~v1 ~v2 ~v3 v4 v5
-  = du__'124''62''8242'__232 v4 v5
-du__'124''62''8242'__232 ::
+d__'124''62''8242'__246 ~v0 ~v1 ~v2 ~v3 v4 v5
+  = du__'124''62''8242'__246 v4 v5
+du__'124''62''8242'__246 ::
   AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny
-du__'124''62''8242'__232 v0 v1 = coe v1 v0
+du__'124''62''8242'__246 v0 v1 = coe v1 v0
 -- Function.Base.case_of_
-d_case_of__234 ::
+d_case_of__248 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny
-d_case_of__234 ~v0 ~v1 ~v2 ~v3 v4 v5 = du_case_of__234 v4 v5
-du_case_of__234 :: AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny
-du_case_of__234 v0 v1 = coe v1 v0
+d_case_of__248 ~v0 ~v1 ~v2 ~v3 v4 v5 = du_case_of__248 v4 v5
+du_case_of__248 :: AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny
+du_case_of__248 v0 v1 = coe v1 v0
 -- Function.Base._⟨_⟩_
-d__'10216'_'10217'__240 ::
+d__'10216'_'10217'__254 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -233,29 +241,29 @@ d__'10216'_'10217'__240 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d__'10216'_'10217'__240 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8
-  = du__'10216'_'10217'__240 v6 v7 v8
-du__'10216'_'10217'__240 ::
+d__'10216'_'10217'__254 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8
+  = du__'10216'_'10217'__254 v6 v7 v8
+du__'10216'_'10217'__254 ::
   AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-du__'10216'_'10217'__240 v0 v1 v2 = coe v1 v0 v2
+du__'10216'_'10217'__254 v0 v1 v2 = coe v1 v0 v2
 -- Function.Base._∋_
-d__'8715'__250 ::
+d__'8715'__264 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> AgdaAny -> AgdaAny
-d__'8715'__250 ~v0 ~v1 v2 = du__'8715'__250 v2
-du__'8715'__250 :: AgdaAny -> AgdaAny
-du__'8715'__250 v0 = coe v0
+d__'8715'__264 ~v0 ~v1 v2 = du__'8715'__264 v2
+du__'8715'__264 :: AgdaAny -> AgdaAny
+du__'8715'__264 v0 = coe v0
 -- Function.Base.typeOf
-d_typeOf_258 ::
+d_typeOf_272 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> AgdaAny -> ()
-d_typeOf_258 = erased
+d_typeOf_272 = erased
 -- Function.Base.it
-d_it_264 ::
+d_it_278 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> AgdaAny -> AgdaAny
-d_it_264 ~v0 ~v1 v2 = du_it_264 v2
-du_it_264 :: AgdaAny -> AgdaAny
-du_it_264 v0 = coe v0
+d_it_278 ~v0 ~v1 v2 = du_it_278 v2
+du_it_278 :: AgdaAny -> AgdaAny
+du_it_278 v0 = coe v0
 -- Function.Base._-⟪_⟫-_
-d__'45''10218'_'10219''45'__268 ::
+d__'45''10218'_'10219''45'__282 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -269,17 +277,17 @@ d__'45''10218'_'10219''45'__268 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-d__'45''10218'_'10219''45'__268 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8
+d__'45''10218'_'10219''45'__282 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8
                                 ~v9 v10 v11 v12 v13 v14
-  = du__'45''10218'_'10219''45'__268 v10 v11 v12 v13 v14
-du__'45''10218'_'10219''45'__268 ::
+  = du__'45''10218'_'10219''45'__282 v10 v11 v12 v13 v14
+du__'45''10218'_'10219''45'__282 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-du__'45''10218'_'10219''45'__268 v0 v1 v2 v3 v4
+du__'45''10218'_'10219''45'__282 v0 v1 v2 v3 v4
   = coe v1 (coe v0 v3 v4) (coe v2 v3 v4)
 -- Function.Base._-⟪_∣
-d__'45''10218'_'8739'_280 ::
+d__'45''10218'_'8739'_294 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -290,17 +298,17 @@ d__'45''10218'_'8739'_280 ::
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-d__'45''10218'_'8739'_280 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 v9
-  = du__'45''10218'_'8739'_280 v8 v9
-du__'45''10218'_'8739'_280 ::
+d__'45''10218'_'8739'_294 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 v9
+  = du__'45''10218'_'8739'_294 v8 v9
+du__'45''10218'_'8739'_294 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-du__'45''10218'_'8739'_280 v0 v1
+du__'45''10218'_'8739'_294 v0 v1
   = coe
-      du__'45''10218'_'10219''45'__268 (coe v0) (coe v1)
+      du__'45''10218'_'10219''45'__282 (coe v0) (coe v1)
       (coe (\ v2 v3 -> v3))
 -- Function.Base.∣_⟫-_
-d_'8739'_'10219''45'__286 ::
+d_'8739'_'10219''45'__300 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -311,17 +319,17 @@ d_'8739'_'10219''45'__286 ::
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8739'_'10219''45'__286 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 v9
-  = du_'8739'_'10219''45'__286 v8 v9
-du_'8739'_'10219''45'__286 ::
+d_'8739'_'10219''45'__300 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 v9
+  = du_'8739'_'10219''45'__300 v8 v9
+du_'8739'_'10219''45'__300 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8739'_'10219''45'__286 v0 v1
+du_'8739'_'10219''45'__300 v0 v1
   = coe
-      du__'45''10218'_'10219''45'__268 (coe (\ v2 v3 -> v2)) (coe v0)
+      du__'45''10218'_'10219''45'__282 (coe (\ v2 v3 -> v2)) (coe v0)
       (coe v1)
 -- Function.Base._-⟨_∣
-d__'45''10216'_'8739'_292 ::
+d__'45''10216'_'8739'_306 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -332,19 +340,19 @@ d__'45''10216'_'8739'_292 ::
   () ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-d__'45''10216'_'8739'_292 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 v9
-  = du__'45''10216'_'8739'_292 v8 v9
-du__'45''10216'_'8739'_292 ::
+d__'45''10216'_'8739'_306 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 v9
+  = du__'45''10216'_'8739'_306 v8 v9
+du__'45''10216'_'8739'_306 ::
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-du__'45''10216'_'8739'_292 v0 v1
+du__'45''10216'_'8739'_306 v0 v1
   = coe
-      du__'45''10218'_'8739'_280
+      du__'45''10218'_'8739'_294
       (coe
          du__'8728''8322'__92 (coe (\ v2 v3 -> v0)) (coe (\ v2 v3 -> v2)))
       (coe v1)
 -- Function.Base.∣_⟩-_
-d_'8739'_'10217''45'__298 ::
+d_'8739'_'10217''45'__312 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -355,18 +363,18 @@ d_'8739'_'10217''45'__298 ::
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8739'_'10217''45'__298 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 v9
-  = du_'8739'_'10217''45'__298 v8 v9
-du_'8739'_'10217''45'__298 ::
+d_'8739'_'10217''45'__312 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 v9
+  = du_'8739'_'10217''45'__312 v8 v9
+du_'8739'_'10217''45'__312 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8739'_'10217''45'__298 v0 v1
+du_'8739'_'10217''45'__312 v0 v1
   = coe
-      du_'8739'_'10219''45'__286 (coe v0)
+      du_'8739'_'10219''45'__300 (coe v0)
       (coe
          du__'8728''8322'__92 (coe (\ v2 v3 -> v1)) (coe (\ v2 v3 -> v3)))
 -- Function.Base._-⟪_⟩-_
-d__'45''10218'_'10217''45'__304 ::
+d__'45''10218'_'10217''45'__318 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -380,19 +388,19 @@ d__'45''10218'_'10217''45'__304 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-d__'45''10218'_'10217''45'__304 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8
+d__'45''10218'_'10217''45'__318 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8
                                 ~v9 v10 v11 v12
-  = du__'45''10218'_'10217''45'__304 v10 v11 v12
-du__'45''10218'_'10217''45'__304 ::
+  = du__'45''10218'_'10217''45'__318 v10 v11 v12
+du__'45''10218'_'10217''45'__318 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-du__'45''10218'_'10217''45'__304 v0 v1 v2
+du__'45''10218'_'10217''45'__318 v0 v1 v2
   = coe
-      du__'45''10218'_'10219''45'__268 (coe v0) (coe v1)
-      (coe du_'8739'_'10217''45'__298 (coe (\ v3 v4 -> v4)) (coe v2))
+      du__'45''10218'_'10219''45'__282 (coe v0) (coe v1)
+      (coe du_'8739'_'10217''45'__312 (coe (\ v3 v4 -> v4)) (coe v2))
 -- Function.Base._-⟨_⟫-_
-d__'45''10216'_'10219''45'__312 ::
+d__'45''10216'_'10219''45'__326 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -406,20 +414,20 @@ d__'45''10216'_'10219''45'__312 ::
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-d__'45''10216'_'10219''45'__312 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8
+d__'45''10216'_'10219''45'__326 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8
                                 ~v9 v10 v11 v12
-  = du__'45''10216'_'10219''45'__312 v10 v11 v12
-du__'45''10216'_'10219''45'__312 ::
+  = du__'45''10216'_'10219''45'__326 v10 v11 v12
+du__'45''10216'_'10219''45'__326 ::
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-du__'45''10216'_'10219''45'__312 v0 v1 v2
+du__'45''10216'_'10219''45'__326 v0 v1 v2
   = coe
-      du__'45''10218'_'10219''45'__268
-      (coe du__'45''10216'_'8739'_292 (coe v0) (coe (\ v3 v4 -> v3)))
+      du__'45''10218'_'10219''45'__282
+      (coe du__'45''10216'_'8739'_306 (coe v0) (coe (\ v3 v4 -> v3)))
       (coe v1) (coe v2)
 -- Function.Base._-⟨_⟩-_
-d__'45''10216'_'10217''45'__320 ::
+d__'45''10216'_'10217''45'__334 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -433,21 +441,21 @@ d__'45''10216'_'10217''45'__320 ::
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-d__'45''10216'_'10217''45'__320 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8
+d__'45''10216'_'10217''45'__334 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8
                                 ~v9 v10 v11 v12
-  = du__'45''10216'_'10217''45'__320 v10 v11 v12
-du__'45''10216'_'10217''45'__320 ::
+  = du__'45''10216'_'10217''45'__334 v10 v11 v12
+du__'45''10216'_'10217''45'__334 ::
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-du__'45''10216'_'10217''45'__320 v0 v1 v2
+du__'45''10216'_'10217''45'__334 v0 v1 v2
   = coe
-      du__'45''10218'_'10219''45'__268
-      (coe du__'45''10216'_'8739'_292 (coe v0) (coe (\ v3 v4 -> v3)))
+      du__'45''10218'_'10219''45'__282
+      (coe du__'45''10216'_'8739'_306 (coe v0) (coe (\ v3 v4 -> v3)))
       (coe v1)
-      (coe du_'8739'_'10217''45'__298 (coe (\ v3 v4 -> v4)) (coe v2))
+      (coe du_'8739'_'10217''45'__312 (coe (\ v3 v4 -> v4)) (coe v2))
 -- Function.Base._on₂_
-d__on'8322'__328 ::
+d__on'8322'__342 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -458,15 +466,15 @@ d__on'8322'__328 ::
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-d__on'8322'__328 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 v9
-  = du__on'8322'__328 v8 v9
-du__on'8322'__328 ::
+d__on'8322'__342 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 v9
+  = du__on'8322'__342 v8 v9
+du__on'8322'__342 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-du__on'8322'__328 v0 v1
-  = coe du__'45''10218'_'10219''45'__268 (coe v1) (coe v0) (coe v1)
+du__on'8322'__342 v0 v1
+  = coe du__'45''10218'_'10219''45'__282 (coe v1) (coe v0) (coe v1)
 -- Function.Base._on_
-d__on__334 ::
+d__on__348 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -475,14 +483,14 @@ d__on__334 ::
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-d__on__334 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 = du__on__334 v6 v7
-du__on__334 ::
+d__on__348 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 = du__on__348 v6 v7
+du__on__348 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-du__on__334 v0 v1
-  = coe du__'45''10216'_'10217''45'__320 (coe v1) (coe v0) (coe v1)
+du__on__348 v0 v1
+  = coe du__'45''10216'_'10217''45'__334 (coe v1) (coe v0) (coe v1)
 -- Function.Base._-[_]-_
-d__'45''91'_'93''45'__340 ::
+d__'45''91'_'93''45'__354 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -496,16 +504,16 @@ d__'45''91'_'93''45'__340 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-d__'45''91'_'93''45'__340 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
+d__'45''91'_'93''45'__354 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                           v13 v14
-  = coe du__'45''10218'_'10219''45'__268 v10 v11 v12 v13 v14
+  = coe du__'45''10218'_'10219''45'__282 v10 v11 v12 v13 v14
 -- Function.Base.case_return_of_
-d_case_return_of__342 ::
+d_case_return_of__356 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> AgdaAny -> (AgdaAny -> ()) -> (AgdaAny -> AgdaAny) -> AgdaAny
-d_case_return_of__342 ~v0 ~v1 ~v2 v3 ~v4 v5
-  = du_case_return_of__342 v3 v5
-du_case_return_of__342 ::
+d_case_return_of__356 ~v0 ~v1 ~v2 v3 ~v4 v5
+  = du_case_return_of__356 v3 v5
+du_case_return_of__356 ::
   AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny
-du_case_return_of__342 v0 v1 = coe v1 v0
+du_case_return_of__356 v0 v1 = coe v1 v0

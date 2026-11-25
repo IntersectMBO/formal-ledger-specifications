@@ -41,14 +41,14 @@ d_coprime'8658'GCD'8801'1_24 ::
   (Integer ->
    MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
    MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12) ->
-  MAlonzo.Code.Data.Nat.GCD.T_GCD_622
+  MAlonzo.Code.Data.Nat.GCD.T_GCD_624
 d_coprime'8658'GCD'8801'1_24 v0 v1 ~v2
   = du_coprime'8658'GCD'8801'1_24 v0 v1
 du_coprime'8658'GCD'8801'1_24 ::
-  Integer -> Integer -> MAlonzo.Code.Data.Nat.GCD.T_GCD_622
+  Integer -> Integer -> MAlonzo.Code.Data.Nat.GCD.T_GCD_624
 du_coprime'8658'GCD'8801'1_24 v0 v1
   = coe
-      MAlonzo.Code.Data.Nat.GCD.C_is_646
+      MAlonzo.Code.Data.Nat.GCD.C_is_648
       (coe
          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
          (coe MAlonzo.Code.Data.Nat.Divisibility.d_1'8739'__294 (coe v0))
@@ -60,7 +60,7 @@ du_coprime'8658'GCD'8801'1_24 v0 v1
 d_GCD'8801'1'8658'coprime_32 ::
   Integer ->
   Integer ->
-  MAlonzo.Code.Data.Nat.GCD.T_GCD_622 ->
+  MAlonzo.Code.Data.Nat.GCD.T_GCD_624 ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
@@ -112,8 +112,8 @@ d_coprime'63'_70 v0 v1
       MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
       erased erased
       (coe
-         MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
-         (coe MAlonzo.Code.Data.Nat.GCD.d_gcd_152 (coe v0) (coe v1))
+         MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
+         (coe MAlonzo.Code.Data.Nat.GCD.d_gcd_154 (coe v0) (coe v1))
          (coe (1 :: Integer)))
 -- Data.Nat.Coprimality.1-coprimeTo
 d_1'45'coprimeTo_78 ::
@@ -167,7 +167,7 @@ d_Bézout'45'coprime_110 ::
   Integer ->
   Integer ->
   MAlonzo.Code.Data.Nat.Base.T_NonZero_112 ->
-  MAlonzo.Code.Data.Nat.GCD.T_Identity_844 ->
+  MAlonzo.Code.Data.Nat.GCD.T_Identity_846 ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
@@ -179,12 +179,12 @@ d_coprime'45'Bézout_132 ::
   (Integer ->
    MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
    MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12) ->
-  MAlonzo.Code.Data.Nat.GCD.T_Identity_844
+  MAlonzo.Code.Data.Nat.GCD.T_Identity_846
 d_coprime'45'Bézout_132 v0 v1 ~v2 = du_coprime'45'Bézout_132 v0 v1
 du_coprime'45'Bézout_132 ::
-  Integer -> Integer -> MAlonzo.Code.Data.Nat.GCD.T_Identity_844
+  Integer -> Integer -> MAlonzo.Code.Data.Nat.GCD.T_Identity_846
 du_coprime'45'Bézout_132 v0 v1
-  = coe MAlonzo.Code.Data.Nat.GCD.du_identity_1168 (coe v0) (coe v1)
+  = coe MAlonzo.Code.Data.Nat.GCD.du_identity_1170 (coe v0) (coe v1)
 -- Data.Nat.Coprimality.coprime-divisor
 d_coprime'45'divisor_134 ::
   Integer ->
@@ -208,7 +208,7 @@ du_coprime'45'divisor_134 v0 v1 v2 v3
       MAlonzo.Code.Data.Nat.Divisibility.Core.C_divides_34 v4
         -> let v6
                  = coe
-                     MAlonzo.Code.Data.Nat.GCD.du_gcd'8243'_1098
+                     MAlonzo.Code.Data.Nat.GCD.du_gcd'8243'_1100
                      (coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v0) (coe v1))
                      (coe
                         MAlonzo.Code.Induction.Lexicographic.du_'91'_'8855'_'93'_166
@@ -216,20 +216,20 @@ du_coprime'45'divisor_134 v0 v1 v2 v3
                            coe MAlonzo.Code.Induction.WellFounded.du_wfRecBuilder_160 v7 v9)
                         (\ v6 v7 v8 v9 ->
                            coe MAlonzo.Code.Induction.WellFounded.du_wfRecBuilder_160 v7 v9)
-                        erased (coe MAlonzo.Code.Data.Nat.GCD.du_gcd'8243'_1098)
+                        erased (coe MAlonzo.Code.Data.Nat.GCD.du_gcd'8243'_1100)
                         (coe
                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v0) (coe v1))) in
            coe
              (case coe v6 of
-                MAlonzo.Code.Data.Nat.GCD.C_result_1032 v7 v8 v9
+                MAlonzo.Code.Data.Nat.GCD.C_result_1034 v7 v8 v9
                   -> case coe v9 of
-                       MAlonzo.Code.Data.Nat.GCD.C_'43''45'_858 v10 v11
+                       MAlonzo.Code.Data.Nat.GCD.C_'43''45'_860 v10 v11
                          -> coe
                               MAlonzo.Code.Data.Nat.Divisibility.Core.C_divides_34
                               (coe
                                  MAlonzo.Code.Agda.Builtin.Nat.d__'45'__22
                                  (mulInt (coe v10) (coe v2)) (mulInt (coe v11) (coe v4)))
-                       MAlonzo.Code.Data.Nat.GCD.C_'45''43'_866 v10 v11
+                       MAlonzo.Code.Data.Nat.GCD.C_'45''43'_868 v10 v11
                          -> coe
                               MAlonzo.Code.Data.Nat.Divisibility.Core.C_divides_34
                               (coe
@@ -265,7 +265,7 @@ du_coprime'45'factors_176 v0 v1 v2
                     MAlonzo.Code.Data.Nat.Divisibility.Core.C_divides_34 v7
                       -> let v9
                                = coe
-                                   MAlonzo.Code.Data.Nat.GCD.du_gcd'8243'_1098
+                                   MAlonzo.Code.Data.Nat.GCD.du_gcd'8243'_1100
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v0) (coe v1))
                                    (coe
@@ -278,22 +278,22 @@ du_coprime'45'factors_176 v0 v1 v2
                                          coe
                                            MAlonzo.Code.Induction.WellFounded.du_wfRecBuilder_160
                                            v10 v12)
-                                      erased (coe MAlonzo.Code.Data.Nat.GCD.du_gcd'8243'_1098)
+                                      erased (coe MAlonzo.Code.Data.Nat.GCD.du_gcd'8243'_1100)
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v0)
                                          (coe v1))) in
                          coe
                            (case coe v9 of
-                              MAlonzo.Code.Data.Nat.GCD.C_result_1032 v10 v11 v12
+                              MAlonzo.Code.Data.Nat.GCD.C_result_1034 v10 v11 v12
                                 -> case coe v12 of
-                                     MAlonzo.Code.Data.Nat.GCD.C_'43''45'_858 v13 v14
+                                     MAlonzo.Code.Data.Nat.GCD.C_'43''45'_860 v13 v14
                                        -> coe
                                             MAlonzo.Code.Data.Nat.Divisibility.Core.C_divides_34
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.Nat.d__'45'__22
                                                (mulInt (coe v13) (coe v5))
                                                (mulInt (coe v14) (coe v7)))
-                                     MAlonzo.Code.Data.Nat.GCD.C_'45''43'_866 v13 v14
+                                     MAlonzo.Code.Data.Nat.GCD.C_'45''43'_868 v13 v14
                                        -> coe
                                             MAlonzo.Code.Data.Nat.Divisibility.Core.C_divides_34
                                             (coe

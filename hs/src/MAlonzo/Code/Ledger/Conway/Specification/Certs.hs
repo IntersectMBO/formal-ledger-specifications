@@ -631,7 +631,7 @@ d_DecEq'45'DepositPurpose_1222 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'DepositPurpose_1222 v0
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (coe
          (\ v1 ->
             case coe v1 of
@@ -814,18 +814,25 @@ d_DecEq'45'DepositPurpose_1222 v0
                           C_GovActionDeposit_1198 v4
                             -> let v5
                                      = coe
-                                         MAlonzo.Code.Data.Product.Properties.du_'8801''45'dec_78
+                                         MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
+                                         erased
+                                         (\ v5 ->
+                                            coe
+                                              MAlonzo.Code.Data.Product.Properties.du_'215''45''8801''44''8801''8592''8801'_234)
                                          (coe
-                                            MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                            MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                                             (coe
-                                               MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_DecEq'45'TxId_614
-                                               (coe v0)))
-                                         (coe
-                                            (\ v5 ->
                                                MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
-                                                 (coe
-                                                    MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)))
-                                         (coe v2) (coe v4) in
+                                               (MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_DecEq'45'TxId_614
+                                                  (coe v0))
+                                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v2))
+                                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v4)))
+                                            (coe
+                                               MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
+                                               MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
+                                               (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v2))
+                                               (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
+                                                  (coe v4)))) in
                                coe
                                  (case coe v5 of
                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v6 v7
@@ -1014,7 +1021,7 @@ d_DecEq'45'StakePoolParams_1376 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'StakePoolParams_1376 v0
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (coe
          (\ v1 ->
             case coe v1 of
@@ -1041,7 +1048,7 @@ d_DecEq'45'StakePoolParams_1376 v0
                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v14 v15
                                       -> if coe v14
                                            then let v16
-                                                      = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                      = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
                                                           (coe v3) (coe v9) in
                                                 coe
                                                   (case coe v16 of
@@ -1076,7 +1083,7 @@ d_DecEq'45'StakePoolParams_1376 v0
                                                                                          -> if coe
                                                                                                  v23
                                                                                               then let v25
-                                                                                                         = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                                                                         = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
                                                                                                              (coe
                                                                                                                 v5)
                                                                                                              (coe
@@ -1159,7 +1166,7 @@ d_DecEq'45'StakePoolParams_1376 v0
                                                                                           -> if coe
                                                                                                   v23
                                                                                                then let v25
-                                                                                                          = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                                                                          = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
                                                                                                               (coe
                                                                                                                  v5)
                                                                                                               (coe
@@ -1246,7 +1253,7 @@ d_DecEq'45'DCert_1378 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'DCert_1378 v0
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (coe
          (\ v1 ->
             case coe v1 of
@@ -1308,7 +1315,7 @@ d_DecEq'45'DCert_1378 v0
                                                                       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v18 v19
                                                                         -> if coe v18
                                                                              then let v20
-                                                                                        = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                                                        = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
                                                                                             (coe v5)
                                                                                             (coe
                                                                                                v10) in
@@ -1548,7 +1555,7 @@ d_DecEq'45'DCert_1378 v0
                                                                              MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v19 v20
                                                                                -> if coe v19
                                                                                     then let v21
-                                                                                               = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                                                               = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
                                                                                                    (coe
                                                                                                       v10)
                                                                                                    (coe
@@ -1593,7 +1600,7 @@ d_DecEq'45'DCert_1378 v0
                                                                                                                                   -> if coe
                                                                                                                                           v28
                                                                                                                                        then let v30
-                                                                                                                                                  = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                                                                                                                  = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
                                                                                                                                                       (coe
                                                                                                                                                          v12)
                                                                                                                                                       (coe
@@ -1680,7 +1687,7 @@ d_DecEq'45'DCert_1378 v0
                                                                                                                                    -> if coe
                                                                                                                                            v28
                                                                                                                                         then let v30
-                                                                                                                                                   = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                                                                                                                   = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
                                                                                                                                                        (coe
                                                                                                                                                           v12)
                                                                                                                                                        (coe
@@ -1929,7 +1936,7 @@ d_DecEq'45'DCert_1378 v0
                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v10 v11
                                       -> if coe v10
                                            then let v12
-                                                      = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                      = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
                                                           (coe v3) (coe v7) in
                                                 coe
                                                   (case coe v12 of
@@ -2074,7 +2081,7 @@ d_DecEq'45'DCert_1378 v0
                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v8 v9
                                       -> if coe v8
                                            then let v10
-                                                      = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                      = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
                                                           (coe v3) (coe v6) in
                                                 coe
                                                   (case coe v10 of
@@ -2280,7 +2287,7 @@ d_DecEq'45'DCert_1378 v0
                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v8 v9
                                       -> if coe v8
                                            then let v10
-                                                      = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                      = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
                                                           (coe v3) (coe v6) in
                                                 coe
                                                   (case coe v10 of
@@ -2770,12 +2777,12 @@ d_rewardsBalance_1614 v0 v1
                MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_cryptoStructure_618
                (coe v0))))
       (coe
-         MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+         MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
       (coe
          MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
          (coe
-            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
       (coe (\ v2 -> v2)) (coe d_rewards_1434 (coe v1))
 -- Ledger.Conway.Specification.Certs.HasCoin-CertState
 d_HasCoin'45'CertState_1620 ::

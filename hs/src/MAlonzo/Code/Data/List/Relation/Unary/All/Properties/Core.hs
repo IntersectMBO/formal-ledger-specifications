@@ -89,8 +89,7 @@ du_'172'All'8658'Any'172'_62 v0 v1
   = case coe v1 of
       []
         -> coe
-             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-             erased
+             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
       (:) v2 v3
         -> let v4 = coe v0 v2 in
            coe

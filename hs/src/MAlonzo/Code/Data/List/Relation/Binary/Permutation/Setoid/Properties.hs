@@ -1066,7 +1066,7 @@ du_Unique'45'resp'45''8621'_432 v0 v1 v2
                  (MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_62 (coe v0))
                  v4 v3 v6)))
       (coe
-         MAlonzo.Code.Relation.Binary.Properties.Setoid.du_'8777''45'resp'8322'_72)
+         MAlonzo.Code.Relation.Binary.Properties.Setoid.du_'8777''45'resp'8322'_76)
       (coe v1) (coe v2)
 -- Data.List.Relation.Binary.Permutation.Setoid.Properties.xs↭ys⇒|xs|≡|ys|
 d_xs'8621'ys'8658''124'xs'124''8801''124'ys'124'_440 ::
@@ -1833,7 +1833,7 @@ du_map'8314'_704 v0 v1 v2 v3 v4
         -> coe
              MAlonzo.Code.Data.List.Relation.Binary.Permutation.Homogeneous.C_trans_80
              (coe
-                MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                 (\ v10 v11 -> v11)
                 (coe MAlonzo.Code.Data.List.Base.du_map_22 (coe v0)) v2 v6)
              (coe du_map'8314'_704 (coe v0) (coe v1) (coe v2) (coe v6) (coe v8))
@@ -1898,8 +1898,7 @@ du_filter'8314'_744 v0 v1 v2 v3
                                                          else coe
                                                                 seq (coe v19)
                                                                 (coe
-                                                                   MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                   erased)
+                                                                   MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68)
                                                   _ -> MAlonzo.RTE.mazUnreachableError)
                                         else coe
                                                seq (coe v17)
@@ -1909,8 +1908,7 @@ du_filter'8314'_744 v0 v1 v2 v3
                                                          then coe
                                                                 seq (coe v19)
                                                                 (coe
-                                                                   MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                   erased)
+                                                                   MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68)
                                                          else coe
                                                                 seq (coe v19)
                                                                 (coe
@@ -1966,8 +1964,7 @@ du_filter'8314'_744 v0 v1 v2 v3
                                                                                                              (coe
                                                                                                                 v31)
                                                                                                              (coe
-                                                                                                                MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                                                erased))
+                                                                                                                MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68))
                                                                                                    _ -> MAlonzo.RTE.mazUnreachableError in
                                                                                          coe
                                                                                            (case coe
@@ -1984,8 +1981,7 @@ du_filter'8314'_744 v0 v1 v2 v3
                                                                                                                                 v34 of
                                                                                                                            MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26
                                                                                                                              -> coe
-                                                                                                                                  MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                                                                  erased
+                                                                                                                                  MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
                                                                                                                            _ -> coe
                                                                                                                                   v30
                                                                                                                     _ -> coe
@@ -2027,8 +2023,7 @@ du_filter'8314'_744 v0 v1 v2 v3
                                                                                                                                    v35 of
                                                                                                                               MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26
                                                                                                                                 -> coe
-                                                                                                                                     MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                                                                     erased
+                                                                                                                                     MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
                                                                                                                               _ -> coe
                                                                                                                                      v33)
                                                                                                                _ -> MAlonzo.RTE.mazUnreachableError
@@ -2043,8 +2038,7 @@ du_filter'8314'_744 v0 v1 v2 v3
                                                                                                                                            v35 of
                                                                                                                                       MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26
                                                                                                                                         -> coe
-                                                                                                                                             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                                                                             erased
+                                                                                                                                             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
                                                                                                                                       _ -> coe
                                                                                                                                              v33
                                                                                                                                _ -> coe
@@ -2055,8 +2049,7 @@ du_filter'8314'_744 v0 v1 v2 v3
                                                                                                                         v32 of
                                                                                                                    MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26
                                                                                                                      -> coe
-                                                                                                                          MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                                                          erased
+                                                                                                                          MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
                                                                                                                    _ -> coe
                                                                                                                           v34)))
                                                                                               _ -> MAlonzo.RTE.mazUnreachableError)))
@@ -2086,8 +2079,7 @@ du_filter'8314'_744 v0 v1 v2 v3
                                                                                                               (coe
                                                                                                                  v31)
                                                                                                               (coe
-                                                                                                                 MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                                                 erased))
+                                                                                                                 MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68))
                                                                                                     _ -> MAlonzo.RTE.mazUnreachableError in
                                                                                           coe
                                                                                             (case coe
@@ -2104,8 +2096,7 @@ du_filter'8314'_744 v0 v1 v2 v3
                                                                                                                                  v34 of
                                                                                                                             MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v35
                                                                                                                               -> coe
-                                                                                                                                   MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                                                                   erased
+                                                                                                                                   MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
                                                                                                                             _ -> coe
                                                                                                                                    v30
                                                                                                                      _ -> coe
@@ -2123,8 +2114,7 @@ du_filter'8314'_744 v0 v1 v2 v3
                                                                                                                                    v35 of
                                                                                                                               MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v36
                                                                                                                                 -> coe
-                                                                                                                                     MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                                                                     erased
+                                                                                                                                     MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
                                                                                                                               _ -> coe
                                                                                                                                      v33
                                                                                                                        else (case coe
@@ -2162,8 +2152,7 @@ du_filter'8314'_744 v0 v1 v2 v3
                                                                                                                                             v35 of
                                                                                                                                        MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v36
                                                                                                                                          -> coe
-                                                                                                                                              MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                                                                              erased
+                                                                                                                                              MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
                                                                                                                                        _ -> coe
                                                                                                                                               v33
                                                                                                                                 _ -> coe
@@ -2174,8 +2163,7 @@ du_filter'8314'_744 v0 v1 v2 v3
                                                                                                                          v32 of
                                                                                                                     MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26
                                                                                                                       -> coe
-                                                                                                                           MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                                                           erased
+                                                                                                                           MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
                                                                                                                     _ -> coe
                                                                                                                            v34)))
                                                                                                _ -> MAlonzo.RTE.mazUnreachableError)))
@@ -2211,8 +2199,7 @@ du_filter'8314'_744 v0 v1 v2 v3
                                                                                                              (coe
                                                                                                                 v31)
                                                                                                              (coe
-                                                                                                                MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                                                erased))
+                                                                                                                MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68))
                                                                                                    _ -> MAlonzo.RTE.mazUnreachableError in
                                                                                          coe
                                                                                            (case coe
@@ -2229,8 +2216,7 @@ du_filter'8314'_744 v0 v1 v2 v3
                                                                                                                                 v34 of
                                                                                                                            MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v35
                                                                                                                              -> coe
-                                                                                                                                  MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                                                                  erased
+                                                                                                                                  MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
                                                                                                                            _ -> coe
                                                                                                                                   v30
                                                                                                                     _ -> coe
@@ -2248,8 +2234,7 @@ du_filter'8314'_744 v0 v1 v2 v3
                                                                                                                                   v35 of
                                                                                                                              MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v36
                                                                                                                                -> coe
-                                                                                                                                    MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                                                                    erased
+                                                                                                                                    MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
                                                                                                                              _ -> coe
                                                                                                                                     v33
                                                                                                                       else (case coe
@@ -2287,8 +2272,7 @@ du_filter'8314'_744 v0 v1 v2 v3
                                                                                                                                            v35 of
                                                                                                                                       MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v36
                                                                                                                                         -> coe
-                                                                                                                                             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                                                                             erased
+                                                                                                                                             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
                                                                                                                                       _ -> coe
                                                                                                                                              v33
                                                                                                                                _ -> coe
@@ -2299,8 +2283,7 @@ du_filter'8314'_744 v0 v1 v2 v3
                                                                                                                         v32 of
                                                                                                                    MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26
                                                                                                                      -> coe
-                                                                                                                          MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                                                          erased
+                                                                                                                          MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
                                                                                                                    _ -> coe
                                                                                                                           v34)))
                                                                                               _ -> MAlonzo.RTE.mazUnreachableError)))
@@ -2330,8 +2313,7 @@ du_filter'8314'_744 v0 v1 v2 v3
                                                                                                               (coe
                                                                                                                  v31)
                                                                                                               (coe
-                                                                                                                 MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                                                 erased))
+                                                                                                                 MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68))
                                                                                                     _ -> MAlonzo.RTE.mazUnreachableError in
                                                                                           coe
                                                                                             (case coe
@@ -2348,8 +2330,7 @@ du_filter'8314'_744 v0 v1 v2 v3
                                                                                                                                  v34 of
                                                                                                                             MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v35
                                                                                                                               -> coe
-                                                                                                                                   MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                                                                   erased
+                                                                                                                                   MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
                                                                                                                             _ -> coe
                                                                                                                                    v30
                                                                                                                      _ -> coe
@@ -2369,8 +2350,7 @@ du_filter'8314'_744 v0 v1 v2 v3
                                                                                                                                            v35 of
                                                                                                                                       MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v36
                                                                                                                                         -> coe
-                                                                                                                                             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                                                                             erased
+                                                                                                                                             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
                                                                                                                                       _ -> coe
                                                                                                                                              v33
                                                                                                                                _ -> coe
@@ -2381,8 +2361,7 @@ du_filter'8314'_744 v0 v1 v2 v3
                                                                                                                         v32 of
                                                                                                                    MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v35
                                                                                                                      -> coe
-                                                                                                                          MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                                                          erased
+                                                                                                                          MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
                                                                                                                    _ -> coe
                                                                                                                           v34)
                                                                                                          else (case coe
@@ -2394,8 +2373,7 @@ du_filter'8314'_744 v0 v1 v2 v3
                                                                                                                                     v35 of
                                                                                                                                MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v36
                                                                                                                                  -> coe
-                                                                                                                                      MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                                                                      erased
+                                                                                                                                      MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
                                                                                                                                _ -> coe
                                                                                                                                       v33
                                                                                                                         else (case coe
@@ -3084,15 +3062,15 @@ d_'43''43''45'isMagma_1412 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 d_'43''43''45'isMagma_1412 ~v0 ~v1 v2
   = du_'43''43''45'isMagma_1412 v2
 du_'43''43''45'isMagma_1412 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 du_'43''43''45'isMagma_1412 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.C_constructor_210
+      MAlonzo.Code.Algebra.Structures.C_constructor_212
       (coe
          MAlonzo.Code.Data.List.Relation.Binary.Permutation.Setoid.du_'8621''45'isEquivalence_176
          (coe v0))
@@ -3103,15 +3081,15 @@ d_'43''43''45'isSemigroup_1414 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 d_'43''43''45'isSemigroup_1414 ~v0 ~v1 v2
   = du_'43''43''45'isSemigroup_1414 v2
 du_'43''43''45'isSemigroup_1414 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 du_'43''43''45'isSemigroup_1414 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.C_constructor_522
+      MAlonzo.Code.Algebra.Structures.C_constructor_524
       (coe du_'43''43''45'isMagma_1412 (coe v0))
       (coe du_'43''43''45'assoc_1372 (coe v0))
 -- Data.List.Relation.Binary.Permutation.Setoid.Properties.++-isMonoid
@@ -3119,15 +3097,15 @@ d_'43''43''45'isMonoid_1416 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 d_'43''43''45'isMonoid_1416 ~v0 ~v1 v2
   = du_'43''43''45'isMonoid_1416 v2
 du_'43''43''45'isMonoid_1416 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 du_'43''43''45'isMonoid_1416 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.C_constructor_758
+      MAlonzo.Code.Algebra.Structures.C_constructor_760
       (coe du_'43''43''45'isSemigroup_1414 (coe v0))
       (coe du_'43''43''45'identity_1370 (coe v0))
 -- Data.List.Relation.Binary.Permutation.Setoid.Properties.++-isCommutativeMonoid
@@ -3135,15 +3113,15 @@ d_'43''43''45'isCommutativeMonoid_1418 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 d_'43''43''45'isCommutativeMonoid_1418 ~v0 ~v1 v2
   = du_'43''43''45'isCommutativeMonoid_1418 v2
 du_'43''43''45'isCommutativeMonoid_1418 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 du_'43''43''45'isCommutativeMonoid_1418 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.C_constructor_820
+      MAlonzo.Code.Algebra.Structures.C_constructor_822
       (coe du_'43''43''45'isMonoid_1416 (coe v0))
       (coe du_'43''43''45'comm_1380 (coe v0))
 -- Data.List.Relation.Binary.Permutation.Setoid.Properties.++-magma
@@ -3929,14 +3907,14 @@ d_commutativeMonoid_1634 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764 ->
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766 ->
   MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_996
 d_commutativeMonoid_1634 ~v0 ~v1 ~v2 v3 v4 v5
   = du_commutativeMonoid_1634 v3 v4 v5
 du_commutativeMonoid_1634 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764 ->
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766 ->
   MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_996
 du_commutativeMonoid_1634 v0 v1 v2
   = coe MAlonzo.Code.Algebra.Bundles.C_constructor_1088 v0 v1 v2
@@ -3947,7 +3925,7 @@ d_foldr'45'commMonoid_1708 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764 ->
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766 ->
   [AgdaAny] ->
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Binary.Permutation.Homogeneous.T_Permutation_32 ->
@@ -3957,7 +3935,7 @@ d_foldr'45'commMonoid_1708 ~v0 ~v1 ~v2 v3 v4 v5 v6 v7 v8
 du_foldr'45'commMonoid_1708 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764 ->
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766 ->
   [AgdaAny] ->
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Binary.Permutation.Homogeneous.T_Permutation_32 ->
@@ -3969,21 +3947,21 @@ du_foldr'45'commMonoid_1708 v0 v1 v2 v3 v4 v5
              MAlonzo.Code.Data.List.Relation.Binary.Pointwise.du_foldr'8314'_466
              (coe v3) (coe v4) (coe v0) (coe v0)
              (coe
-                MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+                MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
                 (coe
-                   MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                   MAlonzo.Code.Algebra.Structures.d_isMagma_498
                    (coe
-                      MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
-                      (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v2)))))
+                      MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
+                      (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v2)))))
              (coe v1) (coe v1)
              (coe
                 MAlonzo.Code.Relation.Binary.Structures.d_refl_36
-                (MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                (MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                    (coe
-                      MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                      MAlonzo.Code.Algebra.Structures.d_isMagma_498
                       (coe
-                         MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
-                         (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v2)))))
+                         MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
+                         (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v2)))))
                 v1)
              (coe v8)
       MAlonzo.Code.Data.List.Relation.Binary.Permutation.Homogeneous.C_prep_54 v10 v11
@@ -3992,18 +3970,18 @@ du_foldr'45'commMonoid_1708 v0 v1 v2 v3 v4 v5
                -> case coe v4 of
                     (:) v14 v15
                       -> coe
-                           MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
-                           (MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                           MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
+                           (MAlonzo.Code.Algebra.Structures.d_isMagma_498
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
-                                 (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v2))))
+                                 MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
+                                 (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v2))))
                            v12 v14
                            (coe
-                              MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+                              MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
                               (coe MAlonzo.Code.Data.List.Base.du_foldr_216 (coe v0) (coe v1))
                               (\ v16 v17 -> v16) v13 v15)
                            (coe
-                              MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                              MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                               (\ v16 v17 -> v17)
                               (coe MAlonzo.Code.Data.List.Base.du_foldr_216 (coe v0) (coe v1))
                               v13 v15)
@@ -4049,13 +4027,13 @@ du_foldr'45'commMonoid_1708 v0 v1 v2 v3 v4 v5
                                                (coe
                                                   MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                                                   (coe
-                                                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                                      (coe
-                                                        MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                        MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                         (coe
-                                                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                            (coe
-                                                              MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                              MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                               (coe v2)))))))
                                             (coe
                                                v0 v15
@@ -4085,23 +4063,23 @@ du_foldr'45'commMonoid_1708 v0 v1 v2 v3 v4 v5
                                                   (coe
                                                      MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                                                      (coe
-                                                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                                         (coe
-                                                           MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                           MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                            (coe
-                                                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                               (coe
-                                                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                                  (coe v2)))))))
                                                (MAlonzo.Code.Relation.Binary.Structures.d_sym_38
                                                   (coe
-                                                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                                      (coe
-                                                        MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                        MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                         (coe
-                                                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                            (coe
-                                                              MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                              MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                               (coe v2))))))
                                                (coe
                                                   v0 v15
@@ -4129,13 +4107,13 @@ du_foldr'45'commMonoid_1708 v0 v1 v2 v3 v4 v5
                                                      (coe
                                                         MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                                                         (coe
-                                                           MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                                           MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                                            (coe
-                                                              MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                              MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                               (coe
-                                                                 MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                                 MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                                  (coe
-                                                                    MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                                    MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                                     (coe v2)))))))
                                                   (coe
                                                      v0 (coe v0 v15 v17)
@@ -4161,13 +4139,13 @@ du_foldr'45'commMonoid_1708 v0 v1 v2 v3 v4 v5
                                                         (coe
                                                            MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                                                            (coe
-                                                              MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                                              MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                                               (coe
-                                                                 MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                                 MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                                  (coe
-                                                                    MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                                    MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                                     (coe
-                                                                       MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                                       MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                                        (coe v2)))))))
                                                      (coe
                                                         v0 (coe v0 v17 v15)
@@ -4193,13 +4171,13 @@ du_foldr'45'commMonoid_1708 v0 v1 v2 v3 v4 v5
                                                            (coe
                                                               MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                                                               (coe
-                                                                 MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                                                 MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                                                  (coe
-                                                                    MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                                    MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                                     (coe
-                                                                       MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                                       MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                                        (coe
-                                                                          MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                                          MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                                           (coe v2)))))))
                                                         (coe
                                                            v0 (coe v0 v19 v21)
@@ -4227,13 +4205,13 @@ du_foldr'45'commMonoid_1708 v0 v1 v2 v3 v4 v5
                                                               (coe
                                                                  MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                                                                  (coe
-                                                                    MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                                                    MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                                                     (coe
-                                                                       MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                                       MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                                        (coe
-                                                                          MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                                          MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                                           (coe
-                                                                             MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                                             MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                                              (coe v2)))))))
                                                            (coe
                                                               v0 v19
@@ -4243,10 +4221,10 @@ du_foldr'45'commMonoid_1708 v0 v1 v2 v3 v4 v5
                                                                     MAlonzo.Code.Data.List.Base.du_foldr_216
                                                                     (coe v0) (coe v1) (coe v22)))))
                                                         (coe
-                                                           MAlonzo.Code.Algebra.Structures.d_assoc_498
-                                                           (MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                           MAlonzo.Code.Algebra.Structures.d_assoc_500
+                                                           (MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                               (coe
-                                                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                                  (coe v2)))
                                                            v19 v21
                                                            (coe
@@ -4254,69 +4232,69 @@ du_foldr'45'commMonoid_1708 v0 v1 v2 v3 v4 v5
                                                               (coe v0) (coe v1) (coe v22))))
                                                      (coe
                                                         MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'691'_46
-                                                        (MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+                                                        (MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
                                                            (coe
-                                                              MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                              MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                               (coe
-                                                                 MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                                 MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                                  (coe
-                                                                    MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                                    MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                                     (coe v2)))))
                                                         (MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                                                            (coe
-                                                              MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                                              MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                                               (coe
-                                                                 MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                                 MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                                  (coe
-                                                                    MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                                    MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                                     (coe
-                                                                       MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                                       MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                                        (coe v2))))))
                                                         (coe
                                                            MAlonzo.Code.Data.List.Base.du_foldr_216
                                                            (coe v0) (coe v1) (coe v22))
                                                         (coe v0 v17 v15) (coe v0 v19 v21)
                                                         (coe
-                                                           MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
-                                                           (MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                           MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
+                                                           (MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                               (coe
-                                                                 MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                                 MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                                  (coe
-                                                                    MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                                    MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                                     (coe v2))))
                                                            v17 v19 v15 v21 v13 v12)))
                                                   (coe
                                                      MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'691'_46
-                                                     (MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+                                                     (MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
                                                         (coe
-                                                           MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                           MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                            (coe
-                                                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                               (coe
-                                                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                                  (coe v2)))))
                                                      (MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                                                         (coe
-                                                           MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                                           MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                                            (coe
-                                                              MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                              MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                               (coe
-                                                                 MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                                 MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                                  (coe
-                                                                    MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                                    MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                                     (coe v2))))))
                                                      (coe
                                                         MAlonzo.Code.Data.List.Base.du_foldr_216
                                                         (coe v0) (coe v1) (coe v22))
                                                      (coe v0 v15 v17) (coe v0 v17 v15)
                                                      (coe
-                                                        MAlonzo.Code.Algebra.Structures.d_comm_776
+                                                        MAlonzo.Code.Algebra.Structures.d_comm_778
                                                         v2 v15 v17)))
                                                (coe
-                                                  MAlonzo.Code.Algebra.Structures.d_assoc_498
-                                                  (MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                  MAlonzo.Code.Algebra.Structures.d_assoc_500
+                                                  (MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                      (coe
-                                                        MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                        MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                         (coe v2)))
                                                   v15 v17
                                                   (coe
@@ -4324,52 +4302,52 @@ du_foldr'45'commMonoid_1708 v0 v1 v2 v3 v4 v5
                                                      (coe v0) (coe v1) (coe v22))))
                                             (coe
                                                MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'737'_42
-                                               (MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+                                               (MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
                                                   (coe
-                                                     MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                     MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                      (coe
-                                                        MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                        MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                         (coe
-                                                           MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                           MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                            (coe v2)))))
                                                (MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                                                   (coe
-                                                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                                      (coe
-                                                        MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                        MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                         (coe
-                                                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                            (coe
-                                                              MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                              MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                               (coe v2))))))
                                                v15
                                                (coe
-                                                  MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+                                                  MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
                                                   (coe v0 v17) (\ v23 v24 -> v23)
                                                   (coe
-                                                     MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+                                                     MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
                                                      (coe
                                                         MAlonzo.Code.Data.List.Base.du_foldr_216
                                                         (coe v0) (coe v1))
                                                      (\ v23 v24 -> v23) v18 v22)
                                                   (coe
-                                                     MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                                                     MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                                                      (\ v23 v24 -> v24)
                                                      (coe
                                                         MAlonzo.Code.Data.List.Base.du_foldr_216
                                                         (coe v0) (coe v1))
                                                      v18 v22))
                                                (coe
-                                                  MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                                                  MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                                                   (\ v23 v24 -> v24) (coe v0 v17)
                                                   (coe
-                                                     MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+                                                     MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
                                                      (coe
                                                         MAlonzo.Code.Data.List.Base.du_foldr_216
                                                         (coe v0) (coe v1))
                                                      (\ v23 v24 -> v23) v18 v22)
                                                   (coe
-                                                     MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                                                     MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                                                      (\ v23 v24 -> v24)
                                                      (coe
                                                         MAlonzo.Code.Data.List.Base.du_foldr_216
@@ -4377,33 +4355,33 @@ du_foldr'45'commMonoid_1708 v0 v1 v2 v3 v4 v5
                                                      v18 v22))
                                                (coe
                                                   MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'737'_42
-                                                  (MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+                                                  (MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
                                                      (coe
-                                                        MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                        MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                         (coe
-                                                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                            (coe
-                                                              MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                              MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                               (coe v2)))))
                                                   (MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                                                      (coe
-                                                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                                         (coe
-                                                           MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                           MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                            (coe
-                                                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                               (coe
-                                                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                                  (coe v2))))))
                                                   v17
                                                   (coe
-                                                     MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+                                                     MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
                                                      (coe
                                                         MAlonzo.Code.Data.List.Base.du_foldr_216
                                                         (coe v0) (coe v1))
                                                      (\ v23 v24 -> v23) v18 v22)
                                                   (coe
-                                                     MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                                                     MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                                                      (\ v23 v24 -> v24)
                                                      (coe
                                                         MAlonzo.Code.Data.List.Base.du_foldr_216
@@ -4419,23 +4397,23 @@ du_foldr'45'commMonoid_1708 v0 v1 v2 v3 v4 v5
       MAlonzo.Code.Data.List.Relation.Binary.Permutation.Homogeneous.C_trans_80 v7 v9 v10
         -> coe
              MAlonzo.Code.Relation.Binary.Structures.d_trans_40
-             (MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+             (MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                 (coe
-                   MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                   MAlonzo.Code.Algebra.Structures.d_isMagma_498
                    (coe
-                      MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
-                      (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_774 (coe v2)))))
+                      MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
+                      (coe MAlonzo.Code.Algebra.Structures.d_isMonoid_776 (coe v2)))))
              (coe
-                MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+                MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
                 (coe MAlonzo.Code.Data.List.Base.du_foldr_216 (coe v0) (coe v1))
                 (\ v11 v12 -> v11) v3 v7)
              (coe
-                MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                 (\ v11 v12 -> v12)
                 (coe MAlonzo.Code.Data.List.Base.du_foldr_216 (coe v0) (coe v1)) v3
                 v7)
              (coe
-                MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                 (\ v11 v12 -> v12)
                 (coe MAlonzo.Code.Data.List.Base.du_foldr_216 (coe v0) (coe v1)) v7
                 v4)
@@ -4826,7 +4804,7 @@ du_0'60'steps_1886 v0 v1 v2
                -> case coe v1 of
                     (:) v11 v12
                       -> coe
-                           MAlonzo.Code.Data.Nat.Properties.du_m'60'n'8658'm'60'1'43'n_3204
+                           MAlonzo.Code.Data.Nat.Properties.du_m'60'n'8658'm'60'1'43'n_3444
                            (coe du_0'60'steps_1886 (coe v10) (coe v12) (coe v8))
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
@@ -4840,7 +4818,7 @@ du_0'60'steps_1886 v0 v1 v2
                              -> case coe v17 of
                                   (:) v18 v19
                                     -> coe
-                                         MAlonzo.Code.Data.Nat.Properties.du_m'60'n'8658'm'60'1'43'n_3204
+                                         MAlonzo.Code.Data.Nat.Properties.du_m'60'n'8658'm'60'1'43'n_3444
                                          (coe du_0'60'steps_1886 (coe v15) (coe v19) (coe v11))
                                   _ -> MAlonzo.RTE.mazUnreachableError
                            _ -> MAlonzo.RTE.mazUnreachableError
@@ -4848,10 +4826,10 @@ du_0'60'steps_1886 v0 v1 v2
              _ -> MAlonzo.RTE.mazUnreachableError
       MAlonzo.Code.Data.List.Relation.Binary.Permutation.Homogeneous.C_trans_80 v4 v6 v7
         -> coe
-             MAlonzo.Code.Data.Nat.Properties.du_'60''45''8804''45'trans_3134
+             MAlonzo.Code.Data.Nat.Properties.du_'60''45''8804''45'trans_3374
              (coe du_0'60'steps_1886 (coe v0) (coe v4) (coe v6))
              (coe
-                MAlonzo.Code.Data.Nat.Properties.du_m'8804'm'43'n_3624
+                MAlonzo.Code.Data.Nat.Properties.du_m'8804'm'43'n_3864
                 (coe
                    MAlonzo.Code.Data.List.Relation.Binary.Permutation.Setoid.du_steps_58
                    v0 v4 v6))

@@ -48,8 +48,7 @@ du_head_56 v0
       C_here_46 v3 -> coe v3
       C_there_54 v3
         -> coe
-             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-             erased
+             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Unary.Any.tail
 d_tail_66 ::
@@ -67,8 +66,7 @@ du_tail_66 v0
   = case coe v0 of
       C_here_46 v3
         -> coe
-             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-             erased
+             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
       C_there_54 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Unary.Any.map
@@ -239,7 +237,7 @@ du_any'63'_138 v0 v1
              MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
              (coe du_fromSum_132) (coe du_toSum_126)
              (coe
-                MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8846''45'dec__96
+                MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8846''63'__96
                 (coe v0 v2) (coe du_any'63'_138 (coe v0) (coe v3)))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Unary.Any.satisfiable

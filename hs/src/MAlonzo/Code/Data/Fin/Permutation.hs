@@ -191,8 +191,8 @@ d_reverse_80 ::
 d_reverse_80 v0
   = coe
       du_permutation_26
-      (MAlonzo.Code.Data.Fin.Base.d_opposite_384 (coe v0))
-      (MAlonzo.Code.Data.Fin.Base.d_opposite_384 (coe v0)) erased erased
+      (MAlonzo.Code.Data.Fin.Base.d_opposite_406 (coe v0))
+      (MAlonzo.Code.Data.Fin.Base.d_opposite_406 (coe v0)) erased erased
 -- Data.Fin.Permutation.remove
 d_remove_82 ::
   Integer ->
@@ -286,10 +286,10 @@ du_to_124 ::
   MAlonzo.Code.Data.Fin.Base.T_Fin_10
 du_to_124 v0 v1 v2
   = coe
-      MAlonzo.Code.Data.Fin.Base.du_punchOut_396 (coe du_π'691'_96 v1 v0)
+      MAlonzo.Code.Data.Fin.Base.du_punchOut_418 (coe du_π'691'_96 v1 v0)
       (coe
          du_π'691'_96 v1
-         (coe MAlonzo.Code.Data.Fin.Base.du_punchIn_410 (coe v0) (coe v2)))
+         (coe MAlonzo.Code.Data.Fin.Base.du_punchIn_432 (coe v0) (coe v2)))
 -- Data.Fin.Permutation._.from
 d_from_128 ::
   Integer ->
@@ -306,11 +306,11 @@ du_from_128 ::
   MAlonzo.Code.Data.Fin.Base.T_Fin_10
 du_from_128 v0 v1 v2
   = coe
-      MAlonzo.Code.Data.Fin.Base.du_punchOut_396 (coe v0)
+      MAlonzo.Code.Data.Fin.Base.du_punchOut_418 (coe v0)
       (coe
          du_π'737'_100 v1
          (coe
-            MAlonzo.Code.Data.Fin.Base.du_punchIn_410 (coe du_π'691'_96 v1 v0)
+            MAlonzo.Code.Data.Fin.Base.du_punchIn_432 (coe du_π'691'_96 v1 v0)
             (coe v2)))
 -- Data.Fin.Permutation._.inverseʳ′
 d_inverse'691''8242'_132 ::
@@ -439,7 +439,7 @@ du_to_188 ::
 du_to_188 v0 v1 v2 v3
   = let v4
           = coe
-              MAlonzo.Code.Data.Fin.Properties.du__'8799'__50 (coe v0)
+              MAlonzo.Code.Data.Fin.Properties.du__'8799'__54 (coe v0)
               (coe v3) in
     coe
       (case coe v4 of
@@ -449,11 +449,11 @@ du_to_188 v0 v1 v2 v3
                 else coe
                        seq (coe v6)
                        (coe
-                          MAlonzo.Code.Data.Fin.Base.du_punchIn_410 (coe v1)
+                          MAlonzo.Code.Data.Fin.Base.du_punchIn_432 (coe v1)
                           (coe
                              du__'10216''36''10217''691'__28 v2
                              (coe
-                                MAlonzo.Code.Data.Fin.Base.du_punchOut_396 (coe v0) (coe v3))))
+                                MAlonzo.Code.Data.Fin.Base.du_punchOut_418 (coe v0) (coe v3))))
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Data.Fin.Permutation._.from
 d_from_204 ::
@@ -474,7 +474,7 @@ du_from_204 ::
 du_from_204 v0 v1 v2 v3
   = let v4
           = coe
-              MAlonzo.Code.Data.Fin.Properties.du__'8799'__50 (coe v1)
+              MAlonzo.Code.Data.Fin.Properties.du__'8799'__54 (coe v1)
               (coe v3) in
     coe
       (case coe v4 of
@@ -484,11 +484,11 @@ du_from_204 v0 v1 v2 v3
                 else coe
                        seq (coe v6)
                        (coe
-                          MAlonzo.Code.Data.Fin.Base.du_punchIn_410 (coe v0)
+                          MAlonzo.Code.Data.Fin.Base.du_punchIn_432 (coe v0)
                           (coe
                              du__'10216''36''10217''737'__30 v2
                              (coe
-                                MAlonzo.Code.Data.Fin.Base.du_punchOut_396 (coe v1) (coe v3))))
+                                MAlonzo.Code.Data.Fin.Base.du_punchOut_418 (coe v1) (coe v3))))
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Data.Fin.Permutation._.inverseʳ′
 d_inverse'691''8242'_220 ::

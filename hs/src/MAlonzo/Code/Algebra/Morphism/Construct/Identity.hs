@@ -44,7 +44,7 @@ d_homo_56 v0
 -- Algebra.Morphism.Construct.Identity._._._.IsMagmaHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_58 ::
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsMagmaHomomorphism_194 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_58 v0
   = coe
       MAlonzo.Code.Algebra.Morphism.Structures.d_isRelHomomorphism_202
@@ -830,7 +830,7 @@ d_'92''92''45'homo_1458 v0
 -- Algebra.Morphism.Construct.Identity._._._.IsQuasigroupHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_1462 ::
   MAlonzo.Code.Algebra.Morphism.Structures.T_IsQuasigroupHomomorphism_2920 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1462 v0
   = coe
       MAlonzo.Code.Algebra.Morphism.Structures.d_isRelHomomorphism_2932
@@ -1193,7 +1193,7 @@ du_magmaHomomorphism_2044 v0
          (coe
             MAlonzo.Code.Relation.Binary.Structures.d_refl_36
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+               MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                (coe MAlonzo.Code.Algebra.Bundles.d_isMagma_94 (coe v0)))))
 -- Algebra.Morphism.Construct.Identity._._.rawMonoid
 d_rawMonoid_2058 ::
@@ -1228,11 +1228,11 @@ du_monoidHomomorphism_2136 v0
          (coe
             MAlonzo.Code.Relation.Binary.Structures.d_refl_36
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+               MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                  MAlonzo.Code.Algebra.Structures.d_isMagma_498
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                     MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                      (coe MAlonzo.Code.Algebra.Bundles.d_isMonoid_938 (coe v0)))))))
 -- Algebra.Morphism.Construct.Identity._._.rawGroup
 d_rawGroup_2150 ::
@@ -1266,13 +1266,13 @@ du_groupHomomorphism_2246 v0
          (coe
             MAlonzo.Code.Relation.Binary.Structures.d_refl_36
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+               MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                  MAlonzo.Code.Algebra.Structures.d_isMagma_498
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                     MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isMonoid_1088
+                        MAlonzo.Code.Algebra.Structures.d_isMonoid_1090
                         (coe MAlonzo.Code.Algebra.Bundles.d_isGroup_1592 (coe v0))))))))
 -- Algebra.Morphism.Construct.Identity._._.rawNearSemiring
 d_rawNearSemiring_2260 ::
@@ -1307,13 +1307,13 @@ du_nearSemiringHomomorphism_2368 v0
          (coe
             MAlonzo.Code.Relation.Binary.Structures.d_refl_36
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+               MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                  MAlonzo.Code.Algebra.Structures.d_isMagma_498
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                     MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_'43''45'isMonoid_1278
+                        MAlonzo.Code.Algebra.Structures.d_'43''45'isMonoid_1280
                         (coe
                            MAlonzo.Code.Algebra.Bundles.d_isNearSemiring_1842 (coe v0))))))))
 -- Algebra.Morphism.Construct.Identity._._.rawSemiring
@@ -1357,17 +1357,17 @@ du_semiringHomomorphism_2508 v0
          (coe
             MAlonzo.Code.Relation.Binary.Structures.d_refl_36
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+               MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                  MAlonzo.Code.Algebra.Structures.d_isMagma_498
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                     MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                        MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                           MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                              MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                               (coe
                                  MAlonzo.Code.Algebra.Bundles.d_isSemiring_2388 (coe v0))))))))))
 -- Algebra.Morphism.Construct.Identity._._.rawKleeneAlgebra
@@ -1405,21 +1405,21 @@ du_kleeneAlgebraHomomorphism_2636 v0
          (coe
             MAlonzo.Code.Relation.Binary.Structures.d_refl_36
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+               MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                  MAlonzo.Code.Algebra.Structures.d_isMagma_498
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                     MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                        MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                           MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                              MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isSemiring_2012
+                                 MAlonzo.Code.Algebra.Structures.d_isSemiring_2014
                                  (coe
-                                    MAlonzo.Code.Algebra.Structures.d_isIdempotentSemiring_2140
+                                    MAlonzo.Code.Algebra.Structures.d_isIdempotentSemiring_2142
                                     (coe
                                        MAlonzo.Code.Algebra.Bundles.d_isKleeneAlgebra_3128
                                        (coe v0))))))))))))
@@ -1427,25 +1427,25 @@ du_kleeneAlgebraHomomorphism_2636 v0
 d_rawRingWithoutOne_2650 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Bundles.T_RingWithoutOne_3434 ->
+  MAlonzo.Code.Algebra.Bundles.T_RingWithoutOne_3622 ->
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRingWithoutOne_240
 d_rawRingWithoutOne_2650 ~v0 ~v1 v2 = du_rawRingWithoutOne_2650 v2
 du_rawRingWithoutOne_2650 ::
-  MAlonzo.Code.Algebra.Bundles.T_RingWithoutOne_3434 ->
+  MAlonzo.Code.Algebra.Bundles.T_RingWithoutOne_3622 ->
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRingWithoutOne_240
 du_rawRingWithoutOne_2650 v0
   = coe
-      MAlonzo.Code.Algebra.Bundles.du_rawRingWithoutOne_3580 (coe v0)
+      MAlonzo.Code.Algebra.Bundles.du_rawRingWithoutOne_3768 (coe v0)
 -- Algebra.Morphism.Construct.Identity._.ringWithoutOneHomomorphism
 d_ringWithoutOneHomomorphism_2782 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Bundles.T_RingWithoutOne_3434 ->
+  MAlonzo.Code.Algebra.Bundles.T_RingWithoutOne_3622 ->
   MAlonzo.Code.Algebra.Morphism.Bundles.T_RingWithoutOneHomomorphism_838
 d_ringWithoutOneHomomorphism_2782 ~v0 ~v1 v2
   = du_ringWithoutOneHomomorphism_2782 v2
 du_ringWithoutOneHomomorphism_2782 ::
-  MAlonzo.Code.Algebra.Bundles.T_RingWithoutOne_3434 ->
+  MAlonzo.Code.Algebra.Bundles.T_RingWithoutOne_3622 ->
   MAlonzo.Code.Algebra.Morphism.Bundles.T_RingWithoutOneHomomorphism_838
 du_ringWithoutOneHomomorphism_2782 v0
   = coe
@@ -1454,45 +1454,45 @@ du_ringWithoutOneHomomorphism_2782 v0
       (coe
          du_isRingWithoutOneHomomorphism_840
          (coe
-            MAlonzo.Code.Algebra.Bundles.du_rawRingWithoutOne_3580 (coe v0))
+            MAlonzo.Code.Algebra.Bundles.du_rawRingWithoutOne_3768 (coe v0))
          (coe
             MAlonzo.Code.Relation.Binary.Structures.d_refl_36
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+               MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                  MAlonzo.Code.Algebra.Structures.d_isMagma_498
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                     MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isMonoid_1088
+                        MAlonzo.Code.Algebra.Structures.d_isMonoid_1090
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isGroup_1184
+                           MAlonzo.Code.Algebra.Structures.d_isGroup_1186
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2386
+                              MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2514
                               (coe
-                                 MAlonzo.Code.Algebra.Bundles.d_isRingWithoutOne_3466
+                                 MAlonzo.Code.Algebra.Bundles.d_isRingWithoutOne_3654
                                  (coe v0))))))))))
 -- Algebra.Morphism.Construct.Identity._._.rawRing
 d_rawRing_2796 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Bundles.T_Ring_3908 ->
+  MAlonzo.Code.Algebra.Bundles.T_Ring_4096 ->
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290
 d_rawRing_2796 ~v0 ~v1 v2 = du_rawRing_2796 v2
 du_rawRing_2796 ::
-  MAlonzo.Code.Algebra.Bundles.T_Ring_3908 ->
+  MAlonzo.Code.Algebra.Bundles.T_Ring_4096 ->
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290
 du_rawRing_2796 v0
-  = coe MAlonzo.Code.Algebra.Bundles.du_rawRing_4112 (coe v0)
+  = coe MAlonzo.Code.Algebra.Bundles.du_rawRing_4300 (coe v0)
 -- Algebra.Morphism.Construct.Identity._.ringHomomorphism
 d_ringHomomorphism_3240 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Bundles.T_Ring_3908 ->
+  MAlonzo.Code.Algebra.Bundles.T_Ring_4096 ->
   MAlonzo.Code.Algebra.Morphism.Bundles.T_RingHomomorphism_1006
 d_ringHomomorphism_3240 ~v0 ~v1 v2 = du_ringHomomorphism_3240 v2
 du_ringHomomorphism_3240 ::
-  MAlonzo.Code.Algebra.Bundles.T_Ring_3908 ->
+  MAlonzo.Code.Algebra.Bundles.T_Ring_4096 ->
   MAlonzo.Code.Algebra.Morphism.Bundles.T_RingHomomorphism_1006
 du_ringHomomorphism_3240 v0
   = coe
@@ -1500,44 +1500,44 @@ du_ringHomomorphism_3240 v0
       (coe (\ v1 -> v1))
       (coe
          du_isRingHomomorphism_1338
-         (coe MAlonzo.Code.Algebra.Bundles.du_rawRing_4112 (coe v0))
+         (coe MAlonzo.Code.Algebra.Bundles.du_rawRing_4300 (coe v0))
          (coe
             MAlonzo.Code.Relation.Binary.Structures.d_refl_36
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+               MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                  MAlonzo.Code.Algebra.Structures.d_isMagma_498
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                     MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isMonoid_1088
+                        MAlonzo.Code.Algebra.Structures.d_isMonoid_1090
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isGroup_1184
+                           MAlonzo.Code.Algebra.Structures.d_isGroup_1186
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2762
-                              (coe MAlonzo.Code.Algebra.Bundles.d_isRing_3944 (coe v0))))))))))
+                              MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2890
+                              (coe MAlonzo.Code.Algebra.Bundles.d_isRing_4132 (coe v0))))))))))
 -- Algebra.Morphism.Construct.Identity._._.rawQuasigroup
 d_rawQuasigroup_3254 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Bundles.T_Quasigroup_4358 ->
+  MAlonzo.Code.Algebra.Bundles.T_Quasigroup_4784 ->
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawQuasigroup_350
 d_rawQuasigroup_3254 ~v0 ~v1 v2 = du_rawQuasigroup_3254 v2
 du_rawQuasigroup_3254 ::
-  MAlonzo.Code.Algebra.Bundles.T_Quasigroup_4358 ->
+  MAlonzo.Code.Algebra.Bundles.T_Quasigroup_4784 ->
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawQuasigroup_350
 du_rawQuasigroup_3254 v0
-  = coe MAlonzo.Code.Algebra.Bundles.du_rawQuasigroup_4444 (coe v0)
+  = coe MAlonzo.Code.Algebra.Bundles.du_rawQuasigroup_4870 (coe v0)
 -- Algebra.Morphism.Construct.Identity._.quasigroupHomomorphism
 d_quasigroupHomomorphism_3530 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Bundles.T_Quasigroup_4358 ->
+  MAlonzo.Code.Algebra.Bundles.T_Quasigroup_4784 ->
   MAlonzo.Code.Algebra.Morphism.Bundles.T_QuasigroupHomomorphism_1214
 d_quasigroupHomomorphism_3530 ~v0 ~v1 v2
   = du_quasigroupHomomorphism_3530 v2
 du_quasigroupHomomorphism_3530 ::
-  MAlonzo.Code.Algebra.Bundles.T_Quasigroup_4358 ->
+  MAlonzo.Code.Algebra.Bundles.T_Quasigroup_4784 ->
   MAlonzo.Code.Algebra.Morphism.Bundles.T_QuasigroupHomomorphism_1214
 du_quasigroupHomomorphism_3530 v0
   = coe
@@ -1545,35 +1545,35 @@ du_quasigroupHomomorphism_3530 v0
       (coe (\ v1 -> v1))
       (coe
          du_isQuasigroupHomomorphism_1654
-         (coe MAlonzo.Code.Algebra.Bundles.du_rawQuasigroup_4444 (coe v0))
+         (coe MAlonzo.Code.Algebra.Bundles.du_rawQuasigroup_4870 (coe v0))
          (coe
             MAlonzo.Code.Relation.Binary.Structures.d_refl_36
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+               MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMagma_3056
-                  (coe MAlonzo.Code.Algebra.Bundles.d_isQuasigroup_4386 (coe v0))))))
+                  MAlonzo.Code.Algebra.Structures.d_isMagma_3340
+                  (coe MAlonzo.Code.Algebra.Bundles.d_isQuasigroup_4812 (coe v0))))))
 -- Algebra.Morphism.Construct.Identity._._.rawLoop
 d_rawLoop_3544 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Bundles.T_Loop_4460 ->
+  MAlonzo.Code.Algebra.Bundles.T_Loop_4886 ->
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawLoop_392
 d_rawLoop_3544 ~v0 ~v1 v2 = du_rawLoop_3544 v2
 du_rawLoop_3544 ::
-  MAlonzo.Code.Algebra.Bundles.T_Loop_4460 ->
+  MAlonzo.Code.Algebra.Bundles.T_Loop_4886 ->
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawLoop_392
 du_rawLoop_3544 v0
-  = coe MAlonzo.Code.Algebra.Bundles.du_rawLoop_4550 (coe v0)
+  = coe MAlonzo.Code.Algebra.Bundles.du_rawLoop_4976 (coe v0)
 -- Algebra.Morphism.Construct.Identity._.loopHomomorphism
 d_loopHomomorphism_3640 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Bundles.T_Loop_4460 ->
+  MAlonzo.Code.Algebra.Bundles.T_Loop_4886 ->
   MAlonzo.Code.Algebra.Morphism.Bundles.T_LoopHomomorphism_1342
 d_loopHomomorphism_3640 ~v0 ~v1 v2 = du_loopHomomorphism_3640 v2
 du_loopHomomorphism_3640 ::
-  MAlonzo.Code.Algebra.Bundles.T_Loop_4460 ->
+  MAlonzo.Code.Algebra.Bundles.T_Loop_4886 ->
   MAlonzo.Code.Algebra.Morphism.Bundles.T_LoopHomomorphism_1342
 du_loopHomomorphism_3640 v0
   = coe
@@ -1581,13 +1581,13 @@ du_loopHomomorphism_3640 v0
       (coe (\ v1 -> v1))
       (coe
          du_isLoopHomomorphism_1804
-         (coe MAlonzo.Code.Algebra.Bundles.du_rawLoop_4550 (coe v0))
+         (coe MAlonzo.Code.Algebra.Bundles.du_rawLoop_4976 (coe v0))
          (coe
             MAlonzo.Code.Relation.Binary.Structures.d_refl_36
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+               MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMagma_3056
+                  MAlonzo.Code.Algebra.Structures.d_isMagma_3340
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isQuasigroup_3136
-                     (coe MAlonzo.Code.Algebra.Bundles.d_isLoop_4492 (coe v0)))))))
+                     MAlonzo.Code.Algebra.Structures.d_isQuasigroup_3420
+                     (coe MAlonzo.Code.Algebra.Bundles.d_isLoop_4918 (coe v0)))))))

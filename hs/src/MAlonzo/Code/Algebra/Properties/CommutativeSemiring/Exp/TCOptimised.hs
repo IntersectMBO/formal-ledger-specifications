@@ -148,7 +148,7 @@ du_'94''45'distrib'45''42'_250 ::
   AgdaAny -> AgdaAny -> Integer -> AgdaAny
 du_'94''45'distrib'45''42'_250 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.CommutativeMonoid.Mult.TCOptimised.du_'215''45'distrib'45''43'_172
+      MAlonzo.Code.Algebra.Properties.CommutativeMonoid.Mult.TCOptimised.du_'215''45'distrib'45''43'_184
       (coe
          MAlonzo.Code.Algebra.Bundles.du_'42''45'commutativeMonoid_2696
          (coe v0))
