@@ -91,10 +91,10 @@ du_Dec'45'HasInlineDatum_2146
 d_Computational'45'UTXOW_2148 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'UTXOW_2148 v0 v1
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_486
       (d_computeProof_2224 (coe v0) (coe v1))
 -- Ledger.Conway.Conformance.Utxow.Properties._.Go.lift-step
 d_lift'45'step_2188 ::
@@ -208,7 +208,7 @@ d_computeProofH_2216 ::
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2510 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3646 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_computeProofH_2216 v0 v1 v2 v3 v4 v5
   = case coe v5 of
       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v6 v7
@@ -216,21 +216,21 @@ d_computeProofH_2216 v0 v1 v2 v3 v4 v5
              then case coe v7 of
                     MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v8
                       -> coe
-                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                           MAlonzo.Code.Class.Functor.Core.du_fmap_24
                            (coe
-                              MAlonzo.Code.Interface.ComputationalRelation.du_Functor'45'ComputationResult_138)
+                              MAlonzo.Code.Interface.ComputationalRelation.du_Functor'45'ComputationResult_148)
                            () erased () erased
                            (coe
-                              MAlonzo.Code.Class.Bifunctor.du_map'8322''8242'_54
-                              (coe MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45'Σ_74)
-                              (\ v9 -> coe du_lift'45'step_2188 (coe v8)))
+                              MAlonzo.Code.Class.Bifunctor.du_map'8322''8242'_56
+                              (coe MAlonzo.Code.Class.Bifunctor.d_Bifunctor'45'Σ_76) (coe ())
+                              (coe ()) (coe ()) (\ v9 -> coe du_lift'45'step_2188 (coe v8)))
                            (MAlonzo.Code.Ledger.Conway.Conformance.Utxo.Properties.d_computeProof_3004
                               (coe v0) (coe v1) (coe v2) (coe v3) (coe v4))
                     _ -> MAlonzo.RTE.mazUnreachableError
              else coe
                     seq (coe v7)
                     (coe
-                       MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
+                       MAlonzo.Code.Interface.ComputationalRelation.C_failure_48
                        (let v8
                               = coe
                                   MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_dec'45'de'45'morgan_10
@@ -1574,7 +1574,7 @@ d_computeProofH_2216 v0 v1 v2 v3 v4 v5
                                                                                                                                                (coe
                                                                                                                                                   v4)))
                                                                                                                                          (coe
-                                                                                                                                            MAlonzo.Code.Class.Functor.Core.du_fmap_22
+                                                                                                                                            MAlonzo.Code.Class.Functor.Core.du_fmap_24
                                                                                                                                             MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6
                                                                                                                                             MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                                                             erased
@@ -1623,7 +1623,7 @@ d_computeProof_2224 ::
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2494 ->
   MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2510 ->
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3646 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_computeProof_2224 v0 v1 v2 v3 v4
   = coe
       d_computeProofH_2216 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4)

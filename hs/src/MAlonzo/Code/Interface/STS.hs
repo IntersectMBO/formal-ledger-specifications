@@ -165,8 +165,8 @@ du_'46'extendedlambda0_188 v0 v1 v2 v3
   = case coe v3 of
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v4 v5
         -> coe
-             MAlonzo.Code.Class.Bifunctor.du_map'8322''8242'_54
-             (coe MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45'Σ_74)
+             MAlonzo.Code.Class.Bifunctor.du_map'8322''8242'_56
+             MAlonzo.Code.Class.Bifunctor.d_Bifunctor'45'Σ_76 () () ()
              (\ v6 -> coe C_BS'45'ind_84 v4 v5)
              (coe
                 du_ReflexiveTransitiveClosure'45'total_170 (coe v0) (coe v1)

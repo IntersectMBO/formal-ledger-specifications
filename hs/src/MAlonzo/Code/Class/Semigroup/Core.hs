@@ -52,7 +52,7 @@ d__'9671'__26 v0 = coe d__'9671'__16 (coe v0)
 -- Class.Semigroup.Core._.SemigroupLaws
 d_SemigroupLaws_42 a0 a1 a2 a3 a4 = ()
 data T_SemigroupLaws_42
-  = C_constructor_330 (AgdaAny -> AgdaAny -> AgdaAny)
+  = C_constructor_334 (AgdaAny -> AgdaAny -> AgdaAny)
                       (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
 -- Class.Semigroup.Core._._.Associative
 d_Associative_72 ::
@@ -60,85 +60,85 @@ d_Associative_72 ::
   () ->
   T_Semigroup_10 ->
   MAlonzo.Code.Class.Setoid.Core.T_ISetoid_10 ->
-  MAlonzo.Code.Class.Setoid.Core.T_SetoidLaws_304 ->
+  MAlonzo.Code.Class.Setoid.Core.T_SetoidLaws_308 ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
 d_Associative_72 = erased
 -- Class.Semigroup.Core._._.Commutative
-d_Commutative_76 ::
+d_Commutative_78 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   T_Semigroup_10 ->
   MAlonzo.Code.Class.Setoid.Core.T_ISetoid_10 ->
-  MAlonzo.Code.Class.Setoid.Core.T_SetoidLaws_304 ->
+  MAlonzo.Code.Class.Setoid.Core.T_SetoidLaws_308 ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Commutative_76 = erased
+d_Commutative_78 = erased
 -- Class.Semigroup.Core._.SemigroupLaws.◇-comm
-d_'9671''45'comm_312 ::
+d_'9671''45'comm_316 ::
   T_SemigroupLaws_42 -> AgdaAny -> AgdaAny -> AgdaAny
-d_'9671''45'comm_312 v0
+d_'9671''45'comm_316 v0
   = case coe v0 of
-      C_constructor_330 v1 v2 -> coe v1
+      C_constructor_334 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Class.Semigroup.Core._.SemigroupLaws.◇-assocʳ
-d_'9671''45'assoc'691'_314 ::
+d_'9671''45'assoc'691'_318 ::
   T_SemigroupLaws_42 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'9671''45'assoc'691'_314 v0
+d_'9671''45'assoc'691'_318 v0
   = case coe v0 of
-      C_constructor_330 v1 v2 -> coe v2
+      C_constructor_334 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Class.Semigroup.Core._.SemigroupLaws.◇-assocˡ
-d_'9671''45'assoc'737'_322 ::
+d_'9671''45'assoc'737'_326 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   T_Semigroup_10 ->
   MAlonzo.Code.Class.Setoid.Core.T_ISetoid_10 ->
-  MAlonzo.Code.Class.Setoid.Core.T_SetoidLaws_304 ->
+  MAlonzo.Code.Class.Setoid.Core.T_SetoidLaws_308 ->
   T_SemigroupLaws_42 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'9671''45'assoc'737'_322 ~v0 ~v1 v2 ~v3 v4 v5 v6 v7 v8
-  = du_'9671''45'assoc'737'_322 v2 v4 v5 v6 v7 v8
-du_'9671''45'assoc'737'_322 ::
+d_'9671''45'assoc'737'_326 ~v0 ~v1 v2 ~v3 v4 v5 v6 v7 v8
+  = du_'9671''45'assoc'737'_326 v2 v4 v5 v6 v7 v8
+du_'9671''45'assoc'737'_326 ::
   T_Semigroup_10 ->
-  MAlonzo.Code.Class.Setoid.Core.T_SetoidLaws_304 ->
+  MAlonzo.Code.Class.Setoid.Core.T_SetoidLaws_308 ->
   T_SemigroupLaws_42 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'9671''45'assoc'737'_322 v0 v1 v2 v3 v4 v5
+du_'9671''45'assoc'737'_326 v0 v1 v2 v3 v4 v5
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_38
-      (MAlonzo.Code.Class.Setoid.Core.d_isEquivalence_312 (coe v1))
+      (MAlonzo.Code.Class.Setoid.Core.d_isEquivalence_316 (coe v1))
       (coe d__'9671'__16 v0 (coe d__'9671'__16 v0 v3 v4) v5)
       (coe d__'9671'__16 v0 v3 (coe d__'9671'__16 v0 v4 v5))
-      (coe d_'9671''45'assoc'691'_314 v2 v3 v4 v5)
+      (coe d_'9671''45'assoc'691'_318 v2 v3 v4 v5)
 -- Class.Semigroup.Core._.SemigroupLaws≡
-d_SemigroupLaws'8801'_336 ::
+d_SemigroupLaws'8801'_340 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> T_Semigroup_10 -> ()
-d_SemigroupLaws'8801'_336 = erased
+d_SemigroupLaws'8801'_340 = erased
 -- Class.Semigroup.Core._.◇-assocʳ
-d_'9671''45'assoc'691'_340 ::
+d_'9671''45'assoc'691'_344 ::
   T_SemigroupLaws_42 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'9671''45'assoc'691'_340 v0
-  = coe d_'9671''45'assoc'691'_314 (coe v0)
+d_'9671''45'assoc'691'_344 v0
+  = coe d_'9671''45'assoc'691'_318 (coe v0)
 -- Class.Semigroup.Core._.◇-assocˡ
-d_'9671''45'assoc'737'_342 ::
+d_'9671''45'assoc'737'_346 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   T_Semigroup_10 ->
   MAlonzo.Code.Class.Setoid.Core.T_ISetoid_10 ->
-  MAlonzo.Code.Class.Setoid.Core.T_SetoidLaws_304 ->
+  MAlonzo.Code.Class.Setoid.Core.T_SetoidLaws_308 ->
   T_SemigroupLaws_42 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'9671''45'assoc'737'_342 ~v0 ~v1 v2 ~v3 v4 v5
-  = du_'9671''45'assoc'737'_342 v2 v4 v5
-du_'9671''45'assoc'737'_342 ::
+d_'9671''45'assoc'737'_346 ~v0 ~v1 v2 ~v3 v4 v5
+  = du_'9671''45'assoc'737'_346 v2 v4 v5
+du_'9671''45'assoc'737'_346 ::
   T_Semigroup_10 ->
-  MAlonzo.Code.Class.Setoid.Core.T_SetoidLaws_304 ->
+  MAlonzo.Code.Class.Setoid.Core.T_SetoidLaws_308 ->
   T_SemigroupLaws_42 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'9671''45'assoc'737'_342 v0 v1 v2
-  = coe du_'9671''45'assoc'737'_322 (coe v0) (coe v1) (coe v2)
+du_'9671''45'assoc'737'_346 v0 v1 v2
+  = coe du_'9671''45'assoc'737'_326 (coe v0) (coe v1) (coe v2)
 -- Class.Semigroup.Core._.◇-comm
-d_'9671''45'comm_344 ::
+d_'9671''45'comm_348 ::
   T_SemigroupLaws_42 -> AgdaAny -> AgdaAny -> AgdaAny
-d_'9671''45'comm_344 v0 = coe d_'9671''45'comm_312 (coe v0)
+d_'9671''45'comm_348 v0 = coe d_'9671''45'comm_316 (coe v0)
 -- Class.Semigroup.Core._._.◇-assocʳ
-d_'9671''45'assoc'691'_362 ::
+d_'9671''45'assoc'691'_366 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   T_Semigroup_10 ->
@@ -146,9 +146,9 @@ d_'9671''45'assoc'691'_362 ::
   AgdaAny ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'9671''45'assoc'691'_362 = erased
+d_'9671''45'assoc'691'_366 = erased
 -- Class.Semigroup.Core._._.◇-assocˡ
-d_'9671''45'assoc'737'_364 ::
+d_'9671''45'assoc'737'_368 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   T_Semigroup_10 ->
@@ -156,13 +156,13 @@ d_'9671''45'assoc'737'_364 ::
   AgdaAny ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'9671''45'assoc'737'_364 = erased
+d_'9671''45'assoc'737'_368 = erased
 -- Class.Semigroup.Core._._.◇-comm
-d_'9671''45'comm_366 ::
+d_'9671''45'comm_370 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   T_Semigroup_10 ->
   T_SemigroupLaws_42 ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'9671''45'comm_366 = erased
+d_'9671''45'comm_370 = erased

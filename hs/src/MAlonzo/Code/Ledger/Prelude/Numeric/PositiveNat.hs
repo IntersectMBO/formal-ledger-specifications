@@ -52,7 +52,7 @@ d_toPosNat_18 ::
   Integer -> Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_toPosNat_18 v0
   = let v1
-          = MAlonzo.Code.Data.Nat.Properties.d_nonZero'63'_2760 (coe v0) in
+          = MAlonzo.Code.Data.Nat.Properties.d_nonZero'63'_2996 (coe v0) in
     coe
       (case coe v1 of
          MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v2 v3
@@ -74,7 +74,7 @@ du_mkPosNat_36 ::
   Integer -> MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 du_mkPosNat_36 v0
   = let v1
-          = MAlonzo.Code.Data.Nat.Properties.d_nonZero'63'_2760 (coe v0) in
+          = MAlonzo.Code.Data.Nat.Properties.d_nonZero'63'_2996 (coe v0) in
     coe
       (case coe v1 of
          MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v2 v3

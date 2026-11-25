@@ -48,7 +48,7 @@ du_MonoidLaws'45'List_8 ::
   MAlonzo.Code.Class.Monoid.Core.T_MonoidLaws_42
 du_MonoidLaws'45'List_8
   = coe
-      MAlonzo.Code.Class.Monoid.Core.C_constructor_314
+      MAlonzo.Code.Class.Monoid.Core.C_constructor_318
       (coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 erased erased)
 -- Class.Monoid.Instances.Monoid-Vec
 d_Monoid'45'Vec_14 ::
@@ -95,7 +95,7 @@ du_MonoidLaws'45'Maybe_30 ::
   MAlonzo.Code.Class.Monoid.Core.T_MonoidLaws_42
 du_MonoidLaws'45'Maybe_30
   = coe
-      MAlonzo.Code.Class.Monoid.Core.C_constructor_314
+      MAlonzo.Code.Class.Monoid.Core.C_constructor_318
       (coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 erased erased)
 -- Class.Monoid.Instances._._.p
 d_p_36 ::
@@ -158,7 +158,7 @@ du_MonoidLaws'45''215'_62 ::
   MAlonzo.Code.Class.Monoid.Core.T_MonoidLaws_42
 du_MonoidLaws'45''215'_62
   = coe
-      MAlonzo.Code.Class.Monoid.Core.C_constructor_314
+      MAlonzo.Code.Class.Monoid.Core.C_constructor_318
       (coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 erased erased)
 -- Class.Monoid.Instances._._.p
 d_p_68 ::
@@ -202,7 +202,7 @@ d_MonoidLaws'45'ℕ'45''43'_112 ::
   MAlonzo.Code.Class.Monoid.Core.T_MonoidLaws_42
 d_MonoidLaws'45'ℕ'45''43'_112
   = coe
-      MAlonzo.Code.Class.Monoid.Core.C_constructor_314
+      MAlonzo.Code.Class.Monoid.Core.C_constructor_318
       (coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 erased erased)
 -- Class.Monoid.Instances._._.Monoid-ℕ-*
 d_Monoid'45'ℕ'45''42'_120 ::
@@ -216,7 +216,7 @@ d_MonoidLaws'45'ℕ'45''42'_126 ::
   MAlonzo.Code.Class.Monoid.Core.T_MonoidLaws_42
 d_MonoidLaws'45'ℕ'45''42'_126
   = coe
-      MAlonzo.Code.Class.Monoid.Core.C_constructor_314
+      MAlonzo.Code.Class.Monoid.Core.C_constructor_318
       (coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 erased erased)
 -- Class.Monoid.Instances._.Monoid-ℕᵇ-+
 d_Monoid'45'ℕ'7495''45''43'_134 ::
@@ -230,7 +230,7 @@ d_MonoidLaws'45'ℕ'7495''45''43'_140 ::
   MAlonzo.Code.Class.Monoid.Core.T_MonoidLaws_42
 d_MonoidLaws'45'ℕ'7495''45''43'_140
   = coe
-      MAlonzo.Code.Class.Monoid.Core.C_constructor_314
+      MAlonzo.Code.Class.Monoid.Core.C_constructor_318
       (coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 erased erased)
 -- Class.Monoid.Instances._._.Monoid-ℤ-+
 d_Monoid'45'ℤ'45''43'_152 ::
@@ -244,7 +244,7 @@ d_MonoidLaws'45'ℤ'45''43'_158 ::
   MAlonzo.Code.Class.Monoid.Core.T_MonoidLaws_42
 d_MonoidLaws'45'ℤ'45''43'_158
   = coe
-      MAlonzo.Code.Class.Monoid.Core.C_constructor_314
+      MAlonzo.Code.Class.Monoid.Core.C_constructor_318
       (coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 erased erased)
 -- Class.Monoid.Instances._._.Monoid-ℤ-*
 d_Monoid'45'ℤ'45''42'_166 ::
@@ -258,7 +258,7 @@ d_MonoidLaws'45'ℤ'45''42'_172 ::
   MAlonzo.Code.Class.Monoid.Core.T_MonoidLaws_42
 d_MonoidLaws'45'ℤ'45''42'_172
   = coe
-      MAlonzo.Code.Class.Monoid.Core.C_constructor_314
+      MAlonzo.Code.Class.Monoid.Core.C_constructor_318
       (coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 erased erased)
 -- Class.Monoid.Instances._.just-◇ˡ
 d_just'45''9671''737'_192 ::

@@ -92,7 +92,7 @@ d__'8799'__30 v0 v1
                     (coe MAlonzo.Code.Data.Product.Base.du_uncurry_244 erased)
                     (coe du_arg'45'info'45'injective_28)
                     (coe
-                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                        (coe
                           MAlonzo.Code.Reflection.AST.Argument.Visibility.d__'8799'__8
                           (coe v2) (coe v4))

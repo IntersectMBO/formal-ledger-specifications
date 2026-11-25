@@ -872,7 +872,7 @@ d_totalRefScriptsSize_3520 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Data.Nat.ListAction.d_sum_6
       (coe
-         MAlonzo.Code.Class.Functor.Core.du_fmap_22
+         MAlonzo.Code.Class.Functor.Core.du_fmap_24
          MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
          () erased
          (MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_refScriptsSize_2590
@@ -897,7 +897,7 @@ d_newEpochState_3554 v0 = coe d_newEpochState_3496 (coe v0)
 -- Ledger.Conway.Specification.Chain._.bheader
 d_bheader_3562 ::
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  T_GeneralizeTel_19427 ->
+  T_GeneralizeTel_19473 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Conway.Specification.BlockBody.T_Block_2366 ->
   MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3364 ->
@@ -914,7 +914,7 @@ du_bheader_3562 v0
 -- Ledger.Conway.Specification.Chain._.ts
 d_ts_3564 ::
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  T_GeneralizeTel_19427 ->
+  T_GeneralizeTel_19473 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Conway.Specification.BlockBody.T_Block_2366 ->
   MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3364 ->
@@ -931,7 +931,7 @@ du_ts_3564 v0
 -- Ledger.Conway.Specification.Chain._.bhbody
 d_bhbody_3572 ::
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  T_GeneralizeTel_19427 ->
+  T_GeneralizeTel_19473 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Conway.Specification.BlockBody.T_Block_2366 ->
   MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3364 ->
@@ -950,7 +950,7 @@ du_bhbody_3572 v0
 -- Ledger.Conway.Specification.Chain._.slot
 d_slot_3586 ::
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  T_GeneralizeTel_19427 ->
+  T_GeneralizeTel_19473 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Conway.Specification.BlockBody.T_Block_2366 ->
   MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3364 ->
@@ -970,7 +970,7 @@ du_slot_3586 v0
 -- Ledger.Conway.Specification.Chain._.bcur
 d_bcur_3590 ::
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  T_GeneralizeTel_19427 ->
+  T_GeneralizeTel_19473 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Conway.Specification.BlockBody.T_Block_2366 ->
   MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3364 ->
@@ -985,7 +985,7 @@ du_bcur_3590 v0
 -- Ledger.Conway.Specification.Chain._.epochState
 d_epochState_3594 ::
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  T_GeneralizeTel_19427 ->
+  T_GeneralizeTel_19473 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Conway.Specification.BlockBody.T_Block_2366 ->
   MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3364 ->
@@ -1002,7 +1002,7 @@ du_epochState_3594 v0
 -- Ledger.Conway.Specification.Chain._.acnt
 d_acnt_3604 ::
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  T_GeneralizeTel_19427 ->
+  T_GeneralizeTel_19473 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Conway.Specification.BlockBody.T_Block_2366 ->
   MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3364 ->
@@ -1021,7 +1021,7 @@ du_acnt_3604 v0
 -- Ledger.Conway.Specification.Chain._.es
 d_es_3606 ::
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  T_GeneralizeTel_19427 ->
+  T_GeneralizeTel_19473 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Conway.Specification.BlockBody.T_Block_2366 ->
   MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3364 ->
@@ -1040,7 +1040,7 @@ du_es_3606 v0
 -- Ledger.Conway.Specification.Chain._.ls
 d_ls_3610 ::
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  T_GeneralizeTel_19427 ->
+  T_GeneralizeTel_19473 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Conway.Specification.BlockBody.T_Block_2366 ->
   MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3364 ->
@@ -1059,7 +1059,7 @@ du_ls_3610 v0
 -- Ledger.Conway.Specification.Chain._.pparams
 d_pparams_3620 ::
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  T_GeneralizeTel_19427 ->
+  T_GeneralizeTel_19473 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Conway.Specification.BlockBody.T_Block_2366 ->
   MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3364 ->
@@ -1080,7 +1080,7 @@ du_pparams_3620 v0
 d_maxRefScriptSizePerBlock_3628 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  T_GeneralizeTel_19427 ->
+  T_GeneralizeTel_19473 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Conway.Specification.BlockBody.T_Block_2366 ->
   MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3364 ->
@@ -1113,14 +1113,14 @@ d__'8866'_'8640''10631'_'44'CHAINS'10632'__3634 ::
   T_ChainState_3492 -> ()
 d__'8866'_'8640''10631'_'44'CHAINS'10632'__3634 = erased
 -- Ledger.Conway.Specification.Chain..generalizedField-ls'
-d_'46'generalizedField'45'ls''_19425 ::
-  T_GeneralizeTel_19427 ->
+d_'46'generalizedField'45'ls''_19471 ::
+  T_GeneralizeTel_19473 ->
   MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2972
-d_'46'generalizedField'45'ls''_19425 v0
+d_'46'generalizedField'45'ls''_19471 v0
   = case coe v0 of
-      C_mkGeneralizeTel_19429 v1 -> coe v1
+      C_mkGeneralizeTel_19475 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Chain.GeneralizeTel
-d_GeneralizeTel_19427 a0 a1 = ()
-newtype T_GeneralizeTel_19427
-  = C_mkGeneralizeTel_19429 MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2972
+d_GeneralizeTel_19473 a0 a1 = ()
+newtype T_GeneralizeTel_19473
+  = C_mkGeneralizeTel_19475 MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2972

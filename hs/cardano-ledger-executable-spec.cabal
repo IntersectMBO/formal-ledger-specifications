@@ -244,8 +244,11 @@ library
       MAlonzo.Code.Data.List.NonEmpty
       MAlonzo.Code.Data.List.NonEmpty.Base
       MAlonzo.Code.Data.List.NonEmpty.Effectful
+      MAlonzo.Code.Data.List.NonEmpty.Membership.Propositional
+      MAlonzo.Code.Data.List.NonEmpty.Membership.Setoid
       MAlonzo.Code.Data.List.NonEmpty.Properties
       MAlonzo.Code.Data.List.NonEmpty.Relation.Unary.All
+      MAlonzo.Code.Data.List.NonEmpty.Relation.Unary.Any
       MAlonzo.Code.Data.List.Properties
       MAlonzo.Code.Data.List.Reflection
       MAlonzo.Code.Data.List.Relation.Binary.BagAndSetEquality
@@ -688,10 +691,13 @@ library
       MAlonzo.Code.Reflection.TCM.Utilities
       MAlonzo.Code.Reflection.Utils
       MAlonzo.Code.Reflection.Utils.Args
+      MAlonzo.Code.Reflection.Utils.AtomStore
       MAlonzo.Code.Reflection.Utils.Core
       MAlonzo.Code.Reflection.Utils.Debug
+      MAlonzo.Code.Reflection.Utils.Goal
       MAlonzo.Code.Reflection.Utils.Metas
       MAlonzo.Code.Reflection.Utils.Records
+      MAlonzo.Code.Reflection.Utils.Reduction
       MAlonzo.Code.Reflection.Utils.Substitute
       MAlonzo.Code.Reflection.Utils.TCI
       MAlonzo.Code.Relation.Binary
@@ -700,6 +706,7 @@ library
       MAlonzo.Code.Relation.Binary.Consequences
       MAlonzo.Code.Relation.Binary.Construct.Closure.Reflexive
       MAlonzo.Code.Relation.Binary.Construct.Closure.Reflexive.Properties
+      MAlonzo.Code.Relation.Binary.Construct.Closure.Symmetric
       MAlonzo.Code.Relation.Binary.Construct.Composition
       MAlonzo.Code.Relation.Binary.Construct.Constant.Core
       MAlonzo.Code.Relation.Binary.Construct.Flip.EqAndOrd

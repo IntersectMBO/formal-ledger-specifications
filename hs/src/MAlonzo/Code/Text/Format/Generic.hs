@@ -94,7 +94,7 @@ d_size_70 ~v0 = du_size_70
 du_size_70 :: [T_Chunk_62] -> Integer
 du_size_70
   = coe
-      MAlonzo.Code.Function.Base.du__'8728''8242'__216
+      MAlonzo.Code.Function.Base.du__'8728''8242'__230
       (coe MAlonzo.Code.Data.Nat.ListAction.d_sum_6)
       (coe
          MAlonzo.Code.Data.List.Base.du_map_22
@@ -162,7 +162,7 @@ du_toRevString_136 ::
   MAlonzo.Code.Agda.Builtin.String.T_String_6
 du_toRevString_136
   = coe
-      MAlonzo.Code.Function.Base.du__'8728''8242'__216
+      MAlonzo.Code.Function.Base.du__'8728''8242'__230
       (coe MAlonzo.Code.Agda.Builtin.String.d_primStringFromList_14)
       (coe MAlonzo.Code.Data.List.Base.du_reverse_444)
 -- Text.Format.Generic.Format._.push

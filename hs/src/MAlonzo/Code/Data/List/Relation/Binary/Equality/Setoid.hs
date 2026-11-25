@@ -181,7 +181,7 @@ du_Unique'45'resp'45''8779'_92 v0 v1
   = coe
       MAlonzo.Code.Data.List.Relation.Binary.Pointwise.du_AllPairs'45'resp'45'Pointwise_240
       (coe
-         MAlonzo.Code.Relation.Binary.Properties.Setoid.du_'8777''45'resp'8322'_72)
+         MAlonzo.Code.Relation.Binary.Properties.Setoid.du_'8777''45'resp'8322'_76)
       (coe v0) (coe v1)
 -- Data.List.Relation.Binary.Equality.Setoid.≋-length
 d_'8779''45'length_98 ::

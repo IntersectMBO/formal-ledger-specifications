@@ -546,8 +546,7 @@ du_'8814''8658''8805'_306 v0 v1 v2 v3
                                 -> case coe v7 of
                                      MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26
                                        -> coe
-                                            MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                            erased
+                                            MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
                                      _ -> coe v8
                               _ -> MAlonzo.RTE.mazUnreachableError))
             _ -> MAlonzo.RTE.mazUnreachableError))

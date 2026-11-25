@@ -94,7 +94,7 @@ d_set_2242 v0
       (coe v0)
 -- Ledger.Conway.Specification.Rewards.Properties.Computational._.completeness
 d_completeness_2246 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
@@ -103,14 +103,14 @@ d_completeness_2246 ::
 d_completeness_2246 = erased
 -- Ledger.Conway.Specification.Rewards.Properties.Computational._.computeProof
 d_computeProof_2252 ::
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264 ->
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_computeProof_2252 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_304
+      MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_346
       (coe v0)
 -- Ledger.Conway.Specification.Rewards.Properties.Computational._.SNAP-total
 d_SNAP'45'total_2274 ::
@@ -194,16 +194,16 @@ d_SNAP'45'deterministic_2286 = erased
 d_Computational'45'SNAP_2288 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2516 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'SNAP_2288 v0 ~v1
   = du_Computational'45'SNAP_2288 v0
 du_Computational'45'SNAP_2288 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 du_Computational'45'SNAP_2288 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_486
       (\ v1 v2 v3 ->
          coe
-           MAlonzo.Code.Interface.ComputationalRelation.C_success_42
+           MAlonzo.Code.Interface.ComputationalRelation.C_success_46
            (coe du_SNAP'45'total_2274 (coe v0) (coe v1) (coe v2)))

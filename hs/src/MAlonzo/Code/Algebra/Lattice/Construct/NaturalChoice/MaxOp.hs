@@ -32,13 +32,13 @@ d_'8851''45'isSemilattice_22 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalPreorder_240 ->
   MAlonzo.Code.Algebra.Construct.NaturalChoice.Base.T_MaxOperator_138 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeBand_612
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeBand_614
 d_'8851''45'isSemilattice_22 ~v0 ~v1 ~v2 v3 v4
   = du_'8851''45'isSemilattice_22 v3 v4
 du_'8851''45'isSemilattice_22 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_TotalPreorder_240 ->
   MAlonzo.Code.Algebra.Construct.NaturalChoice.Base.T_MaxOperator_138 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeBand_612
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeBand_614
 du_'8851''45'isSemilattice_22 v0 v1
   = coe
       MAlonzo.Code.Algebra.Lattice.Construct.NaturalChoice.MinOp.du_'8851''45'isSemilattice_616

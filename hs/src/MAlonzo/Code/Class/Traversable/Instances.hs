@@ -27,142 +27,151 @@ import qualified MAlonzo.Code.Data.List.NonEmpty.Base
 
 -- Class.Traversable.Instances.TraversableA-Maybe
 d_TraversableA'45'Maybe_6 ::
-  MAlonzo.Code.Class.Traversable.Core.T_TraversableA_10
+  MAlonzo.Code.Class.Traversable.Core.T_TraversableA_12
 d_TraversableA'45'Maybe_6
   = coe
-      MAlonzo.Code.Class.Traversable.Core.C_constructor_24
+      MAlonzo.Code.Class.Traversable.Core.C_constructor_26
       (coe
-         (\ v0 v1 v2 v3 v4 ->
-            case coe v4 of
-              MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v5
+         (\ v0 v1 v2 v3 v4 v5 ->
+            case coe v5 of
+              MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v6
                 -> coe
-                     MAlonzo.Code.Class.Applicative.Core.d__'60''42''62'__22 v3 v1
-                     erased v1 erased
+                     MAlonzo.Code.Class.Applicative.Core.d__'60''42''62'__24 v4 v2
+                     erased v2 erased
                      (coe
-                        MAlonzo.Code.Class.Applicative.Core.d_pure_20 v3 v1 erased
+                        MAlonzo.Code.Class.Applicative.Core.d_pure_22 v4 v2 erased
                         (coe MAlonzo.Code.Agda.Builtin.Maybe.C_just_16))
-                     v5
+                     v6
               MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
                 -> coe
-                     MAlonzo.Code.Class.Applicative.Core.d_pure_20 v3 v1 erased v4
+                     MAlonzo.Code.Class.Applicative.Core.d_pure_22 v4 v2 erased v5
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Class.Traversable.Instances.TraversableM-Maybe
 d_TraversableM'45'Maybe_12 ::
-  MAlonzo.Code.Class.Traversable.Core.T_Traversable_36
+  MAlonzo.Code.Class.Traversable.Core.T_Traversable_40
 d_TraversableM'45'Maybe_12
   = coe
-      MAlonzo.Code.Class.Traversable.Core.C_constructor_50
+      MAlonzo.Code.Class.Traversable.Core.C_constructor_54
       (coe
-         (\ v0 v1 v2 v3 ->
-            let v4 = MAlonzo.Code.Class.Monad.Core.d_super_18 (coe v3) in
+         (\ v0 v1 v2 v3 v4 ->
+            let v5 = MAlonzo.Code.Class.Monad.Core.d_super_20 (coe v4) in
             coe
-              (\ v5 ->
-                 case coe v5 of
-                   MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v6
+              (\ v6 ->
+                 case coe v6 of
+                   MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v7
                      -> coe
-                          MAlonzo.Code.Class.Applicative.Core.d__'60''42''62'__22 v4 v1
-                          erased v1 erased
+                          MAlonzo.Code.Class.Applicative.Core.d__'60''42''62'__24 v5 v2
+                          erased v2 erased
                           (coe
-                             MAlonzo.Code.Class.Applicative.Core.d_pure_20 v4 v1 erased
+                             MAlonzo.Code.Class.Applicative.Core.d_pure_22 v5 v2 erased
                              (coe MAlonzo.Code.Agda.Builtin.Maybe.C_just_16))
-                          v6
+                          v7
                    MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
                      -> coe
-                          MAlonzo.Code.Class.Applicative.Core.d_pure_20 v4 v1 erased v5
+                          MAlonzo.Code.Class.Applicative.Core.d_pure_22 v5 v2 erased v6
                    _ -> MAlonzo.RTE.mazUnreachableError)))
 -- Class.Traversable.Instances.TraversableA-List
 d_TraversableA'45'List_14 ::
-  MAlonzo.Code.Class.Traversable.Core.T_TraversableA_10
+  MAlonzo.Code.Class.Traversable.Core.T_TraversableA_12
 d_TraversableA'45'List_14
   = coe
-      MAlonzo.Code.Class.Traversable.Core.C_constructor_24
-      (coe (\ v0 v1 v2 v3 -> coe du_go_20 (coe v1) (coe v3)))
+      MAlonzo.Code.Class.Traversable.Core.C_constructor_26
+      (coe (\ v0 v1 v2 v3 v4 -> coe du_go_20 (coe v0) (coe v2) (coe v4)))
 -- Class.Traversable.Instances._.go
 d_go_20 ::
+  (MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+   MAlonzo.Code.Agda.Primitive.T_Level_18) ->
   (MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> ()) ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
-  MAlonzo.Code.Class.Applicative.Core.T_Applicative_8 ->
+  MAlonzo.Code.Class.Applicative.Core.T_Applicative_10 ->
   [AgdaAny] -> AgdaAny
-d_go_20 ~v0 v1 ~v2 v3 = du_go_20 v1 v3
+d_go_20 v0 ~v1 v2 ~v3 v4 = du_go_20 v0 v2 v4
 du_go_20 ::
+  (MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+   MAlonzo.Code.Agda.Primitive.T_Level_18) ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Class.Applicative.Core.T_Applicative_8 ->
+  MAlonzo.Code.Class.Applicative.Core.T_Applicative_10 ->
   [AgdaAny] -> AgdaAny
-du_go_20 v0 v1 = coe du_'46'extendedlambda1_22 (coe v0) (coe v1)
+du_go_20 v0 v1 v2
+  = coe du_'46'extendedlambda1_22 (coe v0) (coe v1) (coe v2)
 -- Class.Traversable.Instances._..extendedlambda1
 d_'46'extendedlambda1_22 ::
+  (MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+   MAlonzo.Code.Agda.Primitive.T_Level_18) ->
   (MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> ()) ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
-  MAlonzo.Code.Class.Applicative.Core.T_Applicative_8 ->
+  MAlonzo.Code.Class.Applicative.Core.T_Applicative_10 ->
   [AgdaAny] -> AgdaAny
-d_'46'extendedlambda1_22 ~v0 v1 ~v2 v3 v4
-  = du_'46'extendedlambda1_22 v1 v3 v4
+d_'46'extendedlambda1_22 v0 ~v1 v2 ~v3 v4 v5
+  = du_'46'extendedlambda1_22 v0 v2 v4 v5
 du_'46'extendedlambda1_22 ::
+  (MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+   MAlonzo.Code.Agda.Primitive.T_Level_18) ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Class.Applicative.Core.T_Applicative_8 ->
+  MAlonzo.Code.Class.Applicative.Core.T_Applicative_10 ->
   [AgdaAny] -> AgdaAny
-du_'46'extendedlambda1_22 v0 v1 v2
-  = case coe v2 of
+du_'46'extendedlambda1_22 v0 v1 v2 v3
+  = case coe v3 of
       []
         -> coe
-             MAlonzo.Code.Class.Applicative.Core.d_pure_20 v1 v0 erased v2
-      (:) v3 v4
+             MAlonzo.Code.Class.Applicative.Core.d_pure_22 v2 v1 erased v3
+      (:) v4 v5
         -> coe
-             MAlonzo.Code.Class.Applicative.Core.d__'60''42''62'__22 v1 v0
-             erased v0 erased
+             MAlonzo.Code.Class.Applicative.Core.d__'60''42''62'__24 v2 v1
+             erased v1 erased
              (coe
-                MAlonzo.Code.Class.Applicative.Core.d__'60''42''62'__22 v1 v0
-                erased v0 erased
+                MAlonzo.Code.Class.Applicative.Core.d__'60''42''62'__24 v2 v1
+                erased v1 erased
                 (coe
-                   MAlonzo.Code.Class.Applicative.Core.d_pure_20 v1 v0 erased
+                   MAlonzo.Code.Class.Applicative.Core.d_pure_22 v2 v1 erased
                    (coe MAlonzo.Code.Agda.Builtin.List.C__'8759'__22))
-                v3)
-             (coe du_go_20 v0 v1 v4)
+                v4)
+             (coe du_go_20 v0 v1 v2 v5)
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Class.Traversable.Instances.TraversableM-List
 d_TraversableM'45'List_28 ::
-  MAlonzo.Code.Class.Traversable.Core.T_Traversable_36
+  MAlonzo.Code.Class.Traversable.Core.T_Traversable_40
 d_TraversableM'45'List_28
   = coe
-      MAlonzo.Code.Class.Traversable.Core.C_constructor_50
-      (coe
-         (\ v0 v1 v2 v3 ->
-            coe
-              du_go_20 (coe v1)
-              (coe MAlonzo.Code.Class.Monad.Core.d_super_18 (coe v3))))
--- Class.Traversable.Instances.TraversableA-List⁺
-d_TraversableA'45'List'8314'_30 ::
-  MAlonzo.Code.Class.Traversable.Core.T_TraversableA_10
-d_TraversableA'45'List'8314'_30
-  = coe
-      MAlonzo.Code.Class.Traversable.Core.C_constructor_24
+      MAlonzo.Code.Class.Traversable.Core.C_constructor_54
       (coe
          (\ v0 v1 v2 v3 v4 ->
-            case coe v4 of
-              MAlonzo.Code.Data.List.NonEmpty.Base.C__'8759'__34 v5 v6
+            coe
+              du_go_20 (coe v0) (coe v2)
+              (coe MAlonzo.Code.Class.Monad.Core.d_super_20 (coe v4))))
+-- Class.Traversable.Instances.TraversableA-List⁺
+d_TraversableA'45'List'8314'_30 ::
+  MAlonzo.Code.Class.Traversable.Core.T_TraversableA_12
+d_TraversableA'45'List'8314'_30
+  = coe
+      MAlonzo.Code.Class.Traversable.Core.C_constructor_26
+      (coe
+         (\ v0 v1 v2 v3 v4 v5 ->
+            case coe v5 of
+              MAlonzo.Code.Data.List.NonEmpty.Base.C__'8759'__34 v6 v7
                 -> coe
-                     MAlonzo.Code.Class.Applicative.Core.d__'60''42''62'__22 v3 v1
-                     erased v1 erased
+                     MAlonzo.Code.Class.Applicative.Core.d__'60''42''62'__24 v4 v2
+                     erased v2 erased
                      (coe
-                        MAlonzo.Code.Class.Applicative.Core.d__'60''42''62'__22 v3 v1
-                        erased v1 erased
+                        MAlonzo.Code.Class.Applicative.Core.d__'60''42''62'__24 v4 v2
+                        erased v2 erased
                         (coe
-                           MAlonzo.Code.Class.Applicative.Core.d_pure_20 v3 v1 erased
+                           MAlonzo.Code.Class.Applicative.Core.d_pure_22 v4 v2 erased
                            (coe MAlonzo.Code.Data.List.NonEmpty.Base.C__'8759'__34))
-                        v5)
-                     (coe du_go_20 v1 v3 v6)
+                        v6)
+                     (coe du_go_20 v0 v2 v4 v7)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Class.Traversable.Instances.TraversableM-List⁺
 d_TraversableM'45'List'8314'_36 ::
-  MAlonzo.Code.Class.Traversable.Core.T_Traversable_36
+  MAlonzo.Code.Class.Traversable.Core.T_Traversable_40
 d_TraversableM'45'List'8314'_36
   = coe
-      MAlonzo.Code.Class.Traversable.Core.C_constructor_50
+      MAlonzo.Code.Class.Traversable.Core.C_constructor_54
       (coe
-         (\ v0 v1 v2 v3 ->
+         (\ v0 v1 v2 v3 v4 ->
             coe
-              MAlonzo.Code.Class.Traversable.Core.d_sequenceA_18
-              d_TraversableA'45'List'8314'_30 erased v1 erased
-              (MAlonzo.Code.Class.Monad.Core.d_super_18 (coe v3))))
+              MAlonzo.Code.Class.Traversable.Core.d_sequenceA_20
+              d_TraversableA'45'List'8314'_30 v0 erased v2 erased
+              (MAlonzo.Code.Class.Monad.Core.d_super_20 (coe v4))))

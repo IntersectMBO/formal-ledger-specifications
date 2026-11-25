@@ -356,7 +356,7 @@ du_applyDownFrom'8314''8321'_228 v0 v1
                       (\ v3 v4 ->
                          coe
                            v1 v2 v3 v4
-                           (MAlonzo.Code.Data.Nat.Properties.d_'8804''45'refl_2900
+                           (MAlonzo.Code.Data.Nat.Properties.d_'8804''45'refl_3140
                               (coe v0)))))
                 (coe
                    du_applyDownFrom'8314''8321'_228 (coe v2)
@@ -365,7 +365,7 @@ du_applyDownFrom'8314''8321'_228 v0 v1
                          coe
                            v1 v3 v4 v5
                            (coe
-                              MAlonzo.Code.Data.Nat.Properties.du_m'60'n'8658'm'60'1'43'n_3204
+                              MAlonzo.Code.Data.Nat.Properties.du_m'60'n'8658'm'60'1'43'n_3444
                               (coe v6))))))
 -- Data.List.Relation.Unary.AllPairs.Properties._.applyDownFrom⁺₂
 d_applyDownFrom'8314''8322'_252 ::

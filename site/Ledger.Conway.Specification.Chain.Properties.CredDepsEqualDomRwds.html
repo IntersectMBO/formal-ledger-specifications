@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="img/Cardano-RGB_Logo-Icon-White.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -33,7 +33,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
@@ -12303,7 +12303,7 @@
 
 <a id="551" class="Keyword">open</a> <a id="556" class="Keyword">import</a> <a id="563" href="Ledger.Conway.Specification.Certs.html" class="Module">Ledger.Conway.Specification.Certs</a> <a id="597" href="Ledger.Conway.Specification.Transaction.html#3779" class="Function">govStructure</a>
 <a id="610" class="Keyword">open</a> <a id="615" class="Keyword">import</a> <a id="622" href="Ledger.Conway.Specification.Chain.html" class="Module">Ledger.Conway.Specification.Chain</a> <a id="656" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#469" class="Bound">txs</a> <a id="660" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#513" class="Bound">abs</a>
-<a id="664" class="Keyword">open</a> <a id="669" class="Keyword">import</a> <a id="676" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a> <a id="691" class="Keyword">hiding</a> <a id="698" class="Symbol">(</a><a id="699" href="Class.Functor.Core.html#272" class="Function">map</a><a id="702" class="Symbol">)</a> <a id="704" class="Keyword">renaming</a> <a id="713" class="Symbol">(</a><a id="714" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="719" class="Symbol">to</a> <a id="722" class="Function">map</a><a id="725" class="Symbol">;</a> <a id="727" href="abstract-set-theory.FiniteSetTheory.html#2967" class="Function">filterˢ</a> <a id="735" class="Symbol">to</a> <a id="738" class="Function">filter</a><a id="744" class="Symbol">)</a>
+<a id="664" class="Keyword">open</a> <a id="669" class="Keyword">import</a> <a id="676" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a> <a id="691" class="Keyword">hiding</a> <a id="698" class="Symbol">(</a><a id="699" href="Class.Functor.Core.html#275" class="Function">map</a><a id="702" class="Symbol">)</a> <a id="704" class="Keyword">renaming</a> <a id="713" class="Symbol">(</a><a id="714" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="719" class="Symbol">to</a> <a id="722" class="Function">map</a><a id="725" class="Symbol">;</a> <a id="727" href="abstract-set-theory.FiniteSetTheory.html#2967" class="Function">filterˢ</a> <a id="735" class="Symbol">to</a> <a id="738" class="Function">filter</a><a id="744" class="Symbol">)</a>
 <a id="746" class="Keyword">open</a> <a id="751" class="Keyword">import</a> <a id="758" href="Ledger.Conway.Specification.Properties.html" class="Module">Ledger.Conway.Specification.Properties</a> <a id="797" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#469" class="Bound">txs</a> <a id="801" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#513" class="Bound">abs</a>
 </pre>
 
@@ -12329,7 +12329,7 @@ that <code class="AgdaBound">cs</code> <code class="AgdaDatatype">⇀⦇</code> 
 <p><em>Formally</em>.</p>
 <pre class="Agda"><a id="credDeposits≡dom-rwds"></a><a id="1708" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1708" class="Function">credDeposits≡dom-rwds</a> <a id="1730" class="Symbol">:</a> <a id="1732" href="Ledger.Conway.Specification.Chain.html#1187" class="Record">ChainState</a> <a id="1743" class="Symbol">→</a> <a id="1745" href="Agda.Primitive.html#388" class="Primitive">Type</a>
 <a id="1750" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1708" class="Function">credDeposits≡dom-rwds</a> <a id="1772" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1772" class="Bound">cs</a> <a id="1775" class="Symbol">=</a>  <a id="1778" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#738" class="Function">filter</a> <a id="1785" href="Ledger.Conway.Specification.Properties.html#9519" class="Function">isCredDeposit</a> <a id="1799" class="Symbol">(</a><a id="1800" href="Class.IsSet.html#916" class="Function">dom</a> <a id="1804" class="Symbol">(</a><a id="1805" href="Ledger.Conway.Specification.Certs.html#1160" class="Field">DepositsOf</a> <a id="1816" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1772" class="Bound">cs</a><a id="1818" class="Symbol">))</a>
-                            <a id="1849" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1851" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#722" class="Function">map</a> <a id="1855" href="Ledger.Conway.Specification.Certs.html#823" class="InductiveConstructor">CredentialDeposit</a> <a id="1873" class="Symbol">(</a><a id="1874" href="Class.IsSet.html#916" class="Function">dom</a> <a id="1878" class="Symbol">(</a><a id="1879" href="Ledger.Conway.Specification.Certs.html#2034" class="Field">RewardsOf</a> <a id="1889" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1772" class="Bound">cs</a><a id="1891" class="Symbol">))</a>
+                            <a id="1849" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1851" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#722" class="Function">map</a> <a id="1855" href="Ledger.Conway.Specification.Certs.html#823" class="InductiveConstructor">CredentialDeposit</a> <a id="1873" class="Symbol">(</a><a id="1874" href="Class.IsSet.html#916" class="Function">dom</a> <a id="1878" class="Symbol">(</a><a id="1879" href="Ledger.Conway.Specification.Certs.html#2021" class="Field">RewardsOf</a> <a id="1889" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1772" class="Bound">cs</a><a id="1891" class="Symbol">))</a>
 
 <a id="credDeposits≡dom-rwds-inv"></a><a id="1895" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1895" class="Function">credDeposits≡dom-rwds-inv</a> <a id="1921" class="Symbol">:</a> <a id="1923" href="Agda.Primitive.html#388" class="Primitive">Type</a>
 <a id="1928" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1895" class="Function">credDeposits≡dom-rwds-inv</a> <a id="1954" class="Symbol">=</a> <a id="1956" href="Interface.STS.html#5894" class="Function">LedgerInvariant</a> <a id="1972" href="Ledger.Conway.Specification.Chain.html#2779" class="Datatype Operator">_⊢_⇀⦇_,CHAIN⦈_</a> <a id="1987" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1708" class="Function">credDeposits≡dom-rwds</a>
@@ -12427,10 +12427,10 @@ that <code class="AgdaBound">cs</code> <code class="AgdaDatatype">⇀⦇</code> 
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
       

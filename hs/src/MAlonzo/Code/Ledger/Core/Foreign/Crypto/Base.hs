@@ -52,7 +52,7 @@ d_hvkStoredHash_18 v0
 d_DecEq'45'HSVKey_22 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'HSVKey_22
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (coe
          (\ v0 ->
             case coe v0 of
@@ -62,14 +62,14 @@ d_DecEq'45'HSVKey_22
                         case coe v3 of
                           C_MkHSVKey_20 v4 v5
                             -> let v6
-                                     = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                     = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
                                          (coe v1) (coe v4) in
                                coe
                                  (case coe v6 of
                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v7 v8
                                       -> if coe v7
                                            then let v9
-                                                      = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                      = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
                                                           (coe v2) (coe v5) in
                                                 coe
                                                   (case coe v9 of
@@ -109,8 +109,8 @@ d_isHashableSet'45'HSVKey_28
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Crypto.C_mkIsHashableSet_34
       (coe
-         MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+         MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
       (coe
          MAlonzo.Code.Class.Show.Core.C_mkShow_18
          (coe MAlonzo.Code.Data.Nat.Show.d_show_56))
@@ -132,14 +132,14 @@ d_isHashableSet'45'ℕ_34
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Crypto.C_mkIsHashableSet_34
       (coe
-         MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+         MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
       (coe
          MAlonzo.Code.Class.Show.Core.C_mkShow_18
          (coe MAlonzo.Code.Data.Nat.Show.d_show_56))
       (coe
-         MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+         MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
       (coe
          MAlonzo.Code.Interface.TypeClasses.Hashable.C_constructor_20
          (coe (\ v0 -> v0)))
@@ -152,14 +152,14 @@ d_HashableSet'45'ℕ_36
       (coe
          MAlonzo.Code.Ledger.Core.Specification.Crypto.C_mkIsHashableSet_34
          (coe
-            MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-            (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+            MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+            (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
          (coe
             MAlonzo.Code.Class.Show.Core.C_mkShow_18
             (coe MAlonzo.Code.Data.Nat.Show.d_show_56))
          (coe
-            MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-            (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+            MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+            (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
          (coe
             MAlonzo.Code.Interface.TypeClasses.Hashable.C_constructor_20
             (coe (\ v0 -> v0))))
@@ -198,10 +198,10 @@ d_Show'45'HSVKey_42
                         MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
                         (coe ("MkHSVKey" :: Data.Text.Text))
                         (coe
-                           MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                           MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                            (coe MAlonzo.Code.Data.Nat.Show.d_show_56 v1)))
                      (coe
-                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                         (coe MAlonzo.Code.Data.Nat.Show.d_show_56 v2))
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Core.Foreign.Crypto.Base.HSVKey

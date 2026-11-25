@@ -58,7 +58,7 @@ du_DecEq'45'EndorserBlock_34 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'EndorserBlock_34 v0
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (coe
          (\ v1 ->
             case coe v1 of
@@ -70,6 +70,7 @@ du_DecEq'45'EndorserBlock_34 v0
                             -> let v5
                                      = coe
                                          MAlonzo.Code.Data.List.Properties.du_'8801''45'dec_60
+                                         (coe ())
                                          (coe
                                             MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                                             (coe

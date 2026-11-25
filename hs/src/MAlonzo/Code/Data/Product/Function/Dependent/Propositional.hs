@@ -795,7 +795,7 @@ du_swap'45'coercions_360 v0 v1 v2 v3 v4 v5
          MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
          (\ v6 v7 v8 ->
             coe
-              MAlonzo.Code.Function.Base.du__'8728''8242'__216
+              MAlonzo.Code.Function.Base.du__'8728''8242'__230
               (coe
                  MAlonzo.Code.Function.Related.Propositional.du_K'45'trans_164
                  (coe v1))

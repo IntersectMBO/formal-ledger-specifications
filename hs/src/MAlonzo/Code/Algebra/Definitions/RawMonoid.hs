@@ -20,6 +20,7 @@ import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Algebra.Bundles.Raw
 import qualified MAlonzo.Code.Algebra.Definitions.RawMagma
+import qualified MAlonzo.Code.Data.Bool.Base
 import qualified MAlonzo.Code.Data.Fin.Base
 import qualified MAlonzo.Code.Data.Vec.Functional
 
@@ -168,3 +169,34 @@ du_sum_88 v0 v1
       MAlonzo.Code.Data.Vec.Functional.du_foldr_176
       (coe MAlonzo.Code.Algebra.Bundles.Raw.d__'8729'__92 (coe v0))
       (coe MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v0)) (coe v1)
+-- Algebra.Definitions.RawMonoid._?>₀_
+d__'63''62''8320'__90 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
+  Bool -> AgdaAny -> AgdaAny
+d__'63''62''8320'__90 ~v0 ~v1 v2 v3 v4
+  = du__'63''62''8320'__90 v2 v3 v4
+du__'63''62''8320'__90 ::
+  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
+  Bool -> AgdaAny -> AgdaAny
+du__'63''62''8320'__90 v0 v1 v2
+  = coe
+      MAlonzo.Code.Data.Bool.Base.du_if_then_else__44 (coe v1) (coe v2)
+      (coe MAlonzo.Code.Algebra.Bundles.Raw.d_ε_94 (coe v0))
+-- Algebra.Definitions.RawMonoid._?>_∙_
+d__'63''62'_'8729'__96 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
+  Bool -> AgdaAny -> AgdaAny -> AgdaAny
+d__'63''62'_'8729'__96 ~v0 ~v1 v2 v3 v4 v5
+  = du__'63''62'_'8729'__96 v2 v3 v4 v5
+du__'63''62'_'8729'__96 ::
+  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
+  Bool -> AgdaAny -> AgdaAny -> AgdaAny
+du__'63''62'_'8729'__96 v0 v1 v2 v3
+  = coe
+      MAlonzo.Code.Data.Bool.Base.du_if_then_else__44 (coe v1)
+      (coe MAlonzo.Code.Algebra.Bundles.Raw.d__'8729'__92 v0 v2 v3)
+      (coe v3)

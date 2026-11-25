@@ -94,7 +94,7 @@ du_Dec'45''8594'_12 v0 v1
   = coe
       MAlonzo.Code.Class.Decidable.Core.C_'8263'__30
       (coe
-         MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8594''45'dec__106
+         MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8594''63'__106
          (coe MAlonzo.Code.Class.Decidable.Core.d_dec_16 (coe v0))
          (coe MAlonzo.Code.Class.Decidable.Core.d_dec_16 (coe v1)))
 -- Class.Decidable.Instances.Dec-×
@@ -115,7 +115,7 @@ du_Dec'45''215'_14 v0 v1
   = coe
       MAlonzo.Code.Class.Decidable.Core.C_'8263'__30
       (coe
-         MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+         MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
          (coe MAlonzo.Code.Class.Decidable.Core.d_dec_16 (coe v0))
          (coe MAlonzo.Code.Class.Decidable.Core.d_dec_16 (coe v1)))
 -- Class.Decidable.Instances.Dec-⊎
@@ -137,7 +137,7 @@ du_Dec'45''8846'_16 v0 v1
   = coe
       MAlonzo.Code.Class.Decidable.Core.C_'8263'__30
       (coe
-         MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8846''45'dec__96
+         MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8846''63'__96
          (coe MAlonzo.Code.Class.Decidable.Core.d_dec_16 (coe v0))
          (coe MAlonzo.Code.Class.Decidable.Core.d_dec_16 (coe v1)))
 -- Class.Decidable.Instances.Dec-T
@@ -299,7 +299,7 @@ d_ℕ'45'Dec'45''8804'_34 ::
 d_ℕ'45'Dec'45''8804'_34
   = coe
       MAlonzo.Code.Class.Decidable.Core.du_'8263''178'__102
-      (coe MAlonzo.Code.Data.Nat.Properties.d__'8804''63'__2920)
+      (coe MAlonzo.Code.Data.Nat.Properties.d__'8804''63'__3160)
 -- Class.Decidable.Instances.ℕ-Dec-<
 d_ℕ'45'Dec'45''60'_36 ::
   Integer ->
@@ -307,7 +307,7 @@ d_ℕ'45'Dec'45''60'_36 ::
 d_ℕ'45'Dec'45''60'_36
   = coe
       MAlonzo.Code.Class.Decidable.Core.du_'8263''178'__102
-      (coe MAlonzo.Code.Data.Nat.Properties.d__'60''63'__3172)
+      (coe MAlonzo.Code.Data.Nat.Properties.d__'60''63'__3412)
 -- Class.Decidable.Instances.ℤ-Dec-≤
 d_ℤ'45'Dec'45''8804'_38 ::
   Integer ->
@@ -315,7 +315,7 @@ d_ℤ'45'Dec'45''8804'_38 ::
 d_ℤ'45'Dec'45''8804'_38
   = coe
       MAlonzo.Code.Class.Decidable.Core.du_'8263''178'__102
-      (coe MAlonzo.Code.Data.Integer.Properties.d__'8804''63'__2880)
+      (coe MAlonzo.Code.Data.Integer.Properties.d__'8804''63'__3116)
 -- Class.Decidable.Instances.ℤ-Dec-<
 d_ℤ'45'Dec'45''60'_40 ::
   Integer ->
@@ -323,7 +323,7 @@ d_ℤ'45'Dec'45''60'_40 ::
 d_ℤ'45'Dec'45''60'_40
   = coe
       MAlonzo.Code.Class.Decidable.Core.du_'8263''178'__102
-      (coe MAlonzo.Code.Data.Integer.Properties.d__'60''63'__3190)
+      (coe MAlonzo.Code.Data.Integer.Properties.d__'60''63'__3440)
 -- Class.Decidable.Instances.ℚ-Dec-≤
 d_ℚ'45'Dec'45''8804'_42 ::
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6 ->
@@ -332,7 +332,7 @@ d_ℚ'45'Dec'45''8804'_42 ::
 d_ℚ'45'Dec'45''8804'_42
   = coe
       MAlonzo.Code.Class.Decidable.Core.du_'8263''178'__102
-      (coe MAlonzo.Code.Data.Rational.Properties.d__'8804''63'__3622)
+      (coe MAlonzo.Code.Data.Rational.Properties.d__'8804''63'__3874)
 -- Class.Decidable.Instances.ℚ-Dec-<
 d_ℚ'45'Dec'45''60'_44 ::
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6 ->
@@ -341,4 +341,4 @@ d_ℚ'45'Dec'45''60'_44 ::
 d_ℚ'45'Dec'45''60'_44
   = coe
       MAlonzo.Code.Class.Decidable.Core.du_'8263''178'__102
-      (coe MAlonzo.Code.Data.Rational.Properties.d__'60''63'__3804)
+      (coe MAlonzo.Code.Data.Rational.Properties.d__'60''63'__4050)

@@ -232,12 +232,12 @@ du_POOLREAP'45'total_2106 v0 v1 v2
                                  MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1418
                                  (coe v0))))
                         (coe
-                           MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-                           (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+                           MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+                           (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
                         (coe
                            MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                            (coe
-                              MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                              MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                         (coe (\ v3 -> v3))
                         (let v3
                                = coe

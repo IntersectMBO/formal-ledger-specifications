@@ -268,8 +268,7 @@ d_begin'45'contradiction__248 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8
 du_begin'45'contradiction__248 :: AgdaAny
 du_begin'45'contradiction__248
   = coe
-      MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-      erased
+      MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
 -- Relation.Binary.Reasoning.Syntax.begin-contradiction-syntax._.x<x
 d_x'60'x_260 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->

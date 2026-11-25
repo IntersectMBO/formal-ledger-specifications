@@ -1387,7 +1387,7 @@ d_Δf_3066 v0
 -- Ledger.Conway.Specification.Epoch._.RewardUpdate.Δf-nonpositive
 d_Δf'45'nonpositive_3068 ::
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_3016 ->
-  MAlonzo.Code.Data.Integer.Base.T__'8804'__26
+  MAlonzo.Code.Data.Integer.Base.T__'8804'__48
 d_Δf'45'nonpositive_3068 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δf'45'nonpositive_3048
@@ -1409,7 +1409,7 @@ d_Δt_3072 v0
 -- Ledger.Conway.Specification.Epoch._.RewardUpdate.Δt-nonnegative
 d_Δt'45'nonnegative_3074 ::
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_3016 ->
-  MAlonzo.Code.Data.Integer.Base.T__'8804'__26
+  MAlonzo.Code.Data.Integer.Base.T__'8804'__48
 d_Δt'45'nonnegative_3074 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δt'45'nonnegative_3046
@@ -2605,13 +2605,13 @@ du_createRUpd_3464 v0 v1 v2 v3 v4
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Rewards.C_constructor_3050
       (coe du_Δt'8321'_3506 (coe v0) (coe v1) (coe v2) (coe v3))
-      (MAlonzo.Code.Data.Integer.Base.d__'43'__284
+      (MAlonzo.Code.Data.Integer.Base.d__'43'__302
          (coe
-            MAlonzo.Code.Data.Integer.Base.d__'45'__302 (coe (0 :: Integer))
+            MAlonzo.Code.Data.Integer.Base.d__'45'__320 (coe (0 :: Integer))
             (coe du_Δr'8321'_3502 (coe v0) (coe v1) (coe v2) (coe v3)))
          (coe
             du_Δr'8322'_3514 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4)))
-      (MAlonzo.Code.Data.Integer.Base.d__'45'__302
+      (MAlonzo.Code.Data.Integer.Base.d__'45'__320
          (coe (0 :: Integer)) (coe du_feeSS_3484 (coe v3)))
       (coe du_rs_3512 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4))
       (coe du_Δt'45'nonneg_3588 (coe v0) (coe v1) (coe v2) (coe v3))
@@ -2745,12 +2745,12 @@ du_blocksMade_3492 v0 v1
                MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1418
                (coe v0))))
       (coe
-         MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+         MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
       (coe
          MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
          (coe
-            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
       (coe (\ v2 -> v2)) (coe v1)
 -- Ledger.Conway.Specification.Epoch._.ρ
 d_ρ_3496 ::
@@ -2790,7 +2790,7 @@ du_η_3498 v0 v1 v2
          MAlonzo.Code.Data.Rational.Literals.d_fromℤ_6
          (coe du_blocksMade_3492 (coe v0) (coe v2)))
       (coe
-         MAlonzo.Code.Data.Rational.Base.d__'42'__276
+         MAlonzo.Code.Data.Rational.Base.d__'42'__282
          (coe MAlonzo.Code.Data.Rational.Literals.d_fromℤ_6 (coe v1))
          (coe
             MAlonzo.Code.Ledger.Core.Specification.Epoch.d_ActiveSlotCoeff_340
@@ -2829,13 +2829,13 @@ du_Δr'8321'_3502 ::
   T_EpochState_3292 -> Integer
 du_Δr'8321'_3502 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Data.Rational.Base.d_floor_346
+      MAlonzo.Code.Data.Rational.Base.d_floor_352
       (coe
-         MAlonzo.Code.Data.Rational.Base.d__'42'__276
+         MAlonzo.Code.Data.Rational.Base.d__'42'__282
          (coe
-            MAlonzo.Code.Data.Rational.Base.d__'42'__276
+            MAlonzo.Code.Data.Rational.Base.d__'42'__282
             (coe
-               MAlonzo.Code.Data.Rational.Base.d__'8851'__332
+               MAlonzo.Code.Data.Rational.Base.d__'8851'__338
                (coe
                   MAlonzo.Code.Data.Rational.Literals.d_fromℤ_6 (coe (1 :: Integer)))
                (coe du_η_3498 (coe v0) (coe v1) (coe v2)))
@@ -2859,7 +2859,7 @@ du_rewardPot_3504 ::
   T_EpochState_3292 -> Integer
 du_rewardPot_3504 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Data.Integer.Base.d__'43'__284
+      MAlonzo.Code.Data.Integer.Base.d__'43'__302
       (coe du_feeSS_3484 (coe v3))
       (coe du_Δr'8321'_3502 (coe v0) (coe v1) (coe v2) (coe v3))
 -- Ledger.Conway.Specification.Epoch._.Δt₁
@@ -2877,9 +2877,9 @@ du_Δt'8321'_3506 ::
   T_EpochState_3292 -> Integer
 du_Δt'8321'_3506 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Data.Rational.Base.d_floor_346
+      MAlonzo.Code.Data.Rational.Base.d_floor_352
       (coe
-         MAlonzo.Code.Data.Rational.Base.d__'42'__276
+         MAlonzo.Code.Data.Rational.Base.d__'42'__282
          (coe
             MAlonzo.Code.Data.Rational.Literals.d_fromℤ_6
             (coe du_rewardPot_3504 (coe v0) (coe v1) (coe v2) (coe v3)))
@@ -2899,7 +2899,7 @@ du_R_3508 ::
   T_EpochState_3292 -> Integer
 du_R_3508 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Data.Integer.Base.d__'45'__302
+      MAlonzo.Code.Data.Integer.Base.d__'45'__320
       (coe du_rewardPot_3504 (coe v0) (coe v1) (coe v2) (coe v3))
       (coe du_Δt'8321'_3506 (coe v0) (coe v1) (coe v2) (coe v3))
 -- Ledger.Conway.Specification.Epoch._.circulation
@@ -2957,7 +2957,7 @@ du_Δr'8322'_3514 ::
   T_EpochState_3292 -> Integer -> Integer
 du_Δr'8322'_3514 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.Data.Integer.Base.d__'45'__302
+      MAlonzo.Code.Data.Integer.Base.d__'45'__320
       (coe du_R_3508 (coe v0) (coe v1) (coe v2) (coe v3))
       (coe
          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1468
@@ -2976,12 +2976,12 @@ du_Δr'8322'_3514 v0 v1 v2 v3 v4
                   MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1418
                   (coe v0))))
          (coe
-            MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-            (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+            MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+            (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
          (coe
             MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
             (coe
-               MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+               MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
          (coe (\ v5 -> v5))
          (coe du_rs_3512 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4)))
 -- Ledger.Conway.Specification.Epoch._.lemmaFlow
@@ -3028,7 +3028,7 @@ du_'247''8320''45'0'8804''8658'0'8804'_3546 ::
   MAlonzo.Code.Data.Rational.Base.T__'8804'__54
 du_'247''8320''45'0'8804''8658'0'8804'_3546 v0 v1
   = let v2
-          = MAlonzo.Code.Data.Rational.Properties.d__'8799'__2792
+          = MAlonzo.Code.Data.Rational.Properties.d__'8799'__3028
               (coe v1)
               (coe
                  MAlonzo.Code.Data.Rational.Literals.d_fromℤ_6
@@ -3040,7 +3040,7 @@ du_'247''8320''45'0'8804''8658'0'8804'_3546 v0 v1
                 then coe
                        seq (coe v4)
                        (coe
-                          MAlonzo.Code.Data.Rational.Properties.du_nonNegative'8315''185'_3992
+                          MAlonzo.Code.Data.Rational.Properties.du_nonNegative'8315''185'_4238
                           (coe
                              MAlonzo.Code.Data.Rational.Literals.d_fromℤ_6
                              (coe (0 :: Integer))))
@@ -3071,7 +3071,7 @@ du_η'45'nonneg_3580 v0 v1 v2
       (let v3 = coe du_blocksMade_3492 (coe v0) (coe v2) in
        coe (coe MAlonzo.Code.Data.Rational.Literals.d_fromℤ_6 (coe v3)))
       (coe
-         MAlonzo.Code.Data.Rational.Base.d__'42'__276
+         MAlonzo.Code.Data.Rational.Base.d__'42'__282
          (coe MAlonzo.Code.Data.Rational.Literals.d_fromℤ_6 (coe v1))
          (coe
             MAlonzo.Code.Ledger.Core.Specification.Epoch.d_ActiveSlotCoeff_340
@@ -3095,17 +3095,17 @@ du_min1η'45'nonneg_3582 ::
   MAlonzo.Code.Data.Rational.Base.T__'8804'__54
 du_min1η'45'nonneg_3582 v0 v1 v2
   = coe
-      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'glb_3394
+      MAlonzo.Code.Algebra.Construct.NaturalChoice.MinOp.du_'8851''45'glb_3630
       (coe
-         MAlonzo.Code.Data.Rational.Properties.d_'8804''45'totalPreorder_3646)
+         MAlonzo.Code.Data.Rational.Properties.d_'8804''45'totalPreorder_3898)
       (coe
-         MAlonzo.Code.Data.Rational.Properties.d_'8851''45'operator_5716)
-      (coe MAlonzo.Code.Data.Rational.Base.d_0ℚ_178)
+         MAlonzo.Code.Data.Rational.Properties.d_'8851''45'operator_6014)
+      (coe MAlonzo.Code.Data.Rational.Base.d_0ℚ_184)
       (coe
          MAlonzo.Code.Data.Rational.Literals.d_fromℤ_6 (coe (1 :: Integer)))
       (coe du_η_3498 (coe v0) (coe v1) (coe v2))
       (coe
-         MAlonzo.Code.Data.Rational.Properties.du_nonNegative'8315''185'_3992
+         MAlonzo.Code.Data.Rational.Properties.du_nonNegative'8315''185'_4238
          (coe
             MAlonzo.Code.Data.Rational.Literals.d_fromℤ_6
             (coe (1 :: Integer))))
@@ -3117,23 +3117,23 @@ d_Δr'8321''45'nonneg_3584 ::
   Integer ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_EpochState_3292 ->
-  Integer -> MAlonzo.Code.Data.Integer.Base.T__'8804'__26
+  Integer -> MAlonzo.Code.Data.Integer.Base.T__'8804'__48
 d_Δr'8321''45'nonneg_3584 v0 ~v1 v2 v3 v4 ~v5
   = du_Δr'8321''45'nonneg_3584 v0 v2 v3 v4
 du_Δr'8321''45'nonneg_3584 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  T_EpochState_3292 -> MAlonzo.Code.Data.Integer.Base.T__'8804'__26
+  T_EpochState_3292 -> MAlonzo.Code.Data.Integer.Base.T__'8804'__48
 du_Δr'8321''45'nonneg_3584 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Qstdlib.Data.Rational.Properties.d_0'8804''8658'0'8804'floor_36
       (coe
-         MAlonzo.Code.Data.Rational.Base.d__'42'__276
+         MAlonzo.Code.Data.Rational.Base.d__'42'__282
          (coe
-            MAlonzo.Code.Data.Rational.Base.d__'42'__276
+            MAlonzo.Code.Data.Rational.Base.d__'42'__282
             (coe
-               MAlonzo.Code.Data.Rational.Base.d__'8851'__332
+               MAlonzo.Code.Data.Rational.Base.d__'8851'__338
                (coe
                   MAlonzo.Code.Data.Rational.Literals.d_fromℤ_6 (coe (1 :: Integer)))
                (coe du_η_3498 (coe v0) (coe v1) (coe v2)))
@@ -3144,9 +3144,9 @@ du_Δr'8321''45'nonneg_3584 v0 v1 v2 v3
       (coe
          MAlonzo.Code.Qstdlib.Data.Rational.Properties.du_'42''45'0'8804''8658'0'8804'_68
          (coe
-            MAlonzo.Code.Data.Rational.Base.d__'42'__276
+            MAlonzo.Code.Data.Rational.Base.d__'42'__282
             (coe
-               MAlonzo.Code.Data.Rational.Base.d__'8851'__332
+               MAlonzo.Code.Data.Rational.Base.d__'8851'__338
                (coe
                   MAlonzo.Code.Data.Rational.Literals.d_fromℤ_6 (coe (1 :: Integer)))
                (coe du_η_3498 (coe v0) (coe v1) (coe v2)))
@@ -3164,22 +3164,22 @@ d_rewardPot'45'nonneg_3586 ::
   Integer ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_EpochState_3292 ->
-  Integer -> MAlonzo.Code.Data.Integer.Base.T__'8804'__26
+  Integer -> MAlonzo.Code.Data.Integer.Base.T__'8804'__48
 d_rewardPot'45'nonneg_3586 v0 ~v1 v2 v3 v4 ~v5
   = du_rewardPot'45'nonneg_3586 v0 v2 v3 v4
 du_rewardPot'45'nonneg_3586 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  T_EpochState_3292 -> MAlonzo.Code.Data.Integer.Base.T__'8804'__26
+  T_EpochState_3292 -> MAlonzo.Code.Data.Integer.Base.T__'8804'__48
 du_rewardPot'45'nonneg_3586 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Data.Integer.Properties.d_'43''45'mono'45''8804'_4632
+      MAlonzo.Code.Data.Integer.Properties.d_'43''45'mono'45''8804'_4882
       (coe MAlonzo.Code.Data.Integer.Base.d_0ℤ_12)
       (coe du_feeSS_3484 (coe v3)) (coe (0 :: Integer))
       (coe du_Δr'8321'_3502 (coe v0) (coe v1) (coe v2) (coe v3))
       (coe
-         MAlonzo.Code.Data.Integer.Properties.du_nonNegative'8315''185'_3338)
+         MAlonzo.Code.Data.Integer.Properties.du_nonNegative'8315''185'_3588)
       (coe
          du_Δr'8321''45'nonneg_3584 (coe v0) (coe v1) (coe v2) (coe v3))
 -- Ledger.Conway.Specification.Epoch._.Δt-nonneg
@@ -3189,19 +3189,19 @@ d_Δt'45'nonneg_3588 ::
   Integer ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_EpochState_3292 ->
-  Integer -> MAlonzo.Code.Data.Integer.Base.T__'8804'__26
+  Integer -> MAlonzo.Code.Data.Integer.Base.T__'8804'__48
 d_Δt'45'nonneg_3588 v0 ~v1 v2 v3 v4 ~v5
   = du_Δt'45'nonneg_3588 v0 v2 v3 v4
 du_Δt'45'nonneg_3588 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  T_EpochState_3292 -> MAlonzo.Code.Data.Integer.Base.T__'8804'__26
+  T_EpochState_3292 -> MAlonzo.Code.Data.Integer.Base.T__'8804'__48
 du_Δt'45'nonneg_3588 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Qstdlib.Data.Rational.Properties.d_0'8804''8658'0'8804'floor_36
       (coe
-         MAlonzo.Code.Data.Rational.Base.d__'42'__276
+         MAlonzo.Code.Data.Rational.Base.d__'42'__282
          (coe
             MAlonzo.Code.Data.Rational.Literals.d_fromℤ_6
             (coe du_rewardPot_3504 (coe v0) (coe v1) (coe v2) (coe v3)))
@@ -3225,30 +3225,30 @@ d_Δf'45'nonpos_3590 ::
   Integer ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   T_EpochState_3292 ->
-  Integer -> MAlonzo.Code.Data.Integer.Base.T__'8804'__26
+  Integer -> MAlonzo.Code.Data.Integer.Base.T__'8804'__48
 d_Δf'45'nonpos_3590 ~v0 ~v1 ~v2 ~v3 v4 ~v5
   = du_Δf'45'nonpos_3590 v4
 du_Δf'45'nonpos_3590 ::
-  T_EpochState_3292 -> MAlonzo.Code.Data.Integer.Base.T__'8804'__26
+  T_EpochState_3292 -> MAlonzo.Code.Data.Integer.Base.T__'8804'__48
 du_Δf'45'nonpos_3590 v0
   = coe
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
       (coe
          MAlonzo.Code.Relation.Binary.Reasoning.Base.Triple.du_start_96
          (coe
-            MAlonzo.Code.Data.Integer.Properties.d_'8804''45'isPreorder_2908)
+            MAlonzo.Code.Data.Integer.Properties.d_'8804''45'isPreorder_3144)
          (\ v1 v2 v3 ->
             coe
-              MAlonzo.Code.Data.Integer.Properties.du_'60''8658''8804'_2954 v3))
-      (MAlonzo.Code.Data.Integer.Base.d__'45'__302
+              MAlonzo.Code.Data.Integer.Properties.du_'60''8658''8804'_3204 v3))
+      (MAlonzo.Code.Data.Integer.Base.d__'45'__320
          (coe (0 :: Integer)) (coe du_feeSS_3484 (coe v0)))
       (0 :: Integer)
       (coe
          MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8801''45''10217'_438
          (\ v1 v2 v3 v4 v5 -> v5)
-         (MAlonzo.Code.Data.Integer.Base.d__'45'__302
+         (MAlonzo.Code.Data.Integer.Base.d__'45'__320
             (coe (0 :: Integer)) (coe du_feeSS_3484 (coe v0)))
-         (MAlonzo.Code.Data.Integer.Base.d_'45'__260
+         (MAlonzo.Code.Data.Integer.Base.d_'45'__278
             (coe du_feeSS_3484 (coe v0)))
          (0 :: Integer)
          (coe
@@ -3256,12 +3256,12 @@ du_Δf'45'nonpos_3590 v0
             (coe
                MAlonzo.Code.Relation.Binary.Reasoning.Base.Triple.du_'8804''45'go_138
                (coe
-                  MAlonzo.Code.Data.Integer.Properties.d_'8804''45'isPreorder_2908)
+                  MAlonzo.Code.Data.Integer.Properties.d_'8804''45'isPreorder_3144)
                (\ v1 v2 v3 v4 v5 ->
                   coe
-                    MAlonzo.Code.Data.Integer.Properties.du_'8804''45''60''45'trans_3066
+                    MAlonzo.Code.Data.Integer.Properties.du_'8804''45''60''45'trans_3316
                     v4 v5))
-            (MAlonzo.Code.Data.Integer.Base.d_'45'__260
+            (MAlonzo.Code.Data.Integer.Base.d_'45'__278
                (coe du_feeSS_3484 (coe v0)))
             (0 :: Integer) (0 :: Integer)
             (coe
@@ -3269,15 +3269,15 @@ du_Δf'45'nonpos_3590 v0
                (coe
                   MAlonzo.Code.Relation.Binary.Reasoning.Base.Triple.du_stop_166
                   (coe
-                     MAlonzo.Code.Data.Integer.Properties.d_'8804''45'isPreorder_2908))
+                     MAlonzo.Code.Data.Integer.Properties.d_'8804''45'isPreorder_3144))
                (coe (0 :: Integer)))
             (coe
-               MAlonzo.Code.Data.Integer.Properties.du_neg'45'mono'45''8804'_3380
+               MAlonzo.Code.Data.Integer.Properties.du_neg'45'mono'45''8804'_3630
                (coe
                   MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_feeSS_3126
                   (coe d_ss_3306 (coe v0)))
                (coe
-                  MAlonzo.Code.Data.Integer.Base.C_'43''8804''43'_48
+                  MAlonzo.Code.Data.Integer.Base.C_'43''8804''43'_70
                   (coe MAlonzo.Code.Data.Nat.Base.C_z'8804'n_26))))
          erased)
 -- Ledger.Conway.Specification.Epoch.applyRUpd
@@ -3688,9 +3688,9 @@ du_applyRUpd_3596 v0 v1 v2
                                                          (coe
                                                             MAlonzo.Code.Prelude.d_posPart_58
                                                             (coe
-                                                               MAlonzo.Code.Data.Integer.Base.d__'43'__284
+                                                               MAlonzo.Code.Data.Integer.Base.d__'43'__302
                                                                (coe
-                                                                  MAlonzo.Code.Data.Integer.Base.d__'43'__284
+                                                                  MAlonzo.Code.Data.Integer.Base.d__'43'__302
                                                                   (coe v8)
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δt_3034
@@ -3701,7 +3701,7 @@ du_applyRUpd_3596 v0 v1 v2
                                                          (coe
                                                             MAlonzo.Code.Prelude.d_posPart_58
                                                             (coe
-                                                               MAlonzo.Code.Data.Integer.Base.d__'43'__284
+                                                               MAlonzo.Code.Data.Integer.Base.d__'43'__302
                                                                (coe v9)
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δr_3036
@@ -4109,7 +4109,7 @@ du_applyRUpd_3596 v0 v1 v2
                                                                         (coe
                                                                            MAlonzo.Code.Prelude.d_posPart_58
                                                                            (coe
-                                                                              MAlonzo.Code.Data.Integer.Base.d__'43'__284
+                                                                              MAlonzo.Code.Data.Integer.Base.d__'43'__302
                                                                               (coe v14)
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δf_3038
@@ -4470,7 +4470,7 @@ du_applyRUpd_3596 v0 v1 v2
                                                                                     (coe
                                                                                        MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                                                                                        (coe
-                                                                                          MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                                                                                          MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_284
                                                                                        (coe
@@ -4680,12 +4680,12 @@ du_unregRU''_3648 v0 v1 v2
                MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1418
                (coe v0))))
       (coe
-         MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+         MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
       (coe
          MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
          (coe
-            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
       (coe (\ v3 -> v3)) (coe du_unregRU_3646 (coe v0) (coe v1) (coe v2))
 -- Ledger.Conway.Specification.Epoch.calculatePoolDelegatedStake
 d_calculatePoolDelegatedStake_3652 ::
@@ -4769,7 +4769,7 @@ du_sd_3662 v0 v1
       (coe
          MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
          (coe
-            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
       (coe
          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
          (coe
@@ -4847,7 +4847,7 @@ du_stakeFromGADeposits_3664 v0 v1 v2
       (coe
          MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
          (coe
-            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
       (coe
          MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_284
          (coe
@@ -4863,8 +4863,8 @@ du_stakeFromGADeposits_3664 v0 v1 v2
                MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1418
                (coe v0))))
       (coe
-         MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+         MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
       (coe
          MAlonzo.Code.Axiom.Set.du_map_426
          (MAlonzo.Code.Axiom.Set.d_th_1516
@@ -4942,7 +4942,8 @@ du_govSt''_3684 v0
             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
       (coe
          MAlonzo.Code.Class.Bifunctor.du_map'8322'_124
-         (coe MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45''215'_156)
+         (coe MAlonzo.Code.Class.Bifunctor.d_Bifunctor'45''215'_160)
+         (coe ()) (coe ())
          (coe
             (\ v1 ->
                MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_returnAddr_1148
@@ -5298,7 +5299,7 @@ du_calculatePoolDelegatedStakeForVoting_3726 v0 v1 v2 v3
       (coe
          MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
          (coe
-            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
       (MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
          (coe
             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_220
@@ -5357,7 +5358,7 @@ du_stakeFromDeposits_3738 v0 v1 v2 v3
       (coe
          MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
          (coe
-            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
       (coe
          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
          (coe
@@ -7293,7 +7294,7 @@ du_govActionReturns_3984 v0 v1
       (coe
          MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
          (coe
-            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
       (coe
          MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_340
          (coe
@@ -7351,7 +7352,7 @@ du_payout_3992 v0 v1 v2
       (coe
          MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
          (coe
-            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
       (coe
          MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RewardAddress_340
          (coe
@@ -7604,7 +7605,7 @@ du_dState''''_3996 v0 v1 v2 v3
                (coe
                   MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                   (coe
-                     MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+                     MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
                (coe
                   MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_284
                   (coe
@@ -7663,12 +7664,12 @@ du_unclaimed_3998 v0 v1 v2 v3
                   MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1418
                   (coe v0))))
          (coe
-            MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-            (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+            MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+            (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
          (coe
             MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
             (coe
-               MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+               MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
          (coe (\ v4 -> v4)) (coe du_payout_3992 (coe v0) (coe v1) (coe v3)))
       (coe
          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1468
@@ -7687,12 +7688,12 @@ du_unclaimed_3998 v0 v1 v2 v3
                   MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1418
                   (coe v0))))
          (coe
-            MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-            (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+            MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+            (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
          (coe
             MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
             (coe
-               MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+               MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
          (coe (\ v4 -> v4))
          (coe du_refunds_3994 (coe v0) (coe v1) (coe v2) (coe v3)))
 -- Ledger.Conway.Specification.Epoch.Post-POOLREAPUpdate.totWithdrawals
@@ -7733,12 +7734,12 @@ du_totWithdrawals_4000 v0 v1
                MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1418
                (coe v0))))
       (coe
-         MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+         MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
       (coe
          MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
          (coe
-            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
       (coe (\ v2 -> v2))
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Enact.d_withdrawals_1206

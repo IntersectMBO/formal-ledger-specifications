@@ -38,7 +38,7 @@ du_fromThis_12
       (let v0 = coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18 in
        coe (coe (\ v1 -> v0)))
       (coe
-         MAlonzo.Code.Function.Base.du__'8728''8242'__216
+         MAlonzo.Code.Function.Base.du__'8728''8242'__230
          (coe (\ v0 v1 -> v0))
          (coe MAlonzo.Code.Agda.Builtin.Maybe.C_just_16))
 -- Data.These.fromThat
@@ -112,12 +112,12 @@ du_deleteThis_22
       (let v0 = coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18 in
        coe (coe (\ v1 -> v0)))
       (coe
-         MAlonzo.Code.Function.Base.du__'8728''8242'__216
+         MAlonzo.Code.Function.Base.du__'8728''8242'__230
          (coe MAlonzo.Code.Agda.Builtin.Maybe.C_just_16)
          (coe MAlonzo.Code.Data.These.Base.C_that_50))
       (let v0
              = coe
-                 MAlonzo.Code.Function.Base.du__'8728''8242'__216
+                 MAlonzo.Code.Function.Base.du__'8728''8242'__230
                  (coe MAlonzo.Code.Agda.Builtin.Maybe.C_just_16)
                  (coe MAlonzo.Code.Data.These.Base.C_that_50) in
        coe (coe (\ v1 -> v0)))
@@ -137,15 +137,15 @@ du_deleteThat_24
   = coe
       MAlonzo.Code.Data.These.Base.du_fold_92
       (coe
-         MAlonzo.Code.Function.Base.du__'8728''8242'__216
+         MAlonzo.Code.Function.Base.du__'8728''8242'__230
          (coe MAlonzo.Code.Agda.Builtin.Maybe.C_just_16)
          (coe MAlonzo.Code.Data.These.Base.C_this_48))
       (let v0 = coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18 in
        coe (coe (\ v1 -> v0)))
       (coe
-         MAlonzo.Code.Function.Base.du__'8728''8242'__216
+         MAlonzo.Code.Function.Base.du__'8728''8242'__230
          (coe (\ v0 v1 -> v0))
          (coe
-            MAlonzo.Code.Function.Base.du__'8728''8242'__216
+            MAlonzo.Code.Function.Base.du__'8728''8242'__230
             (coe MAlonzo.Code.Agda.Builtin.Maybe.C_just_16)
             (coe MAlonzo.Code.Data.These.Base.C_this_48)))

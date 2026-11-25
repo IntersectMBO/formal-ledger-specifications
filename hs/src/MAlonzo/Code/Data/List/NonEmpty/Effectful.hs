@@ -82,7 +82,7 @@ du_comonad_22
       (coe
          (\ v0 v1 v2 ->
             coe
-              MAlonzo.Code.Function.Base.du__'8728''8242'__216
+              MAlonzo.Code.Function.Base.du__'8728''8242'__230
               (coe
                  MAlonzo.Code.Data.Product.Base.du_uncurry_244
                  (coe du_extend_32 (coe v2)))

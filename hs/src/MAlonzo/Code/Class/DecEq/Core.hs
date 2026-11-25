@@ -28,7 +28,7 @@ import qualified MAlonzo.Code.Relation.Nullary.Reflects
 -- Class.DecEq.Core.DecEq
 d_DecEq_10 a0 a1 = ()
 newtype T_DecEq_10
-  = C_constructor_32 (AgdaAny ->
+  = C_constructor_26 (AgdaAny ->
                       AgdaAny -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20)
 -- Class.DecEq.Core.DecEq._≟_
 d__'8799'__16 ::
@@ -37,92 +37,107 @@ d__'8799'__16 ::
   AgdaAny -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d__'8799'__16 v0
   = case coe v0 of
-      C_constructor_32 v1 -> coe v1
+      C_constructor_26 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Class.DecEq.Core.DecEq._==_
 d__'61''61'__18 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> T_DecEq_10 -> AgdaAny -> AgdaAny -> Bool
-d__'61''61'__18 v0 ~v1 v2 v3 v4 = du__'61''61'__18 v0 v2 v3 v4
-du__'61''61'__18 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_DecEq_10 -> AgdaAny -> AgdaAny -> Bool
-du__'61''61'__18 v0 v1 v2 v3
+d__'61''61'__18 ~v0 ~v1 v2 = du__'61''61'__18 v2
+du__'61''61'__18 :: T_DecEq_10 -> AgdaAny -> AgdaAny -> Bool
+du__'61''61'__18 v0
   = coe
-      MAlonzo.Code.Relation.Nullary.Decidable.Core.d_'8970'_'8971'_140 v0
-      erased (coe d__'8799'__16 v1 v2 v3)
--- Class.DecEq.Core.DecEq._≡ᵇ_
-d__'8801''7495'__20 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> T_DecEq_10 -> AgdaAny -> AgdaAny -> Bool
-d__'8801''7495'__20 v0 ~v1 v2 = du__'8801''7495'__20 v0 v2
-du__'8801''7495'__20 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_DecEq_10 -> AgdaAny -> AgdaAny -> Bool
-du__'8801''7495'__20 v0 v1 = coe du__'61''61'__18 (coe v0) (coe v1)
+      MAlonzo.Code.Function.Base.du__'8728''8322'__92
+      (coe
+         (\ v1 v2 v3 ->
+            MAlonzo.Code.Relation.Nullary.Decidable.Core.d_does_28 (coe v3)))
+      (coe d__'8799'__16 (coe v0))
 -- Class.DecEq.Core.DecEq._≠_
-d__'8800'__26 ::
+d__'8800'__20 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> T_DecEq_10 -> AgdaAny -> AgdaAny -> Bool
-d__'8800'__26 v0 ~v1 v2 v3 v4 = du__'8800'__26 v0 v2 v3 v4
-du__'8800'__26 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_DecEq_10 -> AgdaAny -> AgdaAny -> Bool
-du__'8800'__26 v0 v1 v2 v3
+d__'8800'__20 ~v0 ~v1 v2 = du__'8800'__20 v2
+du__'8800'__20 :: T_DecEq_10 -> AgdaAny -> AgdaAny -> Bool
+du__'8800'__20 v0
   = coe
-      MAlonzo.Code.Data.Bool.Base.d_not_22
-      (coe du__'61''61'__18 (coe v0) (coe v1) (coe v2) (coe v3))
--- Class.DecEq.Core._._==_
-d__'61''61'__36 ::
+      MAlonzo.Code.Function.Base.du__'8728''8322'__92
+      (coe (\ v1 v2 -> MAlonzo.Code.Data.Bool.Base.d_not_22))
+      (coe du__'61''61'__18 (coe v0))
+-- Class.DecEq.Core.DecEq._≡ᵇ_
+d__'8801''7495'__22 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> T_DecEq_10 -> AgdaAny -> AgdaAny -> Bool
-d__'61''61'__36 v0 ~v1 v2 = du__'61''61'__36 v0 v2
-du__'61''61'__36 ::
+d__'8801''7495'__22 ~v0 ~v1 v2 = du__'8801''7495'__22 v2
+du__'8801''7495'__22 :: T_DecEq_10 -> AgdaAny -> AgdaAny -> Bool
+du__'8801''7495'__22 v0
+  = coe
+      MAlonzo.Code.Function.Base.du__'8728''8322'__92
+      (coe
+         (\ v1 v2 ->
+            coe MAlonzo.Code.Relation.Nullary.Decidable.Core.du_isYes_132))
+      (coe d__'8799'__16 (coe v0))
+-- Class.DecEq.Core.DecEq._≢ᵇ_
+d__'8802''7495'__24 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_DecEq_10 -> AgdaAny -> AgdaAny -> Bool
-du__'61''61'__36 v0 v1 = coe du__'61''61'__18 (coe v0) (coe v1)
+  () -> T_DecEq_10 -> AgdaAny -> AgdaAny -> Bool
+d__'8802''7495'__24 ~v0 ~v1 v2 = du__'8802''7495'__24 v2
+du__'8802''7495'__24 :: T_DecEq_10 -> AgdaAny -> AgdaAny -> Bool
+du__'8802''7495'__24 v0
+  = coe
+      MAlonzo.Code.Function.Base.du__'8728''8322'__92
+      (coe (\ v1 v2 -> MAlonzo.Code.Data.Bool.Base.d_not_22))
+      (coe du__'8801''7495'__22 (coe v0))
+-- Class.DecEq.Core._._==_
+d__'61''61'__30 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () -> T_DecEq_10 -> AgdaAny -> AgdaAny -> Bool
+d__'61''61'__30 ~v0 ~v1 v2 = du__'61''61'__30 v2
+du__'61''61'__30 :: T_DecEq_10 -> AgdaAny -> AgdaAny -> Bool
+du__'61''61'__30 v0 = coe du__'61''61'__18 (coe v0)
 -- Class.DecEq.Core._._≟_
-d__'8799'__38 ::
+d__'8799'__32 ::
   T_DecEq_10 ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-d__'8799'__38 v0 = coe d__'8799'__16 (coe v0)
+d__'8799'__32 v0 = coe d__'8799'__16 (coe v0)
 -- Class.DecEq.Core._._≠_
-d__'8800'__40 ::
+d__'8800'__34 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> T_DecEq_10 -> AgdaAny -> AgdaAny -> Bool
-d__'8800'__40 v0 ~v1 v2 = du__'8800'__40 v0 v2
-du__'8800'__40 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_DecEq_10 -> AgdaAny -> AgdaAny -> Bool
-du__'8800'__40 v0 v1 = coe du__'8800'__26 (coe v0) (coe v1)
+d__'8800'__34 ~v0 ~v1 v2 = du__'8800'__34 v2
+du__'8800'__34 :: T_DecEq_10 -> AgdaAny -> AgdaAny -> Bool
+du__'8800'__34 v0 = coe du__'8800'__20 (coe v0)
 -- Class.DecEq.Core._._≡ᵇ_
-d__'8801''7495'__42 ::
+d__'8801''7495'__36 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> T_DecEq_10 -> AgdaAny -> AgdaAny -> Bool
-d__'8801''7495'__42 v0 ~v1 v2 = du__'8801''7495'__42 v0 v2
-du__'8801''7495'__42 ::
+d__'8801''7495'__36 ~v0 ~v1 v2 = du__'8801''7495'__36 v2
+du__'8801''7495'__36 :: T_DecEq_10 -> AgdaAny -> AgdaAny -> Bool
+du__'8801''7495'__36 v0 = coe du__'8801''7495'__22 (coe v0)
+-- Class.DecEq.Core._._≢ᵇ_
+d__'8802''7495'__38 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_DecEq_10 -> AgdaAny -> AgdaAny -> Bool
-du__'8801''7495'__42 v0 v1
-  = coe du__'8801''7495'__20 (coe v0) (coe v1)
+  () -> T_DecEq_10 -> AgdaAny -> AgdaAny -> Bool
+d__'8802''7495'__38 ~v0 ~v1 v2 = du__'8802''7495'__38 v2
+du__'8802''7495'__38 :: T_DecEq_10 -> AgdaAny -> AgdaAny -> Bool
+du__'8802''7495'__38 v0 = coe du__'8802''7495'__24 (coe v0)
 -- Class.DecEq.Core.DecEq¹
-d_DecEq'185'_44 ::
+d_DecEq'185'_40 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 -> (AgdaAny -> ()) -> ()
-d_DecEq'185'_44 = erased
+d_DecEq'185'_40 = erased
 -- Class.DecEq.Core.DecEq²
-d_DecEq'178'_46 ::
+d_DecEq'178'_42 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> ()
-d_DecEq'178'_46 = erased
+d_DecEq'178'_42 = erased
 -- Class.DecEq.Core.DecEq³
-d_DecEq'179'_48 ::
+d_DecEq'179'_44 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -131,23 +146,23 @@ d_DecEq'179'_48 ::
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> AgdaAny -> ()) -> ()
-d_DecEq'179'_48 = erased
+d_DecEq'179'_44 = erased
 -- Class.DecEq.Core.Irrelevant⇒DecEq
-d_Irrelevant'8658'DecEq_50 ::
+d_Irrelevant'8658'DecEq_46 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny ->
    AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12) ->
   T_DecEq_10
-d_Irrelevant'8658'DecEq_50 ~v0 ~v1 v2
-  = du_Irrelevant'8658'DecEq_50 v2
-du_Irrelevant'8658'DecEq_50 ::
+d_Irrelevant'8658'DecEq_46 ~v0 ~v1 v2
+  = du_Irrelevant'8658'DecEq_46 v2
+du_Irrelevant'8658'DecEq_46 ::
   (AgdaAny ->
    AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12) ->
   T_DecEq_10
-du_Irrelevant'8658'DecEq_50 v0
+du_Irrelevant'8658'DecEq_46 v0
   = coe
-      C_constructor_32
+      C_constructor_26
       (coe
          MAlonzo.Code.Function.Base.du__'8728''8322'__92
          (coe

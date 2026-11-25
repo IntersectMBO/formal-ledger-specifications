@@ -46,7 +46,7 @@ du__'47''47'__14 v0
              = MAlonzo.Code.Algebra.Bundles.d__'8315''185'_1708 (coe v0) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Structures.du__'47''47'__1136 (coe v1)
+            MAlonzo.Code.Algebra.Structures.du__'47''47'__1138 (coe v1)
             (coe v2)))
 -- Algebra.Properties.AbelianGroup._.//-cong₂
 d_'47''47''45'cong'8322'_158 ::
@@ -63,7 +63,7 @@ du_'47''47''45'cong'8322'_158 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'47''47''45'cong'8322'_158 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_'47''47''45'cong'8322'_532
+      MAlonzo.Code.Algebra.Properties.Group.du_'47''47''45'cong'8322'_538
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.//-rightDivides
 d_'47''47''45'rightDivides_160 ::
@@ -78,7 +78,7 @@ du_'47''47''45'rightDivides_160 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_'47''47''45'rightDivides_160 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_'47''47''45'rightDivides_564
+      MAlonzo.Code.Algebra.Properties.Group.du_'47''47''45'rightDivides_570
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.//-rightDividesʳ
 d_'47''47''45'rightDivides'691'_162 ::
@@ -93,7 +93,7 @@ du_'47''47''45'rightDivides'691'_162 ::
   AgdaAny -> AgdaAny -> AgdaAny
 du_'47''47''45'rightDivides'691'_162 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_'47''47''45'rightDivides'691'_558
+      MAlonzo.Code.Algebra.Properties.Group.du_'47''47''45'rightDivides'691'_564
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.//-rightDividesˡ
 d_'47''47''45'rightDivides'737'_164 ::
@@ -108,7 +108,7 @@ du_'47''47''45'rightDivides'737'_164 ::
   AgdaAny -> AgdaAny -> AgdaAny
 du_'47''47''45'rightDivides'737'_164 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_'47''47''45'rightDivides'737'_552
+      MAlonzo.Code.Algebra.Properties.Group.du_'47''47''45'rightDivides'737'_558
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.\\-cong₂
 d_'92''92''45'cong'8322'_166 ::
@@ -125,7 +125,7 @@ du_'92''92''45'cong'8322'_166 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'92''92''45'cong'8322'_166 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_'92''92''45'cong'8322'_526
+      MAlonzo.Code.Algebra.Properties.Group.du_'92''92''45'cong'8322'_532
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.\\-leftDivides
 d_'92''92''45'leftDivides_168 ::
@@ -140,7 +140,7 @@ du_'92''92''45'leftDivides_168 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_'92''92''45'leftDivides_168 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_'92''92''45'leftDivides_550
+      MAlonzo.Code.Algebra.Properties.Group.du_'92''92''45'leftDivides_556
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.\\-leftDividesʳ
 d_'92''92''45'leftDivides'691'_170 ::
@@ -155,7 +155,7 @@ du_'92''92''45'leftDivides'691'_170 ::
   AgdaAny -> AgdaAny -> AgdaAny
 du_'92''92''45'leftDivides'691'_170 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_'92''92''45'leftDivides'691'_544
+      MAlonzo.Code.Algebra.Properties.Group.du_'92''92''45'leftDivides'691'_550
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.\\-leftDividesˡ
 d_'92''92''45'leftDivides'737'_172 ::
@@ -170,7 +170,7 @@ du_'92''92''45'leftDivides'737'_172 ::
   AgdaAny -> AgdaAny -> AgdaAny
 du_'92''92''45'leftDivides'737'_172 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_'92''92''45'leftDivides'737'_538
+      MAlonzo.Code.Algebra.Properties.Group.du_'92''92''45'leftDivides'737'_544
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.\\≗flip-//⇒comm
 d_'92''92''8791'flip'45''47''47''8658'comm_174 ::
@@ -185,7 +185,7 @@ du_'92''92''8791'flip'45''47''47''8658'comm_174 ::
   (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
 du_'92''92''8791'flip'45''47''47''8658'comm_174 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_'92''92''8791'flip'45''47''47''8658'comm_690
+      MAlonzo.Code.Algebra.Properties.Group.du_'92''92''8791'flip'45''47''47''8658'comm_696
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.comm⇒\\≗flip-//
 d_comm'8658''92''92''8791'flip'45''47''47'_176 ::
@@ -200,7 +200,7 @@ du_comm'8658''92''92''8791'flip'45''47''47'_176 ::
   (AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
 du_comm'8658''92''92''8791'flip'45''47''47'_176 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_comm'8658''92''92''8791'flip'45''47''47'_702
+      MAlonzo.Code.Algebra.Properties.Group.du_comm'8658''92''92''8791'flip'45''47''47'_708
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.identity-unique
 d_identity'45'unique_178 ::
@@ -217,8 +217,8 @@ du_identity'45'unique_178 v0
           = coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Properties.Loop.du_identity'45'unique_326
-         (coe MAlonzo.Code.Algebra.Properties.Group.du_loop_584 (coe v1)))
+         MAlonzo.Code.Algebra.Properties.Loop.du_identity'45'unique_328
+         (coe MAlonzo.Code.Algebra.Properties.Group.du_loop_590 (coe v1)))
 -- Algebra.Properties.AbelianGroup._.identityʳ-unique
 d_identity'691''45'unique_180 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -235,8 +235,8 @@ du_identity'691''45'unique_180 v0
           = coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Properties.Loop.du_identity'691''45'unique_316
-         (coe MAlonzo.Code.Algebra.Properties.Group.du_loop_584 (coe v1)))
+         MAlonzo.Code.Algebra.Properties.Loop.du_identity'691''45'unique_318
+         (coe MAlonzo.Code.Algebra.Properties.Group.du_loop_590 (coe v1)))
 -- Algebra.Properties.AbelianGroup._.identityˡ-unique
 d_identity'737''45'unique_182 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -253,8 +253,8 @@ du_identity'737''45'unique_182 v0
           = coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Properties.Loop.du_identity'737''45'unique_304
-         (coe MAlonzo.Code.Algebra.Properties.Group.du_loop_584 (coe v1)))
+         MAlonzo.Code.Algebra.Properties.Loop.du_identity'737''45'unique_306
+         (coe MAlonzo.Code.Algebra.Properties.Group.du_loop_590 (coe v1)))
 -- Algebra.Properties.AbelianGroup._.inverseʳ-unique
 d_inverse'691''45'unique_184 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -268,7 +268,7 @@ du_inverse'691''45'unique_184 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_inverse'691''45'unique_184 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_inverse'691''45'unique_610
+      MAlonzo.Code.Algebra.Properties.Group.du_inverse'691''45'unique_616
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.inverseˡ-unique
 d_inverse'737''45'unique_186 ::
@@ -283,63 +283,63 @@ du_inverse'737''45'unique_186 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_inverse'737''45'unique_186 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_inverse'737''45'unique_598
+      MAlonzo.Code.Algebra.Properties.Group.du_inverse'737''45'unique_604
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.isLoop
 d_isLoop_188 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.T_AbelianGroup_1682 ->
-  MAlonzo.Code.Algebra.Structures.T_IsLoop_3122
+  MAlonzo.Code.Algebra.Structures.T_IsLoop_3406
 d_isLoop_188 ~v0 ~v1 v2 = du_isLoop_188 v2
 du_isLoop_188 ::
   MAlonzo.Code.Algebra.Bundles.T_AbelianGroup_1682 ->
-  MAlonzo.Code.Algebra.Structures.T_IsLoop_3122
+  MAlonzo.Code.Algebra.Structures.T_IsLoop_3406
 du_isLoop_188 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_isLoop_582
+      MAlonzo.Code.Algebra.Properties.Group.du_isLoop_588
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.isQuasigroup
 d_isQuasigroup_190 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.T_AbelianGroup_1682 ->
-  MAlonzo.Code.Algebra.Structures.T_IsQuasigroup_3038
+  MAlonzo.Code.Algebra.Structures.T_IsQuasigroup_3322
 d_isQuasigroup_190 ~v0 ~v1 v2 = du_isQuasigroup_190 v2
 du_isQuasigroup_190 ::
   MAlonzo.Code.Algebra.Bundles.T_AbelianGroup_1682 ->
-  MAlonzo.Code.Algebra.Structures.T_IsQuasigroup_3038
+  MAlonzo.Code.Algebra.Structures.T_IsQuasigroup_3322
 du_isQuasigroup_190 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_isQuasigroup_566
+      MAlonzo.Code.Algebra.Properties.Group.du_isQuasigroup_572
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.loop
 d_loop_192 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.T_AbelianGroup_1682 ->
-  MAlonzo.Code.Algebra.Bundles.T_Loop_4460
+  MAlonzo.Code.Algebra.Bundles.T_Loop_4886
 d_loop_192 ~v0 ~v1 v2 = du_loop_192 v2
 du_loop_192 ::
   MAlonzo.Code.Algebra.Bundles.T_AbelianGroup_1682 ->
-  MAlonzo.Code.Algebra.Bundles.T_Loop_4460
+  MAlonzo.Code.Algebra.Bundles.T_Loop_4886
 du_loop_192 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_loop_584
+      MAlonzo.Code.Algebra.Properties.Group.du_loop_590
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.quasigroup
 d_quasigroup_194 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.T_AbelianGroup_1682 ->
-  MAlonzo.Code.Algebra.Bundles.T_Quasigroup_4358
+  MAlonzo.Code.Algebra.Bundles.T_Quasigroup_4784
 d_quasigroup_194 ~v0 ~v1 v2 = du_quasigroup_194 v2
 du_quasigroup_194 ::
   MAlonzo.Code.Algebra.Bundles.T_AbelianGroup_1682 ->
-  MAlonzo.Code.Algebra.Bundles.T_Quasigroup_4358
+  MAlonzo.Code.Algebra.Bundles.T_Quasigroup_4784
 du_quasigroup_194 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_quasigroup_568
+      MAlonzo.Code.Algebra.Properties.Group.du_quasigroup_574
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.x∙y⁻¹≈ε⇒x≈y
 d_x'8729'y'8315''185''8776'ε'8658'x'8776'y_196 ::
@@ -354,7 +354,7 @@ du_x'8729'y'8315''185''8776'ε'8658'x'8776'y_196 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_x'8729'y'8315''185''8776'ε'8658'x'8776'y_196 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_x'8729'y'8315''185''8776'ε'8658'x'8776'y_634
+      MAlonzo.Code.Algebra.Properties.Group.du_x'8729'y'8315''185''8776'ε'8658'x'8776'y_640
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.x≈y⇒x∙y⁻¹≈ε
 d_x'8776'y'8658'x'8729'y'8315''185''8776'ε_198 ::
@@ -369,7 +369,7 @@ du_x'8776'y'8658'x'8729'y'8315''185''8776'ε_198 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_x'8776'y'8658'x'8729'y'8315''185''8776'ε_198 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_x'8776'y'8658'x'8729'y'8315''185''8776'ε_646
+      MAlonzo.Code.Algebra.Properties.Group.du_x'8776'y'8658'x'8729'y'8315''185''8776'ε_652
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.x≈z//y
 d_x'8776'z'47''47'y_200 ::
@@ -386,9 +386,9 @@ du_x'8776'z'47''47'y_200 v0
           = coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Properties.QQuasigroup.du_x'8776'z'47''47'y_278
+         MAlonzo.Code.Algebra.Properties.QQuasigroup.du_x'8776'z'47''47'y_280
          (coe
-            MAlonzo.Code.Algebra.Properties.Group.du_quasigroup_568 (coe v1)))
+            MAlonzo.Code.Algebra.Properties.Group.du_quasigroup_574 (coe v1)))
 -- Algebra.Properties.AbelianGroup._.y≈x\\z
 d_y'8776'x'92''92'z_202 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -404,9 +404,9 @@ du_y'8776'x'92''92'z_202 v0
           = coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Properties.QQuasigroup.du_y'8776'x'92''92'z_262
+         MAlonzo.Code.Algebra.Properties.QQuasigroup.du_y'8776'x'92''92'z_264
          (coe
-            MAlonzo.Code.Algebra.Properties.Group.du_quasigroup_568 (coe v1)))
+            MAlonzo.Code.Algebra.Properties.Group.du_quasigroup_574 (coe v1)))
 -- Algebra.Properties.AbelianGroup._.ε⁻¹≈ε
 d_ε'8315''185''8776'ε_204 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -418,7 +418,7 @@ du_ε'8315''185''8776'ε_204 ::
   MAlonzo.Code.Algebra.Bundles.T_AbelianGroup_1682 -> AgdaAny
 du_ε'8315''185''8776'ε_204 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_ε'8315''185''8776'ε_618
+      MAlonzo.Code.Algebra.Properties.Group.du_ε'8315''185''8776'ε_624
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.⁻¹-anti-homo-//
 d_'8315''185''45'anti'45'homo'45''47''47'_206 ::
@@ -433,7 +433,7 @@ du_'8315''185''45'anti'45'homo'45''47''47'_206 ::
   AgdaAny -> AgdaAny -> AgdaAny
 du_'8315''185''45'anti'45'homo'45''47''47'_206 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_'8315''185''45'anti'45'homo'45''47''47'_670
+      MAlonzo.Code.Algebra.Properties.Group.du_'8315''185''45'anti'45'homo'45''47''47'_676
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.⁻¹-anti-homo-\\
 d_'8315''185''45'anti'45'homo'45''92''92'_208 ::
@@ -448,7 +448,7 @@ du_'8315''185''45'anti'45'homo'45''92''92'_208 ::
   AgdaAny -> AgdaAny -> AgdaAny
 du_'8315''185''45'anti'45'homo'45''92''92'_208 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_'8315''185''45'anti'45'homo'45''92''92'_680
+      MAlonzo.Code.Algebra.Properties.Group.du_'8315''185''45'anti'45'homo'45''92''92'_686
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.⁻¹-anti-homo-∙
 d_'8315''185''45'anti'45'homo'45''8729'_210 ::
@@ -463,7 +463,7 @@ du_'8315''185''45'anti'45'homo'45''8729'_210 ::
   AgdaAny -> AgdaAny -> AgdaAny
 du_'8315''185''45'anti'45'homo'45''8729'_210 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_'8315''185''45'anti'45'homo'45''8729'_660
+      MAlonzo.Code.Algebra.Properties.Group.du_'8315''185''45'anti'45'homo'45''8729'_666
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.⁻¹-injective
 d_'8315''185''45'injective_212 ::
@@ -478,7 +478,7 @@ du_'8315''185''45'injective_212 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'8315''185''45'injective_212 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_'8315''185''45'injective_654
+      MAlonzo.Code.Algebra.Properties.Group.du_'8315''185''45'injective_660
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.⁻¹-involutive
 d_'8315''185''45'involutive_214 ::
@@ -493,7 +493,7 @@ du_'8315''185''45'involutive_214 ::
   AgdaAny -> AgdaAny
 du_'8315''185''45'involutive_214 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_'8315''185''45'involutive_628
+      MAlonzo.Code.Algebra.Properties.Group.du_'8315''185''45'involutive_634
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.⁻¹-selfInverse
 d_'8315''185''45'selfInverse_216 ::
@@ -508,7 +508,7 @@ du_'8315''185''45'selfInverse_216 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'8315''185''45'selfInverse_216 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_'8315''185''45'selfInverse_620
+      MAlonzo.Code.Algebra.Properties.Group.du_'8315''185''45'selfInverse_626
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup._.cancel
 d_cancel_218 ::
@@ -525,9 +525,9 @@ du_cancel_218 v0
           = coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Properties.QQuasigroup.du_cancel_308
+         MAlonzo.Code.Algebra.Properties.QQuasigroup.du_cancel_310
          (coe
-            MAlonzo.Code.Algebra.Properties.Group.du_quasigroup_568 (coe v1)))
+            MAlonzo.Code.Algebra.Properties.Group.du_quasigroup_574 (coe v1)))
 -- Algebra.Properties.AbelianGroup._.cancelʳ
 d_cancel'691'_220 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -543,9 +543,9 @@ du_cancel'691'_220 v0
           = coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Properties.QQuasigroup.du_cancel'691'_298
+         MAlonzo.Code.Algebra.Properties.QQuasigroup.du_cancel'691'_300
          (coe
-            MAlonzo.Code.Algebra.Properties.Group.du_quasigroup_568 (coe v1)))
+            MAlonzo.Code.Algebra.Properties.Group.du_quasigroup_574 (coe v1)))
 -- Algebra.Properties.AbelianGroup._.cancelˡ
 d_cancel'737'_222 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -561,9 +561,9 @@ du_cancel'737'_222 v0
           = coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Properties.QQuasigroup.du_cancel'737'_288
+         MAlonzo.Code.Algebra.Properties.QQuasigroup.du_cancel'737'_290
          (coe
-            MAlonzo.Code.Algebra.Properties.Group.du_quasigroup_568 (coe v1)))
+            MAlonzo.Code.Algebra.Properties.Group.du_quasigroup_574 (coe v1)))
 -- Algebra.Properties.AbelianGroup.⁻¹-anti-homo‿-
 d_'8315''185''45'anti'45'homo'8255''45'_228 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -577,7 +577,7 @@ du_'8315''185''45'anti'45'homo'8255''45'_228 ::
   AgdaAny -> AgdaAny -> AgdaAny
 du_'8315''185''45'anti'45'homo'8255''45'_228 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Group.du_'8315''185''45'anti'45'homo'45''47''47'_670
+      MAlonzo.Code.Algebra.Properties.Group.du_'8315''185''45'anti'45'homo'45''47''47'_676
       (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0))
 -- Algebra.Properties.AbelianGroup.xyx⁻¹≈y
 d_xyx'8315''185''8776'y_234 ::
@@ -608,15 +608,15 @@ du_xyx'8315''185''8776'y_234 v0 v1 v2
             (coe
                MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                  MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                     MAlonzo.Code.Algebra.Structures.d_isMagma_498
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                        MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isMonoid_1088
+                           MAlonzo.Code.Algebra.Structures.d_isMonoid_1090
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isGroup_1184
+                              MAlonzo.Code.Algebra.Structures.d_isGroup_1186
                               (coe
                                  MAlonzo.Code.Algebra.Bundles.d_isAbelianGroup_1710 (coe v0)))))))))
          (coe
@@ -635,15 +635,15 @@ du_xyx'8315''185''8776'y_234 v0 v1 v2
                (coe
                   MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                        MAlonzo.Code.Algebra.Structures.d_isMagma_498
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isMonoid_1088
+                              MAlonzo.Code.Algebra.Structures.d_isMonoid_1090
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isGroup_1184
+                                 MAlonzo.Code.Algebra.Structures.d_isGroup_1186
                                  (coe
                                     MAlonzo.Code.Algebra.Bundles.d_isAbelianGroup_1710
                                     (coe v0)))))))))
@@ -664,15 +664,15 @@ du_xyx'8315''185''8776'y_234 v0 v1 v2
                   (coe
                      MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                           MAlonzo.Code.Algebra.Structures.d_isMagma_498
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_1088
+                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_1090
                                  (coe
-                                    MAlonzo.Code.Algebra.Structures.d_isGroup_1184
+                                    MAlonzo.Code.Algebra.Structures.d_isGroup_1186
                                     (coe
                                        MAlonzo.Code.Algebra.Bundles.d_isAbelianGroup_1710
                                        (coe v0)))))))))
@@ -692,15 +692,15 @@ du_xyx'8315''185''8776'y_234 v0 v1 v2
                      (coe
                         MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                           MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                              MAlonzo.Code.Algebra.Structures.d_isMagma_498
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                 MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                  (coe
-                                    MAlonzo.Code.Algebra.Structures.d_isMonoid_1088
+                                    MAlonzo.Code.Algebra.Structures.d_isMonoid_1090
                                     (coe
-                                       MAlonzo.Code.Algebra.Structures.d_isGroup_1184
+                                       MAlonzo.Code.Algebra.Structures.d_isGroup_1186
                                        (coe
                                           MAlonzo.Code.Algebra.Bundles.d_isAbelianGroup_1710
                                           (coe v0)))))))))
@@ -715,51 +715,51 @@ du_xyx'8315''185''8776'y_234 v0 v1 v2
                         (coe
                            MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                              MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                 MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                  (coe
-                                    MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                    MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                     (coe
-                                       MAlonzo.Code.Algebra.Structures.d_isMonoid_1088
+                                       MAlonzo.Code.Algebra.Structures.d_isMonoid_1090
                                        (coe
-                                          MAlonzo.Code.Algebra.Structures.d_isGroup_1184
+                                          MAlonzo.Code.Algebra.Structures.d_isGroup_1186
                                           (coe
                                              MAlonzo.Code.Algebra.Bundles.d_isAbelianGroup_1710
                                              (coe v0)))))))))
                      (coe v2))
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_identity'691'_754
-                     (MAlonzo.Code.Algebra.Structures.d_isMonoid_1088
+                     MAlonzo.Code.Algebra.Structures.du_identity'691'_756
+                     (MAlonzo.Code.Algebra.Structures.d_isMonoid_1090
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isGroup_1184
+                           MAlonzo.Code.Algebra.Structures.d_isGroup_1186
                            (coe MAlonzo.Code.Algebra.Bundles.d_isAbelianGroup_1710 (coe v0))))
                      v2))
                (coe
                   MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'737'_42
-                  (MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+                  (MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                        MAlonzo.Code.Algebra.Structures.d_isMagma_498
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isMonoid_1088
+                              MAlonzo.Code.Algebra.Structures.d_isMonoid_1090
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isGroup_1184
+                                 MAlonzo.Code.Algebra.Structures.d_isGroup_1186
                                  (coe
                                     MAlonzo.Code.Algebra.Bundles.d_isAbelianGroup_1710
                                     (coe v0)))))))
                   (MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                           MAlonzo.Code.Algebra.Structures.d_isMagma_498
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_1088
+                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_1090
                                  (coe
-                                    MAlonzo.Code.Algebra.Structures.d_isGroup_1184
+                                    MAlonzo.Code.Algebra.Structures.d_isGroup_1186
                                     (coe
                                        MAlonzo.Code.Algebra.Bundles.d_isAbelianGroup_1710
                                        (coe v0))))))))
@@ -769,52 +769,52 @@ du_xyx'8315''185''8776'y_234 v0 v1 v2
                      (coe MAlonzo.Code.Algebra.Bundles.d__'8315''185'_1708 v0 v1))
                   (MAlonzo.Code.Algebra.Bundles.d_ε_1706 (coe v0))
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_inverse'691'_1146
-                     (MAlonzo.Code.Algebra.Structures.d_isGroup_1184
+                     MAlonzo.Code.Algebra.Structures.du_inverse'691'_1148
+                     (MAlonzo.Code.Algebra.Structures.d_isGroup_1186
                         (coe MAlonzo.Code.Algebra.Bundles.d_isAbelianGroup_1710 (coe v0)))
                      v1)))
             (coe
-               MAlonzo.Code.Algebra.Structures.d_assoc_498
-               (MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+               MAlonzo.Code.Algebra.Structures.d_assoc_500
+               (MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isMonoid_1088
+                     MAlonzo.Code.Algebra.Structures.d_isMonoid_1090
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isGroup_1184
+                        MAlonzo.Code.Algebra.Structures.d_isGroup_1186
                         (coe
                            MAlonzo.Code.Algebra.Bundles.d_isAbelianGroup_1710 (coe v0)))))
                v2 v1
                (coe MAlonzo.Code.Algebra.Bundles.d__'8315''185'_1708 v0 v1)))
          (coe
             MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'691'_46
-            (MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+            (MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                  MAlonzo.Code.Algebra.Structures.d_isMagma_498
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                     MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isMonoid_1088
+                        MAlonzo.Code.Algebra.Structures.d_isMonoid_1090
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isGroup_1184
+                           MAlonzo.Code.Algebra.Structures.d_isGroup_1186
                            (coe
                               MAlonzo.Code.Algebra.Bundles.d_isAbelianGroup_1710 (coe v0)))))))
             (MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                  MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                     MAlonzo.Code.Algebra.Structures.d_isMagma_498
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                        MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isMonoid_1088
+                           MAlonzo.Code.Algebra.Structures.d_isMonoid_1090
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isGroup_1184
+                              MAlonzo.Code.Algebra.Structures.d_isGroup_1186
                               (coe
                                  MAlonzo.Code.Algebra.Bundles.d_isAbelianGroup_1710 (coe v0))))))))
             (coe MAlonzo.Code.Algebra.Bundles.d__'8315''185'_1708 v0 v1)
             (coe MAlonzo.Code.Algebra.Bundles.d__'8729'__1704 v0 v1 v2)
             (coe MAlonzo.Code.Algebra.Bundles.d__'8729'__1704 v0 v2 v1)
             (coe
-               MAlonzo.Code.Algebra.Structures.d_comm_1186
+               MAlonzo.Code.Algebra.Structures.d_comm_1188
                (MAlonzo.Code.Algebra.Bundles.d_isAbelianGroup_1710 (coe v0)) v1
                v2)))
 -- Algebra.Properties.AbelianGroup.⁻¹-∙-comm
@@ -848,28 +848,28 @@ du_'8315''185''45''8729''45'comm_244 v0 v1 v2
             (coe
                MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                  MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                     MAlonzo.Code.Algebra.Structures.d_isMagma_498
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                        MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isMonoid_1088
+                           MAlonzo.Code.Algebra.Structures.d_isMonoid_1090
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isGroup_1184
+                              MAlonzo.Code.Algebra.Structures.d_isGroup_1186
                               (coe
                                  MAlonzo.Code.Algebra.Bundles.d_isAbelianGroup_1710 (coe v0)))))))))
          (MAlonzo.Code.Relation.Binary.Structures.d_sym_38
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+               MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                  MAlonzo.Code.Algebra.Structures.d_isMagma_498
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                     MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isMonoid_1088
+                        MAlonzo.Code.Algebra.Structures.d_isMonoid_1090
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isGroup_1184
+                           MAlonzo.Code.Algebra.Structures.d_isGroup_1186
                            (coe
                               MAlonzo.Code.Algebra.Bundles.d_isAbelianGroup_1710 (coe v0))))))))
          (coe
@@ -889,15 +889,15 @@ du_'8315''185''45''8729''45'comm_244 v0 v1 v2
                (coe
                   MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                        MAlonzo.Code.Algebra.Structures.d_isMagma_498
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isMonoid_1088
+                              MAlonzo.Code.Algebra.Structures.d_isMonoid_1090
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isGroup_1184
+                                 MAlonzo.Code.Algebra.Structures.d_isGroup_1186
                                  (coe
                                     MAlonzo.Code.Algebra.Bundles.d_isAbelianGroup_1710
                                     (coe v0)))))))))
@@ -917,15 +917,15 @@ du_'8315''185''45''8729''45'comm_244 v0 v1 v2
                   (coe
                      MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                           MAlonzo.Code.Algebra.Structures.d_isMagma_498
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_1088
+                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_1090
                                  (coe
-                                    MAlonzo.Code.Algebra.Structures.d_isGroup_1184
+                                    MAlonzo.Code.Algebra.Structures.d_isGroup_1186
                                     (coe
                                        MAlonzo.Code.Algebra.Bundles.d_isAbelianGroup_1710
                                        (coe v0)))))))))
@@ -933,16 +933,16 @@ du_'8315''185''45''8729''45'comm_244 v0 v1 v2
                   MAlonzo.Code.Algebra.Bundles.d__'8315''185'_1708 v0
                   (coe MAlonzo.Code.Algebra.Bundles.d__'8729'__1704 v0 v1 v2)))
             (coe
-               MAlonzo.Code.Algebra.Structures.d_'8315''185''45'cong_1092
-               (MAlonzo.Code.Algebra.Structures.d_isGroup_1184
+               MAlonzo.Code.Algebra.Structures.d_'8315''185''45'cong_1094
+               (MAlonzo.Code.Algebra.Structures.d_isGroup_1186
                   (coe MAlonzo.Code.Algebra.Bundles.d_isAbelianGroup_1710 (coe v0)))
                (coe MAlonzo.Code.Algebra.Bundles.d__'8729'__1704 v0 v2 v1)
                (coe MAlonzo.Code.Algebra.Bundles.d__'8729'__1704 v0 v1 v2)
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_comm_1186
+                  MAlonzo.Code.Algebra.Structures.d_comm_1188
                   (MAlonzo.Code.Algebra.Bundles.d_isAbelianGroup_1710 (coe v0)) v2
                   v1)))
          (coe
-            MAlonzo.Code.Algebra.Properties.Group.du_'8315''185''45'anti'45'homo'45''8729'_660
+            MAlonzo.Code.Algebra.Properties.Group.du_'8315''185''45'anti'45'homo'45''8729'_666
             (coe MAlonzo.Code.Algebra.Bundles.du_group_1778 (coe v0)) (coe v2)
             (coe v1)))

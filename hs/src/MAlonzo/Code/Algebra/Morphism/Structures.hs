@@ -93,12 +93,12 @@ d_Homomorphic'8321'_60 = erased
 -- Algebra.Morphism.Structures.SuccessorSetMorphisms.IsSuccessorSetHomomorphism
 d_IsSuccessorSetHomomorphism_68 a0 a1 a2 a3 a4 a5 a6 = ()
 data T_IsSuccessorSetHomomorphism_68
-  = C_constructor_84 MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  = C_constructor_84 MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
                      (AgdaAny -> AgdaAny) AgdaAny
 -- Algebra.Morphism.Structures.SuccessorSetMorphisms.IsSuccessorSetHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_78 ::
   T_IsSuccessorSetHomomorphism_68 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_78 v0
   = case coe v0 of
       C_constructor_84 v1 v2 v3 -> coe v1
@@ -139,7 +139,7 @@ d_injective_98 v0
 -- Algebra.Morphism.Structures.SuccessorSetMorphisms.IsSuccessorSetMonomorphism._.isRelHomomorphism
 d_isRelHomomorphism_102 ::
   T_IsSuccessorSetMonomorphism_88 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_102 v0
   = coe
       d_isRelHomomorphism_78
@@ -167,15 +167,15 @@ d_isRelMonomorphism_108 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawSuccessorSet_10 ->
   (AgdaAny -> AgdaAny) ->
   T_IsSuccessorSetMonomorphism_88 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_108 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_108 v7
 du_isRelMonomorphism_108 ::
   T_IsSuccessorSetMonomorphism_88 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_108 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.C_constructor_86
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.C_constructor_78
       (coe
          d_isRelHomomorphism_78
          (coe d_isSuccessorSetHomomorphism_96 (coe v0)))
@@ -210,7 +210,7 @@ d_injective_128 v0
 -- Algebra.Morphism.Structures.SuccessorSetMorphisms.IsSuccessorSetIsomorphism._.isRelHomomorphism
 d_isRelHomomorphism_130 ::
   T_IsSuccessorSetIsomorphism_114 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_130 v0
   = coe
       d_isRelHomomorphism_78
@@ -227,12 +227,12 @@ d_isRelMonomorphism_132 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawSuccessorSet_10 ->
   (AgdaAny -> AgdaAny) ->
   T_IsSuccessorSetIsomorphism_114 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_132 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_132 v7
 du_isRelMonomorphism_132 ::
   T_IsSuccessorSetIsomorphism_114 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_132 v0
   = coe
       du_isRelMonomorphism_108
@@ -272,15 +272,15 @@ d_isRelIsomorphism_140 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawSuccessorSet_10 ->
   (AgdaAny -> AgdaAny) ->
   T_IsSuccessorSetIsomorphism_114 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_140 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelIsomorphism_140 v7
 du_isRelIsomorphism_140 ::
   T_IsSuccessorSetIsomorphism_114 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_140 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.C_constructor_124
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.C_constructor_116
       (coe
          du_isRelMonomorphism_108
          (coe d_isSuccessorSetMonomorphism_122 (coe v0)))
@@ -334,12 +334,12 @@ d_Homomorphic'8322'_188 = erased
 -- Algebra.Morphism.Structures.MagmaMorphisms.IsMagmaHomomorphism
 d_IsMagmaHomomorphism_194 a0 a1 a2 a3 a4 a5 a6 = ()
 data T_IsMagmaHomomorphism_194
-  = C_constructor_210 MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  = C_constructor_210 MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
                       (AgdaAny -> AgdaAny -> AgdaAny)
 -- Algebra.Morphism.Structures.MagmaMorphisms.IsMagmaHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_202 ::
   T_IsMagmaHomomorphism_194 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_202 v0
   = case coe v0 of
       C_constructor_210 v1 v2 -> coe v1
@@ -357,7 +357,7 @@ d_cong_208 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_208 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe d_isRelHomomorphism_202 (coe v0))
 -- Algebra.Morphism.Structures.MagmaMorphisms.IsMagmaMonomorphism
 d_IsMagmaMonomorphism_214 a0 a1 a2 a3 a4 a5 a6 = ()
@@ -387,7 +387,7 @@ d_homo_228 v0
 -- Algebra.Morphism.Structures.MagmaMorphisms.IsMagmaMonomorphism._.isRelHomomorphism
 d_isRelHomomorphism_230 ::
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_230 v0
   = coe
       d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_222 (coe v0))
@@ -397,7 +397,7 @@ d_cong_232 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_232 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_222 (coe v0)))
 -- Algebra.Morphism.Structures.MagmaMorphisms.IsMagmaMonomorphism.isRelMonomorphism
@@ -410,15 +410,15 @@ d_isRelMonomorphism_234 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_44 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_234 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_234 v7
 du_isRelMonomorphism_234 ::
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_234 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.C_constructor_86
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.C_constructor_78
       (coe
          d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_222 (coe v0)))
       (coe d_injective_224 (coe v0))
@@ -465,7 +465,7 @@ d_isMagmaHomomorphism_258 v0
 -- Algebra.Morphism.Structures.MagmaMorphisms.IsMagmaIsomorphism._.isRelHomomorphism
 d_isRelHomomorphism_260 ::
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_260 v0
   = coe
       d_isRelHomomorphism_202
@@ -481,12 +481,12 @@ d_isRelMonomorphism_262 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_44 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_262 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_262 v7
 du_isRelMonomorphism_262 ::
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_262 v0
   = coe
       du_isRelMonomorphism_234 (coe d_isMagmaMonomorphism_248 (coe v0))
@@ -496,7 +496,7 @@ d_cong_264 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_264 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -512,15 +512,15 @@ d_isRelIsomorphism_266 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_44 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_266 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelIsomorphism_266 v7
 du_isRelIsomorphism_266 ::
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_266 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.C_constructor_124
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.C_constructor_116
       (coe
          du_isRelMonomorphism_234 (coe d_isMagmaMonomorphism_248 (coe v0)))
       (coe d_surjective_250 (coe v0))
@@ -578,7 +578,7 @@ d_homo_338 v0 = coe d_homo_204 (coe v0)
 -- Algebra.Morphism.Structures.MonoidMorphisms._.IsMagmaHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_340 ::
   T_IsMagmaHomomorphism_194 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_340 v0 = coe d_isRelHomomorphism_202 (coe v0)
 -- Algebra.Morphism.Structures.MonoidMorphisms._.IsMagmaHomomorphism.cong
 d_cong_342 ::
@@ -586,7 +586,7 @@ d_cong_342 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_342 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe d_isRelHomomorphism_202 (coe v0))
 -- Algebra.Morphism.Structures.MonoidMorphisms._.IsMagmaIsomorphism.homo
 d_homo_346 ::
@@ -616,7 +616,7 @@ d_isMagmaMonomorphism_352 v0
 -- Algebra.Morphism.Structures.MonoidMorphisms._.IsMagmaIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_354 ::
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_354 v0
   = coe
       d_isRelHomomorphism_202
@@ -632,13 +632,13 @@ d_isRelIsomorphism_356 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_356 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
   = du_isRelIsomorphism_356
 du_isRelIsomorphism_356 ::
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_356 v0 v1 = coe du_isRelIsomorphism_266 v1
 -- Algebra.Morphism.Structures.MonoidMorphisms._.IsMagmaIsomorphism.isRelMonomorphism
 d_isRelMonomorphism_358 ::
@@ -650,12 +650,12 @@ d_isRelMonomorphism_358 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_358 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_358 v7
 du_isRelMonomorphism_358 ::
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_358 v0
   = coe
       du_isRelMonomorphism_234 (coe d_isMagmaMonomorphism_248 (coe v0))
@@ -670,7 +670,7 @@ d_cong_362 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_362 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -694,7 +694,7 @@ d_isMagmaHomomorphism_370 v0
 -- Algebra.Morphism.Structures.MonoidMorphisms._.IsMagmaMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_372 ::
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_372 v0
   = coe
       d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_222 (coe v0))
@@ -708,13 +708,13 @@ d_isRelMonomorphism_374 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_374 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
   = du_isRelMonomorphism_374
 du_isRelMonomorphism_374 ::
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_374 v0 v1 = coe du_isRelMonomorphism_234 v1
 -- Algebra.Morphism.Structures.MonoidMorphisms._.IsMagmaMonomorphism.cong
 d_cong_376 ::
@@ -722,7 +722,7 @@ d_cong_376 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_376 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_222 (coe v0)))
 -- Algebra.Morphism.Structures.MonoidMorphisms.IsMonoidHomomorphism
@@ -750,7 +750,7 @@ d_homo_394 v0
 -- Algebra.Morphism.Structures.MonoidMorphisms.IsMonoidHomomorphism._.isRelHomomorphism
 d_isRelHomomorphism_396 ::
   T_IsMonoidHomomorphism_380 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_396 v0
   = coe
       d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_388 (coe v0))
@@ -760,7 +760,7 @@ d_cong_398 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_398 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_388 (coe v0)))
 -- Algebra.Morphism.Structures.MonoidMorphisms.IsMonoidMonomorphism
@@ -801,7 +801,7 @@ d_isMagmaHomomorphism_420 v0
 -- Algebra.Morphism.Structures.MonoidMorphisms.IsMonoidMonomorphism._.isRelHomomorphism
 d_isRelHomomorphism_422 ::
   T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_422 v0
   = coe
       d_isRelHomomorphism_202
@@ -818,7 +818,7 @@ d_cong_426 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_426 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -855,12 +855,12 @@ d_isRelMonomorphism_432 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_432 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_432 v7
 du_isRelMonomorphism_432 ::
   T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_432 v0
   = coe
       du_isRelMonomorphism_234 (coe du_isMagmaMonomorphism_428 (coe v0))
@@ -938,7 +938,7 @@ d_isMonoidHomomorphism_460 v0
 -- Algebra.Morphism.Structures.MonoidMorphisms.IsMonoidIsomorphism._.isRelHomomorphism
 d_isRelHomomorphism_462 ::
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_462 v0
   = coe
       d_isRelHomomorphism_202
@@ -957,12 +957,12 @@ d_isRelMonomorphism_464 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_464 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_464 v7
 du_isRelMonomorphism_464 ::
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_464 v0
   = let v1 = d_isMonoidMonomorphism_446 (coe v0) in
     coe
@@ -982,7 +982,7 @@ d_cong_468 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_468 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -1021,12 +1021,12 @@ d_isRelIsomorphism_474 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_474 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelIsomorphism_474 v7
 du_isRelIsomorphism_474 ::
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_474 v0
   = coe
       du_isRelIsomorphism_266 (coe du_isMagmaIsomorphism_470 (coe v0))
@@ -1088,7 +1088,7 @@ d_homo_554 v0 = coe d_homo_204 (coe v0)
 -- Algebra.Morphism.Structures.GroupMorphisms._.IsMagmaHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_556 ::
   T_IsMagmaHomomorphism_194 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_556 v0 = coe d_isRelHomomorphism_202 (coe v0)
 -- Algebra.Morphism.Structures.GroupMorphisms._.IsMagmaHomomorphism.cong
 d_cong_558 ::
@@ -1096,7 +1096,7 @@ d_cong_558 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_558 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe d_isRelHomomorphism_202 (coe v0))
 -- Algebra.Morphism.Structures.GroupMorphisms._.IsMagmaIsomorphism.homo
 d_homo_562 ::
@@ -1126,7 +1126,7 @@ d_isMagmaMonomorphism_568 v0
 -- Algebra.Morphism.Structures.GroupMorphisms._.IsMagmaIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_570 ::
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_570 v0
   = coe
       d_isRelHomomorphism_202
@@ -1142,13 +1142,13 @@ d_isRelIsomorphism_572 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawGroup_108 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_572 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
   = du_isRelIsomorphism_572
 du_isRelIsomorphism_572 ::
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_572 v0 v1 = coe du_isRelIsomorphism_266 v1
 -- Algebra.Morphism.Structures.GroupMorphisms._.IsMagmaIsomorphism.isRelMonomorphism
 d_isRelMonomorphism_574 ::
@@ -1160,12 +1160,12 @@ d_isRelMonomorphism_574 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawGroup_108 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_574 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_574 v7
 du_isRelMonomorphism_574 ::
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_574 v0
   = coe
       du_isRelMonomorphism_234 (coe d_isMagmaMonomorphism_248 (coe v0))
@@ -1180,7 +1180,7 @@ d_cong_578 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_578 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -1204,7 +1204,7 @@ d_isMagmaHomomorphism_586 v0
 -- Algebra.Morphism.Structures.GroupMorphisms._.IsMagmaMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_588 ::
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_588 v0
   = coe
       d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_222 (coe v0))
@@ -1218,13 +1218,13 @@ d_isRelMonomorphism_590 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawGroup_108 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_590 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
   = du_isRelMonomorphism_590
 du_isRelMonomorphism_590 ::
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_590 v0 v1 = coe du_isRelMonomorphism_234 v1
 -- Algebra.Morphism.Structures.GroupMorphisms._.IsMagmaMonomorphism.cong
 d_cong_592 ::
@@ -1232,7 +1232,7 @@ d_cong_592 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_592 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_222 (coe v0)))
 -- Algebra.Morphism.Structures.GroupMorphisms._.IsMonoidHomomorphism
@@ -1254,7 +1254,7 @@ d_isMagmaHomomorphism_612 v0
 -- Algebra.Morphism.Structures.GroupMorphisms._.IsMonoidHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_614 ::
   T_IsMonoidHomomorphism_380 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_614 v0
   = coe
       d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_388 (coe v0))
@@ -1267,7 +1267,7 @@ d_cong_618 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_618 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_388 (coe v0)))
 -- Algebra.Morphism.Structures.GroupMorphisms._.IsMonoidIsomorphism.homo
@@ -1345,7 +1345,7 @@ d_isMonoidMonomorphism_634 v0
 -- Algebra.Morphism.Structures.GroupMorphisms._.IsMonoidIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_636 ::
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_636 v0
   = coe
       d_isRelHomomorphism_202
@@ -1364,12 +1364,12 @@ d_isRelIsomorphism_638 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawGroup_108 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_638 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelIsomorphism_638 v7
 du_isRelIsomorphism_638 ::
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_638 v0
   = coe
       du_isRelIsomorphism_266 (coe du_isMagmaIsomorphism_470 (coe v0))
@@ -1383,12 +1383,12 @@ d_isRelMonomorphism_640 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawGroup_108 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_640 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_640 v7
 du_isRelMonomorphism_640 ::
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_640 v0
   = let v1 = d_isMonoidMonomorphism_446 (coe v0) in
     coe
@@ -1413,7 +1413,7 @@ d_cong_646 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_646 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -1466,7 +1466,7 @@ d_isMonoidHomomorphism_658 v0
 -- Algebra.Morphism.Structures.GroupMorphisms._.IsMonoidMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_660 ::
   T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_660 v0
   = coe
       d_isRelHomomorphism_202
@@ -1483,12 +1483,12 @@ d_isRelMonomorphism_662 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawGroup_108 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_662 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_662 v7
 du_isRelMonomorphism_662 ::
   T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_662 v0
   = coe
       du_isRelMonomorphism_234 (coe du_isMagmaMonomorphism_428 (coe v0))
@@ -1502,7 +1502,7 @@ d_cong_666 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_666 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -1544,7 +1544,7 @@ d_isMagmaHomomorphism_686 v0
 -- Algebra.Morphism.Structures.GroupMorphisms.IsGroupHomomorphism._.isRelHomomorphism
 d_isRelHomomorphism_688 ::
   T_IsGroupHomomorphism_670 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_688 v0
   = coe
       d_isRelHomomorphism_202
@@ -1561,7 +1561,7 @@ d_cong_692 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_692 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -1605,7 +1605,7 @@ d_isMonoidHomomorphism_714 v0
 -- Algebra.Morphism.Structures.GroupMorphisms.IsGroupMonomorphism._.isRelHomomorphism
 d_isRelHomomorphism_716 ::
   T_IsGroupMonomorphism_698 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_716 v0
   = coe
       d_isRelHomomorphism_202
@@ -1645,7 +1645,7 @@ d_cong_724 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_724 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -1702,12 +1702,12 @@ d_isRelMonomorphism_732 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawGroup_108 ->
   (AgdaAny -> AgdaAny) ->
   T_IsGroupMonomorphism_698 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_732 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_732 v7
 du_isRelMonomorphism_732 ::
   T_IsGroupMonomorphism_698 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_732 v0
   = let v1 = coe du_isMonoidMonomorphism_726 (coe v0) in
     coe
@@ -1805,7 +1805,7 @@ du_isMonoidMonomorphism_762 v0
 -- Algebra.Morphism.Structures.GroupMorphisms.IsGroupIsomorphism._.isRelHomomorphism
 d_isRelHomomorphism_764 ::
   T_IsGroupIsomorphism_738 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_764 v0
   = coe
       d_isRelHomomorphism_202
@@ -1826,12 +1826,12 @@ d_isRelMonomorphism_766 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawGroup_108 ->
   (AgdaAny -> AgdaAny) ->
   T_IsGroupIsomorphism_738 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_766 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_766 v7
 du_isRelMonomorphism_766 ::
   T_IsGroupIsomorphism_738 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_766 v0
   = let v1 = d_isGroupMonomorphism_746 (coe v0) in
     coe
@@ -1877,7 +1877,7 @@ d_cong_774 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_774 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -1935,12 +1935,12 @@ d_isRelIsomorphism_782 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawGroup_108 ->
   (AgdaAny -> AgdaAny) ->
   T_IsGroupIsomorphism_738 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_782 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelIsomorphism_782 v7
 du_isRelIsomorphism_782 ::
   T_IsGroupIsomorphism_738 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_782 v0
   = let v1 = coe du_isMonoidIsomorphism_776 (coe v0) in
     coe
@@ -1999,7 +1999,7 @@ d_isMagmaHomomorphism_858 v0
 -- Algebra.Morphism.Structures.NearSemiringMorphisms.+.IsMonoidHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_860 ::
   T_IsMonoidHomomorphism_380 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_860 v0
   = coe
       d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_388 (coe v0))
@@ -2012,7 +2012,7 @@ d_cong_864 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_864 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_388 (coe v0)))
 -- Algebra.Morphism.Structures.NearSemiringMorphisms.+.IsMonoidIsomorphism.homo
@@ -2090,7 +2090,7 @@ d_isMonoidMonomorphism_880 v0
 -- Algebra.Morphism.Structures.NearSemiringMorphisms.+.IsMonoidIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_882 ::
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_882 v0
   = coe
       d_isRelHomomorphism_202
@@ -2109,12 +2109,12 @@ d_isRelIsomorphism_884 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawNearSemiring_148 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_884 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelIsomorphism_884 v7
 du_isRelIsomorphism_884 ::
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_884 v0
   = coe
       du_isRelIsomorphism_266 (coe du_isMagmaIsomorphism_470 (coe v0))
@@ -2128,12 +2128,12 @@ d_isRelMonomorphism_886 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawNearSemiring_148 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_886 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_886 v7
 du_isRelMonomorphism_886 ::
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_886 v0
   = let v1 = d_isMonoidMonomorphism_446 (coe v0) in
     coe
@@ -2158,7 +2158,7 @@ d_cong_892 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_892 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -2211,7 +2211,7 @@ d_isMonoidHomomorphism_904 v0
 -- Algebra.Morphism.Structures.NearSemiringMorphisms.+.IsMonoidMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_906 ::
   T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_906 v0
   = coe
       d_isRelHomomorphism_202
@@ -2228,12 +2228,12 @@ d_isRelMonomorphism_908 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawNearSemiring_148 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_908 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_908 v7
 du_isRelMonomorphism_908 ::
   T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_908 v0
   = coe
       du_isRelMonomorphism_234 (coe du_isMagmaMonomorphism_428 (coe v0))
@@ -2247,7 +2247,7 @@ d_cong_912 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_912 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -2266,7 +2266,7 @@ d_homo_930 v0 = coe d_homo_204 (coe v0)
 -- Algebra.Morphism.Structures.NearSemiringMorphisms.*.IsMagmaHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_932 ::
   T_IsMagmaHomomorphism_194 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_932 v0 = coe d_isRelHomomorphism_202 (coe v0)
 -- Algebra.Morphism.Structures.NearSemiringMorphisms.*.IsMagmaHomomorphism.cong
 d_cong_934 ::
@@ -2274,7 +2274,7 @@ d_cong_934 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_934 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe d_isRelHomomorphism_202 (coe v0))
 -- Algebra.Morphism.Structures.NearSemiringMorphisms.*.IsMagmaIsomorphism.homo
 d_homo_938 ::
@@ -2304,7 +2304,7 @@ d_isMagmaMonomorphism_944 v0
 -- Algebra.Morphism.Structures.NearSemiringMorphisms.*.IsMagmaIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_946 ::
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_946 v0
   = coe
       d_isRelHomomorphism_202
@@ -2320,13 +2320,13 @@ d_isRelIsomorphism_948 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawNearSemiring_148 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_948 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
   = du_isRelIsomorphism_948
 du_isRelIsomorphism_948 ::
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_948 v0 v1 = coe du_isRelIsomorphism_266 v1
 -- Algebra.Morphism.Structures.NearSemiringMorphisms.*.IsMagmaIsomorphism.isRelMonomorphism
 d_isRelMonomorphism_950 ::
@@ -2338,12 +2338,12 @@ d_isRelMonomorphism_950 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawNearSemiring_148 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_950 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_950 v7
 du_isRelMonomorphism_950 ::
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_950 v0
   = coe
       du_isRelMonomorphism_234 (coe d_isMagmaMonomorphism_248 (coe v0))
@@ -2358,7 +2358,7 @@ d_cong_954 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_954 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -2382,7 +2382,7 @@ d_isMagmaHomomorphism_962 v0
 -- Algebra.Morphism.Structures.NearSemiringMorphisms.*.IsMagmaMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_964 ::
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_964 v0
   = coe
       d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_222 (coe v0))
@@ -2396,13 +2396,13 @@ d_isRelMonomorphism_966 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawNearSemiring_148 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_966 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
   = du_isRelMonomorphism_966
 du_isRelMonomorphism_966 ::
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_966 v0 v1 = coe du_isRelMonomorphism_234 v1
 -- Algebra.Morphism.Structures.NearSemiringMorphisms.*.IsMagmaMonomorphism.cong
 d_cong_968 ::
@@ -2410,7 +2410,7 @@ d_cong_968 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_968 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_222 (coe v0)))
 -- Algebra.Morphism.Structures.NearSemiringMorphisms._.Homomorphic₂
@@ -2468,7 +2468,7 @@ d_ε'45'homo_1000 v0
 -- Algebra.Morphism.Structures.NearSemiringMorphisms.IsNearSemiringHomomorphism._.isRelHomomorphism
 d_isRelHomomorphism_1002 ::
   T_IsNearSemiringHomomorphism_982 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1002 v0
   = coe
       d_isRelHomomorphism_202
@@ -2481,7 +2481,7 @@ d_cong_1004 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_1004 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -2593,7 +2593,7 @@ d_ε'45'homo_1036 v0
 -- Algebra.Morphism.Structures.NearSemiringMorphisms.IsNearSemiringMonomorphism._.isRelHomomorphism
 d_isRelHomomorphism_1038 ::
   T_IsNearSemiringMonomorphism_1012 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1038 v0
   = coe
       d_isRelHomomorphism_202
@@ -2608,7 +2608,7 @@ d_cong_1040 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_1040 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -2665,12 +2665,12 @@ d_isRelMonomorphism_1048 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawNearSemiring_148 ->
   (AgdaAny -> AgdaAny) ->
   T_IsNearSemiringMonomorphism_1012 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_1048 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_1048 v7
 du_isRelMonomorphism_1048 ::
   T_IsNearSemiringMonomorphism_1012 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_1048 v0
   = let v1 = coe du_'43''45'isMonoidMonomorphism_1042 (coe v0) in
     coe
@@ -2864,7 +2864,7 @@ d_isNearSemiringHomomorphism_1090 v0
 -- Algebra.Morphism.Structures.NearSemiringMorphisms.IsNearSemiringIsomorphism._.isRelHomomorphism
 d_isRelHomomorphism_1092 ::
   T_IsNearSemiringIsomorphism_1056 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1092 v0
   = coe
       d_isRelHomomorphism_202
@@ -2885,12 +2885,12 @@ d_isRelMonomorphism_1094 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawNearSemiring_148 ->
   (AgdaAny -> AgdaAny) ->
   T_IsNearSemiringIsomorphism_1056 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_1094 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_1094 v7
 du_isRelMonomorphism_1094 ::
   T_IsNearSemiringIsomorphism_1056 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_1094 v0
   = let v1 = d_isNearSemiringMonomorphism_1064 (coe v0) in
     coe
@@ -2905,7 +2905,7 @@ d_cong_1096 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_1096 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -2964,12 +2964,12 @@ d_isRelIsomorphism_1104 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawNearSemiring_148 ->
   (AgdaAny -> AgdaAny) ->
   T_IsNearSemiringIsomorphism_1056 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_1104 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelIsomorphism_1104 v7
 du_isRelIsomorphism_1104 ::
   T_IsNearSemiringIsomorphism_1056 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_1104 v0
   = let v1 = coe du_'43''45'isMonoidIsomorphism_1098 (coe v0) in
     coe
@@ -3047,7 +3047,7 @@ d_isMagmaHomomorphism_1194 v0
 -- Algebra.Morphism.Structures.SemiringMorphisms.*.IsMonoidHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_1196 ::
   T_IsMonoidHomomorphism_380 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1196 v0
   = coe
       d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_388 (coe v0))
@@ -3060,7 +3060,7 @@ d_cong_1200 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_1200 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_388 (coe v0)))
 -- Algebra.Morphism.Structures.SemiringMorphisms.*.IsMonoidIsomorphism.homo
@@ -3138,7 +3138,7 @@ d_isMonoidMonomorphism_1216 v0
 -- Algebra.Morphism.Structures.SemiringMorphisms.*.IsMonoidIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_1218 ::
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1218 v0
   = coe
       d_isRelHomomorphism_202
@@ -3157,12 +3157,12 @@ d_isRelIsomorphism_1220 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawSemiring_190 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_1220 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelIsomorphism_1220 v7
 du_isRelIsomorphism_1220 ::
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_1220 v0
   = coe
       du_isRelIsomorphism_266 (coe du_isMagmaIsomorphism_470 (coe v0))
@@ -3176,12 +3176,12 @@ d_isRelMonomorphism_1222 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawSemiring_190 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_1222 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_1222 v7
 du_isRelMonomorphism_1222 ::
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_1222 v0
   = let v1 = d_isMonoidMonomorphism_446 (coe v0) in
     coe
@@ -3206,7 +3206,7 @@ d_cong_1228 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_1228 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -3259,7 +3259,7 @@ d_isMonoidHomomorphism_1240 v0
 -- Algebra.Morphism.Structures.SemiringMorphisms.*.IsMonoidMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_1242 ::
   T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1242 v0
   = coe
       d_isRelHomomorphism_202
@@ -3276,12 +3276,12 @@ d_isRelMonomorphism_1244 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawSemiring_190 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_1244 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_1244 v7
 du_isRelMonomorphism_1244 ::
   T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_1244 v0
   = coe
       du_isRelMonomorphism_234 (coe du_isMagmaMonomorphism_428 (coe v0))
@@ -3295,7 +3295,7 @@ d_cong_1248 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_1248 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -3367,7 +3367,7 @@ d_ε'45'homo_1286 v0
 -- Algebra.Morphism.Structures.SemiringMorphisms._.IsNearSemiringHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_1288 ::
   T_IsNearSemiringHomomorphism_982 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1288 v0
   = coe
       d_isRelHomomorphism_202
@@ -3380,7 +3380,7 @@ d_cong_1290 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_1290 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -3590,7 +3590,7 @@ d_isNearSemiringMonomorphism_1322 v0
 -- Algebra.Morphism.Structures.SemiringMorphisms._.IsNearSemiringIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_1324 ::
   T_IsNearSemiringIsomorphism_1056 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1324 v0
   = coe
       d_isRelHomomorphism_202
@@ -3611,12 +3611,12 @@ d_isRelIsomorphism_1326 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawSemiring_190 ->
   (AgdaAny -> AgdaAny) ->
   T_IsNearSemiringIsomorphism_1056 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_1326 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelIsomorphism_1326 v7
 du_isRelIsomorphism_1326 ::
   T_IsNearSemiringIsomorphism_1056 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_1326 v0
   = let v1 = coe du_'43''45'isMonoidIsomorphism_1098 (coe v0) in
     coe
@@ -3632,12 +3632,12 @@ d_isRelMonomorphism_1328 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawSemiring_190 ->
   (AgdaAny -> AgdaAny) ->
   T_IsNearSemiringIsomorphism_1056 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_1328 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_1328 v7
 du_isRelMonomorphism_1328 ::
   T_IsNearSemiringIsomorphism_1056 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_1328 v0
   = let v1 = d_isNearSemiringMonomorphism_1064 (coe v0) in
     coe
@@ -3657,7 +3657,7 @@ d_cong_1332 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_1332 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -3792,7 +3792,7 @@ d_isNearSemiringHomomorphism_1356 v0
 -- Algebra.Morphism.Structures.SemiringMorphisms._.IsNearSemiringMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_1358 ::
   T_IsNearSemiringMonomorphism_1012 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1358 v0
   = coe
       d_isRelHomomorphism_202
@@ -3811,12 +3811,12 @@ d_isRelMonomorphism_1360 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawSemiring_190 ->
   (AgdaAny -> AgdaAny) ->
   T_IsNearSemiringMonomorphism_1012 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_1360 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_1360 v7
 du_isRelMonomorphism_1360 ::
   T_IsNearSemiringMonomorphism_1012 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_1360 v0
   = let v1 = coe du_'43''45'isMonoidMonomorphism_1042 (coe v0) in
     coe
@@ -3828,7 +3828,7 @@ d_cong_1362 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_1362 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -3915,7 +3915,7 @@ d_ε'45'homo_1390 v0
 -- Algebra.Morphism.Structures.SemiringMorphisms.IsSemiringHomomorphism._.isRelHomomorphism
 d_isRelHomomorphism_1392 ::
   T_IsSemiringHomomorphism_1366 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1392 v0
   = coe
       d_isRelHomomorphism_202
@@ -3930,7 +3930,7 @@ d_cong_1394 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_1394 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -4084,7 +4084,7 @@ d_isNearSemiringHomomorphism_1432 v0
 -- Algebra.Morphism.Structures.SemiringMorphisms.IsSemiringMonomorphism._.isRelHomomorphism
 d_isRelHomomorphism_1434 ::
   T_IsSemiringMonomorphism_1402 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1434 v0
   = coe
       d_isRelHomomorphism_202
@@ -4101,7 +4101,7 @@ d_cong_1436 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_1436 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -4415,7 +4415,7 @@ du_isNearSemiringMonomorphism_1492 v0
 -- Algebra.Morphism.Structures.SemiringMorphisms.IsSemiringIsomorphism._.isRelHomomorphism
 d_isRelHomomorphism_1494 ::
   T_IsSemiringIsomorphism_1452 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1494 v0
   = coe
       d_isRelHomomorphism_202
@@ -4441,7 +4441,7 @@ d_cong_1498 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_1498 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -4594,7 +4594,7 @@ d_isMonoidHomomorphism_1598 v0
 -- Algebra.Morphism.Structures.RingWithoutOneMorphisms.+.IsGroupHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_1600 ::
   T_IsGroupHomomorphism_670 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1600 v0
   = coe
       d_isRelHomomorphism_202
@@ -4616,7 +4616,7 @@ d_cong_1606 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_1606 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -4733,7 +4733,7 @@ du_isMonoidMonomorphism_1626 v0
 -- Algebra.Morphism.Structures.RingWithoutOneMorphisms.+.IsGroupIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_1628 ::
   T_IsGroupIsomorphism_738 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1628 v0
   = coe
       d_isRelHomomorphism_202
@@ -4754,12 +4754,12 @@ d_isRelIsomorphism_1630 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRingWithoutOne_240 ->
   (AgdaAny -> AgdaAny) ->
   T_IsGroupIsomorphism_738 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_1630 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelIsomorphism_1630 v7
 du_isRelIsomorphism_1630 ::
   T_IsGroupIsomorphism_738 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_1630 v0
   = let v1 = coe du_isMonoidIsomorphism_776 (coe v0) in
     coe
@@ -4775,12 +4775,12 @@ d_isRelMonomorphism_1632 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRingWithoutOne_240 ->
   (AgdaAny -> AgdaAny) ->
   T_IsGroupIsomorphism_738 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_1632 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_1632 v7
 du_isRelMonomorphism_1632 ::
   T_IsGroupIsomorphism_738 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_1632 v0
   = let v1 = d_isGroupMonomorphism_746 (coe v0) in
     coe
@@ -4831,7 +4831,7 @@ d_cong_1642 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_1642 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -4904,7 +4904,7 @@ du_isMonoidMonomorphism_1656 v0 v1
 -- Algebra.Morphism.Structures.RingWithoutOneMorphisms.+.IsGroupMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_1658 ::
   T_IsGroupMonomorphism_698 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1658 v0
   = coe
       d_isRelHomomorphism_202
@@ -4923,12 +4923,12 @@ d_isRelMonomorphism_1660 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRingWithoutOne_240 ->
   (AgdaAny -> AgdaAny) ->
   T_IsGroupMonomorphism_698 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_1660 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_1660 v7
 du_isRelMonomorphism_1660 ::
   T_IsGroupMonomorphism_698 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_1660 v0
   = let v1 = coe du_isMonoidMonomorphism_726 (coe v0) in
     coe
@@ -4965,7 +4965,7 @@ d_cong_1668 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_1668 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -4986,7 +4986,7 @@ d_homo_1686 v0 = coe d_homo_204 (coe v0)
 -- Algebra.Morphism.Structures.RingWithoutOneMorphisms.*.IsMagmaHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_1688 ::
   T_IsMagmaHomomorphism_194 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1688 v0 = coe d_isRelHomomorphism_202 (coe v0)
 -- Algebra.Morphism.Structures.RingWithoutOneMorphisms.*.IsMagmaHomomorphism.cong
 d_cong_1690 ::
@@ -4994,7 +4994,7 @@ d_cong_1690 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_1690 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe d_isRelHomomorphism_202 (coe v0))
 -- Algebra.Morphism.Structures.RingWithoutOneMorphisms.*.IsMagmaIsomorphism.homo
 d_homo_1694 ::
@@ -5024,7 +5024,7 @@ d_isMagmaMonomorphism_1700 v0
 -- Algebra.Morphism.Structures.RingWithoutOneMorphisms.*.IsMagmaIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_1702 ::
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1702 v0
   = coe
       d_isRelHomomorphism_202
@@ -5040,13 +5040,13 @@ d_isRelIsomorphism_1704 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRingWithoutOne_240 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_1704 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
   = du_isRelIsomorphism_1704
 du_isRelIsomorphism_1704 ::
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_1704 v0 v1 = coe du_isRelIsomorphism_266 v1
 -- Algebra.Morphism.Structures.RingWithoutOneMorphisms.*.IsMagmaIsomorphism.isRelMonomorphism
 d_isRelMonomorphism_1706 ::
@@ -5058,12 +5058,12 @@ d_isRelMonomorphism_1706 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRingWithoutOne_240 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_1706 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_1706 v7
 du_isRelMonomorphism_1706 ::
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_1706 v0
   = coe
       du_isRelMonomorphism_234 (coe d_isMagmaMonomorphism_248 (coe v0))
@@ -5078,7 +5078,7 @@ d_cong_1710 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_1710 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -5102,7 +5102,7 @@ d_isMagmaHomomorphism_1718 v0
 -- Algebra.Morphism.Structures.RingWithoutOneMorphisms.*.IsMagmaMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_1720 ::
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1720 v0
   = coe
       d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_222 (coe v0))
@@ -5116,13 +5116,13 @@ d_isRelMonomorphism_1722 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRingWithoutOne_240 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_1722 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
   = du_isRelMonomorphism_1722
 du_isRelMonomorphism_1722 ::
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_1722 v0 v1 = coe du_isRelMonomorphism_234 v1
 -- Algebra.Morphism.Structures.RingWithoutOneMorphisms.*.IsMagmaMonomorphism.cong
 d_cong_1724 ::
@@ -5130,7 +5130,7 @@ d_cong_1724 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_1724 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_222 (coe v0)))
 -- Algebra.Morphism.Structures.RingWithoutOneMorphisms.+*.IsNearSemiringHomomorphism
@@ -5189,7 +5189,7 @@ d_ε'45'homo_1752 v0
 -- Algebra.Morphism.Structures.RingWithoutOneMorphisms.+*.IsNearSemiringHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_1754 ::
   T_IsNearSemiringHomomorphism_982 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1754 v0
   = coe
       d_isRelHomomorphism_202
@@ -5202,7 +5202,7 @@ d_cong_1756 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_1756 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -5412,7 +5412,7 @@ d_isNearSemiringMonomorphism_1788 v0
 -- Algebra.Morphism.Structures.RingWithoutOneMorphisms.+*.IsNearSemiringIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_1790 ::
   T_IsNearSemiringIsomorphism_1056 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1790 v0
   = coe
       d_isRelHomomorphism_202
@@ -5433,12 +5433,12 @@ d_isRelIsomorphism_1792 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRingWithoutOne_240 ->
   (AgdaAny -> AgdaAny) ->
   T_IsNearSemiringIsomorphism_1056 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_1792 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelIsomorphism_1792 v7
 du_isRelIsomorphism_1792 ::
   T_IsNearSemiringIsomorphism_1056 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_1792 v0
   = let v1 = coe du_'43''45'isMonoidIsomorphism_1098 (coe v0) in
     coe
@@ -5454,12 +5454,12 @@ d_isRelMonomorphism_1794 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRingWithoutOne_240 ->
   (AgdaAny -> AgdaAny) ->
   T_IsNearSemiringIsomorphism_1056 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_1794 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_1794 v7
 du_isRelMonomorphism_1794 ::
   T_IsNearSemiringIsomorphism_1056 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_1794 v0
   = let v1 = d_isNearSemiringMonomorphism_1064 (coe v0) in
     coe
@@ -5479,7 +5479,7 @@ d_cong_1798 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_1798 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -5614,7 +5614,7 @@ d_isNearSemiringHomomorphism_1822 v0
 -- Algebra.Morphism.Structures.RingWithoutOneMorphisms.+*.IsNearSemiringMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_1824 ::
   T_IsNearSemiringMonomorphism_1012 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1824 v0
   = coe
       d_isRelHomomorphism_202
@@ -5633,12 +5633,12 @@ d_isRelMonomorphism_1826 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRingWithoutOne_240 ->
   (AgdaAny -> AgdaAny) ->
   T_IsNearSemiringMonomorphism_1012 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_1826 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_1826 v7
 du_isRelMonomorphism_1826 ::
   T_IsNearSemiringMonomorphism_1012 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_1826 v0
   = let v1 = coe du_'43''45'isMonoidMonomorphism_1042 (coe v0) in
     coe
@@ -5650,7 +5650,7 @@ d_cong_1828 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_1828 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -5729,7 +5729,7 @@ d_ε'45'homo_1862 v0
 -- Algebra.Morphism.Structures.RingWithoutOneMorphisms.IsRingWithoutOneHomomorphism._.isRelHomomorphism
 d_isRelHomomorphism_1864 ::
   T_IsRingWithoutOneHomomorphism_1842 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1864 v0
   = coe
       d_isRelHomomorphism_202
@@ -5751,7 +5751,7 @@ d_cong_1868 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_1868 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -5928,7 +5928,7 @@ du_isNearSemiringHomomorphism_1906 v0
 -- Algebra.Morphism.Structures.RingWithoutOneMorphisms.IsRingWithoutOneMonomorphism._.isRelHomomorphism
 d_isRelHomomorphism_1908 ::
   T_IsRingWithoutOneMonomorphism_1878 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1908 v0
   = coe
       d_isRelHomomorphism_202
@@ -5954,7 +5954,7 @@ d_cong_1912 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_1912 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -6033,12 +6033,12 @@ d_isRelMonomorphism_1922 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRingWithoutOne_240 ->
   (AgdaAny -> AgdaAny) ->
   T_IsRingWithoutOneMonomorphism_1878 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_1922 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_1922 v7
 du_isRelMonomorphism_1922 ::
   T_IsRingWithoutOneMonomorphism_1878 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_1922 v0
   = let v1 = coe du_'43''45'isGroupMonomorphism_1914 (coe v0) in
     coe
@@ -6288,7 +6288,7 @@ du_isNearSemiringHomomorphism_1968 v0
 -- Algebra.Morphism.Structures.RingWithoutOneMorphisms.IsRingWithoutOneIsoMorphism._.isRelHomomorphism
 d_isRelHomomorphism_1970 ::
   T_IsRingWithoutOneIsoMorphism_1930 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_1970 v0
   = coe
       d_isRelHomomorphism_202
@@ -6311,12 +6311,12 @@ d_isRelMonomorphism_1972 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRingWithoutOne_240 ->
   (AgdaAny -> AgdaAny) ->
   T_IsRingWithoutOneIsoMorphism_1930 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_1972 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_1972 v7
 du_isRelMonomorphism_1972 ::
   T_IsRingWithoutOneIsoMorphism_1930 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_1972 v0
   = let v1 = d_isRingWithoutOneMonomorphism_1938 (coe v0) in
     coe
@@ -6352,7 +6352,7 @@ d_cong_1978 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_1978 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -6433,12 +6433,12 @@ d_isRelIsomorphism_1988 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRingWithoutOne_240 ->
   (AgdaAny -> AgdaAny) ->
   T_IsRingWithoutOneIsoMorphism_1930 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_1988 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelIsomorphism_1988 v7
 du_isRelIsomorphism_1988 ::
   T_IsRingWithoutOneIsoMorphism_1930 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_1988 v0
   = let v1 = coe du_'43''45'isGroupIsomorphism_1980 (coe v0) in
     coe
@@ -6530,7 +6530,7 @@ d_isMonoidHomomorphism_2092 v0
 -- Algebra.Morphism.Structures.RingMorphisms.+.IsGroupHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_2094 ::
   T_IsGroupHomomorphism_670 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2094 v0
   = coe
       d_isRelHomomorphism_202
@@ -6552,7 +6552,7 @@ d_cong_2100 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2100 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -6669,7 +6669,7 @@ du_isMonoidMonomorphism_2120 v0
 -- Algebra.Morphism.Structures.RingMorphisms.+.IsGroupIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_2122 ::
   T_IsGroupIsomorphism_738 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2122 v0
   = coe
       d_isRelHomomorphism_202
@@ -6690,12 +6690,12 @@ d_isRelIsomorphism_2124 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   (AgdaAny -> AgdaAny) ->
   T_IsGroupIsomorphism_738 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_2124 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelIsomorphism_2124 v7
 du_isRelIsomorphism_2124 ::
   T_IsGroupIsomorphism_738 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_2124 v0
   = let v1 = coe du_isMonoidIsomorphism_776 (coe v0) in
     coe
@@ -6711,12 +6711,12 @@ d_isRelMonomorphism_2126 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   (AgdaAny -> AgdaAny) ->
   T_IsGroupIsomorphism_738 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_2126 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_2126 v7
 du_isRelMonomorphism_2126 ::
   T_IsGroupIsomorphism_738 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_2126 v0
   = let v1 = d_isGroupMonomorphism_746 (coe v0) in
     coe
@@ -6767,7 +6767,7 @@ d_cong_2136 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2136 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -6840,7 +6840,7 @@ du_isMonoidMonomorphism_2150 v0 v1
 -- Algebra.Morphism.Structures.RingMorphisms.+.IsGroupMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_2152 ::
   T_IsGroupMonomorphism_698 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2152 v0
   = coe
       d_isRelHomomorphism_202
@@ -6859,12 +6859,12 @@ d_isRelMonomorphism_2154 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   (AgdaAny -> AgdaAny) ->
   T_IsGroupMonomorphism_698 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_2154 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_2154 v7
 du_isRelMonomorphism_2154 ::
   T_IsGroupMonomorphism_698 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_2154 v0
   = let v1 = coe du_isMonoidMonomorphism_726 (coe v0) in
     coe
@@ -6901,7 +6901,7 @@ d_cong_2162 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2162 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -6928,7 +6928,7 @@ d_isMagmaHomomorphism_2182 v0
 -- Algebra.Morphism.Structures.RingMorphisms.*.IsMonoidHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_2184 ::
   T_IsMonoidHomomorphism_380 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2184 v0
   = coe
       d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_388 (coe v0))
@@ -6941,7 +6941,7 @@ d_cong_2188 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2188 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_388 (coe v0)))
 -- Algebra.Morphism.Structures.RingMorphisms.*.IsMonoidIsomorphism.homo
@@ -7019,7 +7019,7 @@ d_isMonoidMonomorphism_2204 v0
 -- Algebra.Morphism.Structures.RingMorphisms.*.IsMonoidIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_2206 ::
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2206 v0
   = coe
       d_isRelHomomorphism_202
@@ -7038,12 +7038,12 @@ d_isRelIsomorphism_2208 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_2208 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelIsomorphism_2208 v7
 du_isRelIsomorphism_2208 ::
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_2208 v0
   = coe
       du_isRelIsomorphism_266 (coe du_isMagmaIsomorphism_470 (coe v0))
@@ -7057,12 +7057,12 @@ d_isRelMonomorphism_2210 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_2210 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_2210 v7
 du_isRelMonomorphism_2210 ::
   T_IsMonoidIsomorphism_438 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_2210 v0
   = let v1 = d_isMonoidMonomorphism_446 (coe v0) in
     coe
@@ -7087,7 +7087,7 @@ d_cong_2216 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2216 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -7140,7 +7140,7 @@ d_isMonoidHomomorphism_2228 v0
 -- Algebra.Morphism.Structures.RingMorphisms.*.IsMonoidMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_2230 ::
   T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2230 v0
   = coe
       d_isRelHomomorphism_202
@@ -7157,12 +7157,12 @@ d_isRelMonomorphism_2232 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_2232 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_2232 v7
 du_isRelMonomorphism_2232 ::
   T_IsMonoidMonomorphism_404 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_2232 v0
   = coe
       du_isRelMonomorphism_234 (coe du_isMagmaMonomorphism_428 (coe v0))
@@ -7176,7 +7176,7 @@ d_cong_2236 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2236 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -7273,7 +7273,7 @@ du_isNearSemiringHomomorphism_2268 v0 v1
 -- Algebra.Morphism.Structures.RingMorphisms.*+0.IsRingWithoutOneHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_2270 ::
   T_IsRingWithoutOneHomomorphism_1842 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2270 v0
   = coe
       d_isRelHomomorphism_202
@@ -7295,7 +7295,7 @@ d_cong_2274 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2274 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -7574,7 +7574,7 @@ du_isNearSemiringHomomorphism_2310 v0
 -- Algebra.Morphism.Structures.RingMorphisms.*+0.IsRingWithoutOneIsoMorphism.isRelHomomorphism
 d_isRelHomomorphism_2312 ::
   T_IsRingWithoutOneIsoMorphism_1930 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2312 v0
   = coe
       d_isRelHomomorphism_202
@@ -7597,12 +7597,12 @@ d_isRelIsomorphism_2314 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   (AgdaAny -> AgdaAny) ->
   T_IsRingWithoutOneIsoMorphism_1930 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_2314 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelIsomorphism_2314 v7
 du_isRelIsomorphism_2314 ::
   T_IsRingWithoutOneIsoMorphism_1930 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_2314 v0
   = let v1 = coe du_'43''45'isGroupIsomorphism_1980 (coe v0) in
     coe
@@ -7620,12 +7620,12 @@ d_isRelMonomorphism_2316 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   (AgdaAny -> AgdaAny) ->
   T_IsRingWithoutOneIsoMorphism_1930 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_2316 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_2316 v7
 du_isRelMonomorphism_2316 ::
   T_IsRingWithoutOneIsoMorphism_1930 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_2316 v0
   = let v1 = d_isRingWithoutOneMonomorphism_1938 (coe v0) in
     coe
@@ -7672,7 +7672,7 @@ d_cong_2326 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2326 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -7861,7 +7861,7 @@ du_isNearSemiringHomomorphism_2354 v0
 -- Algebra.Morphism.Structures.RingMorphisms.*+0.IsRingWithoutOneMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_2356 ::
   T_IsRingWithoutOneMonomorphism_1878 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2356 v0
   = coe
       d_isRelHomomorphism_202
@@ -7882,12 +7882,12 @@ d_isRelMonomorphism_2358 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   (AgdaAny -> AgdaAny) ->
   T_IsRingWithoutOneMonomorphism_1878 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_2358 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_2358 v7
 du_isRelMonomorphism_2358 ::
   T_IsRingWithoutOneMonomorphism_1878 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_2358 v0
   = let v1 = coe du_'43''45'isGroupMonomorphism_1914 (coe v0) in
     coe
@@ -7917,7 +7917,7 @@ d_cong_2364 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2364 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -8031,7 +8031,7 @@ d_isNearSemiringHomomorphism_2408 v0
 -- Algebra.Morphism.Structures.RingMorphisms._.IsSemiringHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_2410 ::
   T_IsSemiringHomomorphism_1366 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2410 v0
   = coe
       d_isRelHomomorphism_202
@@ -8046,7 +8046,7 @@ d_cong_2412 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2412 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -8330,7 +8330,7 @@ du_isNearSemiringMonomorphism_2450 v0
 -- Algebra.Morphism.Structures.RingMorphisms._.IsSemiringIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_2452 ::
   T_IsSemiringIsomorphism_1452 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2452 v0
   = coe
       d_isRelHomomorphism_202
@@ -8366,7 +8366,7 @@ d_cong_2460 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2460 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -8558,7 +8558,7 @@ du_isNearSemiringMonomorphism_2490 v0 v1
 -- Algebra.Morphism.Structures.RingMorphisms._.IsSemiringMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_2492 ::
   T_IsSemiringMonomorphism_1402 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2492 v0
   = coe
       d_isRelHomomorphism_202
@@ -8580,7 +8580,7 @@ d_cong_2496 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2496 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -8714,7 +8714,7 @@ d_isNearSemiringHomomorphism_2530 v0
 -- Algebra.Morphism.Structures.RingMorphisms.IsRingHomomorphism._.isRelHomomorphism
 d_isRelHomomorphism_2532 ::
   T_IsRingHomomorphism_2500 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2532 v0
   = coe
       d_isRelHomomorphism_202
@@ -8731,7 +8731,7 @@ d_cong_2534 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2534 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -8955,7 +8955,7 @@ d_isNearSemiringHomomorphism_2578 v0
 -- Algebra.Morphism.Structures.RingMorphisms.IsRingMonomorphism._.isRelHomomorphism
 d_isRelHomomorphism_2580 ::
   T_IsRingMonomorphism_2544 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2580 v0
   = coe
       d_isRelHomomorphism_202
@@ -8999,7 +8999,7 @@ d_cong_2586 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2586 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -9101,12 +9101,12 @@ d_isRelMonomorphism_2598 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   (AgdaAny -> AgdaAny) ->
   T_IsRingMonomorphism_2544 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_2598 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_2598 v7
 du_isRelMonomorphism_2598 ::
   T_IsRingMonomorphism_2544 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_2598 v0
   = let v1 = coe du_'43''45'isGroupMonomorphism_2590 (coe v0) in
     coe
@@ -9408,7 +9408,7 @@ d_isNearSemiringHomomorphism_2652 v0
 -- Algebra.Morphism.Structures.RingMorphisms.IsRingIsomorphism._.isRelHomomorphism
 d_isRelHomomorphism_2654 ::
   T_IsRingIsomorphism_2610 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2654 v0
   = coe
       d_isRelHomomorphism_202
@@ -9481,7 +9481,7 @@ d_cong_2664 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2664 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -9585,12 +9585,12 @@ d_isRelIsomorphism_2676 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawRing_290 ->
   (AgdaAny -> AgdaAny) ->
   T_IsRingIsomorphism_2610 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_2676 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelIsomorphism_2676 v7
 du_isRelIsomorphism_2676 ::
   T_IsRingIsomorphism_2610 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_2676 v0
   = let v1 = coe du_'43''45'isGroupIsomorphism_2668 (coe v0) in
     coe
@@ -9714,7 +9714,7 @@ d_homo_2756 v0 = coe d_homo_204 (coe v0)
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.∙.IsMagmaHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_2758 ::
   T_IsMagmaHomomorphism_194 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2758 v0 = coe d_isRelHomomorphism_202 (coe v0)
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.∙.IsMagmaHomomorphism.cong
 d_cong_2760 ::
@@ -9722,7 +9722,7 @@ d_cong_2760 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2760 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe d_isRelHomomorphism_202 (coe v0))
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.∙.IsMagmaIsomorphism.homo
 d_homo_2764 ::
@@ -9752,7 +9752,7 @@ d_isMagmaMonomorphism_2770 v0
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.∙.IsMagmaIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_2772 ::
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2772 v0
   = coe
       d_isRelHomomorphism_202
@@ -9768,13 +9768,13 @@ d_isRelIsomorphism_2774 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawQuasigroup_350 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_2774 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
   = du_isRelIsomorphism_2774
 du_isRelIsomorphism_2774 ::
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_2774 v0 v1 = coe du_isRelIsomorphism_266 v1
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.∙.IsMagmaIsomorphism.isRelMonomorphism
 d_isRelMonomorphism_2776 ::
@@ -9786,12 +9786,12 @@ d_isRelMonomorphism_2776 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawQuasigroup_350 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_2776 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_2776 v7
 du_isRelMonomorphism_2776 ::
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_2776 v0
   = coe
       du_isRelMonomorphism_234 (coe d_isMagmaMonomorphism_248 (coe v0))
@@ -9806,7 +9806,7 @@ d_cong_2780 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2780 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -9830,7 +9830,7 @@ d_isMagmaHomomorphism_2788 v0
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.∙.IsMagmaMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_2790 ::
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2790 v0
   = coe
       d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_222 (coe v0))
@@ -9844,13 +9844,13 @@ d_isRelMonomorphism_2792 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawQuasigroup_350 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_2792 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
   = du_isRelMonomorphism_2792
 du_isRelMonomorphism_2792 ::
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_2792 v0 v1 = coe du_isRelMonomorphism_234 v1
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.∙.IsMagmaMonomorphism.cong
 d_cong_2794 ::
@@ -9858,7 +9858,7 @@ d_cong_2794 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2794 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_222 (coe v0)))
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.\\.IsMagmaHomomorphism
@@ -9874,7 +9874,7 @@ d_homo_2812 v0 = coe d_homo_204 (coe v0)
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.\\.IsMagmaHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_2814 ::
   T_IsMagmaHomomorphism_194 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2814 v0 = coe d_isRelHomomorphism_202 (coe v0)
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.\\.IsMagmaHomomorphism.cong
 d_cong_2816 ::
@@ -9882,7 +9882,7 @@ d_cong_2816 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2816 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe d_isRelHomomorphism_202 (coe v0))
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.\\.IsMagmaIsomorphism.homo
 d_homo_2820 ::
@@ -9912,7 +9912,7 @@ d_isMagmaMonomorphism_2826 v0
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.\\.IsMagmaIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_2828 ::
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2828 v0
   = coe
       d_isRelHomomorphism_202
@@ -9928,13 +9928,13 @@ d_isRelIsomorphism_2830 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawQuasigroup_350 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_2830 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
   = du_isRelIsomorphism_2830
 du_isRelIsomorphism_2830 ::
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_2830 v0 v1 = coe du_isRelIsomorphism_266 v1
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.\\.IsMagmaIsomorphism.isRelMonomorphism
 d_isRelMonomorphism_2832 ::
@@ -9946,12 +9946,12 @@ d_isRelMonomorphism_2832 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawQuasigroup_350 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_2832 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_2832 v7
 du_isRelMonomorphism_2832 ::
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_2832 v0
   = coe
       du_isRelMonomorphism_234 (coe d_isMagmaMonomorphism_248 (coe v0))
@@ -9966,7 +9966,7 @@ d_cong_2836 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2836 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -9990,7 +9990,7 @@ d_isMagmaHomomorphism_2844 v0
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.\\.IsMagmaMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_2846 ::
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2846 v0
   = coe
       d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_222 (coe v0))
@@ -10004,13 +10004,13 @@ d_isRelMonomorphism_2848 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawQuasigroup_350 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_2848 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
   = du_isRelMonomorphism_2848
 du_isRelMonomorphism_2848 ::
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_2848 v0 v1 = coe du_isRelMonomorphism_234 v1
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.\\.IsMagmaMonomorphism.cong
 d_cong_2850 ::
@@ -10018,7 +10018,7 @@ d_cong_2850 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2850 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_222 (coe v0)))
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.//.IsMagmaHomomorphism
@@ -10034,7 +10034,7 @@ d_homo_2868 v0 = coe d_homo_204 (coe v0)
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.//.IsMagmaHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_2870 ::
   T_IsMagmaHomomorphism_194 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2870 v0 = coe d_isRelHomomorphism_202 (coe v0)
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.//.IsMagmaHomomorphism.cong
 d_cong_2872 ::
@@ -10042,7 +10042,7 @@ d_cong_2872 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2872 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe d_isRelHomomorphism_202 (coe v0))
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.//.IsMagmaIsomorphism.homo
 d_homo_2876 ::
@@ -10072,7 +10072,7 @@ d_isMagmaMonomorphism_2882 v0
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.//.IsMagmaIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_2884 ::
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2884 v0
   = coe
       d_isRelHomomorphism_202
@@ -10088,13 +10088,13 @@ d_isRelIsomorphism_2886 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawQuasigroup_350 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_2886 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
   = du_isRelIsomorphism_2886
 du_isRelIsomorphism_2886 ::
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_2886 v0 v1 = coe du_isRelIsomorphism_266 v1
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.//.IsMagmaIsomorphism.isRelMonomorphism
 d_isRelMonomorphism_2888 ::
@@ -10106,12 +10106,12 @@ d_isRelMonomorphism_2888 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawQuasigroup_350 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_2888 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_2888 v7
 du_isRelMonomorphism_2888 ::
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_2888 v0
   = coe
       du_isRelMonomorphism_234 (coe d_isMagmaMonomorphism_248 (coe v0))
@@ -10126,7 +10126,7 @@ d_cong_2892 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2892 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -10150,7 +10150,7 @@ d_isMagmaHomomorphism_2900 v0
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.//.IsMagmaMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_2902 ::
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2902 v0
   = coe
       d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_222 (coe v0))
@@ -10164,13 +10164,13 @@ d_isRelMonomorphism_2904 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawQuasigroup_350 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_2904 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
   = du_isRelMonomorphism_2904
 du_isRelMonomorphism_2904 ::
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_2904 v0 v1 = coe du_isRelMonomorphism_234 v1
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.//.IsMagmaMonomorphism.cong
 d_cong_2906 ::
@@ -10178,7 +10178,7 @@ d_cong_2906 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2906 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_222 (coe v0)))
 -- Algebra.Morphism.Structures.QuasigroupMorphisms._.Homomorphic₂
@@ -10196,13 +10196,13 @@ d_Homomorphic'8322'_2914 = erased
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.IsQuasigroupHomomorphism
 d_IsQuasigroupHomomorphism_2920 a0 a1 a2 a3 a4 a5 a6 = ()
 data T_IsQuasigroupHomomorphism_2920
-  = C_constructor_2950 MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  = C_constructor_2950 MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
                        (AgdaAny -> AgdaAny -> AgdaAny) (AgdaAny -> AgdaAny -> AgdaAny)
                        (AgdaAny -> AgdaAny -> AgdaAny)
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.IsQuasigroupHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_2932 ::
   T_IsQuasigroupHomomorphism_2920 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2932 v0
   = case coe v0 of
       C_constructor_2950 v1 v2 v3 v4 -> coe v1
@@ -10234,7 +10234,7 @@ d_cong_2942 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2942 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe d_isRelHomomorphism_2932 (coe v0))
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.IsQuasigroupHomomorphism.∙-isMagmaHomomorphism
 d_'8729''45'isMagmaHomomorphism_2944 ::
@@ -10367,7 +10367,7 @@ du_'92''92''45'isMagmaHomomorphism_2974 v0
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.IsQuasigroupMonomorphism._.isRelHomomorphism
 d_isRelHomomorphism_2976 ::
   T_IsQuasigroupMonomorphism_2954 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_2976 v0
   = coe
       d_isRelHomomorphism_2932
@@ -10403,7 +10403,7 @@ d_cong_2982 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_2982 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_2932
          (coe d_isQuasigroupHomomorphism_2962 (coe v0)))
@@ -10482,12 +10482,12 @@ d_isRelMonomorphism_2992 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawQuasigroup_350 ->
   (AgdaAny -> AgdaAny) ->
   T_IsQuasigroupMonomorphism_2954 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_2992 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_2992 v7
 du_isRelMonomorphism_2992 ::
   T_IsQuasigroupMonomorphism_2954 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_2992 v0
   = coe
       du_isRelMonomorphism_234
@@ -10627,7 +10627,7 @@ d_isQuasigroupHomomorphism_3026 v0
 -- Algebra.Morphism.Structures.QuasigroupMorphisms.IsQuasigroupIsomorphism._.isRelHomomorphism
 d_isRelHomomorphism_3028 ::
   T_IsQuasigroupIsomorphism_2998 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_3028 v0
   = coe
       d_isRelHomomorphism_2932
@@ -10644,12 +10644,12 @@ d_isRelMonomorphism_3030 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawQuasigroup_350 ->
   (AgdaAny -> AgdaAny) ->
   T_IsQuasigroupIsomorphism_2998 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_3030 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_3030 v7
 du_isRelMonomorphism_3030 ::
   T_IsQuasigroupIsomorphism_2998 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_3030 v0
   = let v1 = d_isQuasigroupMonomorphism_3006 (coe v0) in
     coe
@@ -10709,7 +10709,7 @@ d_cong_3038 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_3038 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_2932
          (coe
@@ -10790,12 +10790,12 @@ d_isRelIsomorphism_3048 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawQuasigroup_350 ->
   (AgdaAny -> AgdaAny) ->
   T_IsQuasigroupIsomorphism_2998 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_3048 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelIsomorphism_3048 v7
 du_isRelIsomorphism_3048 ::
   T_IsQuasigroupIsomorphism_2998 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_3048 v0
   = coe
       du_isRelIsomorphism_266
@@ -10861,7 +10861,7 @@ d_homo_3154 v0 = coe d_homo_204 (coe v0)
 -- Algebra.Morphism.Structures.LoopMorphisms._.//.IsMagmaHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_3156 ::
   T_IsMagmaHomomorphism_194 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_3156 v0 = coe d_isRelHomomorphism_202 (coe v0)
 -- Algebra.Morphism.Structures.LoopMorphisms._.//.IsMagmaHomomorphism.cong
 d_cong_3158 ::
@@ -10869,7 +10869,7 @@ d_cong_3158 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_3158 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe d_isRelHomomorphism_202 (coe v0))
 -- Algebra.Morphism.Structures.LoopMorphisms._.//.IsMagmaIsomorphism.homo
 d_homo_3162 ::
@@ -10899,7 +10899,7 @@ d_isMagmaMonomorphism_3168 v0
 -- Algebra.Morphism.Structures.LoopMorphisms._.//.IsMagmaIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_3170 ::
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_3170 v0
   = coe
       d_isRelHomomorphism_202
@@ -10915,13 +10915,13 @@ d_isRelIsomorphism_3172 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawLoop_392 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_3172 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
   = du_isRelIsomorphism_3172
 du_isRelIsomorphism_3172 ::
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_3172 v0 v1 = coe du_isRelIsomorphism_266 v1
 -- Algebra.Morphism.Structures.LoopMorphisms._.//.IsMagmaIsomorphism.isRelMonomorphism
 d_isRelMonomorphism_3174 ::
@@ -10933,12 +10933,12 @@ d_isRelMonomorphism_3174 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawLoop_392 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_3174 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_3174 v7
 du_isRelMonomorphism_3174 ::
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_3174 v0
   = coe
       du_isRelMonomorphism_234 (coe d_isMagmaMonomorphism_248 (coe v0))
@@ -10953,7 +10953,7 @@ d_cong_3178 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_3178 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -10977,7 +10977,7 @@ d_isMagmaHomomorphism_3186 v0
 -- Algebra.Morphism.Structures.LoopMorphisms._.//.IsMagmaMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_3188 ::
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_3188 v0
   = coe
       d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_222 (coe v0))
@@ -10991,13 +10991,13 @@ d_isRelMonomorphism_3190 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawLoop_392 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_3190 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
   = du_isRelMonomorphism_3190
 du_isRelMonomorphism_3190 ::
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_3190 v0 v1 = coe du_isRelMonomorphism_234 v1
 -- Algebra.Morphism.Structures.LoopMorphisms._.//.IsMagmaMonomorphism.cong
 d_cong_3192 ::
@@ -11005,7 +11005,7 @@ d_cong_3192 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_3192 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_222 (coe v0)))
 -- Algebra.Morphism.Structures.LoopMorphisms._.IsQuasigroupHomomorphism.//-homo
@@ -11053,7 +11053,7 @@ du_'92''92''45'isMagmaHomomorphism_3202 v0 v1
 -- Algebra.Morphism.Structures.LoopMorphisms._.IsQuasigroupHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_3204 ::
   T_IsQuasigroupHomomorphism_2920 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_3204 v0 = coe d_isRelHomomorphism_2932 (coe v0)
 -- Algebra.Morphism.Structures.LoopMorphisms._.IsQuasigroupHomomorphism.∙-homo
 d_'8729''45'homo_3206 ::
@@ -11082,7 +11082,7 @@ d_cong_3210 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_3210 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe d_isRelHomomorphism_2932 (coe v0))
 -- Algebra.Morphism.Structures.LoopMorphisms._.IsQuasigroupIsomorphism.//-homo
 d_'47''47''45'homo_3214 ::
@@ -11238,7 +11238,7 @@ d_isQuasigroupMonomorphism_3234 v0
 -- Algebra.Morphism.Structures.LoopMorphisms._.IsQuasigroupIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_3236 ::
   T_IsQuasigroupIsomorphism_2998 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_3236 v0
   = coe
       d_isRelHomomorphism_2932
@@ -11255,12 +11255,12 @@ d_isRelIsomorphism_3238 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawLoop_392 ->
   (AgdaAny -> AgdaAny) ->
   T_IsQuasigroupIsomorphism_2998 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_3238 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelIsomorphism_3238 v7
 du_isRelIsomorphism_3238 ::
   T_IsQuasigroupIsomorphism_2998 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_3238 v0
   = coe
       du_isRelIsomorphism_266
@@ -11275,12 +11275,12 @@ d_isRelMonomorphism_3240 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawLoop_392 ->
   (AgdaAny -> AgdaAny) ->
   T_IsQuasigroupIsomorphism_2998 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_3240 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_3240 v7
 du_isRelMonomorphism_3240 ::
   T_IsQuasigroupIsomorphism_2998 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_3240 v0
   = let v1 = d_isQuasigroupMonomorphism_3006 (coe v0) in
     coe
@@ -11362,7 +11362,7 @@ d_cong_3252 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_3252 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_2932
          (coe
@@ -11467,7 +11467,7 @@ d_isQuasigroupHomomorphism_3270 v0
 -- Algebra.Morphism.Structures.LoopMorphisms._.IsQuasigroupMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_3272 ::
   T_IsQuasigroupMonomorphism_2954 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_3272 v0
   = coe
       d_isRelHomomorphism_2932
@@ -11482,12 +11482,12 @@ d_isRelMonomorphism_3274 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawLoop_392 ->
   (AgdaAny -> AgdaAny) ->
   T_IsQuasigroupMonomorphism_2954 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_3274 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_3274 v7
 du_isRelMonomorphism_3274 ::
   T_IsQuasigroupMonomorphism_2954 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_3274 v0
   = coe
       du_isRelMonomorphism_234
@@ -11540,7 +11540,7 @@ d_cong_3282 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_3282 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_2932
          (coe d_isQuasigroupHomomorphism_2962 (coe v0)))
@@ -11557,7 +11557,7 @@ d_homo_3300 v0 = coe d_homo_204 (coe v0)
 -- Algebra.Morphism.Structures.LoopMorphisms._.\\.IsMagmaHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_3302 ::
   T_IsMagmaHomomorphism_194 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_3302 v0 = coe d_isRelHomomorphism_202 (coe v0)
 -- Algebra.Morphism.Structures.LoopMorphisms._.\\.IsMagmaHomomorphism.cong
 d_cong_3304 ::
@@ -11565,7 +11565,7 @@ d_cong_3304 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_3304 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe d_isRelHomomorphism_202 (coe v0))
 -- Algebra.Morphism.Structures.LoopMorphisms._.\\.IsMagmaIsomorphism.homo
 d_homo_3308 ::
@@ -11595,7 +11595,7 @@ d_isMagmaMonomorphism_3314 v0
 -- Algebra.Morphism.Structures.LoopMorphisms._.\\.IsMagmaIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_3316 ::
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_3316 v0
   = coe
       d_isRelHomomorphism_202
@@ -11611,13 +11611,13 @@ d_isRelIsomorphism_3318 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawLoop_392 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_3318 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
   = du_isRelIsomorphism_3318
 du_isRelIsomorphism_3318 ::
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_3318 v0 v1 = coe du_isRelIsomorphism_266 v1
 -- Algebra.Morphism.Structures.LoopMorphisms._.\\.IsMagmaIsomorphism.isRelMonomorphism
 d_isRelMonomorphism_3320 ::
@@ -11629,12 +11629,12 @@ d_isRelMonomorphism_3320 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawLoop_392 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_3320 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_3320 v7
 du_isRelMonomorphism_3320 ::
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_3320 v0
   = coe
       du_isRelMonomorphism_234 (coe d_isMagmaMonomorphism_248 (coe v0))
@@ -11649,7 +11649,7 @@ d_cong_3324 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_3324 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -11673,7 +11673,7 @@ d_isMagmaHomomorphism_3332 v0
 -- Algebra.Morphism.Structures.LoopMorphisms._.\\.IsMagmaMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_3334 ::
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_3334 v0
   = coe
       d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_222 (coe v0))
@@ -11687,13 +11687,13 @@ d_isRelMonomorphism_3336 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawLoop_392 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_3336 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
   = du_isRelMonomorphism_3336
 du_isRelMonomorphism_3336 ::
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_3336 v0 v1 = coe du_isRelMonomorphism_234 v1
 -- Algebra.Morphism.Structures.LoopMorphisms._.\\.IsMagmaMonomorphism.cong
 d_cong_3338 ::
@@ -11701,7 +11701,7 @@ d_cong_3338 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_3338 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_222 (coe v0)))
 -- Algebra.Morphism.Structures.LoopMorphisms._.∙.IsMagmaHomomorphism
@@ -11717,7 +11717,7 @@ d_homo_3356 v0 = coe d_homo_204 (coe v0)
 -- Algebra.Morphism.Structures.LoopMorphisms._.∙.IsMagmaHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_3358 ::
   T_IsMagmaHomomorphism_194 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_3358 v0 = coe d_isRelHomomorphism_202 (coe v0)
 -- Algebra.Morphism.Structures.LoopMorphisms._.∙.IsMagmaHomomorphism.cong
 d_cong_3360 ::
@@ -11725,7 +11725,7 @@ d_cong_3360 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_3360 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe d_isRelHomomorphism_202 (coe v0))
 -- Algebra.Morphism.Structures.LoopMorphisms._.∙.IsMagmaIsomorphism.homo
 d_homo_3364 ::
@@ -11755,7 +11755,7 @@ d_isMagmaMonomorphism_3370 v0
 -- Algebra.Morphism.Structures.LoopMorphisms._.∙.IsMagmaIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_3372 ::
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_3372 v0
   = coe
       d_isRelHomomorphism_202
@@ -11771,13 +11771,13 @@ d_isRelIsomorphism_3374 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawLoop_392 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 d_isRelIsomorphism_3374 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
   = du_isRelIsomorphism_3374
 du_isRelIsomorphism_3374 ::
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_98
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelIsomorphism_90
 du_isRelIsomorphism_3374 v0 v1 = coe du_isRelIsomorphism_266 v1
 -- Algebra.Morphism.Structures.LoopMorphisms._.∙.IsMagmaIsomorphism.isRelMonomorphism
 d_isRelMonomorphism_3376 ::
@@ -11789,12 +11789,12 @@ d_isRelMonomorphism_3376 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawLoop_392 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_3376 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
   = du_isRelMonomorphism_3376 v7
 du_isRelMonomorphism_3376 ::
   T_IsMagmaIsomorphism_240 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_3376 v0
   = coe
       du_isRelMonomorphism_234 (coe d_isMagmaMonomorphism_248 (coe v0))
@@ -11809,7 +11809,7 @@ d_cong_3380 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_3380 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -11833,7 +11833,7 @@ d_isMagmaHomomorphism_3388 v0
 -- Algebra.Morphism.Structures.LoopMorphisms._.∙.IsMagmaMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_3390 ::
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_3390 v0
   = coe
       d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_222 (coe v0))
@@ -11847,13 +11847,13 @@ d_isRelMonomorphism_3392 ::
   MAlonzo.Code.Algebra.Bundles.Raw.T_RawLoop_392 ->
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 d_isRelMonomorphism_3392 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
   = du_isRelMonomorphism_3392
 du_isRelMonomorphism_3392 ::
   (AgdaAny -> AgdaAny) ->
   T_IsMagmaMonomorphism_214 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_66
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelMonomorphism_58
 du_isRelMonomorphism_3392 v0 v1 = coe du_isRelMonomorphism_234 v1
 -- Algebra.Morphism.Structures.LoopMorphisms._.∙.IsMagmaMonomorphism.cong
 d_cong_3394 ::
@@ -11861,7 +11861,7 @@ d_cong_3394 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_3394 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202 (coe d_isMagmaHomomorphism_222 (coe v0)))
 -- Algebra.Morphism.Structures.LoopMorphisms.IsLoopHomomorphism
@@ -11936,7 +11936,7 @@ du_'92''92''45'isMagmaHomomorphism_3418 v0
 -- Algebra.Morphism.Structures.LoopMorphisms.IsLoopHomomorphism._.isRelHomomorphism
 d_isRelHomomorphism_3420 ::
   T_IsLoopHomomorphism_3398 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_3420 v0
   = coe
       d_isRelHomomorphism_2932
@@ -11972,7 +11972,7 @@ d_cong_3426 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_3426 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_2932
          (coe d_isQuasigroupHomomorphism_3406 (coe v0)))
@@ -12066,7 +12066,7 @@ d_isQuasigroupHomomorphism_3454 v0
 -- Algebra.Morphism.Structures.LoopMorphisms.IsLoopMonomorphism._.isRelHomomorphism
 d_isRelHomomorphism_3456 ::
   T_IsLoopMonomorphism_3432 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_3456 v0
   = coe
       d_isRelHomomorphism_2932
@@ -12112,7 +12112,7 @@ d_cong_3464 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_3464 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_2932
          (coe
@@ -12229,7 +12229,7 @@ d_isQuasigroupHomomorphism_3496 v0
 -- Algebra.Morphism.Structures.LoopMorphisms.IsLoopIsomorphism._.isRelHomomorphism
 d_isRelHomomorphism_3498 ::
   T_IsLoopIsomorphism_3470 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_3498 v0
   = coe
       d_isRelHomomorphism_2932
@@ -12284,7 +12284,7 @@ d_cong_3506 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_3506 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_2932
          (coe
@@ -12430,7 +12430,7 @@ d_isNearSemiringHomomorphism_3622 v0
 -- Algebra.Morphism.Structures.KleeneAlgebraMorphisms._.IsSemiringHomomorphism.isRelHomomorphism
 d_isRelHomomorphism_3624 ::
   T_IsSemiringHomomorphism_1366 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_3624 v0
   = coe
       d_isRelHomomorphism_202
@@ -12445,7 +12445,7 @@ d_cong_3626 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_3626 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -12729,7 +12729,7 @@ du_isNearSemiringMonomorphism_3664 v0
 -- Algebra.Morphism.Structures.KleeneAlgebraMorphisms._.IsSemiringIsomorphism.isRelHomomorphism
 d_isRelHomomorphism_3666 ::
   T_IsSemiringIsomorphism_1452 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_3666 v0
   = coe
       d_isRelHomomorphism_202
@@ -12765,7 +12765,7 @@ d_cong_3674 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_3674 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -12957,7 +12957,7 @@ du_isNearSemiringMonomorphism_3704 v0 v1
 -- Algebra.Morphism.Structures.KleeneAlgebraMorphisms._.IsSemiringMonomorphism.isRelHomomorphism
 d_isRelHomomorphism_3706 ::
   T_IsSemiringMonomorphism_1402 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_3706 v0
   = coe
       d_isRelHomomorphism_202
@@ -12979,7 +12979,7 @@ d_cong_3710 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_3710 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -13115,7 +13115,7 @@ d_isNearSemiringHomomorphism_3744 v0
 -- Algebra.Morphism.Structures.KleeneAlgebraMorphisms.IsKleeneAlgebraHomomorphism._.isRelHomomorphism
 d_isRelHomomorphism_3746 ::
   T_IsKleeneAlgebraHomomorphism_3714 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_3746 v0
   = coe
       d_isRelHomomorphism_202
@@ -13132,7 +13132,7 @@ d_cong_3748 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_3748 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -13289,7 +13289,7 @@ d_isNearSemiringHomomorphism_3784 v0
 -- Algebra.Morphism.Structures.KleeneAlgebraMorphisms.IsKleeneAlgebraMonomorphism._.isRelHomomorphism
 d_isRelHomomorphism_3786 ::
   T_IsKleeneAlgebraMonomorphism_3754 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_3786 v0
   = coe
       d_isRelHomomorphism_202
@@ -13322,7 +13322,7 @@ d_cong_3792 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_3792 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
@@ -13514,7 +13514,7 @@ d_isNearSemiringHomomorphism_3832 v0
 -- Algebra.Morphism.Structures.KleeneAlgebraMorphisms.IsKleeneAlgebraIsomorphism._.isRelHomomorphism
 d_isRelHomomorphism_3834 ::
   T_IsKleeneAlgebraIsomorphism_3798 ->
-  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_42
+  MAlonzo.Code.Relation.Binary.Morphism.Structures.T_IsRelHomomorphism_34
 d_isRelHomomorphism_3834 v0
   = coe
       d_isRelHomomorphism_202
@@ -13553,7 +13553,7 @@ d_cong_3840 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_cong_3840 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_52
+      MAlonzo.Code.Relation.Binary.Morphism.Structures.d_cong_44
       (coe
          d_isRelHomomorphism_202
          (coe
