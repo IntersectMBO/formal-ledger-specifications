@@ -265,6 +265,7 @@ nav:
       - Properties: Ledger.Dijkstra.Specification.Gov.Properties.md
       - Properties/:
         - Computational: Ledger.Dijkstra.Specification.Gov.Properties.Computational.md
+        - PoV: Ledger.Dijkstra.Specification.Gov.Properties.PoV.md
     - Ledger: Ledger.Dijkstra.Specification.Ledger.md
     - Ledger/:
       - Properties: Ledger.Dijkstra.Specification.Ledger.Properties.md
