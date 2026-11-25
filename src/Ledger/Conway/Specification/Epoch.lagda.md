@@ -667,7 +667,8 @@ record Pre-POOLREAP-Update : Type where
     gState' : GState
     utxoSt' : UTxOState
 
-module Pre-POOLREAPUpdate (ls : LState)
+module Pre-POOLREAPUpdate (e : Epoch)
+                          (ls : LState)
                           (es : EnactState)
                           (govUpdate : Governance-Update)
                           where
@@ -687,9 +688,12 @@ module Pre-POOLREAPUpdate (ls : LState)
   pState' : PState
   pState' = ⟦ fPools ∪ˡ pools , ∅ , retiring ⟧
 
+  activeGovSt : GovState
+  activeGovSt = filter (λ (_ , gaSt) → ¬ expired e gaSt) govSt'
+
   gState' : GState
   gState' =
-    ⟦ (if null govSt' then mapValues sucᵉ (DRepsOf gState) else DRepsOf gState)
+    ⟦ (if null activeGovSt then mapValues sucᵉ (DRepsOf gState) else DRepsOf gState)
     , CCHotKeysOf gState ∣ ccCreds (EnactState.cc es)
     ⟧
 
@@ -777,7 +781,7 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
       govUpd : Governance-Update
       govUpd = GovernanceUpdate.updates ls fut
 
-      Pre-POOLREAPUpdate pState' gState' utxoSt' = Pre-POOLREAPUpdate.updates ls es govUpd
+      Pre-POOLREAPUpdate pState' gState' utxoSt' = Pre-POOLREAPUpdate.updates e ls es govUpd
       Post-POOLREAPUpdate dState'' acnt'' = Post-POOLREAPUpdate.updates es ls dState' acnt' govUpd
 
       es' : EnactState
@@ -788,7 +792,7 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
 
       stakeDistrs : StakeDistrs
       stakeDistrs = mkStakeDistrs (Snapshots.mark ss') e utxoSt'
-                                  govSt' (GStateOf ls) (DStateOf ls)
+                                  govSt' (GStateOf ls) dState''
 
       Γ : RatifyEnv
       Γ = ⟦ stakeDistrs , e , DRepsOf ls , CCHotKeysOf ls , TreasuryOf acnt'' , PoolsOf ls , VoteDelegsOf ls ⟧

@@ -49,15 +49,12 @@ lookupActionId :
                                  × canVote pparams (GovActionOf ast) role
                                  × ¬ (expired epoch ast) ) s)
 
-lookupActionId pparams role aid epoch =
-  let  instance _ = λ {e ga} → ⁇ (expired? e ga)
-  in   any? λ _ → ¿ _ ¿
+lookupActionId pparams role aid epoch = any? λ _ → ¿ _ ¿
 
 
 private
   isUpdateCommittee : (a : GovAction)
     → Dec (∃[ new ] ∃[ rem ] ∃[ q ] a ≡ ⟦ UpdateCommittee , (new , rem , q) ⟧ᵍᵃ)
-  -- (new , rem , q) : (Credential ⇀ Epoch) × ℙ Credential × ℚ
 
   isUpdateCommittee ⟦ NoConfidence       , _                ⟧ᵍᵃ = no λ()
   isUpdateCommittee ⟦ UpdateCommittee    , (new , rem , q)  ⟧ᵍᵃ = yes (new , rem , q , refl)
@@ -163,8 +160,6 @@ instance
             ,′ isUpdateCommittee (GovActionOf prop)
 
         pattern gov-propose  {zz} xx = GOV-Propose {_} {_} {_} {_} {_} {_} {_} {_} {_} {zz} xx
-        -- The inferred variables in both cases below are
-        -- { Γ } { RewardAddressOf prop } { GovActionOf prop } { AnchorOf prop } { PolicyOf prop } { DepositOf prop } { (GovProposal.prevAction prop) } { s } { k }
 
         computeProof = case H of λ where
           (yes (wf , av , dep , vHFA , HasParent' en , goodAddr , regReturn) , yes (new , rem , q , refl)) →

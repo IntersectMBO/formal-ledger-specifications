@@ -184,7 +184,7 @@ For the formal statement of the lemma,
       a ∈ fromList (map' (GovActionDeposit ∘ proj₁) (filter P? (GovStateOf eps))) ∎
 
     ls₁ = record (LStateOf eps')
-           { utxoSt = Pre-POOLREAPUpdate.utxoSt' (LStateOf eps) (EnactStateOf eps) (GovernanceUpdate.updates ((LStateOf eps)) ((RatifyStateOf eps))) }
+           { utxoSt = Pre-POOLREAPUpdate.utxoSt' e (LStateOf eps) (EnactStateOf eps) (GovernanceUpdate.updates ((LStateOf eps)) ((RatifyStateOf eps))) }
 
     open LState
     open CertState

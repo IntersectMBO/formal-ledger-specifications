@@ -681,6 +681,10 @@ opaque
   expired? : ∀ e st → Dec (expired e st)
   expired? e st = ¿ expired e st ¿
 
+  instance
+    expired⁇ : expired ⁇²
+    expired⁇ {e} {st} = ⁇ expired? e st
+
 private variable
   Γ : RatifyEnv
   es es' : EnactState
