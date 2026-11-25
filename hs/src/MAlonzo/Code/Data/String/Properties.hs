@@ -69,11 +69,11 @@ d_'8776''45'sym_14 v0 v1
       MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Properties.du_symmetric_40
       erased
       (coe
-         MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+         MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
          MAlonzo.Code.Agda.Builtin.String.d_primStringToList_12
          (\ v2 v3 -> v2) v0 v1)
       (coe
-         MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+         MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
          (\ v2 v3 -> v3)
          MAlonzo.Code.Agda.Builtin.String.d_primStringToList_12 v0 v1)
 -- Data.String.Properties.≈-trans
@@ -89,15 +89,15 @@ d_'8776''45'trans_16 v0 v1 v2
       MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Properties.du_transitive_50
       erased
       (coe
-         MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+         MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
          MAlonzo.Code.Agda.Builtin.String.d_primStringToList_12
          (\ v3 v4 -> v3) v0 v1)
       (coe
-         MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+         MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
          (\ v3 v4 -> v4)
          MAlonzo.Code.Agda.Builtin.String.d_primStringToList_12 v0 v1)
       (coe
-         MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+         MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
          (\ v3 v4 -> v4)
          MAlonzo.Code.Agda.Builtin.String.d_primStringToList_12 v1 v2)
 -- Data.String.Properties.≈-subst

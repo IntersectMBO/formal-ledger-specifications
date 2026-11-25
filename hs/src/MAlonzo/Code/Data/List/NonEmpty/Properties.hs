@@ -151,7 +151,7 @@ du_length'45''8314''43''43''8314''45''8804''737'_212 v0 v1
              (coe
                 MAlonzo.Code.Data.Nat.Base.C_s'8804's_34
                 (coe
-                   MAlonzo.Code.Data.List.Properties.du_length'45''43''43''45''8804''737'_532
+                   MAlonzo.Code.Data.List.Properties.du_length'45''43''43''45''8804''737'_534
                    (coe v3)))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.NonEmpty.Properties.length-⁺++⁺-≤ʳ
@@ -173,7 +173,7 @@ du_length'45''8314''43''43''8314''45''8804''691'_226 v0 v1
         -> case coe v1 of
              MAlonzo.Code.Data.List.NonEmpty.Base.C__'8759'__34 v4 v5
                -> coe
-                    MAlonzo.Code.Data.List.Properties.du_length'45''43''43''45''8804''691'_542
+                    MAlonzo.Code.Data.List.Properties.du_length'45''43''43''45''8804''691'_544
                     (coe
                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe v4) (coe v5))
                     (coe
@@ -210,34 +210,34 @@ d_Cancellative_288 ::
   ()
 d_Cancellative_288 = erased
 -- Data.List.NonEmpty.Properties._._.LeftCancellative
-d_LeftCancellative_320 ::
+d_LeftCancellative_322 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22 ->
    MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22 ->
    MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22) ->
   ()
-d_LeftCancellative_320 = erased
+d_LeftCancellative_322 = erased
 -- Data.List.NonEmpty.Properties._._.RightCancellative
-d_RightCancellative_350 ::
+d_RightCancellative_352 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22 ->
    MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22 ->
    MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22) ->
   ()
-d_RightCancellative_350 = erased
+d_RightCancellative_352 = erased
 -- Data.List.NonEmpty.Properties._.⁺++⁺-assoc
-d_'8314''43''43''8314''45'assoc_392 ::
+d_'8314''43''43''8314''45'assoc_394 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22 ->
   MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22 ->
   MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'8314''43''43''8314''45'assoc_392 = erased
+d_'8314''43''43''8314''45'assoc_394 = erased
 -- Data.List.NonEmpty.Properties._.⁺++⁺-cancelˡ
-d_'8314''43''43''8314''45'cancel'737'_408 ::
+d_'8314''43''43''8314''45'cancel'737'_410 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22 ->
@@ -245,9 +245,9 @@ d_'8314''43''43''8314''45'cancel'737'_408 ::
   MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'8314''43''43''8314''45'cancel'737'_408 = erased
+d_'8314''43''43''8314''45'cancel'737'_410 = erased
 -- Data.List.NonEmpty.Properties._.⁺++⁺-cancelʳ
-d_'8314''43''43''8314''45'cancel'691'_424 ::
+d_'8314''43''43''8314''45'cancel'691'_426 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22 ->
@@ -255,44 +255,44 @@ d_'8314''43''43''8314''45'cancel'691'_424 ::
   MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'8314''43''43''8314''45'cancel'691'_424 = erased
+d_'8314''43''43''8314''45'cancel'691'_426 = erased
 -- Data.List.NonEmpty.Properties._.⁺++⁺-cancel
-d_'8314''43''43''8314''45'cancel_440 ::
+d_'8314''43''43''8314''45'cancel_442 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_'8314''43''43''8314''45'cancel_440 ~v0 ~v1
-  = du_'8314''43''43''8314''45'cancel_440
-du_'8314''43''43''8314''45'cancel_440 ::
+d_'8314''43''43''8314''45'cancel_442 ~v0 ~v1
+  = du_'8314''43''43''8314''45'cancel_442
+du_'8314''43''43''8314''45'cancel_442 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_'8314''43''43''8314''45'cancel_440
+du_'8314''43''43''8314''45'cancel_442
   = coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 erased erased
 -- Data.List.NonEmpty.Properties.length-++⁺
-d_length'45''43''43''8314'_446 ::
+d_length'45''43''43''8314'_448 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   [AgdaAny] ->
   MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_length'45''43''43''8314'_446 = erased
+d_length'45''43''43''8314'_448 = erased
 -- Data.List.NonEmpty.Properties.length-++⁺-tail
-d_length'45''43''43''8314''45'tail_464 ::
+d_length'45''43''43''8314''45'tail_466 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   [AgdaAny] ->
   MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_length'45''43''43''8314''45'tail_464 = erased
+d_length'45''43''43''8314''45'tail_466 = erased
 -- Data.List.NonEmpty.Properties.++-++⁺
-d_'43''43''45''43''43''8314'_484 ::
+d_'43''43''45''43''43''8314'_486 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   [AgdaAny] ->
   [AgdaAny] ->
   MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'43''43''45''43''43''8314'_484 = erased
+d_'43''43''45''43''43''8314'_486 = erased
 -- Data.List.NonEmpty.Properties.++⁺-cancelˡ′
-d_'43''43''8314''45'cancel'737''8242'_500 ::
+d_'43''43''8314''45'cancel'737''8242'_502 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   [AgdaAny] ->
@@ -302,9 +302,9 @@ d_'43''43''8314''45'cancel'737''8242'_500 ::
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'43''43''8314''45'cancel'737''8242'_500 = erased
+d_'43''43''8314''45'cancel'737''8242'_502 = erased
 -- Data.List.NonEmpty.Properties.++⁺-cancelˡ
-d_'43''43''8314''45'cancel'737'_524 ::
+d_'43''43''8314''45'cancel'737'_526 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   [AgdaAny] ->
@@ -312,17 +312,17 @@ d_'43''43''8314''45'cancel'737'_524 ::
   MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'43''43''8314''45'cancel'737'_524 = erased
+d_'43''43''8314''45'cancel'737'_526 = erased
 -- Data.List.NonEmpty.Properties.drop-+-++⁺
-d_drop'45''43''45''43''43''8314'_534 ::
+d_drop'45''43''45''43''43''8314'_536 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   [AgdaAny] ->
   MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_drop'45''43''45''43''43''8314'_534 = erased
+d_drop'45''43''45''43''43''8314'_536 = erased
 -- Data.List.NonEmpty.Properties.map-++⁺
-d_map'45''43''43''8314'_550 ::
+d_map'45''43''43''8314'_552 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -331,9 +331,9 @@ d_map'45''43''43''8314'_550 ::
   [AgdaAny] ->
   MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_map'45''43''43''8314'_550 = erased
+d_map'45''43''43''8314'_552 = erased
 -- Data.List.NonEmpty.Properties.length-map
-d_length'45'map_570 ::
+d_length'45'map_572 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -341,9 +341,9 @@ d_length'45'map_570 ::
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_length'45'map_570 = erased
+d_length'45'map_572 = erased
 -- Data.List.NonEmpty.Properties.map-cong
-d_map'45'cong_580 ::
+d_map'45'cong_582 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -353,9 +353,9 @@ d_map'45'cong_580 ::
   (AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12) ->
   MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_map'45'cong_580 = erased
+d_map'45'cong_582 = erased
 -- Data.List.NonEmpty.Properties.map-∘
-d_map'45''8728'_592 ::
+d_map'45''8728'_594 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -366,26 +366,26 @@ d_map'45''8728'_592 ::
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_map'45''8728'_592 = erased
+d_map'45''8728'_594 = erased
 -- Data.List.NonEmpty.Properties.map-id
-d_map'45'id_600 ::
+d_map'45'id_602 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_map'45'id_600 = erased
+d_map'45'id_602 = erased
 -- Data.List.NonEmpty.Properties.toList-inits
-d_toList'45'inits_608 ::
+d_toList'45'inits_610 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> [AgdaAny] -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_toList'45'inits_608 = erased
+d_toList'45'inits_610 = erased
 -- Data.List.NonEmpty.Properties.toList-tails
-d_toList'45'tails_610 ::
+d_toList'45'tails_612 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> [AgdaAny] -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_toList'45'tails_610 = erased
+d_toList'45'tails_612 = erased
 -- Data.List.NonEmpty.Properties._.groupSeqs-groups
-d_groupSeqs'45'groups_626 ::
+d_groupSeqs'45'groups_628 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -393,13 +393,13 @@ d_groupSeqs'45'groups_626 ::
   (AgdaAny ->
    MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->
   [AgdaAny] -> MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44
-d_groupSeqs'45'groups_626 ~v0 ~v1 ~v2 ~v3 v4 v5
-  = du_groupSeqs'45'groups_626 v4 v5
-du_groupSeqs'45'groups_626 ::
+d_groupSeqs'45'groups_628 ~v0 ~v1 ~v2 ~v3 v4 v5
+  = du_groupSeqs'45'groups_628 v4 v5
+du_groupSeqs'45'groups_628 ::
   (AgdaAny ->
    MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->
   [AgdaAny] -> MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44
-du_groupSeqs'45'groups_626 v0 v1
+du_groupSeqs'45'groups_628 v0 v1
   = case coe v1 of
       [] -> coe MAlonzo.Code.Data.List.Relation.Unary.All.C_'91''93'_50
       (:) v2 v3
@@ -414,7 +414,7 @@ du_groupSeqs'45'groups_626 v0 v1
                                 (coe v0 v5)))
                         (coe v3) in
               coe
-                (let v6 = coe du_groupSeqs'45'groups_626 (coe v0) (coe v3) in
+                (let v6 = coe du_groupSeqs'45'groups_628 (coe v0) (coe v3) in
                  coe
                    (case coe v4 of
                       MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v7 v8
@@ -428,7 +428,7 @@ du_groupSeqs'45'groups_626 v0 v1
                                                   (coe
                                                      MAlonzo.Code.Data.Sum.Relation.Unary.All.C_inj'8321'_56
                                                      (coe
-                                                        MAlonzo.Code.Data.List.NonEmpty.Relation.Unary.All.C__'8759'__42
+                                                        MAlonzo.Code.Data.List.NonEmpty.Relation.Unary.All.C__'8759'__46
                                                         v9
                                                         (coe
                                                            MAlonzo.Code.Data.List.Relation.Unary.All.C_'91''93'_50)))
@@ -445,10 +445,10 @@ du_groupSeqs'45'groups_626 v0 v1
                                                                        (coe
                                                                           MAlonzo.Code.Data.Sum.Relation.Unary.All.C_inj'8321'_56
                                                                           (coe
-                                                                             MAlonzo.Code.Data.List.NonEmpty.Relation.Unary.All.C__'8759'__42
+                                                                             MAlonzo.Code.Data.List.NonEmpty.Relation.Unary.All.C__'8759'__46
                                                                              v9
                                                                              (coe
-                                                                                MAlonzo.Code.Data.List.NonEmpty.Relation.Unary.All.du_toList'8314'_46
+                                                                                MAlonzo.Code.Data.List.NonEmpty.Relation.Unary.All.du_toList'8314'_72
                                                                                 (coe v18))))
                                                                        v16
                                                                 _ -> MAlonzo.RTE.mazUnreachableError
@@ -463,7 +463,7 @@ du_groupSeqs'45'groups_626 v0 v1
                                                                        (coe
                                                                           MAlonzo.Code.Data.Sum.Relation.Unary.All.C_inj'8321'_56
                                                                           (coe
-                                                                             MAlonzo.Code.Data.List.NonEmpty.Relation.Unary.All.C__'8759'__42
+                                                                             MAlonzo.Code.Data.List.NonEmpty.Relation.Unary.All.C__'8759'__46
                                                                              v9
                                                                              (coe
                                                                                 MAlonzo.Code.Data.List.Relation.Unary.All.C_'91''93'_50)))
@@ -487,7 +487,7 @@ du_groupSeqs'45'groups_626 v0 v1
                                               (coe
                                                  MAlonzo.Code.Data.Sum.Relation.Unary.All.C_inj'8322'_60
                                                  (coe
-                                                    MAlonzo.Code.Data.List.NonEmpty.Relation.Unary.All.C__'8759'__42
+                                                    MAlonzo.Code.Data.List.NonEmpty.Relation.Unary.All.C__'8759'__46
                                                     erased
                                                     (coe
                                                        MAlonzo.Code.Data.List.Relation.Unary.All.C_'91''93'_50)))
@@ -504,7 +504,7 @@ du_groupSeqs'45'groups_626 v0 v1
                                                                    (coe
                                                                       MAlonzo.Code.Data.Sum.Relation.Unary.All.C_inj'8322'_60
                                                                       (coe
-                                                                         MAlonzo.Code.Data.List.NonEmpty.Relation.Unary.All.C__'8759'__42
+                                                                         MAlonzo.Code.Data.List.NonEmpty.Relation.Unary.All.C__'8759'__46
                                                                          erased
                                                                          (coe
                                                                             MAlonzo.Code.Data.List.Relation.Unary.All.C_'91''93'_50)))
@@ -526,10 +526,10 @@ du_groupSeqs'45'groups_626 v0 v1
                                                                    (coe
                                                                       MAlonzo.Code.Data.Sum.Relation.Unary.All.C_inj'8322'_60
                                                                       (coe
-                                                                         MAlonzo.Code.Data.List.NonEmpty.Relation.Unary.All.C__'8759'__42
+                                                                         MAlonzo.Code.Data.List.NonEmpty.Relation.Unary.All.C__'8759'__46
                                                                          erased
                                                                          (coe
-                                                                            MAlonzo.Code.Data.List.NonEmpty.Relation.Unary.All.du_toList'8314'_46
+                                                                            MAlonzo.Code.Data.List.NonEmpty.Relation.Unary.All.du_toList'8314'_72
                                                                             (coe v17))))
                                                                    v15
                                                             _ -> MAlonzo.RTE.mazUnreachableError
@@ -539,7 +539,7 @@ du_groupSeqs'45'groups_626 v0 v1
                       _ -> MAlonzo.RTE.mazUnreachableError)))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.NonEmpty.Properties._.ungroupSeqs-groupSeqs
-d_ungroupSeqs'45'groupSeqs_710 ::
+d_ungroupSeqs'45'groupSeqs_712 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -547,9 +547,9 @@ d_ungroupSeqs'45'groupSeqs_710 ::
   (AgdaAny ->
    MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->
   [AgdaAny] -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_ungroupSeqs'45'groupSeqs_710 = erased
+d_ungroupSeqs'45'groupSeqs_712 = erased
 -- Data.List.NonEmpty.Properties.map-compose
-d_map'45'compose_768 ::
+d_map'45'compose_770 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -560,9 +560,9 @@ d_map'45'compose_768 ::
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_map'45'compose_768 = erased
+d_map'45'compose_770 = erased
 -- Data.List.NonEmpty.Properties.map-++⁺-commute
-d_map'45''43''43''8314''45'commute_770 ::
+d_map'45''43''43''8314''45'commute_772 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -571,4 +571,4 @@ d_map'45''43''43''8314''45'commute_770 ::
   [AgdaAny] ->
   MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_map'45''43''43''8314''45'commute_770 = erased
+d_map'45''43''43''8314''45'commute_772 = erased

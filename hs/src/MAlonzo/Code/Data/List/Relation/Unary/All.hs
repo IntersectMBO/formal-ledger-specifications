@@ -503,7 +503,7 @@ du_mapA_368 ::
   (AgdaAny -> AgdaAny -> AgdaAny) -> [AgdaAny] -> T_All_44 -> AgdaAny
 du_mapA_368 v0 v1 v2
   = coe
-      MAlonzo.Code.Function.Base.du__'8728''8242'__216
+      MAlonzo.Code.Function.Base.du__'8728''8242'__230
       (coe du_sequenceA_360 (coe v0) (coe v2))
       (coe du_map_164 (coe v1) (coe v2))
 -- Data.List.Relation.Unary.All._.forA
@@ -764,7 +764,7 @@ du_all'63'_510 v0 v1
                 MAlonzo.Code.Data.Product.Base.du_uncurry_244 (coe C__'8759'__60))
              (coe du_uncons_108)
              (coe
-                MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+                MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                 (coe v0 v2) (coe du_all'63'_510 (coe v0) (coe v3)))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Unary.All.universal

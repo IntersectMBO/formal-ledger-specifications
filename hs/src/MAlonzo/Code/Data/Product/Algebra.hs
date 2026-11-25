@@ -219,14 +219,14 @@ du_'215''45'distrib'737''45''8846'_262
                coe
                  MAlonzo.Code.Data.Sum.Base.du_'91'_'44'_'93''8242'_66
                  (coe
-                    MAlonzo.Code.Function.Base.du__'8728''8242'__216
+                    MAlonzo.Code.Function.Base.du__'8728''8242'__230
                     (coe MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38)
                     (coe
                        (\ v1 ->
                           coe
                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v0) (coe v1))))
                  (coe
-                    MAlonzo.Code.Function.Base.du__'8728''8242'__216
+                    MAlonzo.Code.Function.Base.du__'8728''8242'__230
                     (coe MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42)
                     (coe
                        (\ v1 ->
@@ -285,38 +285,38 @@ du_'215''45'distrib'45''8846'_278
 -- Data.Product.Algebra._.×-isMagma
 d_'215''45'isMagma_280 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 d_'215''45'isMagma_280 ~v0 = du_'215''45'isMagma_280
 du_'215''45'isMagma_280 ::
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 du_'215''45'isMagma_280
   = coe
-      MAlonzo.Code.Algebra.Structures.C_constructor_210
+      MAlonzo.Code.Algebra.Structures.C_constructor_212
       (coe
          MAlonzo.Code.Function.Properties.Inverse.du_'8596''45'isEquivalence_42)
       (coe (\ v0 v1 v2 v3 v4 v5 -> coe du_'215''45'cong_42 v4 v5))
 -- Data.Product.Algebra._.×-isSemigroup
 d_'215''45'isSemigroup_282 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 d_'215''45'isSemigroup_282 ~v0 = du_'215''45'isSemigroup_282
 du_'215''45'isSemigroup_282 ::
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 du_'215''45'isSemigroup_282
   = coe
-      MAlonzo.Code.Algebra.Structures.C_constructor_522
+      MAlonzo.Code.Algebra.Structures.C_constructor_524
       (coe du_'215''45'isMagma_280)
       (coe (\ v0 v1 v2 -> coe du_Σ'45'assoc_32))
 -- Data.Product.Algebra._.×-isMonoid
 d_'215''45'isMonoid_290 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 d_'215''45'isMonoid_290 ~v0 = du_'215''45'isMonoid_290
 du_'215''45'isMonoid_290 ::
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 du_'215''45'isMonoid_290
   = coe
-      MAlonzo.Code.Algebra.Structures.C_constructor_758
+      MAlonzo.Code.Algebra.Structures.C_constructor_760
       (coe du_'215''45'isSemigroup_282)
       (coe
          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -325,29 +325,29 @@ du_'215''45'isMonoid_290
 -- Data.Product.Algebra._.×-isCommutativeMonoid
 d_'215''45'isCommutativeMonoid_292 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 d_'215''45'isCommutativeMonoid_292 ~v0
   = du_'215''45'isCommutativeMonoid_292
 du_'215''45'isCommutativeMonoid_292 ::
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_764
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeMonoid_766
 du_'215''45'isCommutativeMonoid_292
   = coe
-      MAlonzo.Code.Algebra.Structures.C_constructor_820
+      MAlonzo.Code.Algebra.Structures.C_constructor_822
       (coe du_'215''45'isMonoid_290)
       (\ v0 v1 -> coe du_'215''45'comm_232)
 -- Data.Product.Algebra._.⊎-×-isSemiringWithoutAnnihilatingZero
 d_'8846''45''215''45'isSemiringWithoutAnnihilatingZero_294 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1536
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1538
 d_'8846''45''215''45'isSemiringWithoutAnnihilatingZero_294 ~v0
   = du_'8846''45''215''45'isSemiringWithoutAnnihilatingZero_294
 du_'8846''45''215''45'isSemiringWithoutAnnihilatingZero_294 ::
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1536
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1538
 du_'8846''45''215''45'isSemiringWithoutAnnihilatingZero_294
   = coe
-      MAlonzo.Code.Algebra.Structures.C_constructor_1630
+      MAlonzo.Code.Algebra.Structures.C_constructor_1632
       (coe
-         MAlonzo.Code.Data.Sum.Algebra.du_'8846''45'isCommutativeMonoid_230)
+         MAlonzo.Code.Data.Sum.Algebra.du_'8846''45'isCommutativeMonoid_224)
       (coe (\ v0 v1 v2 v3 v4 v5 -> coe du_'215''45'cong_42 v4 v5))
       (\ v0 v1 v2 -> coe du_'215''45'assoc_240)
       (coe du_'215''45'identity_250)
@@ -355,27 +355,27 @@ du_'8846''45''215''45'isSemiringWithoutAnnihilatingZero_294
 -- Data.Product.Algebra._.⊎-×-isSemiring
 d_'8846''45''215''45'isSemiring_296 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1640
+  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1642
 d_'8846''45''215''45'isSemiring_296 ~v0
   = du_'8846''45''215''45'isSemiring_296
 du_'8846''45''215''45'isSemiring_296 ::
-  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1640
+  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1642
 du_'8846''45''215''45'isSemiring_296
   = coe
-      MAlonzo.Code.Algebra.Structures.C_constructor_1740
+      MAlonzo.Code.Algebra.Structures.C_constructor_1742
       (coe du_'8846''45''215''45'isSemiringWithoutAnnihilatingZero_294)
       (coe du_'215''45'zero_260)
 -- Data.Product.Algebra._.⊎-×-isCommutativeSemiring
 d_'8846''45''215''45'isCommutativeSemiring_298 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1750
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1752
 d_'8846''45''215''45'isCommutativeSemiring_298 ~v0
   = du_'8846''45''215''45'isCommutativeSemiring_298
 du_'8846''45''215''45'isCommutativeSemiring_298 ::
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1750
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1752
 du_'8846''45''215''45'isCommutativeSemiring_298
   = coe
-      MAlonzo.Code.Algebra.Structures.C_constructor_1862
+      MAlonzo.Code.Algebra.Structures.C_constructor_1864
       (coe du_'8846''45''215''45'isSemiring_296)
       (\ v0 v1 -> coe du_'215''45'comm_232)
 -- Data.Product.Algebra._.×-magma

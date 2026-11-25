@@ -65,11 +65,11 @@ d_absorptive_26 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_absorptive_26 v0
   = coe
-      MAlonzo.Code.Algebra.Lattice.Structures.d_absorptive_3106
+      MAlonzo.Code.Algebra.Lattice.Structures.d_absorptive_3342
       (coe
-         MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+         MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
          (coe
-            MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+            MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
             (coe
                MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                (coe v0))))
@@ -93,7 +93,7 @@ du_distributiveLattice_28 v0
 -- Algebra.Function.B.isBooleanAlgebra
 d_isBooleanAlgebra_30 ::
   MAlonzo.Code.Algebra.Lattice.Bundles.T_BooleanAlgebra_698 ->
-  MAlonzo.Code.Algebra.Lattice.Structures.T_IsBooleanAlgebra_3224
+  MAlonzo.Code.Algebra.Lattice.Structures.T_IsBooleanAlgebra_3460
 d_isBooleanAlgebra_30 v0
   = coe
       MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
@@ -101,10 +101,10 @@ d_isBooleanAlgebra_30 v0
 -- Algebra.Function.B.isDistributiveLattice
 d_isDistributiveLattice_32 ::
   MAlonzo.Code.Algebra.Lattice.Bundles.T_BooleanAlgebra_698 ->
-  MAlonzo.Code.Algebra.Lattice.Structures.T_IsDistributiveLattice_3146
+  MAlonzo.Code.Algebra.Lattice.Structures.T_IsDistributiveLattice_3382
 d_isDistributiveLattice_32 v0
   = coe
-      MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+      MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
       (coe
          MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
          (coe v0))
@@ -114,23 +114,23 @@ d_isEquivalence_34 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_28
 d_isEquivalence_34 v0
   = coe
-      MAlonzo.Code.Algebra.Lattice.Structures.d_isEquivalence_3092
+      MAlonzo.Code.Algebra.Lattice.Structures.d_isEquivalence_3328
       (coe
-         MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+         MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
          (coe
-            MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+            MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
             (coe
                MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                (coe v0))))
 -- Algebra.Function.B.isLattice
 d_isLattice_36 ::
   MAlonzo.Code.Algebra.Lattice.Bundles.T_BooleanAlgebra_698 ->
-  MAlonzo.Code.Algebra.Lattice.Structures.T_IsLattice_3070
+  MAlonzo.Code.Algebra.Lattice.Structures.T_IsLattice_3306
 d_isLattice_36 v0
   = coe
-      MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+      MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
       (coe
-         MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+         MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
          (coe
             MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
             (coe v0)))
@@ -153,17 +153,17 @@ du_isPartialEquivalence_38 v0
               (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+             = MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
                  (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+                = MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
                     (coe v2) in
           coe
             (coe
                MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_44
                (coe
-                  MAlonzo.Code.Algebra.Lattice.Structures.d_isEquivalence_3092
+                  MAlonzo.Code.Algebra.Lattice.Structures.d_isEquivalence_3328
                   (coe v3)))))
 -- Algebra.Function.B.lattice
 d_lattice_40 ::
@@ -212,11 +212,11 @@ d_refl_44 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_36
       (coe
-         MAlonzo.Code.Algebra.Lattice.Structures.d_isEquivalence_3092
+         MAlonzo.Code.Algebra.Lattice.Structures.d_isEquivalence_3328
          (coe
-            MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+            MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
             (coe
-               MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+               MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
                (coe
                   MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                   (coe v0)))))
@@ -242,18 +242,18 @@ du_reflexive_46 v0
               (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+             = MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
                  (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+                = MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
                     (coe v2) in
           coe
             (\ v4 v5 v6 ->
                coe
                  MAlonzo.Code.Relation.Binary.Structures.du_reflexive_42
                  (coe
-                    MAlonzo.Code.Algebra.Lattice.Structures.d_isEquivalence_3092
+                    MAlonzo.Code.Algebra.Lattice.Structures.d_isEquivalence_3328
                     (coe v3))
                  v4)))
 -- Algebra.Function.B.setoid
@@ -285,11 +285,11 @@ d_sym_50 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_38
       (coe
-         MAlonzo.Code.Algebra.Lattice.Structures.d_isEquivalence_3092
+         MAlonzo.Code.Algebra.Lattice.Structures.d_isEquivalence_3328
          (coe
-            MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+            MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
             (coe
-               MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+               MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
                (coe
                   MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                   (coe v0)))))
@@ -301,11 +301,11 @@ d_trans_52 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_40
       (coe
-         MAlonzo.Code.Algebra.Lattice.Structures.d_isEquivalence_3092
+         MAlonzo.Code.Algebra.Lattice.Structures.d_isEquivalence_3328
          (coe
-            MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+            MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
             (coe
-               MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+               MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
                (coe
                   MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                   (coe v0)))))
@@ -321,7 +321,7 @@ d_'172''45'cong_56 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_'172''45'cong_56 v0
   = coe
-      MAlonzo.Code.Algebra.Lattice.Structures.d_'172''45'cong_3250
+      MAlonzo.Code.Algebra.Lattice.Structures.d_'172''45'cong_3486
       (coe
          MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
          (coe v0))
@@ -344,13 +344,13 @@ du_'8743''45'absorbs'45''8744'_58 v0
               (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+             = MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
                  (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Lattice.Structures.du_'8743''45'absorbs'45''8744'_3122
+            MAlonzo.Code.Algebra.Lattice.Structures.du_'8743''45'absorbs'45''8744'_3358
             (coe
-               MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+               MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
                (coe v2))))
 -- Algebra.Function.B.∧-assoc
 d_'8743''45'assoc_60 ::
@@ -358,11 +358,11 @@ d_'8743''45'assoc_60 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_'8743''45'assoc_60 v0
   = coe
-      MAlonzo.Code.Algebra.Lattice.Structures.d_'8743''45'assoc_3102
+      MAlonzo.Code.Algebra.Lattice.Structures.d_'8743''45'assoc_3338
       (coe
-         MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+         MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
          (coe
-            MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+            MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
             (coe
                MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                (coe v0))))
@@ -372,11 +372,11 @@ d_'8743''45'comm_62 ::
   AgdaAny -> AgdaAny -> AgdaAny
 d_'8743''45'comm_62 v0
   = coe
-      MAlonzo.Code.Algebra.Lattice.Structures.d_'8743''45'comm_3100
+      MAlonzo.Code.Algebra.Lattice.Structures.d_'8743''45'comm_3336
       (coe
-         MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+         MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
          (coe
-            MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+            MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
             (coe
                MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                (coe v0))))
@@ -386,7 +386,7 @@ d_'8743''45'complement_64 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_'8743''45'complement_64 v0
   = coe
-      MAlonzo.Code.Algebra.Lattice.Structures.d_'8743''45'complement_3248
+      MAlonzo.Code.Algebra.Lattice.Structures.d_'8743''45'complement_3484
       (coe
          MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
          (coe v0))
@@ -405,7 +405,7 @@ du_'8743''45'complement'691'_66 ::
   AgdaAny -> AgdaAny
 du_'8743''45'complement'691'_66 v0
   = coe
-      MAlonzo.Code.Algebra.Lattice.Structures.du_'8743''45'complement'691'_3312
+      MAlonzo.Code.Algebra.Lattice.Structures.du_'8743''45'complement'691'_3548
       (coe
          MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
          (coe v0))
@@ -424,7 +424,7 @@ du_'8743''45'complement'737'_68 ::
   AgdaAny -> AgdaAny
 du_'8743''45'complement'737'_68 v0
   = coe
-      MAlonzo.Code.Algebra.Lattice.Structures.du_'8743''45'complement'737'_3310
+      MAlonzo.Code.Algebra.Lattice.Structures.du_'8743''45'complement'737'_3546
       (coe
          MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
          (coe v0))
@@ -435,11 +435,11 @@ d_'8743''45'cong_70 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_'8743''45'cong_70 v0
   = coe
-      MAlonzo.Code.Algebra.Lattice.Structures.d_'8743''45'cong_3104
+      MAlonzo.Code.Algebra.Lattice.Structures.d_'8743''45'cong_3340
       (coe
-         MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+         MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
          (coe
-            MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+            MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
             (coe
                MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                (coe v0))))
@@ -462,13 +462,13 @@ du_'8743''45'cong'691'_72 v0
               (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+             = MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
                  (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Lattice.Structures.du_'8743''45'cong'691'_3128
+            MAlonzo.Code.Algebra.Lattice.Structures.du_'8743''45'cong'691'_3364
             (coe
-               MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+               MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
                (coe v2))))
 -- Algebra.Function.B.∧-congˡ
 d_'8743''45'cong'737'_74 ::
@@ -489,13 +489,13 @@ du_'8743''45'cong'737'_74 v0
               (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+             = MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
                  (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Lattice.Structures.du_'8743''45'cong'737'_3124
+            MAlonzo.Code.Algebra.Lattice.Structures.du_'8743''45'cong'737'_3360
             (coe
-               MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+               MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
                (coe v2))))
 -- Algebra.Function.B.∧-distrib-∨
 d_'8743''45'distrib'45''8744'_76 ::
@@ -503,9 +503,9 @@ d_'8743''45'distrib'45''8744'_76 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_'8743''45'distrib'45''8744'_76 v0
   = coe
-      MAlonzo.Code.Algebra.Lattice.Structures.d_'8743''45'distrib'45''8744'_3162
+      MAlonzo.Code.Algebra.Lattice.Structures.d_'8743''45'distrib'45''8744'_3398
       (coe
-         MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+         MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
          (coe
             MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
             (coe v0)))
@@ -528,9 +528,9 @@ du_'8743''45'distrib'691''45''8744'_78 v0
               (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Lattice.Structures.du_'8743''45'distrib'691''45''8744'_3210
+         MAlonzo.Code.Algebra.Lattice.Structures.du_'8743''45'distrib'691''45''8744'_3446
          (coe
-            MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+            MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
             (coe v1)))
 -- Algebra.Function.B.∧-distribˡ-∨
 d_'8743''45'distrib'737''45''8744'_80 ::
@@ -551,9 +551,9 @@ du_'8743''45'distrib'737''45''8744'_80 v0
               (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Lattice.Structures.du_'8743''45'distrib'737''45''8744'_3208
+         MAlonzo.Code.Algebra.Lattice.Structures.du_'8743''45'distrib'737''45''8744'_3444
          (coe
-            MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+            MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
             (coe v1)))
 -- Algebra.Function.B.∧-rawMagma
 d_'8743''45'rawMagma_82 ::
@@ -601,13 +601,13 @@ du_'8744''45'absorbs'45''8743'_84 v0
               (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+             = MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
                  (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Lattice.Structures.du_'8744''45'absorbs'45''8743'_3120
+            MAlonzo.Code.Algebra.Lattice.Structures.du_'8744''45'absorbs'45''8743'_3356
             (coe
-               MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+               MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
                (coe v2))))
 -- Algebra.Function.B.∨-assoc
 d_'8744''45'assoc_86 ::
@@ -615,11 +615,11 @@ d_'8744''45'assoc_86 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_'8744''45'assoc_86 v0
   = coe
-      MAlonzo.Code.Algebra.Lattice.Structures.d_'8744''45'assoc_3096
+      MAlonzo.Code.Algebra.Lattice.Structures.d_'8744''45'assoc_3332
       (coe
-         MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+         MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
          (coe
-            MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+            MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
             (coe
                MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                (coe v0))))
@@ -629,11 +629,11 @@ d_'8744''45'comm_88 ::
   AgdaAny -> AgdaAny -> AgdaAny
 d_'8744''45'comm_88 v0
   = coe
-      MAlonzo.Code.Algebra.Lattice.Structures.d_'8744''45'comm_3094
+      MAlonzo.Code.Algebra.Lattice.Structures.d_'8744''45'comm_3330
       (coe
-         MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+         MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
          (coe
-            MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+            MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
             (coe
                MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                (coe v0))))
@@ -643,7 +643,7 @@ d_'8744''45'complement_90 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_'8744''45'complement_90 v0
   = coe
-      MAlonzo.Code.Algebra.Lattice.Structures.d_'8744''45'complement_3246
+      MAlonzo.Code.Algebra.Lattice.Structures.d_'8744''45'complement_3482
       (coe
          MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
          (coe v0))
@@ -662,7 +662,7 @@ du_'8744''45'complement'691'_92 ::
   AgdaAny -> AgdaAny
 du_'8744''45'complement'691'_92 v0
   = coe
-      MAlonzo.Code.Algebra.Lattice.Structures.du_'8744''45'complement'691'_3308
+      MAlonzo.Code.Algebra.Lattice.Structures.du_'8744''45'complement'691'_3544
       (coe
          MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
          (coe v0))
@@ -681,7 +681,7 @@ du_'8744''45'complement'737'_94 ::
   AgdaAny -> AgdaAny
 du_'8744''45'complement'737'_94 v0
   = coe
-      MAlonzo.Code.Algebra.Lattice.Structures.du_'8744''45'complement'737'_3306
+      MAlonzo.Code.Algebra.Lattice.Structures.du_'8744''45'complement'737'_3542
       (coe
          MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
          (coe v0))
@@ -692,11 +692,11 @@ d_'8744''45'cong_96 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_'8744''45'cong_96 v0
   = coe
-      MAlonzo.Code.Algebra.Lattice.Structures.d_'8744''45'cong_3098
+      MAlonzo.Code.Algebra.Lattice.Structures.d_'8744''45'cong_3334
       (coe
-         MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+         MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
          (coe
-            MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+            MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
             (coe
                MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                (coe v0))))
@@ -719,13 +719,13 @@ du_'8744''45'cong'691'_98 v0
               (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+             = MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
                  (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Lattice.Structures.du_'8744''45'cong'691'_3136
+            MAlonzo.Code.Algebra.Lattice.Structures.du_'8744''45'cong'691'_3372
             (coe
-               MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+               MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
                (coe v2))))
 -- Algebra.Function.B.∨-congˡ
 d_'8744''45'cong'737'_100 ::
@@ -746,13 +746,13 @@ du_'8744''45'cong'737'_100 v0
               (coe v0) in
     coe
       (let v2
-             = MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+             = MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
                  (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Lattice.Structures.du_'8744''45'cong'737'_3132
+            MAlonzo.Code.Algebra.Lattice.Structures.du_'8744''45'cong'737'_3368
             (coe
-               MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+               MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
                (coe v2))))
 -- Algebra.Function.B.∨-distrib-∧
 d_'8744''45'distrib'45''8743'_102 ::
@@ -760,9 +760,9 @@ d_'8744''45'distrib'45''8743'_102 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_'8744''45'distrib'45''8743'_102 v0
   = coe
-      MAlonzo.Code.Algebra.Lattice.Structures.d_'8744''45'distrib'45''8743'_3160
+      MAlonzo.Code.Algebra.Lattice.Structures.d_'8744''45'distrib'45''8743'_3396
       (coe
-         MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+         MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
          (coe
             MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
             (coe v0)))
@@ -785,9 +785,9 @@ du_'8744''45'distrib'691''45''8743'_104 v0
               (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Lattice.Structures.du_'8744''45'distrib'691''45''8743'_3206
+         MAlonzo.Code.Algebra.Lattice.Structures.du_'8744''45'distrib'691''45''8743'_3442
          (coe
-            MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+            MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
             (coe v1)))
 -- Algebra.Function.B.∨-distribˡ-∧
 d_'8744''45'distrib'737''45''8743'_106 ::
@@ -808,9 +808,9 @@ du_'8744''45'distrib'737''45''8743'_106 v0
               (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Lattice.Structures.du_'8744''45'distrib'737''45''8743'_3204
+         MAlonzo.Code.Algebra.Lattice.Structures.du_'8744''45'distrib'737''45''8743'_3440
          (coe
-            MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+            MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
             (coe v1)))
 -- Algebra.Function.B.∨-rawMagma
 d_'8744''45'rawMagma_108 ::
@@ -952,14 +952,14 @@ d_isLattice''_154 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Algebra.Lattice.Bundles.T_BooleanAlgebra_698 ->
-  MAlonzo.Code.Algebra.Lattice.Structures.T_IsLattice_3070
+  MAlonzo.Code.Algebra.Lattice.Structures.T_IsLattice_3306
 d_isLattice''_154 ~v0 ~v1 ~v2 ~v3 v4 = du_isLattice''_154 v4
 du_isLattice''_154 ::
   MAlonzo.Code.Algebra.Lattice.Bundles.T_BooleanAlgebra_698 ->
-  MAlonzo.Code.Algebra.Lattice.Structures.T_IsLattice_3070
+  MAlonzo.Code.Algebra.Lattice.Structures.T_IsLattice_3306
 du_isLattice''_154 v0
   = coe
-      MAlonzo.Code.Algebra.Lattice.Structures.C_constructor_3140
+      MAlonzo.Code.Algebra.Lattice.Structures.C_constructor_3376
       (coe
          MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_62
          (coe
@@ -976,10 +976,10 @@ du_isLattice''_154 v0
       (coe
          (\ v1 v2 v3 ->
             coe
-              MAlonzo.Code.Algebra.Lattice.Structures.d_'8744''45'comm_3094
-              (MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+              MAlonzo.Code.Algebra.Lattice.Structures.d_'8744''45'comm_3330
+              (MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
                  (coe
-                    MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+                    MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
                     (coe
                        MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                        (coe v0))))
@@ -987,10 +987,10 @@ du_isLattice''_154 v0
       (coe
          (\ v1 v2 v3 v4 ->
             coe
-              MAlonzo.Code.Algebra.Lattice.Structures.d_'8744''45'assoc_3096
-              (MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+              MAlonzo.Code.Algebra.Lattice.Structures.d_'8744''45'assoc_3332
+              (MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
                  (coe
-                    MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+                    MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
                     (coe
                        MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                        (coe v0))))
@@ -998,10 +998,10 @@ du_isLattice''_154 v0
       (coe
          (\ v1 v2 v3 v4 v5 v6 v7 ->
             coe
-              MAlonzo.Code.Algebra.Lattice.Structures.d_'8744''45'cong_3098
-              (MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+              MAlonzo.Code.Algebra.Lattice.Structures.d_'8744''45'cong_3334
+              (MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
                  (coe
-                    MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+                    MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
                     (coe
                        MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                        (coe v0))))
@@ -1010,10 +1010,10 @@ du_isLattice''_154 v0
       (coe
          (\ v1 v2 v3 ->
             coe
-              MAlonzo.Code.Algebra.Lattice.Structures.d_'8743''45'comm_3100
-              (MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+              MAlonzo.Code.Algebra.Lattice.Structures.d_'8743''45'comm_3336
+              (MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
                  (coe
-                    MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+                    MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
                     (coe
                        MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                        (coe v0))))
@@ -1021,10 +1021,10 @@ du_isLattice''_154 v0
       (coe
          (\ v1 v2 v3 v4 ->
             coe
-              MAlonzo.Code.Algebra.Lattice.Structures.d_'8743''45'assoc_3102
-              (MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+              MAlonzo.Code.Algebra.Lattice.Structures.d_'8743''45'assoc_3338
+              (MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
                  (coe
-                    MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+                    MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
                     (coe
                        MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                        (coe v0))))
@@ -1032,10 +1032,10 @@ du_isLattice''_154 v0
       (coe
          (\ v1 v2 v3 v4 v5 v6 v7 ->
             coe
-              MAlonzo.Code.Algebra.Lattice.Structures.d_'8743''45'cong_3104
-              (MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+              MAlonzo.Code.Algebra.Lattice.Structures.d_'8743''45'cong_3340
+              (MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
                  (coe
-                    MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+                    MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
                     (coe
                        MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                        (coe v0))))
@@ -1047,11 +1047,11 @@ du_isLattice''_154 v0
             (\ v1 v2 v3 ->
                coe
                  MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-                 (MAlonzo.Code.Algebra.Lattice.Structures.d_absorptive_3106
+                 (MAlonzo.Code.Algebra.Lattice.Structures.d_absorptive_3342
                     (coe
-                       MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+                       MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
                        (coe
-                          MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+                          MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
                           (coe
                              MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                              (coe v0)))))
@@ -1060,11 +1060,11 @@ du_isLattice''_154 v0
             (\ v1 v2 v3 ->
                coe
                  MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
-                 (MAlonzo.Code.Algebra.Lattice.Structures.d_absorptive_3106
+                 (MAlonzo.Code.Algebra.Lattice.Structures.d_absorptive_3342
                     (coe
-                       MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3158
+                       MAlonzo.Code.Algebra.Lattice.Structures.d_isLattice_3394
                        (coe
-                          MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+                          MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
                           (coe
                              MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                              (coe v0)))))
@@ -1076,15 +1076,15 @@ d_isDistributiveLattice''_208 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Algebra.Lattice.Bundles.T_BooleanAlgebra_698 ->
-  MAlonzo.Code.Algebra.Lattice.Structures.T_IsDistributiveLattice_3146
+  MAlonzo.Code.Algebra.Lattice.Structures.T_IsDistributiveLattice_3382
 d_isDistributiveLattice''_208 ~v0 ~v1 ~v2 ~v3 v4
   = du_isDistributiveLattice''_208 v4
 du_isDistributiveLattice''_208 ::
   MAlonzo.Code.Algebra.Lattice.Bundles.T_BooleanAlgebra_698 ->
-  MAlonzo.Code.Algebra.Lattice.Structures.T_IsDistributiveLattice_3146
+  MAlonzo.Code.Algebra.Lattice.Structures.T_IsDistributiveLattice_3382
 du_isDistributiveLattice''_208 v0
   = coe
-      MAlonzo.Code.Algebra.Lattice.Structures.C_constructor_3212
+      MAlonzo.Code.Algebra.Lattice.Structures.C_constructor_3448
       (coe du_isLattice''_154 (coe v0))
       (coe
          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -1092,9 +1092,9 @@ du_isDistributiveLattice''_208 v0
             (\ v1 v2 v3 v4 ->
                coe
                  MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-                 (MAlonzo.Code.Algebra.Lattice.Structures.d_'8744''45'distrib'45''8743'_3160
+                 (MAlonzo.Code.Algebra.Lattice.Structures.d_'8744''45'distrib'45''8743'_3396
                     (coe
-                       MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+                       MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
                        (coe
                           MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                           (coe v0))))
@@ -1103,9 +1103,9 @@ du_isDistributiveLattice''_208 v0
             (\ v1 v2 v3 v4 ->
                coe
                  MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
-                 (MAlonzo.Code.Algebra.Lattice.Structures.d_'8744''45'distrib'45''8743'_3160
+                 (MAlonzo.Code.Algebra.Lattice.Structures.d_'8744''45'distrib'45''8743'_3396
                     (coe
-                       MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+                       MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
                        (coe
                           MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                           (coe v0))))
@@ -1116,9 +1116,9 @@ du_isDistributiveLattice''_208 v0
             (\ v1 v2 v3 v4 ->
                coe
                  MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-                 (MAlonzo.Code.Algebra.Lattice.Structures.d_'8743''45'distrib'45''8744'_3162
+                 (MAlonzo.Code.Algebra.Lattice.Structures.d_'8743''45'distrib'45''8744'_3398
                     (coe
-                       MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+                       MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
                        (coe
                           MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                           (coe v0))))
@@ -1127,9 +1127,9 @@ du_isDistributiveLattice''_208 v0
             (\ v1 v2 v3 v4 ->
                coe
                  MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
-                 (MAlonzo.Code.Algebra.Lattice.Structures.d_'8743''45'distrib'45''8744'_3162
+                 (MAlonzo.Code.Algebra.Lattice.Structures.d_'8743''45'distrib'45''8744'_3398
                     (coe
-                       MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3244
+                       MAlonzo.Code.Algebra.Lattice.Structures.d_isDistributiveLattice_3480
                        (coe
                           MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                           (coe v0))))
@@ -1141,15 +1141,15 @@ d_isBooleanAlgebra_242 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Algebra.Lattice.Bundles.T_BooleanAlgebra_698 ->
-  MAlonzo.Code.Algebra.Lattice.Structures.T_IsBooleanAlgebra_3224
+  MAlonzo.Code.Algebra.Lattice.Structures.T_IsBooleanAlgebra_3460
 d_isBooleanAlgebra_242 ~v0 ~v1 ~v2 ~v3 v4
   = du_isBooleanAlgebra_242 v4
 du_isBooleanAlgebra_242 ::
   MAlonzo.Code.Algebra.Lattice.Bundles.T_BooleanAlgebra_698 ->
-  MAlonzo.Code.Algebra.Lattice.Structures.T_IsBooleanAlgebra_3224
+  MAlonzo.Code.Algebra.Lattice.Structures.T_IsBooleanAlgebra_3460
 du_isBooleanAlgebra_242 v0
   = coe
-      MAlonzo.Code.Algebra.Lattice.Structures.C_constructor_3314
+      MAlonzo.Code.Algebra.Lattice.Structures.C_constructor_3550
       (coe du_isDistributiveLattice''_208 (coe v0))
       (coe
          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -1157,7 +1157,7 @@ du_isBooleanAlgebra_242 v0
             (\ v1 v2 ->
                coe
                  MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-                 (MAlonzo.Code.Algebra.Lattice.Structures.d_'8744''45'complement_3246
+                 (MAlonzo.Code.Algebra.Lattice.Structures.d_'8744''45'complement_3482
                     (coe
                        MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                        (coe v0)))
@@ -1166,7 +1166,7 @@ du_isBooleanAlgebra_242 v0
             (\ v1 v2 ->
                coe
                  MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
-                 (MAlonzo.Code.Algebra.Lattice.Structures.d_'8744''45'complement_3246
+                 (MAlonzo.Code.Algebra.Lattice.Structures.d_'8744''45'complement_3482
                     (coe
                        MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                        (coe v0)))
@@ -1177,7 +1177,7 @@ du_isBooleanAlgebra_242 v0
             (\ v1 v2 ->
                coe
                  MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-                 (MAlonzo.Code.Algebra.Lattice.Structures.d_'8743''45'complement_3248
+                 (MAlonzo.Code.Algebra.Lattice.Structures.d_'8743''45'complement_3484
                     (coe
                        MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                        (coe v0)))
@@ -1186,7 +1186,7 @@ du_isBooleanAlgebra_242 v0
             (\ v1 v2 ->
                coe
                  MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
-                 (MAlonzo.Code.Algebra.Lattice.Structures.d_'8743''45'complement_3248
+                 (MAlonzo.Code.Algebra.Lattice.Structures.d_'8743''45'complement_3484
                     (coe
                        MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                        (coe v0)))
@@ -1194,7 +1194,7 @@ du_isBooleanAlgebra_242 v0
       (coe
          (\ v1 v2 v3 v4 ->
             coe
-              MAlonzo.Code.Algebra.Lattice.Structures.d_'172''45'cong_3250
+              MAlonzo.Code.Algebra.Lattice.Structures.d_'172''45'cong_3486
               (MAlonzo.Code.Algebra.Lattice.Bundles.d_isBooleanAlgebra_734
                  (coe v0))
               (coe v1 v4) (coe v2 v4) (coe v3 v4)))

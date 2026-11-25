@@ -79,288 +79,291 @@ d_Associative_30 = erased
 -- Data.Integer.GCD.Algebra.Cancellative
 d_Cancellative_32 :: (Integer -> Integer -> Integer) -> ()
 d_Cancellative_32 = erased
+-- Data.Integer.GCD.Algebra.Central
+d_Central_34 :: (Integer -> Integer -> Integer) -> Integer -> ()
+d_Central_34 = erased
 -- Data.Integer.GCD.Algebra.Commutative
-d_Commutative_34 :: (Integer -> Integer -> Integer) -> ()
-d_Commutative_34 = erased
+d_Commutative_36 :: (Integer -> Integer -> Integer) -> ()
+d_Commutative_36 = erased
 -- Data.Integer.GCD.Algebra.Congruent₁
-d_Congruent'8321'_36 :: (Integer -> Integer) -> ()
-d_Congruent'8321'_36 = erased
+d_Congruent'8321'_38 :: (Integer -> Integer) -> ()
+d_Congruent'8321'_38 = erased
 -- Data.Integer.GCD.Algebra.Congruent₂
-d_Congruent'8322'_38 :: (Integer -> Integer -> Integer) -> ()
-d_Congruent'8322'_38 = erased
+d_Congruent'8322'_40 :: (Integer -> Integer -> Integer) -> ()
+d_Congruent'8322'_40 = erased
 -- Data.Integer.GCD.Algebra.Conical
-d_Conical_40 :: Integer -> (Integer -> Integer -> Integer) -> ()
-d_Conical_40 = erased
+d_Conical_42 :: Integer -> (Integer -> Integer -> Integer) -> ()
+d_Conical_42 = erased
 -- Data.Integer.GCD.Algebra.Flexible
-d_Flexible_42 :: (Integer -> Integer -> Integer) -> ()
-d_Flexible_42 = erased
+d_Flexible_44 :: (Integer -> Integer -> Integer) -> ()
+d_Flexible_44 = erased
 -- Data.Integer.GCD.Algebra.Idempotent
-d_Idempotent_44 :: (Integer -> Integer -> Integer) -> ()
-d_Idempotent_44 = erased
+d_Idempotent_46 :: (Integer -> Integer -> Integer) -> ()
+d_Idempotent_46 = erased
 -- Data.Integer.GCD.Algebra.IdempotentFun
-d_IdempotentFun_46 :: (Integer -> Integer) -> ()
-d_IdempotentFun_46 = erased
+d_IdempotentFun_48 :: (Integer -> Integer) -> ()
+d_IdempotentFun_48 = erased
 -- Data.Integer.GCD.Algebra.Identical
-d_Identical_48 :: (Integer -> Integer -> Integer) -> ()
-d_Identical_48 = erased
+d_Identical_50 :: (Integer -> Integer -> Integer) -> ()
+d_Identical_50 = erased
 -- Data.Integer.GCD.Algebra.Identity
-d_Identity_50 :: Integer -> (Integer -> Integer -> Integer) -> ()
-d_Identity_50 = erased
+d_Identity_52 :: Integer -> (Integer -> Integer -> Integer) -> ()
+d_Identity_52 = erased
 -- Data.Integer.GCD.Algebra.Interchangable
-d_Interchangable_52 ::
+d_Interchangable_54 ::
   (Integer -> Integer -> Integer) ->
   (Integer -> Integer -> Integer) -> ()
-d_Interchangable_52 = erased
+d_Interchangable_54 = erased
 -- Data.Integer.GCD.Algebra.Inverse
-d_Inverse_54 ::
+d_Inverse_56 ::
   Integer ->
   (Integer -> Integer) -> (Integer -> Integer -> Integer) -> ()
-d_Inverse_54 = erased
+d_Inverse_56 = erased
 -- Data.Integer.GCD.Algebra.Invertible
-d_Invertible_56 ::
+d_Invertible_58 ::
   Integer -> (Integer -> Integer -> Integer) -> Integer -> ()
-d_Invertible_56 = erased
+d_Invertible_58 = erased
 -- Data.Integer.GCD.Algebra.Involutive
-d_Involutive_58 :: (Integer -> Integer) -> ()
-d_Involutive_58 = erased
+d_Involutive_60 :: (Integer -> Integer) -> ()
+d_Involutive_60 = erased
 -- Data.Integer.GCD.Algebra.LeftAlternative
-d_LeftAlternative_60 :: (Integer -> Integer -> Integer) -> ()
-d_LeftAlternative_60 = erased
+d_LeftAlternative_62 :: (Integer -> Integer -> Integer) -> ()
+d_LeftAlternative_62 = erased
 -- Data.Integer.GCD.Algebra.LeftBol
-d_LeftBol_62 :: (Integer -> Integer -> Integer) -> ()
-d_LeftBol_62 = erased
+d_LeftBol_64 :: (Integer -> Integer -> Integer) -> ()
+d_LeftBol_64 = erased
 -- Data.Integer.GCD.Algebra.LeftCancellative
-d_LeftCancellative_64 :: (Integer -> Integer -> Integer) -> ()
-d_LeftCancellative_64 = erased
+d_LeftCancellative_66 :: (Integer -> Integer -> Integer) -> ()
+d_LeftCancellative_66 = erased
 -- Data.Integer.GCD.Algebra.LeftCongruent
-d_LeftCongruent_66 :: (Integer -> Integer -> Integer) -> ()
-d_LeftCongruent_66 = erased
+d_LeftCongruent_68 :: (Integer -> Integer -> Integer) -> ()
+d_LeftCongruent_68 = erased
 -- Data.Integer.GCD.Algebra.LeftConical
-d_LeftConical_68 ::
+d_LeftConical_70 ::
   Integer -> (Integer -> Integer -> Integer) -> ()
-d_LeftConical_68 = erased
+d_LeftConical_70 = erased
 -- Data.Integer.GCD.Algebra.LeftDivides
-d_LeftDivides_70 ::
+d_LeftDivides_72 ::
   (Integer -> Integer -> Integer) ->
   (Integer -> Integer -> Integer) -> ()
-d_LeftDivides_70 = erased
+d_LeftDivides_72 = erased
 -- Data.Integer.GCD.Algebra.LeftDividesʳ
-d_LeftDivides'691'_72 ::
+d_LeftDivides'691'_74 ::
   (Integer -> Integer -> Integer) ->
   (Integer -> Integer -> Integer) -> ()
-d_LeftDivides'691'_72 = erased
+d_LeftDivides'691'_74 = erased
 -- Data.Integer.GCD.Algebra.LeftDividesˡ
-d_LeftDivides'737'_74 ::
+d_LeftDivides'737'_76 ::
   (Integer -> Integer -> Integer) ->
   (Integer -> Integer -> Integer) -> ()
-d_LeftDivides'737'_74 = erased
+d_LeftDivides'737'_76 = erased
 -- Data.Integer.GCD.Algebra.LeftIdentity
-d_LeftIdentity_76 ::
+d_LeftIdentity_78 ::
   Integer -> (Integer -> Integer -> Integer) -> ()
-d_LeftIdentity_76 = erased
+d_LeftIdentity_78 = erased
 -- Data.Integer.GCD.Algebra.LeftInverse
-d_LeftInverse_78 ::
+d_LeftInverse_80 ::
   Integer ->
   (Integer -> Integer) -> (Integer -> Integer -> Integer) -> ()
-d_LeftInverse_78 = erased
+d_LeftInverse_80 = erased
 -- Data.Integer.GCD.Algebra.LeftInvertible
-d_LeftInvertible_80 ::
+d_LeftInvertible_82 ::
   Integer -> (Integer -> Integer -> Integer) -> Integer -> ()
-d_LeftInvertible_80 = erased
+d_LeftInvertible_82 = erased
 -- Data.Integer.GCD.Algebra.LeftSemimedial
-d_LeftSemimedial_82 :: (Integer -> Integer -> Integer) -> ()
-d_LeftSemimedial_82 = erased
+d_LeftSemimedial_84 :: (Integer -> Integer -> Integer) -> ()
+d_LeftSemimedial_84 = erased
 -- Data.Integer.GCD.Algebra.LeftZero
-d_LeftZero_84 :: Integer -> (Integer -> Integer -> Integer) -> ()
-d_LeftZero_84 = erased
+d_LeftZero_86 :: Integer -> (Integer -> Integer -> Integer) -> ()
+d_LeftZero_86 = erased
 -- Data.Integer.GCD.Algebra.Medial
-d_Medial_86 :: (Integer -> Integer -> Integer) -> ()
-d_Medial_86 = erased
+d_Medial_88 :: (Integer -> Integer -> Integer) -> ()
+d_Medial_88 = erased
 -- Data.Integer.GCD.Algebra.MiddleBol
-d_MiddleBol_88 ::
+d_MiddleBol_90 ::
   (Integer -> Integer -> Integer) ->
   (Integer -> Integer -> Integer) ->
   (Integer -> Integer -> Integer) -> ()
-d_MiddleBol_88 = erased
+d_MiddleBol_90 = erased
 -- Data.Integer.GCD.Algebra.RightAlternative
-d_RightAlternative_90 :: (Integer -> Integer -> Integer) -> ()
-d_RightAlternative_90 = erased
+d_RightAlternative_92 :: (Integer -> Integer -> Integer) -> ()
+d_RightAlternative_92 = erased
 -- Data.Integer.GCD.Algebra.RightBol
-d_RightBol_92 :: (Integer -> Integer -> Integer) -> ()
-d_RightBol_92 = erased
+d_RightBol_94 :: (Integer -> Integer -> Integer) -> ()
+d_RightBol_94 = erased
 -- Data.Integer.GCD.Algebra.RightCancellative
-d_RightCancellative_94 :: (Integer -> Integer -> Integer) -> ()
-d_RightCancellative_94 = erased
+d_RightCancellative_96 :: (Integer -> Integer -> Integer) -> ()
+d_RightCancellative_96 = erased
 -- Data.Integer.GCD.Algebra.RightCongruent
-d_RightCongruent_96 :: (Integer -> Integer -> Integer) -> ()
-d_RightCongruent_96 = erased
+d_RightCongruent_98 :: (Integer -> Integer -> Integer) -> ()
+d_RightCongruent_98 = erased
 -- Data.Integer.GCD.Algebra.RightConical
-d_RightConical_98 ::
+d_RightConical_100 ::
   Integer -> (Integer -> Integer -> Integer) -> ()
-d_RightConical_98 = erased
+d_RightConical_100 = erased
 -- Data.Integer.GCD.Algebra.RightDivides
-d_RightDivides_100 ::
+d_RightDivides_102 ::
   (Integer -> Integer -> Integer) ->
   (Integer -> Integer -> Integer) -> ()
-d_RightDivides_100 = erased
+d_RightDivides_102 = erased
 -- Data.Integer.GCD.Algebra.RightDividesʳ
-d_RightDivides'691'_102 ::
+d_RightDivides'691'_104 ::
   (Integer -> Integer -> Integer) ->
   (Integer -> Integer -> Integer) -> ()
-d_RightDivides'691'_102 = erased
+d_RightDivides'691'_104 = erased
 -- Data.Integer.GCD.Algebra.RightDividesˡ
-d_RightDivides'737'_104 ::
+d_RightDivides'737'_106 ::
   (Integer -> Integer -> Integer) ->
   (Integer -> Integer -> Integer) -> ()
-d_RightDivides'737'_104 = erased
+d_RightDivides'737'_106 = erased
 -- Data.Integer.GCD.Algebra.RightIdentity
-d_RightIdentity_106 ::
+d_RightIdentity_108 ::
   Integer -> (Integer -> Integer -> Integer) -> ()
-d_RightIdentity_106 = erased
+d_RightIdentity_108 = erased
 -- Data.Integer.GCD.Algebra.RightInverse
-d_RightInverse_108 ::
+d_RightInverse_110 ::
   Integer ->
   (Integer -> Integer) -> (Integer -> Integer -> Integer) -> ()
-d_RightInverse_108 = erased
+d_RightInverse_110 = erased
 -- Data.Integer.GCD.Algebra.RightInvertible
-d_RightInvertible_110 ::
+d_RightInvertible_112 ::
   Integer -> (Integer -> Integer -> Integer) -> Integer -> ()
-d_RightInvertible_110 = erased
+d_RightInvertible_112 = erased
 -- Data.Integer.GCD.Algebra.RightSemimedial
-d_RightSemimedial_112 :: (Integer -> Integer -> Integer) -> ()
-d_RightSemimedial_112 = erased
+d_RightSemimedial_114 :: (Integer -> Integer -> Integer) -> ()
+d_RightSemimedial_114 = erased
 -- Data.Integer.GCD.Algebra.RightZero
-d_RightZero_114 :: Integer -> (Integer -> Integer -> Integer) -> ()
-d_RightZero_114 = erased
+d_RightZero_116 :: Integer -> (Integer -> Integer -> Integer) -> ()
+d_RightZero_116 = erased
 -- Data.Integer.GCD.Algebra.Selective
-d_Selective_116 :: (Integer -> Integer -> Integer) -> ()
-d_Selective_116 = erased
+d_Selective_118 :: (Integer -> Integer -> Integer) -> ()
+d_Selective_118 = erased
 -- Data.Integer.GCD.Algebra.SelfInverse
-d_SelfInverse_118 :: (Integer -> Integer) -> ()
-d_SelfInverse_118 = erased
+d_SelfInverse_120 :: (Integer -> Integer) -> ()
+d_SelfInverse_120 = erased
 -- Data.Integer.GCD.Algebra.Semimedial
-d_Semimedial_120 :: (Integer -> Integer -> Integer) -> ()
-d_Semimedial_120 = erased
+d_Semimedial_122 :: (Integer -> Integer -> Integer) -> ()
+d_Semimedial_122 = erased
 -- Data.Integer.GCD.Algebra.StarDestructive
-d_StarDestructive_122 ::
+d_StarDestructive_124 ::
   (Integer -> Integer -> Integer) ->
   (Integer -> Integer -> Integer) -> (Integer -> Integer) -> ()
-d_StarDestructive_122 = erased
+d_StarDestructive_124 = erased
 -- Data.Integer.GCD.Algebra.StarExpansive
-d_StarExpansive_124 ::
+d_StarExpansive_126 ::
   Integer ->
   (Integer -> Integer -> Integer) ->
   (Integer -> Integer -> Integer) -> (Integer -> Integer) -> ()
-d_StarExpansive_124 = erased
+d_StarExpansive_126 = erased
 -- Data.Integer.GCD.Algebra.StarLeftDestructive
-d_StarLeftDestructive_126 ::
+d_StarLeftDestructive_128 ::
   (Integer -> Integer -> Integer) ->
   (Integer -> Integer -> Integer) -> (Integer -> Integer) -> ()
-d_StarLeftDestructive_126 = erased
+d_StarLeftDestructive_128 = erased
 -- Data.Integer.GCD.Algebra.StarLeftExpansive
-d_StarLeftExpansive_128 ::
+d_StarLeftExpansive_130 ::
   Integer ->
   (Integer -> Integer -> Integer) ->
   (Integer -> Integer -> Integer) -> (Integer -> Integer) -> ()
-d_StarLeftExpansive_128 = erased
+d_StarLeftExpansive_130 = erased
 -- Data.Integer.GCD.Algebra.StarRightDestructive
-d_StarRightDestructive_130 ::
+d_StarRightDestructive_132 ::
   (Integer -> Integer -> Integer) ->
   (Integer -> Integer -> Integer) -> (Integer -> Integer) -> ()
-d_StarRightDestructive_130 = erased
+d_StarRightDestructive_132 = erased
 -- Data.Integer.GCD.Algebra.StarRightExpansive
-d_StarRightExpansive_132 ::
+d_StarRightExpansive_134 ::
   Integer ->
   (Integer -> Integer -> Integer) ->
   (Integer -> Integer -> Integer) -> (Integer -> Integer) -> ()
-d_StarRightExpansive_132 = erased
+d_StarRightExpansive_134 = erased
 -- Data.Integer.GCD.Algebra.Zero
-d_Zero_134 :: Integer -> (Integer -> Integer -> Integer) -> ()
-d_Zero_134 = erased
+d_Zero_136 :: Integer -> (Integer -> Integer -> Integer) -> ()
+d_Zero_136 = erased
 -- Data.Integer.GCD.gcd
-d_gcd_136 :: Integer -> Integer -> Integer
-d_gcd_136 v0 v1
+d_gcd_138 :: Integer -> Integer -> Integer
+d_gcd_138 v0 v1
   = coe
-      MAlonzo.Code.Data.Nat.GCD.d_gcd_152
+      MAlonzo.Code.Data.Nat.GCD.d_gcd_154
       (coe MAlonzo.Code.Data.Integer.Base.d_'8739'_'8739'_18 (coe v0))
       (coe MAlonzo.Code.Data.Integer.Base.d_'8739'_'8739'_18 (coe v1))
 -- Data.Integer.GCD.gcd[i,j]∣i
-d_gcd'91'i'44'j'93''8739'i_146 ::
+d_gcd'91'i'44'j'93''8739'i_148 ::
   Integer ->
   Integer -> MAlonzo.Code.Data.Nat.Divisibility.Core.T__'8739'__20
-d_gcd'91'i'44'j'93''8739'i_146 v0 v1
+d_gcd'91'i'44'j'93''8739'i_148 v0 v1
   = coe
-      MAlonzo.Code.Data.Nat.GCD.d_gcd'91'm'44'n'93''8739'm_248
+      MAlonzo.Code.Data.Nat.GCD.d_gcd'91'm'44'n'93''8739'm_250
       (coe MAlonzo.Code.Data.Integer.Base.d_'8739'_'8739'_18 (coe v0))
       (coe MAlonzo.Code.Data.Integer.Base.d_'8739'_'8739'_18 (coe v1))
 -- Data.Integer.GCD.gcd[i,j]∣j
-d_gcd'91'i'44'j'93''8739'j_156 ::
+d_gcd'91'i'44'j'93''8739'j_158 ::
   Integer ->
   Integer -> MAlonzo.Code.Data.Nat.Divisibility.Core.T__'8739'__20
-d_gcd'91'i'44'j'93''8739'j_156 v0 v1
+d_gcd'91'i'44'j'93''8739'j_158 v0 v1
   = coe
-      MAlonzo.Code.Data.Nat.GCD.d_gcd'91'm'44'n'93''8739'n_278
+      MAlonzo.Code.Data.Nat.GCD.d_gcd'91'm'44'n'93''8739'n_280
       (coe MAlonzo.Code.Data.Integer.Base.d_'8739'_'8739'_18 (coe v0))
       (coe MAlonzo.Code.Data.Integer.Base.d_'8739'_'8739'_18 (coe v1))
 -- Data.Integer.GCD.gcd-greatest
-d_gcd'45'greatest_168 ::
+d_gcd'45'greatest_170 ::
   Integer ->
   Integer ->
   Integer ->
   MAlonzo.Code.Data.Nat.Divisibility.Core.T__'8739'__20 ->
   MAlonzo.Code.Data.Nat.Divisibility.Core.T__'8739'__20 ->
   MAlonzo.Code.Data.Nat.Divisibility.Core.T__'8739'__20
-d_gcd'45'greatest_168 v0 v1 v2 v3 v4
+d_gcd'45'greatest_170 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.Data.Nat.GCD.d_gcd'45'greatest_310
+      MAlonzo.Code.Data.Nat.GCD.d_gcd'45'greatest_312
       (coe
-         MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+         MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
          (\ v5 v6 -> v6) MAlonzo.Code.Data.Integer.Base.d_'8739'_'8739'_18
          v2 v0)
       (coe MAlonzo.Code.Data.Integer.Base.d_'8739'_'8739'_18 (coe v1))
       (coe
-         MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+         MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
          MAlonzo.Code.Data.Integer.Base.d_'8739'_'8739'_18 (\ v5 v6 -> v5)
-         v2 (d_gcd_136 (coe v0) (coe v1)))
+         v2 (d_gcd_138 (coe v0) (coe v1)))
       (coe v3) (coe v4)
 -- Data.Integer.GCD.gcd[0,0]≡0
-d_gcd'91'0'44'0'93''8801'0_174 ::
+d_gcd'91'0'44'0'93''8801'0_176 ::
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_gcd'91'0'44'0'93''8801'0_174 = erased
+d_gcd'91'0'44'0'93''8801'0_176 = erased
 -- Data.Integer.GCD.gcd[i,j]≡0⇒i≡0
-d_gcd'91'i'44'j'93''8801'0'8658'i'8801'0_180 ::
+d_gcd'91'i'44'j'93''8801'0'8658'i'8801'0_182 ::
   Integer ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_gcd'91'i'44'j'93''8801'0'8658'i'8801'0_180 = erased
+d_gcd'91'i'44'j'93''8801'0'8658'i'8801'0_182 = erased
 -- Data.Integer.GCD.gcd[i,j]≡0⇒j≡0
-d_gcd'91'i'44'j'93''8801'0'8658'j'8801'0_192 ::
+d_gcd'91'i'44'j'93''8801'0'8658'j'8801'0_194 ::
   Integer ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_gcd'91'i'44'j'93''8801'0'8658'j'8801'0_192 = erased
+d_gcd'91'i'44'j'93''8801'0'8658'j'8801'0_194 = erased
 -- Data.Integer.GCD.gcd-comm
-d_gcd'45'comm_198 ::
+d_gcd'45'comm_200 ::
   Integer ->
   Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_gcd'45'comm_198 = erased
+d_gcd'45'comm_200 = erased
 -- Data.Integer.GCD.gcd-assoc
-d_gcd'45'assoc_204 ::
+d_gcd'45'assoc_206 ::
   Integer ->
   Integer ->
   Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_gcd'45'assoc_204 = erased
+d_gcd'45'assoc_206 = erased
 -- Data.Integer.GCD.gcd-zeroˡ
-d_gcd'45'zero'737'_212 ::
+d_gcd'45'zero'737'_214 ::
   Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_gcd'45'zero'737'_212 = erased
+d_gcd'45'zero'737'_214 = erased
 -- Data.Integer.GCD.gcd-zeroʳ
-d_gcd'45'zero'691'_216 ::
+d_gcd'45'zero'691'_218 ::
   Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_gcd'45'zero'691'_216 = erased
+d_gcd'45'zero'691'_218 = erased
 -- Data.Integer.GCD.gcd-zero
-d_gcd'45'zero_220 :: MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_gcd'45'zero_220
+d_gcd'45'zero_222 :: MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_gcd'45'zero_222
   = coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 erased erased

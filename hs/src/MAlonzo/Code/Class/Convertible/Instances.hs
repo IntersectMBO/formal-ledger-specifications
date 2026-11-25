@@ -47,7 +47,7 @@ du_Convertible'45'Maybe_16 ::
   MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 du_Convertible'45'Maybe_16 v0
   = coe
-      MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_60
+      MAlonzo.Code.Class.Convertible.Core.du_Functor'8658'Convertible_62
       (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
       (coe v0)
 -- Class.Convertible.Instances.Convertible-×
@@ -67,8 +67,8 @@ du_Convertible'45''215'_18 ::
   MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 du_Convertible'45''215'_18 v0 v1
   = coe
-      MAlonzo.Code.Class.Convertible.Core.du_Bifunctor'8658'Convertible_66
-      (coe MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45''215'_156)
+      MAlonzo.Code.Class.Convertible.Core.du_Bifunctor'8658'Convertible_72
+      (coe MAlonzo.Code.Class.Bifunctor.d_Bifunctor'45''215'_160)
       (coe v0) (coe v1)
 -- Class.Convertible.Instances.Convertible-⊎
 d_Convertible'45''8846'_20 ::
@@ -87,8 +87,8 @@ du_Convertible'45''8846'_20 ::
   MAlonzo.Code.Class.Convertible.Core.T_Convertible_10
 du_Convertible'45''8846'_20 v0 v1
   = coe
-      MAlonzo.Code.Class.Convertible.Core.du_Bifunctor'8658'Convertible_66
-      (coe MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45''8846'_162)
+      MAlonzo.Code.Class.Convertible.Core.du_Bifunctor'8658'Convertible_72
+      (coe MAlonzo.Code.Class.Bifunctor.d_Bifunctor'45''8846'_166)
       (coe v0) (coe v1)
 -- Class.Convertible.Instances.Convertible-List
 d_Convertible'45'List_22 ::
@@ -104,11 +104,11 @@ du_Convertible'45'List_22 v0
   = coe
       MAlonzo.Code.Class.Convertible.Core.C_constructor_24
       (coe
-         MAlonzo.Code.Class.Functor.Core.du_fmap_22
+         MAlonzo.Code.Class.Functor.Core.du_fmap_24
          MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
          () erased (MAlonzo.Code.Class.Convertible.Core.d_to_20 (coe v0)))
       (coe
-         MAlonzo.Code.Class.Functor.Core.du_fmap_22
+         MAlonzo.Code.Class.Functor.Core.du_fmap_24
          MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
          () erased (MAlonzo.Code.Class.Convertible.Core.d_from_22 (coe v0)))
 -- Class.Convertible.Instances.Convertible-Fun

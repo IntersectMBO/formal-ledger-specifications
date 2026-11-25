@@ -31,13 +31,13 @@ d_addInt_8 :: MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_10
 d_addInt_8
   = coe
       MAlonzo.Code.Class.HasAdd.Core.C_constructor_18
-      (coe MAlonzo.Code.Data.Integer.Base.d__'43'__284)
+      (coe MAlonzo.Code.Data.Integer.Base.d__'43'__302)
 -- Class.HasAdd.Instances.addRat
 d_addRat_10 :: MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_10
 d_addRat_10
   = coe
       MAlonzo.Code.Class.HasAdd.Core.C_constructor_18
-      (coe MAlonzo.Code.Data.Rational.Base.d__'43'__270)
+      (coe MAlonzo.Code.Data.Rational.Base.d__'43'__276)
 -- Class.HasAdd.Instances.addString
 d_addString_12 :: MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_10
 d_addString_12

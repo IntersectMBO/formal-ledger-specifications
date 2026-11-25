@@ -127,26 +127,26 @@ du_SemigroupLaws'8801''45'Maybe_52 ::
   MAlonzo.Code.Class.Semigroup.Core.T_SemigroupLaws_42
 du_SemigroupLaws'8801''45'Maybe_52
   = coe
-      MAlonzo.Code.Class.Semigroup.Core.C_constructor_330 erased erased
+      MAlonzo.Code.Class.Semigroup.Core.C_constructor_334 erased erased
 -- Class.Semigroup.Instances._._.SemigroupLaws-Maybe
 d_SemigroupLaws'45'Maybe_96 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Class.Semigroup.Core.T_Semigroup_10 ->
   MAlonzo.Code.Class.Setoid.Core.T_ISetoid_10 ->
-  MAlonzo.Code.Class.Setoid.Core.T_SetoidLaws_304 ->
+  MAlonzo.Code.Class.Setoid.Core.T_SetoidLaws_308 ->
   MAlonzo.Code.Class.Semigroup.Core.T_SemigroupLaws_42 ->
   MAlonzo.Code.Class.Semigroup.Core.T_SemigroupLaws_42
 d_SemigroupLaws'45'Maybe_96 ~v0 ~v1 v2 ~v3 v4 v5
   = du_SemigroupLaws'45'Maybe_96 v2 v4 v5
 du_SemigroupLaws'45'Maybe_96 ::
   MAlonzo.Code.Class.Semigroup.Core.T_Semigroup_10 ->
-  MAlonzo.Code.Class.Setoid.Core.T_SetoidLaws_304 ->
+  MAlonzo.Code.Class.Setoid.Core.T_SetoidLaws_308 ->
   MAlonzo.Code.Class.Semigroup.Core.T_SemigroupLaws_42 ->
   MAlonzo.Code.Class.Semigroup.Core.T_SemigroupLaws_42
 du_SemigroupLaws'45'Maybe_96 v0 v1 v2
   = coe
-      MAlonzo.Code.Class.Semigroup.Core.C_constructor_330
+      MAlonzo.Code.Class.Semigroup.Core.C_constructor_334
       (coe
          (\ v3 v4 ->
             case coe v3 of
@@ -154,18 +154,18 @@ du_SemigroupLaws'45'Maybe_96 v0 v1 v2
                 -> case coe v4 of
                      MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v6
                        -> coe
-                            MAlonzo.Code.Class.Semigroup.Core.d_'9671''45'comm_312 v2 v5 v6
+                            MAlonzo.Code.Class.Semigroup.Core.d_'9671''45'comm_316 v2 v5 v6
                      MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
                        -> coe
                             MAlonzo.Code.Relation.Binary.Structures.d_refl_36
-                            (MAlonzo.Code.Class.Setoid.Core.d_isEquivalence_312 (coe v1)) v5
+                            (MAlonzo.Code.Class.Setoid.Core.d_isEquivalence_316 (coe v1)) v5
                      _ -> MAlonzo.RTE.mazUnreachableError
               MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
                 -> case coe v4 of
                      MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v5
                        -> coe
                             MAlonzo.Code.Relation.Binary.Structures.d_refl_36
-                            (MAlonzo.Code.Class.Setoid.Core.d_isEquivalence_312 (coe v1)) v5
+                            (MAlonzo.Code.Class.Setoid.Core.d_isEquivalence_316 (coe v1)) v5
                      MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
                        -> coe
                             MAlonzo.Code.Level.C_lift_20
@@ -181,12 +181,12 @@ du_SemigroupLaws'45'Maybe_96 v0 v1 v2
                        -> case coe v5 of
                             MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v8
                               -> coe
-                                   MAlonzo.Code.Class.Semigroup.Core.d_'9671''45'assoc'691'_314 v2
+                                   MAlonzo.Code.Class.Semigroup.Core.d_'9671''45'assoc'691'_318 v2
                                    v6 v7 v8
                             MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
                               -> coe
                                    MAlonzo.Code.Relation.Binary.Structures.d_refl_36
-                                   (MAlonzo.Code.Class.Setoid.Core.d_isEquivalence_312 (coe v1))
+                                   (MAlonzo.Code.Class.Setoid.Core.d_isEquivalence_316 (coe v1))
                                    (coe MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16 v0 v6 v7)
                             _ -> MAlonzo.RTE.mazUnreachableError
                      MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
@@ -199,12 +199,12 @@ du_SemigroupLaws'45'Maybe_96 v0 v1 v2
                                  coe
                                    (coe
                                       MAlonzo.Code.Relation.Binary.Structures.d_refl_36
-                                      (MAlonzo.Code.Class.Setoid.Core.d_isEquivalence_312 (coe v1))
+                                      (MAlonzo.Code.Class.Setoid.Core.d_isEquivalence_316 (coe v1))
                                       v8)
                             MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
                               -> coe
                                    MAlonzo.Code.Relation.Binary.Structures.d_refl_36
-                                   (MAlonzo.Code.Class.Setoid.Core.d_isEquivalence_312 (coe v1)) v6
+                                   (MAlonzo.Code.Class.Setoid.Core.d_isEquivalence_316 (coe v1)) v6
                             _ -> MAlonzo.RTE.mazUnreachableError
                      _ -> MAlonzo.RTE.mazUnreachableError
               MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
@@ -219,19 +219,19 @@ du_SemigroupLaws'45'Maybe_96 v0 v1 v2
                                  coe
                                    (coe
                                       MAlonzo.Code.Relation.Binary.Structures.d_refl_36
-                                      (MAlonzo.Code.Class.Setoid.Core.d_isEquivalence_312 (coe v1))
+                                      (MAlonzo.Code.Class.Setoid.Core.d_isEquivalence_316 (coe v1))
                                       v8)
                             MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
                               -> coe
                                    MAlonzo.Code.Relation.Binary.Structures.d_refl_36
-                                   (MAlonzo.Code.Class.Setoid.Core.d_isEquivalence_312 (coe v1)) v6
+                                   (MAlonzo.Code.Class.Setoid.Core.d_isEquivalence_316 (coe v1)) v6
                             _ -> MAlonzo.RTE.mazUnreachableError
                      MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
                        -> case coe v5 of
                             MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v6
                               -> coe
                                    MAlonzo.Code.Relation.Binary.Structures.d_refl_36
-                                   (MAlonzo.Code.Class.Setoid.Core.d_isEquivalence_312 (coe v1)) v6
+                                   (MAlonzo.Code.Class.Setoid.Core.d_isEquivalence_316 (coe v1)) v6
                             MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
                               -> coe
                                    MAlonzo.Code.Level.C_lift_20
@@ -288,7 +288,7 @@ du_SemigroupLaws'45''215'_152 ::
   MAlonzo.Code.Class.Semigroup.Core.T_SemigroupLaws_42
 du_SemigroupLaws'45''215'_152
   = coe
-      MAlonzo.Code.Class.Semigroup.Core.C_constructor_330 erased erased
+      MAlonzo.Code.Class.Semigroup.Core.C_constructor_334 erased erased
 -- Class.Semigroup.Instances._._.p
 d_p_158 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -329,7 +329,7 @@ d_SemigroupLaws'45'ℕ'45''43'_206 ::
   MAlonzo.Code.Class.Semigroup.Core.T_SemigroupLaws_42
 d_SemigroupLaws'45'ℕ'45''43'_206
   = coe
-      MAlonzo.Code.Class.Semigroup.Core.C_constructor_330 erased erased
+      MAlonzo.Code.Class.Semigroup.Core.C_constructor_334 erased erased
 -- Class.Semigroup.Instances._.Semigroup-ℕ-*
 d_Semigroup'45'ℕ'45''42'_214 ::
   MAlonzo.Code.Class.Semigroup.Core.T_Semigroup_10
@@ -341,7 +341,7 @@ d_SemigroupLaws'45'ℕ'45''42'_218 ::
   MAlonzo.Code.Class.Semigroup.Core.T_SemigroupLaws_42
 d_SemigroupLaws'45'ℕ'45''42'_218
   = coe
-      MAlonzo.Code.Class.Semigroup.Core.C_constructor_330 erased erased
+      MAlonzo.Code.Class.Semigroup.Core.C_constructor_334 erased erased
 -- Class.Semigroup.Instances._.Semigroup-ℕᵇ-+
 d_Semigroup'45'ℕ'7495''45''43'_230 ::
   MAlonzo.Code.Class.Semigroup.Core.T_Semigroup_10
@@ -354,30 +354,30 @@ d_SemigroupLaws'45'ℕ'7495''45''43'_234 ::
   MAlonzo.Code.Class.Semigroup.Core.T_SemigroupLaws_42
 d_SemigroupLaws'45'ℕ'7495''45''43'_234
   = coe
-      MAlonzo.Code.Class.Semigroup.Core.C_constructor_330 erased erased
+      MAlonzo.Code.Class.Semigroup.Core.C_constructor_334 erased erased
 -- Class.Semigroup.Instances._.Semigroup-ℤ-+
 d_Semigroup'45'ℤ'45''43'_246 ::
   MAlonzo.Code.Class.Semigroup.Core.T_Semigroup_10
 d_Semigroup'45'ℤ'45''43'_246
   = coe
       MAlonzo.Code.Class.Semigroup.Core.C_constructor_20
-      (coe MAlonzo.Code.Data.Integer.Base.d__'43'__284)
+      (coe MAlonzo.Code.Data.Integer.Base.d__'43'__302)
 -- Class.Semigroup.Instances._.SemigroupLaws-ℤ-+
 d_SemigroupLaws'45'ℤ'45''43'_250 ::
   MAlonzo.Code.Class.Semigroup.Core.T_SemigroupLaws_42
 d_SemigroupLaws'45'ℤ'45''43'_250
   = coe
-      MAlonzo.Code.Class.Semigroup.Core.C_constructor_330 erased erased
+      MAlonzo.Code.Class.Semigroup.Core.C_constructor_334 erased erased
 -- Class.Semigroup.Instances._.Semigroup-ℤ-*
 d_Semigroup'45'ℤ'45''42'_258 ::
   MAlonzo.Code.Class.Semigroup.Core.T_Semigroup_10
 d_Semigroup'45'ℤ'45''42'_258
   = coe
       MAlonzo.Code.Class.Semigroup.Core.C_constructor_20
-      (coe MAlonzo.Code.Data.Integer.Base.d__'42'__316)
+      (coe MAlonzo.Code.Data.Integer.Base.d__'42'__334)
 -- Class.Semigroup.Instances._.SemigroupLaws-ℤ-*
 d_SemigroupLaws'45'ℤ'45''42'_262 ::
   MAlonzo.Code.Class.Semigroup.Core.T_SemigroupLaws_42
 d_SemigroupLaws'45'ℤ'45''42'_262
   = coe
-      MAlonzo.Code.Class.Semigroup.Core.C_constructor_330 erased erased
+      MAlonzo.Code.Class.Semigroup.Core.C_constructor_334 erased erased

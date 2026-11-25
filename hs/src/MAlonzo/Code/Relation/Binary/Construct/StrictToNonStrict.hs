@@ -128,8 +128,7 @@ du_as_54 v0 v1 v2 v3 v4
         -> case coe v4 of
              MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v6
                -> coe
-                    MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                    erased
+                    MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
              MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v6
                -> coe MAlonzo.Code.Relation.Binary.Structures.d_sym_38 v0 v2 v1 v6
              _ -> MAlonzo.RTE.mazUnreachableError
@@ -470,7 +469,7 @@ du_decidable_260 ::
   AgdaAny -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 du_decidable_260 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8846''45'dec__96
+      MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8846''63'__96
       (coe v1 v2 v3) (coe v0 v2 v3)
 -- Relation.Binary.Construct.StrictToNonStrict.decidable′
 d_decidable'8242'_270 ::

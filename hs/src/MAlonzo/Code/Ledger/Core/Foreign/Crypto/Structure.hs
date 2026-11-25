@@ -68,8 +68,8 @@ d_HSCryptoStructure_36 v0
       (coe
          MAlonzo.Code.Ledger.Core.Specification.Crypto.C_mkIsHashableSet_34
          (coe
-            MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-            (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+            MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+            (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
          (coe
             MAlonzo.Code.Class.Show.Core.C_mkShow_18
             (coe MAlonzo.Code.Data.Nat.Show.d_show_56))
@@ -81,8 +81,8 @@ d_HSCryptoStructure_36 v0
                   MAlonzo.Code.Ledger.Core.Foreign.Crypto.Base.d_hvkStoredHash_18
                     (coe v1)))))
       (coe
-         MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+         MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
       (coe
          MAlonzo.Code.Class.Show.Core.C_mkShow_18
          (coe MAlonzo.Code.Data.Nat.Show.d_show_56))

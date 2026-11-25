@@ -59,7 +59,7 @@ du_liftW_36 v0 v1
   = coe
       d_extend_32 v0 erased erased
       (coe
-         MAlonzo.Code.Function.Base.du__'8728''8242'__216 (coe v1)
+         MAlonzo.Code.Function.Base.du__'8728''8242'__230 (coe v1)
          (coe d_extract_30 v0 erased))
 -- Effect.Comonad.RawComonad._=>>_
 d__'61''62''62'__40 ::
@@ -90,7 +90,7 @@ du__'61''62''61'__42 ::
   (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
 du__'61''62''61'__42 v0 v1 v2
   = coe
-      MAlonzo.Code.Function.Base.du__'8728''8242'__216 (coe v2)
+      MAlonzo.Code.Function.Base.du__'8728''8242'__230 (coe v2)
       (coe d_extend_32 v0 erased erased v1)
 -- Effect.Comonad.RawComonad._<<=_
 d__'60''60''61'__48 ::

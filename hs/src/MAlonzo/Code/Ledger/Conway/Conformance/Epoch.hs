@@ -194,7 +194,7 @@ d_Δf_4526 v0
 -- Ledger.Conway.Conformance.Epoch._.RewardUpdate.Δf-nonpositive
 d_Δf'45'nonpositive_4528 ::
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_3016 ->
-  MAlonzo.Code.Data.Integer.Base.T__'8804'__26
+  MAlonzo.Code.Data.Integer.Base.T__'8804'__48
 d_Δf'45'nonpositive_4528 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δf'45'nonpositive_3048
@@ -216,7 +216,7 @@ d_Δt_4532 v0
 -- Ledger.Conway.Conformance.Epoch._.RewardUpdate.Δt-nonnegative
 d_Δt'45'nonnegative_4534 ::
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_3016 ->
-  MAlonzo.Code.Data.Integer.Base.T__'8804'__26
+  MAlonzo.Code.Data.Integer.Base.T__'8804'__48
 d_Δt'45'nonnegative_4534 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δt'45'nonnegative_3046

@@ -336,13 +336,13 @@ du_fold'45'cong'8621'_962 v0 v1 v2 v3 v4
                    (coe
                       MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                       (coe
-                         MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                         MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                          (coe
-                            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                            MAlonzo.Code.Algebra.Structures.d_isMagma_498
                             (coe
-                               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                (coe
-                                  MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                  MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                   (coe
                                      MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                      (coe v0))))))))
@@ -366,25 +366,25 @@ du_fold'45'cong'8621'_962 v0 v1 v2 v3 v4
                     (:) v11 v12
                       -> coe
                            MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'737'_42
-                           (MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+                           (MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                 MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                  (coe
-                                    MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                    MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                     (coe
-                                       MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                       MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                        (coe
                                           MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                           (coe v0))))))
                            (MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                 MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                  (coe
-                                    MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                    MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                     (coe
-                                       MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                       MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                        (coe
-                                          MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                          MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                           (coe
                                              MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                              (coe v0)))))))
@@ -464,13 +464,13 @@ du_fold'45'cong'8621'_962 v0 v1 v2 v3 v4
                                                (coe
                                                   MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                                                   (coe
-                                                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                                      (coe
-                                                        MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                        MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                         (coe
-                                                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                            (coe
-                                                              MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                              MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                               (coe
                                                                  MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                                                  (coe v0))))))))
@@ -511,13 +511,13 @@ du_fold'45'cong'8621'_962 v0 v1 v2 v3 v4
                                                   (coe
                                                      MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                                                      (coe
-                                                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                                         (coe
-                                                           MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                           MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                            (coe
-                                                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                               (coe
-                                                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                                  (coe
                                                                     MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                                                     (coe v0))))))))
@@ -561,13 +561,13 @@ du_fold'45'cong'8621'_962 v0 v1 v2 v3 v4
                                                      (coe
                                                         MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                                                         (coe
-                                                           MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                                           MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                                            (coe
-                                                              MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                              MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                               (coe
-                                                                 MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                                 MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                                  (coe
-                                                                    MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                                    MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                                     (coe
                                                                        MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                                                        (coe v0))))))))
@@ -584,31 +584,31 @@ du_fold'45'cong'8621'_962 v0 v1 v2 v3 v4
                                                         (coe du_indexedSumL_938 v0 v1 v17))))
                                                (coe
                                                   MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'737'_42
-                                                  (MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+                                                  (MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
                                                      (coe
-                                                        MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                        MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                         (coe
-                                                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                            (coe
-                                                              MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                              MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                               (coe
                                                                  MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                                                  (coe v0))))))
                                                   (MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                                                      (coe
-                                                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                                         (coe
-                                                           MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                           MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                            (coe
-                                                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                               (coe
-                                                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                                  (coe
                                                                     MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                                                     (coe v0)))))))
                                                   (coe v1 v12)
                                                   (coe
-                                                     MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+                                                     MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
                                                      (coe
                                                         MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
                                                         (MAlonzo.Code.Class.CommutativeMonoid.Core.d_semigroup_30
@@ -646,7 +646,7 @@ du_fold'45'cong'8621'_962 v0 v1 v2 v3 v4
                                                               (coe v0)))
                                                         (coe v17)))
                                                   (coe
-                                                     MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+                                                     MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
                                                      (\ v18 v19 -> v19)
                                                      (coe
                                                         MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
@@ -685,25 +685,25 @@ du_fold'45'cong'8621'_962 v0 v1 v2 v3 v4
                                                         (coe v17)))
                                                   (coe
                                                      MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'737'_42
-                                                     (MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+                                                     (MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
                                                         (coe
-                                                           MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                           MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                            (coe
-                                                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                               (coe
-                                                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                                  (coe
                                                                     MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                                                     (coe v0))))))
                                                      (MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                                                         (coe
-                                                           MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                                           MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                                            (coe
-                                                              MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                              MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                               (coe
-                                                                 MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                                 MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                                  (coe
-                                                                    MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                                    MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                                     (coe
                                                                        MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                                                        (coe v0)))))))
@@ -742,7 +742,7 @@ du_fold'45'cong'8621'_962 v0 v1 v2 v3 v4
                                                         du_fold'45'cong'8621'_962 (coe v0) (coe v1)
                                                         (coe v13) (coe v17) (coe v9)))))
                                             (coe
-                                               MAlonzo.Code.Algebra.Properties.CommutativeSemigroup.du_x'8729'yz'8776'y'8729'xz_296
+                                               MAlonzo.Code.Algebra.Properties.CommutativeSemigroup.du_x'8729'yz'8776'y'8729'xz_298
                                                (coe
                                                   MAlonzo.Code.Algebra.Bundles.du_commutativeSemigroup_1082
                                                   (coe
@@ -757,13 +757,13 @@ du_fold'45'cong'8621'_962 v0 v1 v2 v3 v4
       MAlonzo.Code.Data.List.Relation.Binary.Permutation.Propositional.C_trans_48 v6 v8 v9
         -> coe
              MAlonzo.Code.Relation.Binary.Structures.d_trans_40
-             (MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+             (MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                 (coe
-                   MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                   MAlonzo.Code.Algebra.Structures.d_isMagma_498
                    (coe
-                      MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                      MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                       (coe
-                         MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                         MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                          (coe
                             MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                             (coe v0))))))
@@ -888,13 +888,13 @@ du_indexedSumL'45''43''43'_1010 v0 v1 v2 v3
                (coe
                   MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                        MAlonzo.Code.Algebra.Structures.d_isMagma_498
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                              MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                               (coe
                                  MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                  (coe v0))))))))
@@ -924,13 +924,13 @@ du_indexedSumL'45''43''43'_1010 v0 v1 v2 v3
                   (coe
                      MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                           MAlonzo.Code.Algebra.Structures.d_isMagma_498
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                  (coe
                                     MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                     (coe v0))))))))
@@ -981,25 +981,25 @@ du_helper_1032 v0 v1 v2 v3
                    (coe
                       MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                       (coe
-                         MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                         MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                          (coe
-                            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                            MAlonzo.Code.Algebra.Structures.d_isMagma_498
                             (coe
-                               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                (coe
-                                  MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                  MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                   (coe
                                      MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                      (coe v0))))))))
                 (MAlonzo.Code.Relation.Binary.Structures.d_sym_38
                    (coe
-                      MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                      MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                       (coe
-                         MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                         MAlonzo.Code.Algebra.Structures.d_isMagma_498
                          (coe
-                            MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                            MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                             (coe
-                               MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                               MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                (coe
                                   MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                   (coe v0)))))))
@@ -1025,13 +1025,13 @@ du_helper_1032 v0 v1 v2 v3
                       (coe
                          MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                          (coe
-                            MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                            MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                             (coe
-                               MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                               MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                (coe
-                                  MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                  MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                   (coe
-                                     MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                     MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                      (coe
                                         MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                         (coe v0))))))))
@@ -1043,8 +1043,8 @@ du_helper_1032 v0 v1 v2 v3
                             MAlonzo.Code.Class.CommutativeMonoid.Core.d_monoid_32 (coe v0)))
                       v1))
                 (coe
-                   MAlonzo.Code.Algebra.Structures.du_identity'737'_752
-                   (MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                   MAlonzo.Code.Algebra.Structures.du_identity'737'_754
+                   (MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                       (coe
                          MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                          (coe v0)))
@@ -1083,13 +1083,13 @@ du_helper_1032 v0 v1 v2 v3
                    (coe
                       MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                       (coe
-                         MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                         MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                          (coe
-                            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                            MAlonzo.Code.Algebra.Structures.d_isMagma_498
                             (coe
-                               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                (coe
-                                  MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                  MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                   (coe
                                      MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                      (coe v0))))))))
@@ -1129,25 +1129,25 @@ du_helper_1032 v0 v1 v2 v3
                       (coe
                          MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                          (coe
-                            MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                            MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                             (coe
-                               MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                               MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                (coe
-                                  MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                  MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                   (coe
-                                     MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                     MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                      (coe
                                         MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                         (coe v0))))))))
                    (MAlonzo.Code.Relation.Binary.Structures.d_sym_38
                       (coe
-                         MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                         MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                          (coe
-                            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                            MAlonzo.Code.Algebra.Structures.d_isMagma_498
                             (coe
-                               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                (coe
-                                  MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                  MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                   (coe
                                      MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                      (coe v0)))))))
@@ -1182,13 +1182,13 @@ du_helper_1032 v0 v1 v2 v3
                          (coe
                             MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                             (coe
-                               MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                               MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                (coe
-                                  MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                  MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                   (coe
-                                     MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                     MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                      (coe
-                                        MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                        MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                         (coe
                                            MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                            (coe v0))))))))
@@ -1201,35 +1201,35 @@ du_helper_1032 v0 v1 v2 v3
                             (coe v3 v4) (coe du_indexedSumL_938 v0 v3 v5))
                          v1))
                    (coe
-                      MAlonzo.Code.Algebra.Structures.d_assoc_498
-                      (MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                      MAlonzo.Code.Algebra.Structures.d_assoc_500
+                      (MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                          (coe
-                            MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                            MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                             (coe
                                MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                (coe v0))))
                       (coe v3 v4) (coe du_indexedSumL_938 v0 v3 v5) v1))
                 (coe
                    MAlonzo.Code.Algebra.Consequences.Base.du_'8729''45'cong'737'_42
-                   (MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
+                   (MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
                       (coe
-                         MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                         MAlonzo.Code.Algebra.Structures.d_isMagma_498
                          (coe
-                            MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                            MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                             (coe
-                               MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                               MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                (coe
                                   MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                   (coe v0))))))
                    (MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                       (coe
-                         MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                         MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                          (coe
-                            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                            MAlonzo.Code.Algebra.Structures.d_isMagma_498
                             (coe
-                               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                (coe
-                                  MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                  MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                   (coe
                                      MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                      (coe v0)))))))
@@ -1321,13 +1321,13 @@ du_indexedSum'45''8709'_1092 v0 v1 v2 v3
             (coe
                MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                  MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                     MAlonzo.Code.Algebra.Structures.d_isMagma_498
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                        MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                           MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                            (coe
                               MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                               (coe v1))))))))
@@ -1369,13 +1369,13 @@ du_indexedSum'45''8746'_1098 v0 v1 v2 v3 v4
          (\ v5 v6 v7 ->
             coe
               MAlonzo.Code.Relation.Binary.Structures.d_trans_40
-              (MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+              (MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                  (coe
-                    MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                    MAlonzo.Code.Algebra.Structures.d_isMagma_498
                     (coe
-                       MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                       MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                        (coe
-                          MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                          MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                           (coe
                              MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                              (coe v0))))))
@@ -1470,8 +1470,8 @@ du_indexedSum'45'singleton_1114 ::
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
 du_indexedSum'45'singleton_1114 v0 v1 v2
   = coe
-      MAlonzo.Code.Algebra.Structures.du_identity'691'_754
-      (MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+      MAlonzo.Code.Algebra.Structures.du_identity'691'_756
+      (MAlonzo.Code.Algebra.Structures.d_isMonoid_776
          (coe
             MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
             (coe v0)))
@@ -1496,18 +1496,18 @@ du_indexedSum'45'singleton''_1120 ::
 du_indexedSum'45'singleton''_1120 v0 v1 v2 v3 v4 v5
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_40
-      (MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+      (MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
          (coe
-            MAlonzo.Code.Algebra.Structures.d_isMagma_496
+            MAlonzo.Code.Algebra.Structures.d_isMagma_498
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+               MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                  MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                   (coe
                      MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                      (coe v1))))))
       (coe
-         MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
+         MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_306
          (coe du_indexedSum_984 (coe v1) (coe v2) (coe v3)) (\ v6 v7 -> v6)
          (coe
             MAlonzo.Code.Data.Product.Base.du_'45''44'__92
@@ -1520,7 +1520,7 @@ du_indexedSum'45'singleton''_1120 v0 v1 v2 v3 v4 v5
                MAlonzo.Code.Axiom.Set.Properties.du_singleton'45'finite_910
                (coe v0) (coe v4))))
       (coe
-         MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
+         MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__312
          (\ v6 v7 -> v7) (coe du_indexedSum_984 (coe v1) (coe v2) (coe v3))
          (coe
             MAlonzo.Code.Data.Product.Base.du_'45''44'__92
@@ -1864,13 +1864,13 @@ du_indexedSum'7504''45''8746'_1246 v0 v1 v2 v3 v4 v5 v6 v7 v8
                                         (coe
                                            MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                                            (coe
-                                              MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                              MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                               (coe
-                                                 MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                 MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                  (coe
-                                                    MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                    MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                     (coe
-                                                       MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                       MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                        (coe
                                                           MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                                           (coe v8))))))))
@@ -1910,13 +1910,13 @@ du_indexedSum'7504''45''8746'_1246 v0 v1 v2 v3 v4 v5 v6 v7 v8
                                            (coe
                                               MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                                               (coe
-                                                 MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                                 MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                                  (coe
-                                                    MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                    MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                     (coe
-                                                       MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                       MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                        (coe
-                                                          MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                          MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                           (coe
                                                              MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                                              (coe v8))))))))
@@ -1961,13 +1961,13 @@ du_indexedSum'7504''45''8746'_1246 v0 v1 v2 v3 v4 v5 v6 v7 v8
                                               (coe
                                                  MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                                                  (coe
-                                                    MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                                                    MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                                                     (coe
-                                                       MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                                       MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                                        (coe
-                                                          MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                                          MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                                           (coe
-                                                             MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                                             MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                                              (coe
                                                                 MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                                                 (coe v8))))))))
@@ -2159,13 +2159,13 @@ du_indexedSum'7504''45'partition_1282 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
             (coe
                MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                  MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                     MAlonzo.Code.Algebra.Structures.d_isMagma_498
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                        MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                           MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                            (coe
                               MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                               (coe v9))))))))
@@ -2193,13 +2193,13 @@ du_indexedSum'7504''45'partition_1282 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                (coe
                   MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                        MAlonzo.Code.Algebra.Structures.d_isMagma_498
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                              MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                               (coe
                                  MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                  (coe v9))))))))
@@ -2233,13 +2233,13 @@ du_indexedSum'7504''45'partition_1282 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9
                   (coe
                      MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                           MAlonzo.Code.Algebra.Structures.d_isMagma_498
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                  (coe
                                     MAlonzo.Code.Class.CommutativeMonoid.Core.d_isCommutativeMonoid_34
                                     (coe v9))))))))

@@ -80,7 +80,7 @@ d_'96'case_of__20 v0 v1
       MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
       (coe
          (MAlonzo.RTE.QName
-            (234 :: Integer) (10779521135412943468 :: Integer)
+            (248 :: Integer) (10779521135412943468 :: Integer)
             "Function.Base.case_of_"
             (MAlonzo.RTE.Fixity
                MAlonzo.RTE.NonAssoc (MAlonzo.RTE.Related (0.0 :: Double)))))

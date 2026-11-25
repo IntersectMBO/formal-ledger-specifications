@@ -50,13 +50,13 @@ d_anyOf''_4 v0
                  MAlonzo.Code.Class.MonadError.d_catch_28
                  MAlonzo.Code.Meta.Init.d_iMonadError'45'TC_10 () erased
                  (coe
-                    MAlonzo.Code.Class.Monad.Core.du__'62''62'__24
+                    MAlonzo.Code.Class.Monad.Core.du__'62''62'__26
                     (coe MAlonzo.Code.Meta.Init.d_iMonad'45'TC_4) (coe ()) (coe ())
                     (coe
-                       MAlonzo.Code.Class.Monad.Core.du__'62''62'__24
+                       MAlonzo.Code.Class.Monad.Core.du__'62''62'__26
                        (coe MAlonzo.Code.Meta.Init.d_iMonad'45'TC_4) (coe ()) (coe ())
                        (coe
-                          MAlonzo.Code.Class.MonadTC.du_debugLog_578
+                          MAlonzo.Code.Class.MonadTC.du_debugLog_582
                           (coe MAlonzo.Code.Meta.Init.d_iMonad'45'TC_4)
                           (coe MAlonzo.Code.Meta.Init.d_iMonadTC'45'TCI_6)
                           (coe MAlonzo.Code.Meta.Init.d_iMonadReader'45'TC_8)
@@ -69,13 +69,13 @@ d_anyOf''_4 v0
                                 (coe MAlonzo.Code.Reflection.Debug.d_IsErrorPart'45'Term_22)
                                 (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
                        (coe
-                          MAlonzo.Code.Class.MonadTC.du_unifyWithGoal_824
+                          MAlonzo.Code.Class.MonadTC.du_unifyWithGoal_828
                           (coe MAlonzo.Code.Reflection.TCI.d_Monad'45'TC_6)
                           (coe MAlonzo.Code.Meta.Init.d_iMonadError'45'TC_10)
                           (coe MAlonzo.Code.Meta.Init.d_iMonadTC'45'TCI_6)
                           (coe MAlonzo.Code.Meta.Init.d_iMonadReader'45'TC_8) (coe v2)))
                     (coe
-                       MAlonzo.Code.Class.MonadTC.du_debugLog_578
+                       MAlonzo.Code.Class.MonadTC.du_debugLog_582
                        (coe MAlonzo.Code.Reflection.TCI.d_Monad'45'TC_6)
                        (coe MAlonzo.Code.Meta.Init.d_iMonadTC'45'TCI_6)
                        (coe MAlonzo.Code.Meta.Init.d_iMonadReader'45'TC_8)
@@ -89,14 +89,14 @@ d_anyOf''_4 v0
                              (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
                  (\ v3 -> v1)))
          (coe
-            MAlonzo.Code.Class.MonadTC.du_logAndError1_740
+            MAlonzo.Code.Class.MonadTC.du_logAndError1_744
             (coe MAlonzo.Code.Reflection.TCI.d_Monad'45'TC_6)
             (coe
-               MAlonzo.Code.Class.MonadReader.du_MonadError'45'ReaderT_134
-               (coe MAlonzo.Code.Class.MonadError.d_MonadError'45'TC_32))
+               MAlonzo.Code.Class.MonadReader.du_MonadError'45'ReaderT_138
+               (coe MAlonzo.Code.Class.MonadError.d_MonadError'45'TC_40))
             (coe MAlonzo.Code.Reflection.TCI.d_MonadTC'45'TCI_146)
             (coe
-               MAlonzo.Code.Class.MonadReader.du_MonadReader'45'ReaderT_122
+               MAlonzo.Code.Class.MonadReader.du_MonadReader'45'ReaderT_126
                (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6))
             (coe ())
             (coe MAlonzo.Code.Reflection.Debug.d_IsErrorPart'45'String_20)
@@ -121,13 +121,13 @@ d_anyOf'8319'_12 v0
                  MAlonzo.Code.Class.MonadError.d_catch_28
                  MAlonzo.Code.Meta.Init.d_iMonadError'45'TC_10 () erased
                  (coe
-                    MAlonzo.Code.Class.Monad.Core.du__'62''62'__24
+                    MAlonzo.Code.Class.Monad.Core.du__'62''62'__26
                     (coe MAlonzo.Code.Meta.Init.d_iMonad'45'TC_4) (coe ()) (coe ())
                     (coe
-                       MAlonzo.Code.Class.Monad.Core.du__'62''62'__24
+                       MAlonzo.Code.Class.Monad.Core.du__'62''62'__26
                        (coe MAlonzo.Code.Meta.Init.d_iMonad'45'TC_4) (coe ()) (coe ())
                        (coe
-                          MAlonzo.Code.Class.MonadTC.du_debugLog_578
+                          MAlonzo.Code.Class.MonadTC.du_debugLog_582
                           (coe MAlonzo.Code.Meta.Init.d_iMonad'45'TC_4)
                           (coe MAlonzo.Code.Meta.Init.d_iMonadTC'45'TCI_6)
                           (coe MAlonzo.Code.Meta.Init.d_iMonadReader'45'TC_8)
@@ -140,7 +140,7 @@ d_anyOf'8319'_12 v0
                                 (coe MAlonzo.Code.Reflection.Debug.d_IsErrorPart'45'Name_24)
                                 (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
                        (coe
-                          MAlonzo.Code.Class.MonadTC.du_unifyWithGoal_824
+                          MAlonzo.Code.Class.MonadTC.du_unifyWithGoal_828
                           (coe MAlonzo.Code.Reflection.TCI.d_Monad'45'TC_6)
                           (coe MAlonzo.Code.Meta.Init.d_iMonadError'45'TC_10)
                           (coe MAlonzo.Code.Meta.Init.d_iMonadTC'45'TCI_6)
@@ -149,7 +149,7 @@ d_anyOf'8319'_12 v0
                              MAlonzo.Code.Agda.Builtin.Reflection.C_def_184 (coe v2)
                              (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
                     (coe
-                       MAlonzo.Code.Class.MonadTC.du_debugLog_578
+                       MAlonzo.Code.Class.MonadTC.du_debugLog_582
                        (coe MAlonzo.Code.Reflection.TCI.d_Monad'45'TC_6)
                        (coe MAlonzo.Code.Meta.Init.d_iMonadTC'45'TCI_6)
                        (coe MAlonzo.Code.Meta.Init.d_iMonadReader'45'TC_8)
@@ -163,14 +163,14 @@ d_anyOf'8319'_12 v0
                              (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
                  (\ v3 -> v1)))
          (coe
-            MAlonzo.Code.Class.MonadTC.du_logAndError1_740
+            MAlonzo.Code.Class.MonadTC.du_logAndError1_744
             (coe MAlonzo.Code.Reflection.TCI.d_Monad'45'TC_6)
             (coe
-               MAlonzo.Code.Class.MonadReader.du_MonadError'45'ReaderT_134
-               (coe MAlonzo.Code.Class.MonadError.d_MonadError'45'TC_32))
+               MAlonzo.Code.Class.MonadReader.du_MonadError'45'ReaderT_138
+               (coe MAlonzo.Code.Class.MonadError.d_MonadError'45'TC_40))
             (coe MAlonzo.Code.Reflection.TCI.d_MonadTC'45'TCI_146)
             (coe
-               MAlonzo.Code.Class.MonadReader.du_MonadReader'45'ReaderT_122
+               MAlonzo.Code.Class.MonadReader.du_MonadReader'45'ReaderT_126
                (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6))
             (coe ())
             (coe MAlonzo.Code.Reflection.Debug.d_IsErrorPart'45'String_20)

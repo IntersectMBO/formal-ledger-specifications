@@ -25,9 +25,9 @@ d_liftOp'8322'_6 ::
   MAlonzo.RTE.Word64 -> MAlonzo.RTE.Word64 -> MAlonzo.RTE.Word64
 d_liftOp'8322'_6 v0
   = coe
-      MAlonzo.Code.Function.Base.du__on__334
+      MAlonzo.Code.Function.Base.du__on__348
       (coe
-         MAlonzo.Code.Function.Base.du__'8728''8322''8242'__222
+         MAlonzo.Code.Function.Base.du__'8728''8322''8242'__236
          (coe word64FromNat) (coe v0))
       (coe word64ToNat)
 -- Data.Word64.Base._≈_

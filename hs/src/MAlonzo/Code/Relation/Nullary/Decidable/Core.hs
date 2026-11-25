@@ -102,26 +102,25 @@ du_'172''63'_76 v0
       (coe
          MAlonzo.Code.Relation.Nullary.Reflects.du_'172''45'reflects_74
          (coe d_proof_30 (coe v0)))
--- Relation.Nullary.Decidable.Core.⊤-dec
-d_'8868''45'dec_82 ::
+-- Relation.Nullary.Decidable.Core.⊤?
+d_'8868''63'_82 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 -> T_Dec_20
-d_'8868''45'dec_82 ~v0 = du_'8868''45'dec_82
-du_'8868''45'dec_82 :: T_Dec_20
-du_'8868''45'dec_82
+d_'8868''63'_82 ~v0 = du_'8868''63'_82
+du_'8868''63'_82 :: T_Dec_20
+du_'8868''63'_82
   = coe
       C__because__32 (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10)
       (coe
          MAlonzo.Code.Relation.Nullary.Reflects.du_'8868''45'reflects_66)
--- Relation.Nullary.Decidable.Core._×-dec_
-d__'215''45'dec__84 ::
+-- Relation.Nullary.Decidable.Core._×?_
+d__'215''63'__84 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> T_Dec_20 -> T_Dec_20 -> T_Dec_20
-d__'215''45'dec__84 ~v0 ~v1 ~v2 ~v3 v4 v5
-  = du__'215''45'dec__84 v4 v5
-du__'215''45'dec__84 :: T_Dec_20 -> T_Dec_20 -> T_Dec_20
-du__'215''45'dec__84 v0 v1
+d__'215''63'__84 ~v0 ~v1 ~v2 ~v3 v4 v5 = du__'215''63'__84 v4 v5
+du__'215''63'__84 :: T_Dec_20 -> T_Dec_20 -> T_Dec_20
+du__'215''63'__84 v0 v1
   = coe
       C__because__32
       (coe
@@ -131,26 +130,25 @@ du__'215''45'dec__84 v0 v1
          MAlonzo.Code.Relation.Nullary.Reflects.du__'215''45'reflects__86
          (coe d_does_28 (coe v1)) (coe d_proof_30 (coe v0))
          (coe d_proof_30 (coe v1)))
--- Relation.Nullary.Decidable.Core.⊥-dec
-d_'8869''45'dec_94 ::
+-- Relation.Nullary.Decidable.Core.⊥?
+d_'8869''63'_94 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 -> T_Dec_20
-d_'8869''45'dec_94 ~v0 = du_'8869''45'dec_94
-du_'8869''45'dec_94 :: T_Dec_20
-du_'8869''45'dec_94
+d_'8869''63'_94 ~v0 = du_'8869''63'_94
+du_'8869''63'_94 :: T_Dec_20
+du_'8869''63'_94
   = coe
       C__because__32 (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
       (coe
          MAlonzo.Code.Relation.Nullary.Reflects.du_'8869''45'reflects_64)
--- Relation.Nullary.Decidable.Core._⊎-dec_
-d__'8846''45'dec__96 ::
+-- Relation.Nullary.Decidable.Core._⊎?_
+d__'8846''63'__96 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> T_Dec_20 -> T_Dec_20 -> T_Dec_20
-d__'8846''45'dec__96 ~v0 ~v1 ~v2 ~v3 v4 v5
-  = du__'8846''45'dec__96 v4 v5
-du__'8846''45'dec__96 :: T_Dec_20 -> T_Dec_20 -> T_Dec_20
-du__'8846''45'dec__96 v0 v1
+d__'8846''63'__96 ~v0 ~v1 ~v2 ~v3 v4 v5 = du__'8846''63'__96 v4 v5
+du__'8846''63'__96 :: T_Dec_20 -> T_Dec_20 -> T_Dec_20
+du__'8846''63'__96 v0 v1
   = coe
       C__because__32
       (coe
@@ -160,16 +158,16 @@ du__'8846''45'dec__96 v0 v1
          MAlonzo.Code.Relation.Nullary.Reflects.du__'8846''45'reflects__102
          (coe d_does_28 (coe v1)) (coe d_proof_30 (coe v0))
          (coe d_proof_30 (coe v1)))
--- Relation.Nullary.Decidable.Core._→-dec_
-d__'8594''45'dec__106 ::
+-- Relation.Nullary.Decidable.Core._→?_
+d__'8594''63'__106 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> T_Dec_20 -> T_Dec_20 -> T_Dec_20
-d__'8594''45'dec__106 ~v0 ~v1 ~v2 ~v3 v4 v5
-  = du__'8594''45'dec__106 v4 v5
-du__'8594''45'dec__106 :: T_Dec_20 -> T_Dec_20 -> T_Dec_20
-du__'8594''45'dec__106 v0 v1
+d__'8594''63'__106 ~v0 ~v1 ~v2 ~v3 v4 v5
+  = du__'8594''63'__106 v4 v5
+du__'8594''63'__106 :: T_Dec_20 -> T_Dec_20 -> T_Dec_20
+du__'8594''63'__106 v0 v1
   = coe
       C__because__32
       (coe
@@ -401,8 +399,7 @@ du_decidable'45'stable_198 v0
              then coe
                     MAlonzo.Code.Relation.Nullary.Reflects.du_invert_38 (coe v2)
              else coe
-                    MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                    erased
+                    MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Nullary.Decidable.Core.¬-drop-Dec
 d_'172''45'drop'45'Dec_208 ::
@@ -412,12 +409,7 @@ d_'172''45'drop'45'Dec_208 ~v0 ~v1 v2
   = du_'172''45'drop'45'Dec_208 v2
 du_'172''45'drop'45'Dec_208 :: T_Dec_20 -> T_Dec_20
 du_'172''45'drop'45'Dec_208 v0
-  = coe
-      du_map'8242'_178 erased
-      (\ v1 ->
-         coe
-           MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44)
-      (coe du_'172''63'_76 (coe v0))
+  = coe du_map'8242'_178 erased erased (coe du_'172''63'_76 (coe v0))
 -- Relation.Nullary.Decidable.Core.¬¬-excluded-middle
 d_'172''172''45'excluded'45'middle_212 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -447,3 +439,35 @@ d_toDec_224 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> T_Dec_20
 d_toDec_224 v0 v1 v2 = coe du_fromSum_126 v2
+-- Relation.Nullary.Decidable.Core.⊤-dec
+d_'8868''45'dec_226 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 -> T_Dec_20
+d_'8868''45'dec_226 v0 = coe du_'8868''63'_82
+-- Relation.Nullary.Decidable.Core.⊥-dec
+d_'8869''45'dec_228 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 -> T_Dec_20
+d_'8869''45'dec_228 v0 = coe du_'8869''63'_94
+-- Relation.Nullary.Decidable.Core._×-dec_
+d__'215''45'dec__230 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () -> T_Dec_20 -> T_Dec_20 -> T_Dec_20
+d__'215''45'dec__230 v0 v1 v2 v3 v4 v5
+  = coe du__'215''63'__84 v4 v5
+-- Relation.Nullary.Decidable.Core._⊎-dec_
+d__'8846''45'dec__232 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () -> T_Dec_20 -> T_Dec_20 -> T_Dec_20
+d__'8846''45'dec__232 v0 v1 v2 v3 v4 v5
+  = coe du__'8846''63'__96 v4 v5
+-- Relation.Nullary.Decidable.Core._→-dec_
+d__'8594''45'dec__234 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () -> T_Dec_20 -> T_Dec_20 -> T_Dec_20
+d__'8594''45'dec__234 v0 v1 v2 v3 v4 v5
+  = coe du__'8594''63'__106 v4 v5

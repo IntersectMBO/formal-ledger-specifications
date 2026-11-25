@@ -135,7 +135,7 @@ du_acceptConds'63'_2510 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 du_acceptConds'63'_2510 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+      MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_accepted'63'_2524
          (coe
@@ -146,9 +146,9 @@ du_acceptConds'63'_2510 v0 v1 v2 v3
             MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1910 (coe v2))
          (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3)))
       (coe
-         MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+         MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
          (coe
-            MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8594''45'dec__106
+            MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8594''63'__106
             (coe
                MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_delayed'63'_2412
                (coe
@@ -172,7 +172,7 @@ du_acceptConds'63'_2510 v0 v1 v2 v3
                (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
                (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)))
          (coe
-            MAlonzo.Code.Interface.ComputationalRelation.du_Computational'8658'Dec''_728
+            MAlonzo.Code.Interface.ComputationalRelation.du_Computational'8658'Dec''_770
             (coe
                MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
                (coe
@@ -364,10 +364,10 @@ d_computeProof_2532 ::
   MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_1870 ->
   MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1902 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
+  MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_36
 d_computeProof_2532 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_success_42
+      MAlonzo.Code.Interface.ComputationalRelation.C_success_46
       (coe d_RATIFY'45'total_2514 (coe v0) (coe v1) (coe v2) (coe v3))
 -- Ledger.Conway.Specification.Ratify.Properties.Computational.Implementation.RATIFY-completeness
 d_RATIFY'45'completeness_2536 ::
@@ -392,25 +392,25 @@ d_completeness_2594 = erased
 -- Ledger.Conway.Specification.Ratify.Properties.Computational.Computational-RATIFY
 d_Computational'45'RATIFY_2596 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'RATIFY_2596 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_444
+      MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_486
       (d_computeProof_2532 (coe v0))
 -- Ledger.Conway.Specification.Ratify.Properties.Computational.Computational-RATIFIES
 d_Computational'45'RATIFIES_2598 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_264
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_306
 d_Computational'45'RATIFIES_2598 v0
   = coe
-      MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'ReflexiveTransitiveClosure'7495'_808
+      MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'ReflexiveTransitiveClosure'7495'_850
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'Id_772)
+         MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'Id_814)
       (coe d_Computational'45'RATIFY_2596 (coe v0))
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_760)
+         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_802)
       (coe
-         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_760)
+         MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_802)
 -- Ledger.Conway.Specification.Ratify.Properties.Computational.RATIFIES-total
 d_RATIFIES'45'total_2608 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->

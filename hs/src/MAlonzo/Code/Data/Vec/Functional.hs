@@ -200,7 +200,7 @@ du_removeAt_108 ::
 du_removeAt_108 v0 v1 v2
   = coe
       v0
-      (coe MAlonzo.Code.Data.Fin.Base.du_punchIn_410 (coe v1) (coe v2))
+      (coe MAlonzo.Code.Data.Fin.Base.du_punchIn_432 (coe v1) (coe v2))
 -- Data.Vec.Functional.updateAt
 d_updateAt_114 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -270,7 +270,7 @@ du__'43''43'__156 ::
 du__'43''43'__156 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Data.Sum.Base.du_'91'_'44'_'93'_52 (coe v1) (coe v2)
-      (coe MAlonzo.Code.Data.Fin.Base.du_splitAt_166 (coe v0) (coe v3))
+      (coe MAlonzo.Code.Data.Fin.Base.du_splitAt_188 (coe v0) (coe v3))
 -- Data.Vec.Functional.concat
 d_concat_166 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -290,7 +290,7 @@ du_concat_166 v0 v1 v2
   = coe
       MAlonzo.Code.Data.Product.Base.du_uncurry_244
       (coe (\ v3 v4 -> coe v1 v4 v3))
-      (coe MAlonzo.Code.Data.Fin.Base.du_quotRem_192 (coe v0) (coe v2))
+      (coe MAlonzo.Code.Data.Fin.Base.du_quotRem_214 (coe v0) (coe v2))
 -- Data.Vec.Functional.foldr
 d_foldr_176 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -394,7 +394,7 @@ du__'62''62''61'__218 ::
   (AgdaAny -> MAlonzo.Code.Data.Fin.Base.T_Fin_10 -> AgdaAny) ->
   MAlonzo.Code.Data.Fin.Base.T_Fin_10 -> AgdaAny
 du__'62''62''61'__218 v0 v1 v2
-  = coe du_concat_166 (coe v0) (coe du_map_150 (coe v2) (coe v1))
+  = coe du_concat_166 (coe v0) (coe (\ v3 -> coe v2 (coe v1 v3)))
 -- Data.Vec.Functional.zipWith
 d_zipWith_226 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -509,7 +509,7 @@ du_drop_262 v0 v1 v2
   = coe
       v1
       (coe
-         MAlonzo.Code.Data.Fin.Base.du__'8593''691'__84 (coe v0) (coe v2))
+         MAlonzo.Code.Data.Fin.Base.du__'8593''691'__106 (coe v0) (coe v2))
 -- Data.Vec.Functional.reverse
 d_reverse_270 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -524,7 +524,7 @@ du_reverse_270 ::
   MAlonzo.Code.Data.Fin.Base.T_Fin_10 -> AgdaAny
 du_reverse_270 v0 v1 v2
   = coe
-      v1 (MAlonzo.Code.Data.Fin.Base.d_opposite_384 (coe v0) (coe v2))
+      v1 (MAlonzo.Code.Data.Fin.Base.d_opposite_406 (coe v0) (coe v2))
 -- Data.Vec.Functional.init
 d_init_274 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -548,7 +548,7 @@ du_last_278 ::
   Integer ->
   (MAlonzo.Code.Data.Fin.Base.T_Fin_10 -> AgdaAny) -> AgdaAny
 du_last_278 v0 v1
-  = coe v1 (MAlonzo.Code.Data.Fin.Base.d_fromℕ_48 (coe v0))
+  = coe v1 (MAlonzo.Code.Data.Fin.Base.d_fromℕ_70 (coe v0))
 -- Data.Vec.Functional.transpose
 d_transpose_284 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->

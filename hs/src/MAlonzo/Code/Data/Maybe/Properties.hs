@@ -299,13 +299,13 @@ d_IsMonoid_244 a0 a1 a2 a3 = ()
 d_IsSemigroup_248 a0 a1 a2 = ()
 -- Data.Maybe.Properties._._.IsMagma.isEquivalence
 d_isEquivalence_254 ::
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_28
 d_isEquivalence_254 v0
-  = coe MAlonzo.Code.Algebra.Structures.d_isEquivalence_186 (coe v0)
+  = coe MAlonzo.Code.Algebra.Structures.d_isEquivalence_188 (coe v0)
 -- Data.Maybe.Properties._._.IsMagma.∙-cong
 d_'8729''45'cong_268 ::
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180 ->
   Maybe AgdaAny ->
   Maybe AgdaAny ->
   Maybe AgdaAny ->
@@ -316,66 +316,66 @@ d_'8729''45'cong_268 ::
 d_'8729''45'cong_268 = erased
 -- Data.Maybe.Properties._._.IsMonoid.identity
 d_identity_278 ::
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_identity_278 v0
-  = coe MAlonzo.Code.Algebra.Structures.d_identity_724 (coe v0)
+  = coe MAlonzo.Code.Algebra.Structures.d_identity_726 (coe v0)
 -- Data.Maybe.Properties._._.IsMonoid.isSemigroup
 d_isSemigroup_290 ::
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714 ->
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 d_isSemigroup_290 v0
-  = coe MAlonzo.Code.Algebra.Structures.d_isSemigroup_722 (coe v0)
+  = coe MAlonzo.Code.Algebra.Structures.d_isSemigroup_724 (coe v0)
 -- Data.Maybe.Properties._._.IsSemigroup.assoc
 d_assoc_312 ::
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488 ->
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490 ->
   Maybe AgdaAny ->
   Maybe AgdaAny ->
   Maybe AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_assoc_312 = erased
 -- Data.Maybe.Properties._._.IsSemigroup.isMagma
 d_isMagma_316 ::
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488 ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490 ->
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 d_isMagma_316 v0
-  = coe MAlonzo.Code.Algebra.Structures.d_isMagma_496 (coe v0)
+  = coe MAlonzo.Code.Algebra.Structures.d_isMagma_498 (coe v0)
 -- Data.Maybe.Properties._.<∣>-isMagma
 d_'60''8739''62''45'isMagma_336 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  () -> MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 d_'60''8739''62''45'isMagma_336 ~v0 ~v1
   = du_'60''8739''62''45'isMagma_336
 du_'60''8739''62''45'isMagma_336 ::
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_180
 du_'60''8739''62''45'isMagma_336
   = coe
-      MAlonzo.Code.Algebra.Structures.C_constructor_210
+      MAlonzo.Code.Algebra.Structures.C_constructor_212
       (coe
          MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_isEquivalence_396)
       erased
 -- Data.Maybe.Properties._.<∣>-isSemigroup
 d_'60''8739''62''45'isSemigroup_338 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  () -> MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 d_'60''8739''62''45'isSemigroup_338 ~v0 ~v1
   = du_'60''8739''62''45'isSemigroup_338
 du_'60''8739''62''45'isSemigroup_338 ::
-  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_488
+  MAlonzo.Code.Algebra.Structures.T_IsSemigroup_490
 du_'60''8739''62''45'isSemigroup_338
   = coe
-      MAlonzo.Code.Algebra.Structures.C_constructor_522
+      MAlonzo.Code.Algebra.Structures.C_constructor_524
       (coe du_'60''8739''62''45'isMagma_336) erased
 -- Data.Maybe.Properties._.<∣>-isMonoid
 d_'60''8739''62''45'isMonoid_340 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  () -> MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 d_'60''8739''62''45'isMonoid_340 ~v0 ~v1
   = du_'60''8739''62''45'isMonoid_340
 du_'60''8739''62''45'isMonoid_340 ::
-  MAlonzo.Code.Algebra.Structures.T_IsMonoid_712
+  MAlonzo.Code.Algebra.Structures.T_IsMonoid_714
 du_'60''8739''62''45'isMonoid_340
   = coe
-      MAlonzo.Code.Algebra.Structures.C_constructor_758
+      MAlonzo.Code.Algebra.Structures.C_constructor_760
       (coe du_'60''8739''62''45'isSemigroup_338)
       (coe du_'60''8739''62''45'identity_224)
 -- Data.Maybe.Properties._.<∣>-semigroup

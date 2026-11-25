@@ -32,25 +32,25 @@ import qualified MAlonzo.Code.Reflection.AST.Argument
 
 -- Class.Functor.Instances.Functor-Maybe
 d_Functor'45'Maybe_6 ::
-  MAlonzo.Code.Class.Functor.Core.T_Functor_14
+  MAlonzo.Code.Class.Functor.Core.T_Functor_16
 d_Functor'45'Maybe_6
   = coe
-      MAlonzo.Code.Class.Functor.Core.C_constructor_32
+      MAlonzo.Code.Class.Functor.Core.C_constructor_34
       (\ v0 v1 v2 v3 v4 -> coe MAlonzo.Code.Data.Maybe.Base.du_map_64 v4)
 -- Class.Functor.Instances.FunctorLaws-Maybe
 d_FunctorLaws'45'Maybe_84 ::
-  MAlonzo.Code.Class.Functor.Core.T_FunctorLaws_48
+  MAlonzo.Code.Class.Functor.Core.T_FunctorLaws_52
 d_FunctorLaws'45'Maybe_84 = erased
 -- Class.Functor.Instances.Functor-List
 d_Functor'45'List_92 ::
-  MAlonzo.Code.Class.Functor.Core.T_Functor_14
+  MAlonzo.Code.Class.Functor.Core.T_Functor_16
 d_Functor'45'List_92
   = coe
-      MAlonzo.Code.Class.Functor.Core.C_constructor_32
+      MAlonzo.Code.Class.Functor.Core.C_constructor_34
       (coe (\ v0 v1 v2 v3 -> coe MAlonzo.Code.Data.List.Base.du_map_22))
 -- Class.Functor.Instances.FunctorLaws-List
 d_FunctorLaws'45'List_94 ::
-  MAlonzo.Code.Class.Functor.Core.T_FunctorLaws_48
+  MAlonzo.Code.Class.Functor.Core.T_FunctorLaws_52
 d_FunctorLaws'45'List_94 = erased
 -- Class.Functor.Instances._.p
 d_p_104 ::
@@ -88,27 +88,27 @@ d_'46'extendedlambda4_132 ::
 d_'46'extendedlambda4_132 = erased
 -- Class.Functor.Instances.Functor-List⁺
 d_Functor'45'List'8314'_140 ::
-  MAlonzo.Code.Class.Functor.Core.T_Functor_14
+  MAlonzo.Code.Class.Functor.Core.T_Functor_16
 d_Functor'45'List'8314'_140
   = coe
-      MAlonzo.Code.Class.Functor.Core.C_constructor_32
+      MAlonzo.Code.Class.Functor.Core.C_constructor_34
       (\ v0 v1 v2 v3 v4 v5 ->
          coe MAlonzo.Code.Data.List.NonEmpty.Base.du_map_98 v4 v5)
 -- Class.Functor.Instances.Functor-Vec
 d_Functor'45'Vec_264 ::
-  Integer -> MAlonzo.Code.Class.Functor.Core.T_Functor_14
+  Integer -> MAlonzo.Code.Class.Functor.Core.T_Functor_16
 d_Functor'45'Vec_264 ~v0 = du_Functor'45'Vec_264
 du_Functor'45'Vec_264 ::
-  MAlonzo.Code.Class.Functor.Core.T_Functor_14
+  MAlonzo.Code.Class.Functor.Core.T_Functor_16
 du_Functor'45'Vec_264
   = coe
-      MAlonzo.Code.Class.Functor.Core.C_constructor_32
+      MAlonzo.Code.Class.Functor.Core.C_constructor_34
       (coe (\ v0 v1 v2 v3 -> coe MAlonzo.Code.Data.Vec.Base.du_map_178))
 -- Class.Functor.Instances.Functor-TC
-d_Functor'45'TC_438 :: MAlonzo.Code.Class.Functor.Core.T_Functor_14
+d_Functor'45'TC_438 :: MAlonzo.Code.Class.Functor.Core.T_Functor_16
 d_Functor'45'TC_438
   = coe
-      MAlonzo.Code.Class.Functor.Core.C_constructor_32
+      MAlonzo.Code.Class.Functor.Core.C_constructor_34
       (coe
          (\ v0 v1 v2 v3 v4 v5 ->
             coe
@@ -120,26 +120,26 @@ d_Functor'45'TC_438
                    (coe v4 v6))))
 -- Class.Functor.Instances.Functor-Abs
 d_Functor'45'Abs_444 ::
-  MAlonzo.Code.Class.Functor.Core.T_Functor_14
+  MAlonzo.Code.Class.Functor.Core.T_Functor_16
 d_Functor'45'Abs_444
   = coe
-      MAlonzo.Code.Class.Functor.Core.C_constructor_32
+      MAlonzo.Code.Class.Functor.Core.C_constructor_34
       (\ v0 v1 v2 v3 v4 v5 ->
          coe MAlonzo.Code.Reflection.AST.Abstraction.du_map_22 v4 v5)
 -- Class.Functor.Instances.Functor-Arg
 d_Functor'45'Arg_450 ::
-  MAlonzo.Code.Class.Functor.Core.T_Functor_14
+  MAlonzo.Code.Class.Functor.Core.T_Functor_16
 d_Functor'45'Arg_450
   = coe
-      MAlonzo.Code.Class.Functor.Core.C_constructor_32
+      MAlonzo.Code.Class.Functor.Core.C_constructor_34
       (\ v0 v1 v2 v3 v4 v5 ->
          coe MAlonzo.Code.Reflection.AST.Argument.du_map_54 v4 v5)
 -- Class.Functor.Instances.Functor-∃Vec
 d_Functor'45''8707'Vec_456 ::
-  MAlonzo.Code.Class.Functor.Core.T_Functor_14
+  MAlonzo.Code.Class.Functor.Core.T_Functor_16
 d_Functor'45''8707'Vec_456
   = coe
-      MAlonzo.Code.Class.Functor.Core.C_constructor_32
+      MAlonzo.Code.Class.Functor.Core.C_constructor_34
       (coe
          (\ v0 v1 v2 v3 v4 v5 ->
             case coe v5 of

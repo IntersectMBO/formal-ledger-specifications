@@ -211,9 +211,9 @@ du_nonZero'45'1'47'n_2640 ::
   MAlonzo.Code.Data.Nat.Base.T_NonZero_112
 du_nonZero'45'1'47'n_2640 v0 v1
   = coe
-      MAlonzo.Code.Data.Rational.Properties.du_pos'8658'nonZero_3004
+      MAlonzo.Code.Data.Rational.Properties.du_pos'8658'nonZero_3256
       (coe
-         MAlonzo.Code.Data.Rational.Base.du__'47'__156 (coe (1 :: Integer))
+         MAlonzo.Code.Data.Rational.Base.du__'47'__162 (coe (1 :: Integer))
          (coe v0))
 -- Ledger.Conway.Conformance.Rewards._.nonZero-max-1
 d_nonZero'45'max'45'1_2642 ::
@@ -407,7 +407,7 @@ d_Δf_2668 v0
 -- Ledger.Conway.Conformance.Rewards._.RewardUpdate.Δf-nonpositive
 d_Δf'45'nonpositive_2670 ::
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_3016 ->
-  MAlonzo.Code.Data.Integer.Base.T__'8804'__26
+  MAlonzo.Code.Data.Integer.Base.T__'8804'__48
 d_Δf'45'nonpositive_2670 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δf'45'nonpositive_3048
@@ -429,7 +429,7 @@ d_Δt_2674 v0
 -- Ledger.Conway.Conformance.Rewards._.RewardUpdate.Δt-nonnegative
 d_Δt'45'nonnegative_2676 ::
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_3016 ->
-  MAlonzo.Code.Data.Integer.Base.T__'8804'__26
+  MAlonzo.Code.Data.Integer.Base.T__'8804'__48
 d_Δt'45'nonnegative_2676 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δt'45'nonnegative_3046

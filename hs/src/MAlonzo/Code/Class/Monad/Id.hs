@@ -26,23 +26,23 @@ import qualified MAlonzo.Code.Class.Monad.Core
 d_Id_6 :: MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> ()
 d_Id_6 = erased
 -- Class.Monad.Id.Functor-Id
-d_Functor'45'Id_8 :: MAlonzo.Code.Class.Functor.Core.T_Functor_14
+d_Functor'45'Id_8 :: MAlonzo.Code.Class.Functor.Core.T_Functor_16
 d_Functor'45'Id_8
   = coe
-      MAlonzo.Code.Class.Functor.Core.C_constructor_32
+      MAlonzo.Code.Class.Functor.Core.C_constructor_34
       (coe (\ v0 v1 v2 v3 v4 -> v4))
 -- Class.Monad.Id.Applicative-Id
 d_Applicative'45'Id_10 ::
-  MAlonzo.Code.Class.Applicative.Core.T_Applicative_8
+  MAlonzo.Code.Class.Applicative.Core.T_Applicative_10
 d_Applicative'45'Id_10
   = coe
-      MAlonzo.Code.Class.Applicative.Core.C_constructor_58
+      MAlonzo.Code.Class.Applicative.Core.C_mkApplicative_60
       (coe d_Functor'45'Id_8) (coe (\ v0 v1 v2 -> v2))
       (coe (\ v0 v1 v2 v3 v4 -> v4))
 -- Class.Monad.Id.Monad-Id
-d_Monad'45'Id_12 :: MAlonzo.Code.Class.Monad.Core.T_Monad_8
+d_Monad'45'Id_12 :: MAlonzo.Code.Class.Monad.Core.T_Monad_10
 d_Monad'45'Id_12
   = coe
-      MAlonzo.Code.Class.Monad.Core.C_constructor_68
+      MAlonzo.Code.Class.Monad.Core.C_mkMonad_62
       (coe d_Applicative'45'Id_10) (coe (\ v0 v1 v2 -> v2))
       (coe (\ v0 v1 v2 v3 v4 v5 -> coe v5 v4))

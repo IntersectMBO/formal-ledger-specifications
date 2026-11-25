@@ -43,7 +43,7 @@ d_ActiveSlotCoeff_14 ::
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_ActiveSlotCoeff_14 v0
   = coe
-      MAlonzo.Code.Data.Rational.Base.du__'47'__156
+      MAlonzo.Code.Data.Rational.Base.du__'47'__162
       (coe MAlonzo.Code.Data.Integer.Base.d_1ℤ_16) (coe (20 :: Integer))
 -- Ledger.Conway.Foreign.Core.Implementation.StabilityWindowᶜ
 d_StabilityWindow'7580'_16 :: Integer
@@ -104,9 +104,9 @@ d_ExUnit'45'CommutativeMonoid_44
       (coe
          MAlonzo.Code.Algebra.Construct.DirectProduct.du_commutativeMonoid_1546
          (coe
-            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476)
+            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716)
          (coe
-            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
+            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716))
 -- Ledger.Conway.Foreign.Core.Implementation.Show-ExUnits
 d_Show'45'ExUnits_46 :: MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'ExUnits_46
