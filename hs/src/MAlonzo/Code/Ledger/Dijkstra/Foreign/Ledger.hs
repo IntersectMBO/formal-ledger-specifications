@@ -185,7 +185,7 @@ d_HasGState'45'LedgerState_42
       MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasGState'45'LedgerState_3988
 -- Ledger.Dijkstra.Foreign.Ledger._.HasGovState-LedgerState
 d_HasGovState'45'LedgerState_44 ::
-  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_HasGovState_2140
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.T_HasGovState_2142
 d_HasGovState'45'LedgerState_44
   = coe
       MAlonzo.Code.Ledger.Dijkstra.Specification.Ledger.du_HasGovState'45'LedgerState_3982
