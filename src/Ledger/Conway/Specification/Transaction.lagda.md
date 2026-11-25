@@ -71,9 +71,11 @@ record TransactionStructure : Type₁ where
   field
 ```
 
-*Abstract types*
+*Abstract types and output index conversion*
 ```agda
     Ix TxId AuxiliaryData POSIXTimeRange : Type
+
+    natToIx : ℕ → Ix
 ```
 
 <!--
