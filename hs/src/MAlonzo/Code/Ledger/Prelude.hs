@@ -106,9 +106,9 @@ d__'47''8320'__26 ::
   Integer -> Integer -> MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d__'47''8320'__26 v0 v1
   = case coe v1 of
-      0 -> coe MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
+      0 -> coe MAlonzo.Code.Data.Rational.Base.d_0ℚ_184
       _ -> coe
-             MAlonzo.Code.Data.Rational.Base.du__'47'__156 (coe v0) (coe v1)
+             MAlonzo.Code.Data.Rational.Base.du__'47'__162 (coe v0) (coe v1)
 -- Ledger.Prelude._÷₀_
 d__'247''8320'__34 ::
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6 ->
@@ -116,18 +116,18 @@ d__'247''8320'__34 ::
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d__'247''8320'__34 v0 v1
   = let v2
-          = MAlonzo.Code.Data.Rational.Properties.d__'8799'__2792
-              (coe v1) (coe MAlonzo.Code.Data.Rational.Base.d_0ℚ_178) in
+          = MAlonzo.Code.Data.Rational.Properties.d__'8799'__3028
+              (coe v1) (coe MAlonzo.Code.Data.Rational.Base.d_0ℚ_184) in
     coe
       (case coe v2 of
          MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v3 v4
            -> if coe v3
                 then coe
-                       seq (coe v4) (coe MAlonzo.Code.Data.Rational.Base.d_0ℚ_178)
+                       seq (coe v4) (coe MAlonzo.Code.Data.Rational.Base.d_0ℚ_184)
                 else coe
                        seq (coe v4)
                        (coe
-                          MAlonzo.Code.Data.Rational.Base.du__'247'__312 (coe v0) (coe v1))
+                          MAlonzo.Code.Data.Rational.Base.du__'247'__318 (coe v0) (coe v1))
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Ledger.Prelude.⟦_⟧
 d_'10214'_'10215'_52 ::
@@ -268,7 +268,7 @@ du_concatMap'737'_126 v0 v1
                (coe
                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
             (coe
-               MAlonzo.Code.Class.Functor.Core.du_fmap_22
+               MAlonzo.Code.Class.Functor.Core.du_fmap_24
                MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92 () erased
                () erased v0 v1)))
 -- Ledger.Prelude.indexedSumL-proj₂-zero

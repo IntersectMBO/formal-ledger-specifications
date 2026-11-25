@@ -336,8 +336,8 @@ d_Dec'45'EvalNativeScript_276 v0
       MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Native.du_Dec'45'EvalNativeScript_394
       (coe d___12 (coe v0)) (coe du___14)
       (coe
-         MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+         MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
 -- Ledger.Dijkstra.Foreign.Script.Structure._.EvalNativeScript
 d_EvalNativeScript_280 a0 a1 a2 a3 a4 = ()
 -- Ledger.Dijkstra.Foreign.Script.Structure._.NativeScript
@@ -385,7 +385,7 @@ d_DecEq'45'HSNativeScript_362 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'HSNativeScript_362 v0
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (coe
          (\ v1 ->
             case coe v1 of
@@ -401,23 +401,23 @@ d_DecEq'45'HSNativeScript_362 v0
                                             MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Native.du_DecEq'45'NativeScript_340
                                             (coe d___12 (coe v0)) (coe du___14)
                                             (coe
-                                               MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+                                               MAlonzo.Code.Class.DecEq.Core.C_constructor_26
                                                (coe
-                                                  MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796)))
+                                                  MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032)))
                                          v2 v6 in
                                coe
                                  (case coe v9 of
                                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v10 v11
                                       -> if coe v10
                                            then let v12
-                                                      = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                      = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
                                                           (coe v3) (coe v7) in
                                                 coe
                                                   (case coe v12 of
                                                      MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v13 v14
                                                        -> if coe v13
                                                             then let v15
-                                                                       = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+                                                                       = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
                                                                            (coe v4) (coe v8) in
                                                                  coe
                                                                    (case coe v15 of
@@ -461,8 +461,8 @@ d_HSP1ScriptStructure_364 v0
            MAlonzo.Code.Ledger.Dijkstra.Specification.Script.Native.du_Dec'45'EvalNativeScript_394
            (coe d___12 (coe v0)) (coe du___14)
            (coe
-              MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-              (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+              MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+              (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
            (coe v1) (coe v2) (coe v3) (coe d_nativeScript_352 (coe v4)))
       (coe du_Hashable'45'HSNativeScript_360)
       (d_DecEq'45'HSNativeScript_362 (coe v0))
@@ -584,15 +584,15 @@ d_HSP2ScriptStructure_398 v0
          (coe
             MAlonzo.Code.Algebra.Construct.DirectProduct.du_commutativeMonoid_1546
             (coe
-               MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476)
+               MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716)
             (coe
-               MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476)))
+               MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3716)))
       (coe du_Hashable'45'HSPlutusScript_412)
       (coe
-         MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+         MAlonzo.Code.Class.DecEq.Core.C_constructor_26
          (\ v1 v2 -> coe MAlonzo.Code.Data.Unit.Properties.du__'8799'__8))
       (coe
-         MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+         MAlonzo.Code.Class.DecEq.Core.C_constructor_26
          (\ v1 v2 -> coe MAlonzo.Code.Data.Unit.Properties.du__'8799'__8))
       (coe
          MAlonzo.Code.Class.Show.Core.C_mkShow_18
@@ -615,7 +615,7 @@ d_HSP2ScriptStructure_398 v0
          (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
          (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
       (coe
-         MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+         MAlonzo.Code.Class.DecEq.Core.C_constructor_26
          (\ v1 v2 -> coe MAlonzo.Code.Data.Unit.Properties.du__'8799'__8))
       (coe
          MAlonzo.Code.Class.Show.Instances.du_Show'45''215'_6

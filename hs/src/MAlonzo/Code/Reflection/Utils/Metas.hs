@@ -19,7 +19,9 @@ import qualified MAlonzo.RTE
 import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Bool
 import qualified MAlonzo.Code.Agda.Builtin.List
+import qualified MAlonzo.Code.Agda.Builtin.Maybe
 import qualified MAlonzo.Code.Agda.Builtin.Reflection
+import qualified MAlonzo.Code.Data.Bool.ListAction
 import qualified MAlonzo.Code.Data.List.Base
 
 -- Reflection.Utils.Metas.isMeta
@@ -121,3 +123,39 @@ d_'46'extendedlambda3_46 v0
                -> coe d_findMetasCl_14 v2
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
+-- Reflection.Utils.Metas.metaId
+d_metaId_54 ::
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> Maybe AgdaAny
+d_metaId_54 v0
+  = let v1 = coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18 in
+    coe
+      (case coe v0 of
+         MAlonzo.Code.Agda.Builtin.Reflection.C_meta_214 v2 v3
+           -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 (coe v2)
+         _ -> coe v1)
+-- Reflection.Utils.Metas.findMetaIds
+d_findMetaIds_58 ::
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> [AgdaAny]
+d_findMetaIds_58 v0
+  = coe
+      MAlonzo.Code.Data.List.Base.du_mapMaybe_258 (coe d_metaId_54)
+      (coe d_findMetas_10 v0)
+-- Reflection.Utils.Metas.firstMeta
+d_firstMeta_60 ::
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> Maybe AgdaAny
+d_firstMeta_60 v0
+  = coe
+      MAlonzo.Code.Data.List.Base.du_head_516
+      (coe d_findMetaIds_58 (coe v0))
+-- Reflection.Utils.Metas.shareMeta
+d_shareMeta_62 :: [AgdaAny] -> [AgdaAny] -> Bool
+d_shareMeta_62 v0 v1
+  = coe
+      MAlonzo.Code.Data.Bool.ListAction.du_any_14
+      (coe
+         (\ v2 ->
+            coe
+              MAlonzo.Code.Data.Bool.ListAction.du_any_14
+              (coe MAlonzo.Code.Agda.Builtin.Reflection.d_primMetaEquality_40 v2)
+              (coe v1)))
+      (coe v0)

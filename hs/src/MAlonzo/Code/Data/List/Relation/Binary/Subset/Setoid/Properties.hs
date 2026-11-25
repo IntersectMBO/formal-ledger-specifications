@@ -1365,8 +1365,7 @@ du_'8838''8759''8743''8713''8658''8838'_912 v0 v1 v2 v3 v4 v5
       (case coe v6 of
          MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v7
            -> coe
-                MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                erased
+                MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
          MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v7 -> coe v7 v5
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Data.List.Relation.Binary.Subset.Setoid.Properties._._._⊆_

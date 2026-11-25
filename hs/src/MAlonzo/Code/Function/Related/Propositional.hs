@@ -626,10 +626,10 @@ du_step'45''10518'_246 v0
       (coe
          (\ v1 v2 v3 ->
             coe
-              MAlonzo.Code.Function.Base.du__'8728''8242'__216
+              MAlonzo.Code.Function.Base.du__'8728''8242'__230
               (coe du_K'45'trans_164 (coe v0))
               (coe
-                 MAlonzo.Code.Function.Base.du__'8728''8242'__216
+                 MAlonzo.Code.Function.Base.du__'8728''8242'__230
                  (coe du_'8596''8658'_82 (coe v0))
                  (coe
                     MAlonzo.Code.Function.Properties.Bijection.du_'10518''8658''8596'_130))))
@@ -658,10 +658,10 @@ du_step'45''11067'_248 v0
       (coe
          (\ v1 v2 v3 ->
             coe
-              MAlonzo.Code.Function.Base.du__'8728''8242'__216
+              MAlonzo.Code.Function.Base.du__'8728''8242'__230
               (coe du_K'45'trans_164 (coe v0))
               (coe
-                 MAlonzo.Code.Function.Base.du__'8728''8242'__216
+                 MAlonzo.Code.Function.Base.du__'8728''8242'__230
                  (coe du_'8596''8658'_82 (coe v0))
                  (coe
                     MAlonzo.Code.Function.Properties.Bijection.du_'10518''8658''8596'_130))))
@@ -694,7 +694,7 @@ du_step'45''8596''45''10216'_252 v0
       (coe
          (\ v1 v2 v3 ->
             coe
-              MAlonzo.Code.Function.Base.du__'8728''8242'__216
+              MAlonzo.Code.Function.Base.du__'8728''8242'__230
               (coe du_K'45'trans_164 (coe v0))
               (coe du_'8596''8658'_82 (coe v0))))
       (coe
@@ -725,7 +725,7 @@ du_step'45''8596''45''10217'_254 v0
       (coe
          (\ v1 v2 v3 ->
             coe
-              MAlonzo.Code.Function.Base.du__'8728''8242'__216
+              MAlonzo.Code.Function.Base.du__'8728''8242'__230
               (coe du_K'45'trans_164 (coe v0))
               (coe du_'8596''8658'_82 (coe v0))))
 -- Function.Related.Propositional.EquationalReasoning._._._∎

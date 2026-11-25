@@ -57,7 +57,7 @@ du_record'45'equality_24 ::
   (AgdaAny -> AgdaAny) -> MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_record'45'equality_24 v0 v1
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (coe
          (\ v2 v3 ->
             coe
@@ -215,7 +215,7 @@ d_derive'45'single_62 v0 v1 v2
            (case coe v3 of
               MAlonzo.Code.Agda.Builtin.Reflection.C_record'45'type_296 v5 v6
                 -> coe
-                     MAlonzo.Code.Class.Monad.Core.du__'62''62'__24
+                     MAlonzo.Code.Class.Monad.Core.du__'62''62'__26
                      MAlonzo.Code.Meta.Init.d_iMonad'45'TC_4 () ()
                      (coe
                         MAlonzo.Code.Reflection.TCI.d_declareDef_122
@@ -401,19 +401,19 @@ d_derive'45'DecEqRecord_92 v0 v1
                (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
          (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))
       (coe
-         MAlonzo.Code.Class.Monad.Core.du__'62''62'__24
+         MAlonzo.Code.Class.Monad.Core.du__'62''62'__26
          (coe
-            MAlonzo.Code.Class.MonadReader.du_Monad'45'ReaderT_108
+            MAlonzo.Code.Class.MonadReader.du_Monad'45'ReaderT_112
             (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6))
          (coe ()) (coe ())
          (coe
-            MAlonzo.Code.Class.Traversable.Core.du_traverse_46
+            MAlonzo.Code.Class.Traversable.Core.du_traverse_50
             (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_92)
             (coe
                MAlonzo.Code.Class.Traversable.Instances.d_TraversableM'45'List_28)
-            (coe ()) (coe ())
+            (coe (\ v2 -> v2)) (coe ()) (coe ())
             (coe
-               MAlonzo.Code.Class.MonadReader.du_Monad'45'ReaderT_108
+               MAlonzo.Code.Class.MonadReader.du_Monad'45'ReaderT_112
                (coe MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6))
             (coe
                MAlonzo.Code.Data.Product.Base.du_uncurry_244

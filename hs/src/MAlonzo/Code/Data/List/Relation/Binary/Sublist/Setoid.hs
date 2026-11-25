@@ -291,7 +291,7 @@ du_antisym_218 ::
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
 du_antisym_218
   = coe
-      MAlonzo.Code.Data.List.Relation.Binary.Sublist.Heterogeneous.Properties.du_antisym_1184
+      MAlonzo.Code.Data.List.Relation.Binary.Sublist.Heterogeneous.Properties.du_antisym_1196
       (coe (\ v0 v1 v2 v3 -> v2))
 -- Data.List.Relation.Binary.Sublist.Setoid.⊆-isPreorder
 d_'8838''45'isPreorder_220 ::
@@ -335,7 +335,7 @@ du_'8838''45'isPartialOrder_222 v0
       MAlonzo.Code.Relation.Binary.Structures.C_constructor_294
       (coe du_'8838''45'isPreorder_220 (coe v0))
       (coe
-         MAlonzo.Code.Data.List.Relation.Binary.Sublist.Heterogeneous.Properties.du_antisym_1184
+         MAlonzo.Code.Data.List.Relation.Binary.Sublist.Heterogeneous.Properties.du_antisym_1196
          (coe (\ v1 v2 v3 v4 -> v3)))
 -- Data.List.Relation.Binary.Sublist.Setoid.⊆-preorder
 d_'8838''45'preorder_224 ::

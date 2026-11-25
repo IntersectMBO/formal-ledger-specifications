@@ -67,7 +67,7 @@ d__'8799'__14 v0 v1
       MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
       erased erased
       (coe
-         MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+         MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
          (coe MAlonzo.Code.Agda.Builtin.Char.d_primCharToNat_28 v0)
          (coe MAlonzo.Code.Agda.Builtin.Char.d_primCharToNat_28 v1))
 -- Data.Char.Properties.setoid
@@ -89,11 +89,11 @@ d_isDecEquivalence_24
   = coe
       MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_isDecEquivalence_398
       (coe d__'8799'__14)
--- Data.Char.Properties._==_
-d__'61''61'__26 ::
+-- Data.Char.Properties._≡ᵇ_
+d__'8801''7495'__26 ::
   MAlonzo.Code.Agda.Builtin.Char.T_Char_6 ->
   MAlonzo.Code.Agda.Builtin.Char.T_Char_6 -> Bool
-d__'61''61'__26 v0 v1
+d__'8801''7495'__26 v0 v1
   = coe
       MAlonzo.Code.Relation.Nullary.Decidable.Core.du_isYes_132
       (coe d__'8799'__14 (coe v0) (coe v1))
@@ -106,7 +106,7 @@ d__'60''63'__44
   = coe
       MAlonzo.Code.Relation.Binary.Construct.On.du_decidable_102
       (coe MAlonzo.Code.Agda.Builtin.Char.d_primCharToNat_28)
-      (coe MAlonzo.Code.Data.Nat.Properties.d__'60''63'__3172)
+      (coe MAlonzo.Code.Data.Nat.Properties.d__'60''63'__3412)
 -- Data.Char.Properties.<-cmp
 d_'60''45'cmp_46 ::
   MAlonzo.Code.Agda.Builtin.Char.T_Char_6 ->
@@ -125,7 +125,7 @@ d_'60''45'cmp_46 v0 v1
                     erased
                     (\ v4 ->
                        coe
-                         MAlonzo.Code.Data.Nat.Properties.du_'8801''8658''8801''7495'_2786
+                         MAlonzo.Code.Data.Nat.Properties.du_'8801''8658''8801''7495'_3022
                          (coe MAlonzo.Code.Agda.Builtin.Char.d_primCharToNat_28 v0))
                     (coe
                        MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
@@ -162,7 +162,7 @@ d_'60''45'cmp_46 v0 v1
                                           (coe
                                              MAlonzo.Code.Relation.Binary.Definitions.C_tri'60'_172
                                              (coe
-                                                MAlonzo.Code.Data.Nat.Properties.du_'60''7495''8658''60'_2824
+                                                MAlonzo.Code.Data.Nat.Properties.du_'60''7495''8658''60'_3064
                                                 (coe v2)))
                                    else coe
                                           seq
@@ -172,10 +172,10 @@ d_'60''45'cmp_46 v0 v1
                                           (coe
                                              MAlonzo.Code.Relation.Binary.Definitions.C_tri'62'_188
                                              (coe
-                                                MAlonzo.Code.Data.Nat.Properties.du_'8804''8743''8802''8658''60'_3060
+                                                MAlonzo.Code.Data.Nat.Properties.du_'8804''8743''8802''8658''60'_3300
                                                 (coe v2)
                                                 (coe
-                                                   MAlonzo.Code.Data.Nat.Properties.du_'8814''8658''8805'_3044
+                                                   MAlonzo.Code.Data.Nat.Properties.du_'8814''8658''8805'_3284
                                                    (coe v2) (coe v3))))))
                _ -> MAlonzo.RTE.mazUnreachableError)))
 -- Data.Char.Properties.<-irrefl
@@ -200,7 +200,7 @@ d_'60''45'trans_88 v0 v1 v2
       (coe MAlonzo.Code.Agda.Builtin.Char.d_primCharToNat_28)
       (\ v3 v4 v5 v6 v7 ->
          coe
-           MAlonzo.Code.Data.Nat.Properties.du_'60''45'trans_3122 v4 v6 v7)
+           MAlonzo.Code.Data.Nat.Properties.du_'60''45'trans_3362 v4 v6 v7)
       (coe v0) (coe v1) (coe v2)
 -- Data.Char.Properties.<-asym
 d_'60''45'asym_96 ::
@@ -371,7 +371,7 @@ d__'8776''63'__166 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d__'8776''63'__166 v0 v1
   = coe
-      MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
+      MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032
       (coe MAlonzo.Code.Agda.Builtin.Char.d_primCharToNat_28 v0)
       (coe MAlonzo.Code.Agda.Builtin.Char.d_primCharToNat_28 v1)
 -- Data.Char.Properties.≈-isEquivalence
@@ -418,7 +418,7 @@ d_'60''45'isStrictPartialOrder'45''8776'_184
       MAlonzo.Code.Relation.Binary.Construct.On.du_isStrictPartialOrder_374
       (coe MAlonzo.Code.Agda.Builtin.Char.d_primCharToNat_28)
       (coe
-         MAlonzo.Code.Data.Nat.Properties.d_'60''45'isStrictPartialOrder_3188)
+         MAlonzo.Code.Data.Nat.Properties.d_'60''45'isStrictPartialOrder_3428)
 -- Data.Char.Properties.<-isStrictTotalOrder-≈
 d_'60''45'isStrictTotalOrder'45''8776'_186 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsStrictTotalOrder_624
@@ -427,7 +427,7 @@ d_'60''45'isStrictTotalOrder'45''8776'_186
       MAlonzo.Code.Relation.Binary.Construct.On.du_isStrictTotalOrder_530
       (coe MAlonzo.Code.Agda.Builtin.Char.d_primCharToNat_28)
       (coe
-         MAlonzo.Code.Data.Nat.Properties.d_'60''45'isStrictTotalOrder_3190)
+         MAlonzo.Code.Data.Nat.Properties.d_'60''45'isStrictTotalOrder_3430)
 -- Data.Char.Properties.<-strictPartialOrder-≈
 d_'60''45'strictPartialOrder'45''8776'_188 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_StrictPartialOrder_760
@@ -435,7 +435,7 @@ d_'60''45'strictPartialOrder'45''8776'_188
   = coe
       MAlonzo.Code.Relation.Binary.Construct.On.du_strictPartialOrder_626
       (coe
-         MAlonzo.Code.Data.Nat.Properties.d_'60''45'strictPartialOrder_3192)
+         MAlonzo.Code.Data.Nat.Properties.d_'60''45'strictPartialOrder_3432)
       (coe MAlonzo.Code.Agda.Builtin.Char.d_primCharToNat_28)
 -- Data.Char.Properties.<-strictTotalOrder-≈
 d_'60''45'strictTotalOrder'45''8776'_190 ::
@@ -444,5 +444,10 @@ d_'60''45'strictTotalOrder'45''8776'_190
   = coe
       MAlonzo.Code.Relation.Binary.Construct.On.du_strictTotalOrder_650
       (coe
-         MAlonzo.Code.Data.Nat.Properties.d_'60''45'strictTotalOrder_3194)
+         MAlonzo.Code.Data.Nat.Properties.d_'60''45'strictTotalOrder_3434)
       (coe MAlonzo.Code.Agda.Builtin.Char.d_primCharToNat_28)
+-- Data.Char.Properties._==_
+d__'61''61'__192 ::
+  MAlonzo.Code.Agda.Builtin.Char.T_Char_6 ->
+  MAlonzo.Code.Agda.Builtin.Char.T_Char_6 -> Bool
+d__'61''61'__192 = coe d__'8801''7495'__26

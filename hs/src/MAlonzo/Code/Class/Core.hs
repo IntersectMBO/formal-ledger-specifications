@@ -24,18 +24,44 @@ d_Type'91'_'8605'_'93'_8 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 -> ()
 d_Type'91'_'8605'_'93'_8 = erased
+-- Class.Core.Level↑
+d_Level'8593'_14 :: ()
+d_Level'8593'_14 = erased
 -- Class.Core.Type↑
-d_Type'8593'_14 :: ()
-d_Type'8593'_14 = erased
+d_Type'8593'_20 ::
+  (MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+   MAlonzo.Code.Agda.Primitive.T_Level_18) ->
+  ()
+d_Type'8593'_20 = erased
+-- Class.Core.Type[_∣_↝_]
+d_Type'91'_'8739'_'8605'_'93'_36 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 -> ()
+d_Type'91'_'8739'_'8605'_'93'_36 = erased
+-- Class.Core.Level↑²
+d_Level'8593''178'_44 :: ()
+d_Level'8593''178'_44 = erased
+-- Class.Core.Type↑²
+d_Type'8593''178'_46 ::
+  (MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+   MAlonzo.Code.Agda.Primitive.T_Level_18) ->
+  ()
+d_Type'8593''178'_46 = erased
 -- Class.Core._._¹
-d__'185'_24 ::
+d__'185'_66 ::
+  (MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+   MAlonzo.Code.Agda.Primitive.T_Level_18) ->
   (MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> ()) ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 -> (AgdaAny -> ()) -> ()
-d__'185'_24 = erased
+d__'185'_66 = erased
 -- Class.Core._._²
-d__'178'_30 ::
+d__'178'_72 ::
+  (MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+   MAlonzo.Code.Agda.Primitive.T_Level_18) ->
   (MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> ()) ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -43,9 +69,11 @@ d__'178'_30 ::
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) -> ()
-d__'178'_30 = erased
+d__'178'_72 = erased
 -- Class.Core._._³
-d__'179'_38 ::
+d__'179'_80 ::
+  (MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+   MAlonzo.Code.Agda.Primitive.T_Level_18) ->
   (MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> ()) ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -55,4 +83,4 @@ d__'179'_38 ::
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> AgdaAny -> ()) -> ()
-d__'179'_38 = erased
+d__'179'_80 = erased

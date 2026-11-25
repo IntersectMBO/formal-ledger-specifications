@@ -161,7 +161,7 @@ du_assoc'691'_96
       du_'91'_'44'_'93''8242'_66
       (coe du_map'8322'_94 (coe C_inj'8321'_38))
       (coe
-         MAlonzo.Code.Function.Base.du__'8728''8242'__216
+         MAlonzo.Code.Function.Base.du__'8728''8242'__230
          (coe C_inj'8322'_42) (coe C_inj'8322'_42))
 -- Data.Sum.Base.assocˡ
 d_assoc'737'_98 ::
@@ -177,7 +177,7 @@ du_assoc'737'_98
   = coe
       du_'91'_'44'_'93''8242'_66
       (coe
-         MAlonzo.Code.Function.Base.du__'8728''8242'__216
+         MAlonzo.Code.Function.Base.du__'8728''8242'__230
          (coe C_inj'8321'_38) (coe C_inj'8321'_38))
       (coe du_map'8321'_90 (coe C_inj'8322'_42))
 -- Data.Sum.Base._-⊎-_

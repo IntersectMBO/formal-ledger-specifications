@@ -26,10 +26,10 @@ import qualified MAlonzo.Code.Data.Maybe.Base
 
 -- Class.Foldable.Instances.Foldable-List
 d_Foldable'45'List_6 ::
-  MAlonzo.Code.Class.Foldable.Core.T_Foldable_10
+  MAlonzo.Code.Class.Foldable.Core.T_Foldable_12
 d_Foldable'45'List_6
   = coe
-      MAlonzo.Code.Class.Foldable.Core.C_constructor_30
+      MAlonzo.Code.Class.Foldable.Core.C_constructor_32
       (coe
          (\ v0 v1 v2 v3 ->
             coe
@@ -38,10 +38,10 @@ d_Foldable'45'List_6
               (coe MAlonzo.Code.Class.Monoid.Core.d_ε_20 (coe v3))))
 -- Class.Foldable.Instances.Foldable-Maybe
 d_Foldable'45'Maybe_8 ::
-  MAlonzo.Code.Class.Foldable.Core.T_Foldable_10
+  MAlonzo.Code.Class.Foldable.Core.T_Foldable_12
 d_Foldable'45'Maybe_8
   = coe
-      MAlonzo.Code.Class.Foldable.Core.C_constructor_30
+      MAlonzo.Code.Class.Foldable.Core.C_constructor_32
       (coe
          (\ v0 v1 v2 v3 ->
             coe
@@ -49,10 +49,10 @@ d_Foldable'45'Maybe_8
               (MAlonzo.Code.Class.Monoid.Core.d_ε_20 (coe v3))))
 -- Class.Foldable.Instances.Foldable-List⁺
 d_Foldable'45'List'8314'_10 ::
-  MAlonzo.Code.Class.Foldable.Core.T_Foldable_10
+  MAlonzo.Code.Class.Foldable.Core.T_Foldable_12
 d_Foldable'45'List'8314'_10
   = coe
-      MAlonzo.Code.Class.Foldable.Core.C_constructor_30
+      MAlonzo.Code.Class.Foldable.Core.C_constructor_32
       (coe
          (\ v0 v1 v2 v3 v4 ->
             case coe v4 of

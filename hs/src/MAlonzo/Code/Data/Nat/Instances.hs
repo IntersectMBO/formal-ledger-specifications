@@ -27,10 +27,10 @@ d_ℕ'45''8801''45'isDecEquivalence_6 ::
 d_ℕ'45''8801''45'isDecEquivalence_6
   = coe
       MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_isDecEquivalence_398
-      (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796)
+      (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032)
 -- Data.Nat.Instances.ℕ-≤-isDecTotalOrder
 d_ℕ'45''8804''45'isDecTotalOrder_8 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsDecTotalOrder_546
 d_ℕ'45''8804''45'isDecTotalOrder_8
   = coe
-      MAlonzo.Code.Data.Nat.Properties.d_'8804''45'isDecTotalOrder_2958
+      MAlonzo.Code.Data.Nat.Properties.d_'8804''45'isDecTotalOrder_3198

@@ -57,55 +57,56 @@ d_Convertible'8322'_48 ::
   (() -> () -> ()) -> (() -> () -> ()) -> ()
 d_Convertible'8322'_48 = erased
 -- Class.Convertible.Core.Functor⇒Convertible
-d_Functor'8658'Convertible_60 ::
+d_Functor'8658'Convertible_62 ::
   (MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> ()) ->
-  MAlonzo.Code.Class.Functor.Core.T_Functor_14 ->
+  MAlonzo.Code.Class.Functor.Core.T_Functor_16 ->
   () -> () -> T_Convertible_10 -> T_Convertible_10
-d_Functor'8658'Convertible_60 ~v0 v1 ~v2 ~v3 v4
-  = du_Functor'8658'Convertible_60 v1 v4
-du_Functor'8658'Convertible_60 ::
-  MAlonzo.Code.Class.Functor.Core.T_Functor_14 ->
+d_Functor'8658'Convertible_62 ~v0 v1 ~v2 ~v3 v4
+  = du_Functor'8658'Convertible_62 v1 v4
+du_Functor'8658'Convertible_62 ::
+  MAlonzo.Code.Class.Functor.Core.T_Functor_16 ->
   T_Convertible_10 -> T_Convertible_10
-du_Functor'8658'Convertible_60 v0 v1
+du_Functor'8658'Convertible_62 v0 v1
   = coe
       C_constructor_24
       (coe
-         MAlonzo.Code.Class.Functor.Core.du_fmap_22 v0 () erased () erased
+         MAlonzo.Code.Class.Functor.Core.du_fmap_24 v0 () erased () erased
          (d_to_20 (coe v1)))
       (coe
-         MAlonzo.Code.Class.Functor.Core.du_fmap_22 v0 () erased () erased
+         MAlonzo.Code.Class.Functor.Core.du_fmap_24 v0 () erased () erased
          (d_from_22 (coe v1)))
 -- Class.Convertible.Core.Bifunctor⇒Convertible
-d_Bifunctor'8658'Convertible_66 ::
-  (() -> () -> ()) ->
+d_Bifunctor'8658'Convertible_72 ::
+  (MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+   MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> () -> ()) ->
   MAlonzo.Code.Class.Bifunctor.T_Bifunctor_82 ->
   () ->
   () ->
   T_Convertible_10 ->
   () -> () -> T_Convertible_10 -> T_Convertible_10
-d_Bifunctor'8658'Convertible_66 ~v0 v1 ~v2 ~v3 v4 ~v5 ~v6 v7
-  = du_Bifunctor'8658'Convertible_66 v1 v4 v7
-du_Bifunctor'8658'Convertible_66 ::
+d_Bifunctor'8658'Convertible_72 ~v0 v1 ~v2 ~v3 v4 ~v5 ~v6 v7
+  = du_Bifunctor'8658'Convertible_72 v1 v4 v7
+du_Bifunctor'8658'Convertible_72 ::
   MAlonzo.Code.Class.Bifunctor.T_Bifunctor_82 ->
   T_Convertible_10 -> T_Convertible_10 -> T_Convertible_10
-du_Bifunctor'8658'Convertible_66 v0 v1 v2
+du_Bifunctor'8658'Convertible_72 v0 v1 v2
   = coe
       C_constructor_24
       (coe
-         MAlonzo.Code.Class.Bifunctor.d_bimap_104 v0 erased erased erased
-         erased (d_to_20 (coe v1)) (d_to_20 (coe v2)))
+         MAlonzo.Code.Class.Bifunctor.d_bimap_104 v0 () () erased erased
+         erased erased (d_to_20 (coe v1)) (d_to_20 (coe v2)))
       (coe
-         MAlonzo.Code.Class.Bifunctor.d_bimap_104 v0 erased erased erased
-         erased (d_from_22 (coe v1)) (d_from_22 (coe v2)))
+         MAlonzo.Code.Class.Bifunctor.d_bimap_104 v0 () () erased erased
+         erased erased (d_from_22 (coe v1)) (d_from_22 (coe v2)))
 -- Class.Convertible.Core._⨾_
-d__'10814'__76 ::
+d__'10814'__82 ::
   () ->
   () ->
   () -> T_Convertible_10 -> T_Convertible_10 -> T_Convertible_10
-d__'10814'__76 ~v0 ~v1 ~v2 v3 v4 = du__'10814'__76 v3 v4
-du__'10814'__76 ::
+d__'10814'__82 ~v0 ~v1 ~v2 v3 v4 = du__'10814'__82 v3 v4
+du__'10814'__82 ::
   T_Convertible_10 -> T_Convertible_10 -> T_Convertible_10
-du__'10814'__76 v0 v1
+du__'10814'__82 v0 v1
   = coe
       C_constructor_24 (coe (\ v2 -> coe d_to_20 v1 (coe d_to_20 v0 v2)))
       (coe (\ v2 -> coe d_from_22 v0 (coe d_from_22 v1 v2)))

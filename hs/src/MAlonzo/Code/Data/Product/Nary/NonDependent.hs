@@ -137,7 +137,7 @@ du_curry'8345'_150 v0 v1
       0 -> coe v1 (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
       1 -> coe v1
       _ -> coe
-             MAlonzo.Code.Function.Base.du__'8728''8242'__216
+             MAlonzo.Code.Function.Base.du__'8728''8242'__230
              (coe du_curry'8345'_150 (coe subInt (coe v0) (coe (1 :: Integer))))
              (coe MAlonzo.Code.Data.Product.Base.du_curry_224 (coe v1))
 -- Data.Product.Nary.NonDependent.uncurryₙ
@@ -157,7 +157,7 @@ du_uncurry'8345'_170 v0 v1
       _ -> coe
              MAlonzo.Code.Data.Product.Base.du_uncurry_244
              (coe
-                MAlonzo.Code.Function.Base.du__'8728''8242'__216
+                MAlonzo.Code.Function.Base.du__'8728''8242'__230
                 (coe
                    du_uncurry'8345'_170 (coe subInt (coe v0) (coe (1 :: Integer))))
                 (coe v1))
@@ -178,7 +178,7 @@ du_curry'8868''8345'_190 v0 v1
       _ -> let v2 = subInt (coe v0) (coe (1 :: Integer)) in
            coe
              (coe
-                MAlonzo.Code.Function.Base.du__'8728''8242'__216
+                MAlonzo.Code.Function.Base.du__'8728''8242'__230
                 (coe du_curry'8868''8345'_190 (coe v2))
                 (coe MAlonzo.Code.Data.Product.Base.du_curry_224 (coe v1)))
 -- Data.Product.Nary.NonDependent.uncurry⊤ₙ
@@ -200,7 +200,7 @@ du_uncurry'8868''8345'_208 v0 v1
              (coe
                 MAlonzo.Code.Data.Product.Base.du_uncurry_244
                 (coe
-                   MAlonzo.Code.Function.Base.du__'8728''8242'__216
+                   MAlonzo.Code.Function.Base.du__'8728''8242'__230
                    (coe du_uncurry'8868''8345'_208 (coe v2)) (coe v1)))
 -- Data.Product.Nary.NonDependent.Product⊤-dec
 d_Product'8868''45'dec_222 ::
@@ -226,7 +226,7 @@ du_Product'8868''45'dec_222 v0 v1
              (case coe v1 of
                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v3 v4
                   -> coe
-                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                        (coe v3) (coe du_Product'8868''45'dec_222 (coe v2) (coe v4))
                 _ -> MAlonzo.RTE.mazUnreachableError)
 -- Data.Product.Nary.NonDependent.Product-dec
@@ -251,7 +251,7 @@ du_Product'45'dec_236 v0 v1
       _ -> case coe v1 of
              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v2 v3
                -> coe
-                    MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+                    MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                     (coe v2)
                     (coe
                        du_Product'45'dec_236 (coe subInt (coe v0) (coe (1 :: Integer)))

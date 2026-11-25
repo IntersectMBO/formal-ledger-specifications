@@ -175,7 +175,7 @@ du_'8801''45'dec_60 v0 v1 v2 v3
                     (coe MAlonzo.Code.Data.Product.Base.du_uncurry_244 erased)
                     (coe du_these'45'injective_58)
                     (coe
-                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
                        (coe v0 v4 v6) (coe v1 v5 v7))
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError

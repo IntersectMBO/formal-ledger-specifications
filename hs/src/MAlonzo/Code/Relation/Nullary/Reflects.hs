@@ -61,7 +61,7 @@ du_recompute_46 v0
       C_of'696'_22 v1 -> coe v1
       C_of'8319'_26
         -> coe
-             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction'45'irr_38
+             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction'45'irr_62
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Nullary.Reflects.recompute-constant
 d_recompute'45'constant_62 ::
@@ -249,8 +249,7 @@ du__'8594''45'reflects__118 v0 v1 v2
              (coe
                 (\ v4 ->
                    coe
-                     MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                     erased))
+                     MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Nullary.Reflects.fromEquivalence
 d_fromEquivalence_136 ::

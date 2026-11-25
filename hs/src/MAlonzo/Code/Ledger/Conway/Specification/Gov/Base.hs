@@ -1682,7 +1682,7 @@ d_paramsUpdateWellFormed'63'_1100 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_paramsUpdateWellFormed'63'_1100 v0
   = coe
-      MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8594''45'dec__106
+      MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8594''63'__106
       (coe
          MAlonzo.Code.Class.Decidable.Core.d_dec_16
          (coe
@@ -2220,7 +2220,7 @@ d_NonZero'45'SlotsPerEpoch'7580'_1226 v0
       (coe d_globalConstants_1206 (coe v0))
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.Positive-ActiveSlotCoeff
 d_Positive'45'ActiveSlotCoeff_1228 ::
-  T_GovStructure_10 -> MAlonzo.Code.Data.Integer.Base.T_Positive_134
+  T_GovStructure_10 -> MAlonzo.Code.Data.Integer.Base.T_Positive_174
 d_Positive'45'ActiveSlotCoeff_1228 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Epoch.d_Positive'45'ActiveSlotCoeff_342

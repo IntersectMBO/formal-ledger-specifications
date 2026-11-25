@@ -32,9 +32,9 @@ import qualified MAlonzo.Code.Relation.Binary.Reflection
 -- Data.Nat.Solver.+-*-Solver._*H_
 d__'42'H__8 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508
 d__'42'H__8
   = let v0 = MAlonzo.Code.Level.d_0ℓ_22 in
     coe
@@ -42,14 +42,14 @@ d__'42'H__8
        coe
          (let v2
                 = coe
-                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
                     (coe
-                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
           coe
-            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796 in
+            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032 in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Solver.Ring.d__'42'H__752 (coe v0) (coe v0)
+                  MAlonzo.Code.Algebra.Solver.Ring.d__'42'H__754 (coe v0) (coe v0)
                   (coe v1) (coe v1)
                   (coe
                      MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_rawRing_346
@@ -64,9 +64,9 @@ d__'42'H__8
 -- Data.Nat.Solver.+-*-Solver._*HN_
 d__'42'HN__10 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508
 d__'42'HN__10
   = let v0 = MAlonzo.Code.Level.d_0ℓ_22 in
     coe
@@ -74,14 +74,14 @@ d__'42'HN__10
        coe
          (let v2
                 = coe
-                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
                     (coe
-                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
           coe
-            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796 in
+            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032 in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Solver.Ring.d__'42'HN__750 (coe v0) (coe v0)
+                  MAlonzo.Code.Algebra.Solver.Ring.d__'42'HN__752 (coe v0) (coe v0)
                   (coe v1) (coe v1)
                   (coe
                      MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_rawRing_346
@@ -96,9 +96,9 @@ d__'42'HN__10
 -- Data.Nat.Solver.+-*-Solver._*N_
 d__'42'N__12 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510
 d__'42'N__12
   = let v0 = MAlonzo.Code.Level.d_0ℓ_22 in
     coe
@@ -106,14 +106,14 @@ d__'42'N__12
        coe
          (let v2
                 = coe
-                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
                     (coe
-                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
           coe
-            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796 in
+            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032 in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Solver.Ring.d__'42'N__754 (coe v0) (coe v0)
+                  MAlonzo.Code.Algebra.Solver.Ring.d__'42'N__756 (coe v0) (coe v0)
                   (coe v1) (coe v1)
                   (coe
                      MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_rawRing_346
@@ -128,9 +128,9 @@ d__'42'N__12
 -- Data.Nat.Solver.+-*-Solver._*NH_
 d__'42'NH__14 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508
 d__'42'NH__14
   = let v0 = MAlonzo.Code.Level.d_0ℓ_22 in
     coe
@@ -138,14 +138,14 @@ d__'42'NH__14
        coe
          (let v2
                 = coe
-                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
                     (coe
-                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
           coe
-            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796 in
+            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032 in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Solver.Ring.d__'42'NH__748 (coe v0) (coe v0)
+                  MAlonzo.Code.Algebra.Solver.Ring.d__'42'NH__750 (coe v0) (coe v0)
                   (coe v1) (coe v1)
                   (coe
                      MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_rawRing_346
@@ -160,9 +160,9 @@ d__'42'NH__14
 -- Data.Nat.Solver.+-*-Solver._*x+H_
 d__'42'x'43'H__20 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508
 d__'42'x'43'H__20
   = let v0 = MAlonzo.Code.Level.d_0ℓ_22 in
     coe
@@ -170,14 +170,14 @@ d__'42'x'43'H__20
        coe
          (let v2
                 = coe
-                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
                     (coe
-                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
           coe
-            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796 in
+            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032 in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Solver.Ring.d__'42'x'43'H__736 (coe v0)
+                  MAlonzo.Code.Algebra.Solver.Ring.d__'42'x'43'H__738 (coe v0)
                   (coe v0) (coe v1) (coe v1)
                   (coe
                      MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_rawRing_346
@@ -192,9 +192,9 @@ d__'42'x'43'H__20
 -- Data.Nat.Solver.+-*-Solver._*x+HN_
 d__'42'x'43'HN__22 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508
 d__'42'x'43'HN__22
   = let v0 = MAlonzo.Code.Level.d_0ℓ_22 in
     coe
@@ -202,14 +202,14 @@ d__'42'x'43'HN__22
        coe
          (let v2
                 = coe
-                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
                     (coe
-                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
           coe
-            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796 in
+            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032 in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Solver.Ring.d__'42'x'43'HN__692 (coe v0)
+                  MAlonzo.Code.Algebra.Solver.Ring.d__'42'x'43'HN__694 (coe v0)
                   (coe v0) (coe v1) (coe v1)
                   (coe
                      MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_rawRing_346
@@ -224,9 +224,9 @@ d__'42'x'43'HN__22
 -- Data.Nat.Solver.+-*-Solver._+H_
 d__'43'H__24 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508
 d__'43'H__24
   = let v0 = MAlonzo.Code.Level.d_0ℓ_22 in
     coe
@@ -234,14 +234,14 @@ d__'43'H__24
        coe
          (let v2
                 = coe
-                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
                     (coe
-                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
           coe
-            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796 in
+            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032 in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Solver.Ring.d__'43'H__712 (coe v0) (coe v0)
+                  MAlonzo.Code.Algebra.Solver.Ring.d__'43'H__714 (coe v0) (coe v0)
                   (coe v1) (coe v1)
                   (coe
                      MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_rawRing_346
@@ -256,9 +256,9 @@ d__'43'H__24
 -- Data.Nat.Solver.+-*-Solver._+N_
 d__'43'N__26 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510
 d__'43'N__26
   = let v0 = MAlonzo.Code.Level.d_0ℓ_22 in
     coe
@@ -266,14 +266,14 @@ d__'43'N__26
        coe
          (let v2
                 = coe
-                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
                     (coe
-                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
           coe
-            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796 in
+            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032 in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Solver.Ring.d__'43'N__714 (coe v0) (coe v0)
+                  MAlonzo.Code.Algebra.Solver.Ring.d__'43'N__716 (coe v0) (coe v0)
                   (coe v1) (coe v1)
                   (coe
                      MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_rawRing_346
@@ -287,37 +287,37 @@ d__'43'N__26
                      (coe v3))))))
 -- Data.Nat.Solver.+-*-Solver._:*_
 d__'58''42'__28 ::
-  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_426 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_426 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_426
+  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_428 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_428 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_428
 d__'58''42'__28
   = coe
-      MAlonzo.Code.Algebra.Solver.Ring.C_op_436
-      (coe MAlonzo.Code.Algebra.Solver.Ring.C_'91''42''93'_422)
+      MAlonzo.Code.Algebra.Solver.Ring.C_op_438
+      (coe MAlonzo.Code.Algebra.Solver.Ring.C_'91''42''93'_424)
 -- Data.Nat.Solver.+-*-Solver._:+_
 d__'58''43'__30 ::
-  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_426 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_426 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_426
+  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_428 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_428 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_428
 d__'58''43'__30
   = coe
-      MAlonzo.Code.Algebra.Solver.Ring.C_op_436
-      (coe MAlonzo.Code.Algebra.Solver.Ring.C_'91''43''93'_420)
+      MAlonzo.Code.Algebra.Solver.Ring.C_op_438
+      (coe MAlonzo.Code.Algebra.Solver.Ring.C_'91''43''93'_422)
 -- Data.Nat.Solver.+-*-Solver._:-_
 d__'58''45'__32 ::
-  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_426 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_426 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_426
+  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_428 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_428 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_428
 d__'58''45'__32 v0 v1
   = coe
-      MAlonzo.Code.Algebra.Solver.Ring.C_op_436
-      (coe MAlonzo.Code.Algebra.Solver.Ring.C_'91''43''93'_420) (coe v0)
-      (coe MAlonzo.Code.Algebra.Solver.Ring.C_'58''45'__454 (coe v1))
+      MAlonzo.Code.Algebra.Solver.Ring.C_op_438
+      (coe MAlonzo.Code.Algebra.Solver.Ring.C_'91''43''93'_422) (coe v0)
+      (coe MAlonzo.Code.Algebra.Solver.Ring.C_'58''45'__456 (coe v1))
 -- Data.Nat.Solver.+-*-Solver._⊜_
 d__'8860'__34 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_426 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_426 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_428 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_428 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d__'8860'__34 v0
   = coe MAlonzo.Code.Relation.Binary.Reflection.du__'8860'__142
@@ -325,18 +325,18 @@ d__'8860'__34 v0
 d__'58''215'__38 ::
   Integer ->
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_426 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_426
+  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_428 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_428
 d__'58''215'__38
   = let v0
           = coe
-              MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+              MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
               (coe
-                 MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                 MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
     coe
       (\ v1 v2 v3 ->
          coe
-           MAlonzo.Code.Algebra.Solver.Ring.du__'58''215'__466
+           MAlonzo.Code.Algebra.Solver.Ring.du__'58''215'__468
            (coe
               MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_rawRing_346
               (coe v0))
@@ -344,8 +344,8 @@ d__'58''215'__38
 -- Data.Nat.Solver.+-*-Solver._^N_
 d__'94'N__40 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
-  Integer -> MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
+  Integer -> MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510
 d__'94'N__40
   = let v0 = MAlonzo.Code.Level.d_0ℓ_22 in
     coe
@@ -353,14 +353,14 @@ d__'94'N__40
        coe
          (let v2
                 = coe
-                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
                     (coe
-                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
           coe
-            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796 in
+            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032 in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Solver.Ring.d__'94'N__824 (coe v0) (coe v0)
+                  MAlonzo.Code.Algebra.Solver.Ring.d__'94'N__826 (coe v0) (coe v0)
                   (coe v1) (coe v1)
                   (coe
                      MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_rawRing_346
@@ -379,9 +379,9 @@ d__'8776'N__44 a0 a1 a2 = ()
 -- Data.Nat.Solver.+-*-Solver._≟H_
 d__'8799'H__46 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
-  Maybe MAlonzo.Code.Algebra.Solver.Ring.T__'8776'H__536
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
+  Maybe MAlonzo.Code.Algebra.Solver.Ring.T__'8776'H__538
 d__'8799'H__46
   = let v0 = MAlonzo.Code.Level.d_0ℓ_22 in
     coe
@@ -389,14 +389,14 @@ d__'8799'H__46
        coe
          (let v2
                 = coe
-                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
                     (coe
-                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
           coe
-            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796 in
+            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032 in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Solver.Ring.d__'8799'H__568 (coe v0) (coe v0)
+                  MAlonzo.Code.Algebra.Solver.Ring.d__'8799'H__570 (coe v0) (coe v0)
                   (coe v1) (coe v1)
                   (coe
                      MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_rawRing_346
@@ -411,9 +411,9 @@ d__'8799'H__46
 -- Data.Nat.Solver.+-*-Solver._≟N_
 d__'8799'N__48 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
-  Maybe MAlonzo.Code.Algebra.Solver.Ring.T__'8776'N__538
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
+  Maybe MAlonzo.Code.Algebra.Solver.Ring.T__'8776'N__540
 d__'8799'N__48
   = let v0 = MAlonzo.Code.Level.d_0ℓ_22 in
     coe
@@ -421,14 +421,14 @@ d__'8799'N__48
        coe
          (let v2
                 = coe
-                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
                     (coe
-                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
           coe
-            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796 in
+            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032 in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Solver.Ring.d__'8799'N__570 (coe v0) (coe v0)
+                  MAlonzo.Code.Algebra.Solver.Ring.d__'8799'N__572 (coe v0) (coe v0)
                   (coe v1) (coe v1)
                   (coe
                      MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_rawRing_346
@@ -443,16 +443,16 @@ d__'8799'N__48
 -- Data.Nat.Solver.+-*-Solver.*H-homo
 d_'42'H'45'homo_50 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
   MAlonzo.Code.Data.Vec.Base.T_Vec_28 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_'42'H'45'homo_50 = erased
 -- Data.Nat.Solver.+-*-Solver.*HN-homo
 d_'42'HN'45'homo_52 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
   Integer ->
   MAlonzo.Code.Data.Vec.Base.T_Vec_28 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
@@ -460,16 +460,16 @@ d_'42'HN'45'homo_52 = erased
 -- Data.Nat.Solver.+-*-Solver.*N-homo
 d_'42'N'45'homo_54 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
   MAlonzo.Code.Data.Vec.Base.T_Vec_28 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_'42'N'45'homo_54 = erased
 -- Data.Nat.Solver.+-*-Solver.*NH-homo
 d_'42'NH'45'homo_56 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
   Integer ->
   MAlonzo.Code.Data.Vec.Base.T_Vec_28 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
@@ -477,8 +477,8 @@ d_'42'NH'45'homo_56 = erased
 -- Data.Nat.Solver.+-*-Solver.*x+H-homo
 d_'42'x'43'H'45'homo_58 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
   Integer ->
   MAlonzo.Code.Data.Vec.Base.T_Vec_28 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
@@ -486,32 +486,32 @@ d_'42'x'43'H'45'homo_58 = erased
 -- Data.Nat.Solver.+-*-Solver.*x+HN≈*x+
 d_'42'x'43'HN'8776''42'x'43'_60 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
   MAlonzo.Code.Data.Vec.Base.T_Vec_28 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_'42'x'43'HN'8776''42'x'43'_60 = erased
 -- Data.Nat.Solver.+-*-Solver.+H-homo
 d_'43'H'45'homo_62 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
   MAlonzo.Code.Data.Vec.Base.T_Vec_28 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_'43'H'45'homo_62 = erased
 -- Data.Nat.Solver.+-*-Solver.+N-homo
 d_'43'N'45'homo_64 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
   MAlonzo.Code.Data.Vec.Base.T_Vec_28 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_'43'N'45'homo_64 = erased
 -- Data.Nat.Solver.+-*-Solver.-H_
 d_'45'H__66 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508
 d_'45'H__66
   = let v0 = MAlonzo.Code.Level.d_0ℓ_22 in
     coe
@@ -519,14 +519,14 @@ d_'45'H__66
        coe
          (let v2
                 = coe
-                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
                     (coe
-                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
           coe
-            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796 in
+            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032 in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Solver.Ring.d_'45'H__832 (coe v0) (coe v0)
+                  MAlonzo.Code.Algebra.Solver.Ring.d_'45'H__834 (coe v0) (coe v0)
                   (coe v1) (coe v1)
                   (coe
                      MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_rawRing_346
@@ -541,15 +541,15 @@ d_'45'H__66
 -- Data.Nat.Solver.+-*-Solver.-H‿-homo
 d_'45'H'8255''45'homo_68 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
   MAlonzo.Code.Data.Vec.Base.T_Vec_28 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_'45'H'8255''45'homo_68 = erased
 -- Data.Nat.Solver.+-*-Solver.-N_
 d_'45'N__70 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510
 d_'45'N__70
   = let v0 = MAlonzo.Code.Level.d_0ℓ_22 in
     coe
@@ -557,14 +557,14 @@ d_'45'N__70
        coe
          (let v2
                 = coe
-                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
                     (coe
-                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
           coe
-            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796 in
+            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032 in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Solver.Ring.d_'45'N__834 (coe v0) (coe v0)
+                  MAlonzo.Code.Algebra.Solver.Ring.d_'45'N__836 (coe v0) (coe v0)
                   (coe v1) (coe v1)
                   (coe
                      MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_rawRing_346
@@ -579,26 +579,26 @@ d_'45'N__70
 -- Data.Nat.Solver.+-*-Solver.-N‿-homo
 d_'45'N'8255''45'homo_72 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
   MAlonzo.Code.Data.Vec.Base.T_Vec_28 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_'45'N'8255''45'homo_72 = erased
 -- Data.Nat.Solver.+-*-Solver.0H
-d_0H_74 :: Integer -> MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506
+d_0H_74 :: Integer -> MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508
 d_0H_74 ~v0 = du_0H_74
-du_0H_74 :: MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506
-du_0H_74 = coe MAlonzo.Code.Algebra.Solver.Ring.C_'8709'_510
+du_0H_74 :: MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508
+du_0H_74 = coe MAlonzo.Code.Algebra.Solver.Ring.C_'8709'_512
 -- Data.Nat.Solver.+-*-Solver.0N
-d_0N_76 :: Integer -> MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508
+d_0N_76 :: Integer -> MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510
 d_0N_76
   = let v0
           = coe
-              MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+              MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
               (coe
-                 MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                 MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
     coe
       (coe
-         MAlonzo.Code.Algebra.Solver.Ring.du_0N_680
+         MAlonzo.Code.Algebra.Solver.Ring.du_0N_682
          (coe
             MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_rawRing_346
             (coe v0)))
@@ -611,13 +611,13 @@ d_0N'45'homo_78 = erased
 -- Data.Nat.Solver.+-*-Solver.0≈⟦0⟧
 d_0'8776''10214'0'10215'_80 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T__'8776'N__538 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T__'8776'N__540 ->
   MAlonzo.Code.Data.Vec.Base.T_Vec_28 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_0'8776''10214'0'10215'_80 = erased
 -- Data.Nat.Solver.+-*-Solver.1H
-d_1H_82 :: Integer -> MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506
+d_1H_82 :: Integer -> MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508
 d_1H_82
   = let v0 = MAlonzo.Code.Level.d_0ℓ_22 in
     coe
@@ -625,14 +625,14 @@ d_1H_82
        coe
          (let v2
                 = coe
-                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
                     (coe
-                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
           coe
-            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796 in
+            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032 in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Solver.Ring.d_1H_684 (coe v0) (coe v0)
+                  MAlonzo.Code.Algebra.Solver.Ring.d_1H_686 (coe v0) (coe v0)
                   (coe v1) (coe v1)
                   (coe
                      MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_rawRing_346
@@ -645,7 +645,7 @@ d_1H_82
                      MAlonzo.Code.Relation.Binary.Consequences.du_dec'8658'weaklyDec_856
                      (coe v3))))))
 -- Data.Nat.Solver.+-*-Solver.1N
-d_1N_84 :: Integer -> MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508
+d_1N_84 :: Integer -> MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510
 d_1N_84
   = let v0 = MAlonzo.Code.Level.d_0ℓ_22 in
     coe
@@ -653,14 +653,14 @@ d_1N_84
        coe
          (let v2
                 = coe
-                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
                     (coe
-                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
           coe
-            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796 in
+            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032 in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Solver.Ring.d_1N_686 (coe v0) (coe v0)
+                  MAlonzo.Code.Algebra.Solver.Ring.d_1N_688 (coe v0) (coe v0)
                   (coe v1) (coe v1)
                   (coe
                      MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_rawRing_346
@@ -692,7 +692,7 @@ d_Polynomial_98 a0 = ()
 -- Data.Nat.Solver.+-*-Solver.^N-homo
 d_'94'N'45'homo_104 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
   Integer ->
   MAlonzo.Code.Data.Vec.Base.T_Vec_28 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
@@ -700,7 +700,7 @@ d_'94'N'45'homo_104 = erased
 -- Data.Nat.Solver.+-*-Solver.correct
 d_correct_112 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_426 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_428 ->
   MAlonzo.Code.Data.Vec.Base.T_Vec_28 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_correct_112 = erased
@@ -721,8 +721,8 @@ d_correct'45'var_116 = erased
 -- Data.Nat.Solver.+-*-Solver.normalise
 d_normalise_118 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_426 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508
+  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_428 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510
 d_normalise_118
   = let v0 = MAlonzo.Code.Level.d_0ℓ_22 in
     coe
@@ -730,14 +730,14 @@ d_normalise_118
        coe
          (let v2
                 = coe
-                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
                     (coe
-                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
           coe
-            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796 in
+            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032 in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Solver.Ring.d_normalise_854 (coe v0) (coe v0)
+                  MAlonzo.Code.Algebra.Solver.Ring.d_normalise_856 (coe v0) (coe v0)
                   (coe v1) (coe v1)
                   (coe
                      MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_rawRing_346
@@ -751,7 +751,7 @@ d_normalise_118
                      (coe v3))))))
 -- Data.Nat.Solver.+-*-Solver.normalise-con
 d_normalise'45'con_120 ::
-  Integer -> Integer -> MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508
+  Integer -> Integer -> MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510
 d_normalise'45'con_120
   = let v0 = MAlonzo.Code.Level.d_0ℓ_22 in
     coe
@@ -759,14 +759,14 @@ d_normalise'45'con_120
        coe
          (let v2
                 = coe
-                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
                     (coe
-                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
           coe
-            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796 in
+            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032 in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Solver.Ring.d_normalise'45'con_842 (coe v0)
+                  MAlonzo.Code.Algebra.Solver.Ring.d_normalise'45'con_844 (coe v0)
                   (coe v0) (coe v1) (coe v1)
                   (coe
                      MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_rawRing_346
@@ -782,7 +782,7 @@ d_normalise'45'con_120
 d_normalise'45'var_122 ::
   Integer ->
   MAlonzo.Code.Data.Fin.Base.T_Fin_10 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510
 d_normalise'45'var_122
   = let v0 = MAlonzo.Code.Level.d_0ℓ_22 in
     coe
@@ -790,14 +790,14 @@ d_normalise'45'var_122
        coe
          (let v2
                 = coe
-                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
                     (coe
-                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
           coe
-            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796 in
+            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032 in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Solver.Ring.d_normalise'45'var_850 (coe v0)
+                  MAlonzo.Code.Algebra.Solver.Ring.d_normalise'45'var_852 (coe v0)
                   (coe v0) (coe v1) (coe v1)
                   (coe
                      MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_rawRing_346
@@ -813,22 +813,22 @@ d_normalise'45'var_122
 d_prove_130 ::
   Integer ->
   MAlonzo.Code.Data.Vec.Base.T_Vec_28 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_426 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_426 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_428 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_428 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_prove_130 = erased
 -- Data.Nat.Solver.+-*-Solver.sem
 d_sem_132 ::
-  MAlonzo.Code.Algebra.Solver.Ring.T_Op_418 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Op_420 ->
   Integer -> Integer -> Integer
 d_sem_132
   = let v0
           = coe
-              MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+              MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
               (coe
-                 MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
-    coe (coe MAlonzo.Code.Algebra.Solver.Ring.du_sem_474 (coe v0))
+                 MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
+    coe (coe MAlonzo.Code.Algebra.Solver.Ring.du_sem_476 (coe v0))
 -- Data.Nat.Solver.+-*-Solver.solve
 d_solve_134 :: Integer -> AgdaAny -> AgdaAny -> AgdaAny
 d_solve_134
@@ -838,11 +838,11 @@ d_solve_134
        coe
          (let v2
                 = coe
-                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
                     (coe
-                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
           coe
-            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796 in
+            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032 in
              coe
                (let v4
                       = coe
@@ -862,40 +862,40 @@ d_solve_134
                         (coe
                            MAlonzo.Code.Relation.Binary.Reflection.du_solve_114
                            (coe
-                              MAlonzo.Code.Algebra.Structures.du_setoid_202
+                              MAlonzo.Code.Algebra.Structures.du_setoid_204
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                                 MAlonzo.Code.Algebra.Structures.d_isMagma_498
                                  (coe
-                                    MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                    MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                     (coe
-                                       MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                       MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                        (coe
-                                          MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1556
+                                          MAlonzo.Code.Algebra.Structures.d_'43''45'isCommutativeMonoid_1558
                                           (coe
-                                             MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1654
+                                             MAlonzo.Code.Algebra.Structures.d_isSemiringWithoutAnnihilatingZero_1656
                                              (coe
-                                                MAlonzo.Code.Algebra.Structures.d_isSemiring_1764
+                                                MAlonzo.Code.Algebra.Structures.d_isSemiring_1766
                                                 (coe
                                                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.d_isCommutativeSemiring_62
                                                    (coe
                                                       MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.d_isAlmostCommutativeRing_216
                                                       (coe v2))))))))))
-                           (coe (\ v7 -> coe MAlonzo.Code.Algebra.Solver.Ring.C_var_444))
+                           (coe (\ v7 -> coe MAlonzo.Code.Algebra.Solver.Ring.C_var_446))
                            (\ v7 v8 v9 ->
                               coe
-                                MAlonzo.Code.Algebra.Solver.Ring.du_'10214'_'10215'_478 (coe v2)
+                                MAlonzo.Code.Algebra.Solver.Ring.du_'10214'_'10215'_480 (coe v2)
                                 (coe v5) v8 v9)
                            (coe
-                              MAlonzo.Code.Algebra.Solver.Ring.d_'10214'_'10215''8595'_874
+                              MAlonzo.Code.Algebra.Solver.Ring.d_'10214'_'10215''8595'_876
                               (coe v0) (coe v0) (coe v1) (coe v1) (coe v4) (coe v2) (coe v5)
                               (coe v6))
                            (coe
-                              MAlonzo.Code.Algebra.Solver.Ring.d_correct_1320 (coe v0) (coe v0)
+                              MAlonzo.Code.Algebra.Solver.Ring.d_correct_1322 (coe v0) (coe v0)
                               (coe v1) (coe v1) (coe v4) (coe v2) (coe v5) (coe v6)))))))))
 -- Data.Nat.Solver.+-*-Solver.∅*x+HN-homo
 d_'8709''42'x'43'HN'45'homo_142 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
   Integer ->
   MAlonzo.Code.Data.Vec.Base.T_Vec_28 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
@@ -903,18 +903,18 @@ d_'8709''42'x'43'HN'45'homo_142 = erased
 -- Data.Nat.Solver.+-*-Solver.⟦_⟧
 d_'10214'_'10215'_144 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_426 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_428 ->
   MAlonzo.Code.Data.Vec.Base.T_Vec_28 -> Integer
 d_'10214'_'10215'_144
   = let v0
           = coe
-              MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+              MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
               (coe
-                 MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                 MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
     coe
       (\ v1 v2 v3 ->
          coe
-           MAlonzo.Code.Algebra.Solver.Ring.du_'10214'_'10215'_478 (coe v0)
+           MAlonzo.Code.Algebra.Solver.Ring.du_'10214'_'10215'_480 (coe v0)
            (coe
               MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_'45'raw'45'almostCommutative'10230'_780
               (coe v0))
@@ -922,7 +922,7 @@ d_'10214'_'10215'_144
 -- Data.Nat.Solver.+-*-Solver.⟦_⟧H
 d_'10214'_'10215'H_146 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
   MAlonzo.Code.Data.Vec.Base.T_Vec_28 -> Integer
 d_'10214'_'10215'H_146
   = let v0 = MAlonzo.Code.Level.d_0ℓ_22 in
@@ -931,14 +931,14 @@ d_'10214'_'10215'H_146
        coe
          (let v2
                 = coe
-                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
                     (coe
-                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
           coe
-            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796 in
+            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032 in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Solver.Ring.d_'10214'_'10215'H_518 (coe v0)
+                  MAlonzo.Code.Algebra.Solver.Ring.d_'10214'_'10215'H_520 (coe v0)
                   (coe v0) (coe v1) (coe v1)
                   (coe
                      MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_rawRing_346
@@ -953,16 +953,16 @@ d_'10214'_'10215'H_146
 -- Data.Nat.Solver.+-*-Solver.⟦_⟧H-cong
 d_'10214'_'10215'H'45'cong_148 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_506 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T__'8776'H__536 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_HNF_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T__'8776'H__538 ->
   MAlonzo.Code.Data.Vec.Base.T_Vec_28 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_'10214'_'10215'H'45'cong_148 = erased
 -- Data.Nat.Solver.+-*-Solver.⟦_⟧N
 d_'10214'_'10215'N_150 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
   MAlonzo.Code.Data.Vec.Base.T_Vec_28 -> Integer
 d_'10214'_'10215'N_150
   = let v0 = MAlonzo.Code.Level.d_0ℓ_22 in
@@ -971,14 +971,14 @@ d_'10214'_'10215'N_150
        coe
          (let v2
                 = coe
-                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
                     (coe
-                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
           coe
-            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796 in
+            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032 in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Solver.Ring.d_'10214'_'10215'N_520 (coe v0)
+                  MAlonzo.Code.Algebra.Solver.Ring.d_'10214'_'10215'N_522 (coe v0)
                   (coe v0) (coe v1) (coe v1)
                   (coe
                      MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_rawRing_346
@@ -993,16 +993,16 @@ d_'10214'_'10215'N_150
 -- Data.Nat.Solver.+-*-Solver.⟦_⟧N-cong
 d_'10214'_'10215'N'45'cong_152 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_508 ->
-  MAlonzo.Code.Algebra.Solver.Ring.T__'8776'N__538 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Normal_510 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T__'8776'N__540 ->
   MAlonzo.Code.Data.Vec.Base.T_Vec_28 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_'10214'_'10215'N'45'cong_152 = erased
 -- Data.Nat.Solver.+-*-Solver.⟦_⟧↓
 d_'10214'_'10215''8595'_154 ::
   Integer ->
-  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_426 ->
+  MAlonzo.Code.Algebra.Solver.Ring.T_Polynomial_428 ->
   MAlonzo.Code.Data.Vec.Base.T_Vec_28 -> Integer
 d_'10214'_'10215''8595'_154
   = let v0 = MAlonzo.Code.Level.d_0ℓ_22 in
@@ -1011,14 +1011,14 @@ d_'10214'_'10215''8595'_154
        coe
          (let v2
                 = coe
-                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1506
+                    MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_fromCommutativeSemiring_1508
                     (coe
-                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_3888) in
+                       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'commutativeSemiring_4136) in
           coe
-            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796 in
+            (let v3 = MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032 in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Solver.Ring.d_'10214'_'10215''8595'_874
+                  MAlonzo.Code.Algebra.Solver.Ring.d_'10214'_'10215''8595'_876
                   (coe v0) (coe v0) (coe v1) (coe v1)
                   (coe
                      MAlonzo.Code.Algebra.Solver.Ring.AlmostCommutativeRing.du_rawRing_346

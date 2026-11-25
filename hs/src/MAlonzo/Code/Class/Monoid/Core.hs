@@ -38,116 +38,116 @@ d_ε_26 v0 = coe d_ε_20 (coe v0)
 -- Class.Monoid.Core._.MonoidLaws
 d_MonoidLaws_42 a0 a1 a2 a3 a4 = ()
 newtype T_MonoidLaws_42
-  = C_constructor_314 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+  = C_constructor_318 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Class.Monoid.Core._._.Identity
-d_Identity_90 ::
+d_Identity_92 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Class.Semigroup.Core.T_Semigroup_10 ->
   T_Monoid_12 ->
   MAlonzo.Code.Class.Setoid.Core.T_ISetoid_10 ->
   AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Identity_90 = erased
+d_Identity_92 = erased
 -- Class.Monoid.Core._.MonoidLaws.ε-identity
-d_ε'45'identity_308 ::
+d_ε'45'identity_312 ::
   T_MonoidLaws_42 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_ε'45'identity_308 v0
+d_ε'45'identity_312 v0
   = case coe v0 of
-      C_constructor_314 v1 -> coe v1
+      C_constructor_318 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Class.Monoid.Core._.MonoidLaws.ε-identityˡ
-d_ε'45'identity'737'_310 ::
+d_ε'45'identity'737'_314 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Class.Semigroup.Core.T_Semigroup_10 ->
   T_Monoid_12 ->
   MAlonzo.Code.Class.Setoid.Core.T_ISetoid_10 ->
   T_MonoidLaws_42 -> AgdaAny -> AgdaAny
-d_ε'45'identity'737'_310 ~v0 ~v1 ~v2 ~v3 ~v4 v5
-  = du_ε'45'identity'737'_310 v5
-du_ε'45'identity'737'_310 :: T_MonoidLaws_42 -> AgdaAny -> AgdaAny
-du_ε'45'identity'737'_310 v0
+d_ε'45'identity'737'_314 ~v0 ~v1 ~v2 ~v3 ~v4 v5
+  = du_ε'45'identity'737'_314 v5
+du_ε'45'identity'737'_314 :: T_MonoidLaws_42 -> AgdaAny -> AgdaAny
+du_ε'45'identity'737'_314 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-      (coe d_ε'45'identity_308 (coe v0))
+      (coe d_ε'45'identity_312 (coe v0))
 -- Class.Monoid.Core._.MonoidLaws.ε-identityʳ
-d_ε'45'identity'691'_312 ::
+d_ε'45'identity'691'_316 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Class.Semigroup.Core.T_Semigroup_10 ->
   T_Monoid_12 ->
   MAlonzo.Code.Class.Setoid.Core.T_ISetoid_10 ->
   T_MonoidLaws_42 -> AgdaAny -> AgdaAny
-d_ε'45'identity'691'_312 ~v0 ~v1 ~v2 ~v3 ~v4 v5
-  = du_ε'45'identity'691'_312 v5
-du_ε'45'identity'691'_312 :: T_MonoidLaws_42 -> AgdaAny -> AgdaAny
-du_ε'45'identity'691'_312 v0
+d_ε'45'identity'691'_316 ~v0 ~v1 ~v2 ~v3 ~v4 v5
+  = du_ε'45'identity'691'_316 v5
+du_ε'45'identity'691'_316 :: T_MonoidLaws_42 -> AgdaAny -> AgdaAny
+du_ε'45'identity'691'_316 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
-      (coe d_ε'45'identity_308 (coe v0))
+      (coe d_ε'45'identity_312 (coe v0))
 -- Class.Monoid.Core._.MonoidLaws≡
-d_MonoidLaws'8801'_316 ::
+d_MonoidLaws'8801'_320 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Class.Semigroup.Core.T_Semigroup_10 ->
   T_Monoid_12 -> ()
-d_MonoidLaws'8801'_316 = erased
+d_MonoidLaws'8801'_320 = erased
 -- Class.Monoid.Core._.ε-identity
-d_ε'45'identity_328 ::
+d_ε'45'identity_332 ::
   T_MonoidLaws_42 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_ε'45'identity_328 v0 = coe d_ε'45'identity_308 (coe v0)
+d_ε'45'identity_332 v0 = coe d_ε'45'identity_312 (coe v0)
 -- Class.Monoid.Core._.ε-identityʳ
-d_ε'45'identity'691'_330 ::
+d_ε'45'identity'691'_334 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Class.Semigroup.Core.T_Semigroup_10 ->
   T_Monoid_12 ->
   MAlonzo.Code.Class.Setoid.Core.T_ISetoid_10 ->
   T_MonoidLaws_42 -> AgdaAny -> AgdaAny
-d_ε'45'identity'691'_330 ~v0 ~v1 ~v2 ~v3 ~v4 v5
-  = du_ε'45'identity'691'_330 v5
-du_ε'45'identity'691'_330 :: T_MonoidLaws_42 -> AgdaAny -> AgdaAny
-du_ε'45'identity'691'_330 v0
-  = coe du_ε'45'identity'691'_312 (coe v0)
+d_ε'45'identity'691'_334 ~v0 ~v1 ~v2 ~v3 ~v4 v5
+  = du_ε'45'identity'691'_334 v5
+du_ε'45'identity'691'_334 :: T_MonoidLaws_42 -> AgdaAny -> AgdaAny
+du_ε'45'identity'691'_334 v0
+  = coe du_ε'45'identity'691'_316 (coe v0)
 -- Class.Monoid.Core._.ε-identityˡ
-d_ε'45'identity'737'_332 ::
+d_ε'45'identity'737'_336 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Class.Semigroup.Core.T_Semigroup_10 ->
   T_Monoid_12 ->
   MAlonzo.Code.Class.Setoid.Core.T_ISetoid_10 ->
   T_MonoidLaws_42 -> AgdaAny -> AgdaAny
-d_ε'45'identity'737'_332 ~v0 ~v1 ~v2 ~v3 ~v4 v5
-  = du_ε'45'identity'737'_332 v5
-du_ε'45'identity'737'_332 :: T_MonoidLaws_42 -> AgdaAny -> AgdaAny
-du_ε'45'identity'737'_332 v0
-  = coe du_ε'45'identity'737'_310 (coe v0)
+d_ε'45'identity'737'_336 ~v0 ~v1 ~v2 ~v3 ~v4 v5
+  = du_ε'45'identity'737'_336 v5
+du_ε'45'identity'737'_336 :: T_MonoidLaws_42 -> AgdaAny -> AgdaAny
+du_ε'45'identity'737'_336 v0
+  = coe du_ε'45'identity'737'_314 (coe v0)
 -- Class.Monoid.Core._._.ε-identityʳ
-d_ε'45'identity'691'_352 ::
+d_ε'45'identity'691'_356 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Class.Semigroup.Core.T_Semigroup_10 ->
   T_Monoid_12 ->
   T_MonoidLaws_42 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_ε'45'identity'691'_352 = erased
+d_ε'45'identity'691'_356 = erased
 -- Class.Monoid.Core._._.ε-identityˡ
-d_ε'45'identity'737'_354 ::
+d_ε'45'identity'737'_358 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Class.Semigroup.Core.T_Semigroup_10 ->
   T_Monoid_12 ->
   T_MonoidLaws_42 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_ε'45'identity'737'_354 = erased
+d_ε'45'identity'737'_358 = erased
 -- Class.Monoid.Core._._.ε-identity
-d_ε'45'identity_356 ::
+d_ε'45'identity_360 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Class.Semigroup.Core.T_Semigroup_10 ->
   T_Monoid_12 ->
   T_MonoidLaws_42 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_ε'45'identity_356 ~v0 ~v1 ~v2 ~v3 v4 = du_ε'45'identity_356 v4
-du_ε'45'identity_356 ::
+d_ε'45'identity_360 ~v0 ~v1 ~v2 ~v3 v4 = du_ε'45'identity_360 v4
+du_ε'45'identity_360 ::
   T_MonoidLaws_42 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_ε'45'identity_356 v0 = coe d_ε'45'identity_308 (coe v0)
+du_ε'45'identity_360 v0 = coe d_ε'45'identity_312 (coe v0)

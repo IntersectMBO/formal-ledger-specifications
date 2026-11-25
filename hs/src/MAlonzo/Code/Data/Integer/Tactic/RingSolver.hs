@@ -30,7 +30,7 @@ d_ring_8
   = coe
       MAlonzo.Code.Tactic.RingSolver.Core.AlmostCommutativeRing.du_fromCommutativeRing_1356
       (coe
-         MAlonzo.Code.Data.Integer.Properties.d_'43''45''42''45'commutativeRing_5712)
+         MAlonzo.Code.Data.Integer.Properties.d_'43''45''42''45'commutativeRing_5962)
       (coe
          (\ v0 ->
             let v1 = coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18 in

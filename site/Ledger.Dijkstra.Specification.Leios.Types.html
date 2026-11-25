@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="img/Cardano-RGB_Logo-Icon-White.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -33,7 +33,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
@@ -12346,7 +12346,7 @@ parameter.</p>
 <h3 id="endorser-blocks">Endorser blocks<a class="headerlink" href="#endorser-blocks" title="Permanent link">&para;</a></h3>
 <pre class="Agda"><a id="1044" class="Keyword">record</a> <a id="EndorserBlock"></a><a id="1051" href="Ledger.Dijkstra.Specification.Leios.Types.html#1051" class="Record">EndorserBlock</a> <a id="1065" class="Symbol">:</a> <a id="1067" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1072" class="Keyword">where</a>
   <a id="1080" class="Keyword">field</a>
-    <a id="EndorserBlock.ebTxRefs"></a><a id="1090" href="Ledger.Dijkstra.Specification.Leios.Types.html#1090" class="Field">ebTxRefs</a> <a id="1099" class="Symbol">:</a> <a id="1101" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="1106" class="Symbol">(</a><a id="1107" href="Ledger.Dijkstra.Specification.Crypto.html#3470" class="Field">TxRefHash</a> <a id="1117" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="1119" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a><a id="1120" class="Symbol">)</a>
+    <a id="EndorserBlock.ebTxRefs"></a><a id="1090" href="Ledger.Dijkstra.Specification.Leios.Types.html#1090" class="Field">ebTxRefs</a> <a id="1099" class="Symbol">:</a> <a id="1101" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="1106" class="Symbol">(</a><a id="1107" href="Ledger.Dijkstra.Specification.Crypto.html#3470" class="Field">TxRefHash</a> <a id="1117" href="Data.Product.Base.html#1752" class="Function Operator">×</a> <a id="1119" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a><a id="1120" class="Symbol">)</a>
 </pre>
 <p>An <strong>endorser block</strong> (EB) is the ordered list of its transaction references, each
 the pair of a reference hash and a declared byte size.</p>
@@ -12372,7 +12372,7 @@ data arrives.</p>
 <p>What <code class="AgdaFunction">hashEB</code> deliberately does not fix is the preimage, since
 <code class="AgdaField">hashEBRefs</code> is abstract and no byte-exact serialization of the
 reference list is pinned.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
-<pre class="Agda hidden-source"><a id="2448" class="Keyword">unquoteDecl</a> <a id="DecEq-EndorserBlock"></a><a id="2460" href="Ledger.Dijkstra.Specification.Leios.Types.html#2460" class="Function">DecEq-EndorserBlock</a> <a id="2480" class="Symbol">=</a> <a id="2482" href="Tactic.Derive.DecEq.html#5150" class="Function">derive-DecEq</a> <a id="2495" class="Symbol">((</a><a id="2497" class="Keyword">quote</a> <a id="2503" href="Ledger.Dijkstra.Specification.Leios.Types.html#1051" class="Record">EndorserBlock</a> <a id="2517" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2519" href="Ledger.Dijkstra.Specification.Leios.Types.html#2460" class="Function">DecEq-EndorserBlock</a><a id="2538" class="Symbol">)</a> <a id="2540" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="2542" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a><a id="2544" class="Symbol">)</a>
+<pre class="Agda hidden-source"><a id="2448" class="Keyword">unquoteDecl</a> <a id="DecEq-EndorserBlock"></a><a id="2460" href="Ledger.Dijkstra.Specification.Leios.Types.html#2460" class="Function">DecEq-EndorserBlock</a> <a id="2480" class="Symbol">=</a> <a id="2482" href="Tactic.Derive.DecEq.html#5154" class="Function">derive-DecEq</a> <a id="2495" class="Symbol">((</a><a id="2497" class="Keyword">quote</a> <a id="2503" href="Ledger.Dijkstra.Specification.Leios.Types.html#1051" class="Record">EndorserBlock</a> <a id="2517" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2519" href="Ledger.Dijkstra.Specification.Leios.Types.html#2460" class="Function">DecEq-EndorserBlock</a><a id="2538" class="Symbol">)</a> <a id="2540" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="2542" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a><a id="2544" class="Symbol">)</a>
 </pre>
 
 <hr />
@@ -12480,10 +12480,10 @@ reference list is pinned.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
       

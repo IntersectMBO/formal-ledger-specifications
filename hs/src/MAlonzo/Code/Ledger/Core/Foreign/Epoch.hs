@@ -41,8 +41,8 @@ d_HSGlobalConstants_8
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Epoch.C_constructor_398
       (coe
-         MAlonzo.Code.Class.DecEq.Core.C_constructor_32
-         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
+         MAlonzo.Code.Class.DecEq.Core.C_constructor_26
+         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__3032))
       (coe
          MAlonzo.Code.Class.Show.Core.C_mkShow_18
          (coe MAlonzo.Code.Data.Nat.Show.d_show_56))
@@ -51,10 +51,10 @@ d_HSGlobalConstants_8
          MAlonzo.Code.Data.Nat.Base.C_constructor_120
          (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
       (coe
-         MAlonzo.Code.Data.Rational.Base.du__'47'__156
+         MAlonzo.Code.Data.Rational.Base.du__'47'__162
          (coe MAlonzo.Code.Data.Integer.Base.d_1ℤ_16) (coe (20 :: Integer)))
       (coe
-         MAlonzo.Code.Data.Integer.Base.C_constructor_142
+         MAlonzo.Code.Data.Integer.Base.C_constructor_182
          (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
       (10 :: Integer) (10 :: Integer) (1 :: Integer) (1 :: Integer)
       (0 :: Integer) (10 :: Integer) (864 :: Integer) (1000 :: Integer)

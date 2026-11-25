@@ -27,8 +27,8 @@ import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Negation.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
 
--- Relation.Nullary.Negation.∃⟶¬∀¬
-d_'8707''10230''172''8704''172'_32 ::
+-- Relation.Nullary.Negation.∃⇒¬∀¬
+d_'8707''8658''172''8704''172'_32 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -37,9 +37,9 @@ d_'8707''10230''172''8704''172'_32 ::
   (AgdaAny ->
    AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
-d_'8707''10230''172''8704''172'_32 = erased
--- Relation.Nullary.Negation.∀⟶¬∃¬
-d_'8704''10230''172''8707''172'_38 ::
+d_'8707''8658''172''8704''172'_32 = erased
+-- Relation.Nullary.Negation.∀⇒¬∃¬
+d_'8704''8658''172''8707''172'_38 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -47,9 +47,9 @@ d_'8704''10230''172''8707''172'_38 ::
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
-d_'8704''10230''172''8707''172'_38 = erased
--- Relation.Nullary.Negation.¬∃⟶∀¬
-d_'172''8707''10230''8704''172'_50 ::
+d_'8704''8658''172''8707''172'_38 = erased
+-- Relation.Nullary.Negation.¬∃⇒∀¬
+d_'172''8707''8658''8704''172'_50 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -57,9 +57,9 @@ d_'172''8707''10230''8704''172'_50 ::
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   AgdaAny -> AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
-d_'172''8707''10230''8704''172'_50 = erased
--- Relation.Nullary.Negation.∀¬⟶¬∃
-d_'8704''172''10230''172''8707'_56 ::
+d_'172''8707''8658''8704''172'_50 = erased
+-- Relation.Nullary.Negation.∀¬⇒¬∃
+d_'8704''172''8658''172''8707'_56 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -68,9 +68,9 @@ d_'8704''172''10230''172''8707'_56 ::
    AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
-d_'8704''172''10230''172''8707'_56 = erased
--- Relation.Nullary.Negation.∃¬⟶¬∀
-d_'8707''172''10230''172''8704'_62 ::
+d_'8704''172''8658''172''8707'_56 = erased
+-- Relation.Nullary.Negation.∃¬⇒¬∀
+d_'8707''172''8658''172''8704'_62 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -78,7 +78,7 @@ d_'8707''172''10230''172''8704'_62 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
-d_'8707''172''10230''172''8704'_62 = erased
+d_'8707''172''8658''172''8704'_62 = erased
 -- Relation.Nullary.Negation.¬¬-Monad
 d_'172''172''45'Monad_64 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -87,13 +87,7 @@ d_'172''172''45'Monad_64 ~v0 = du_'172''172''45'Monad_64
 du_'172''172''45'Monad_64 ::
   MAlonzo.Code.Effect.Monad.T_RawMonad_24
 du_'172''172''45'Monad_64
-  = coe
-      MAlonzo.Code.Effect.Monad.du_mkRawMonad_180
-      (coe
-         (\ v0 v1 ->
-            coe
-              MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44))
-      erased
+  = coe MAlonzo.Code.Effect.Monad.du_mkRawMonad_180 erased erased
 -- Relation.Nullary.Negation.¬¬-push
 d_'172''172''45'push_70 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -166,11 +160,9 @@ du_helper_106 v0 v1 v2
                     seq (coe v4)
                     (coe
                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v0)
-                       (coe
-                          (\ v5 ->
-                             coe
-                               MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                               erased)))
+                       (\ v5 ->
+                          coe
+                            MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction'8242'_74))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Relation.Nullary.Negation.independence-of-premise-⊎
 d_independence'45'of'45'premise'45''8846'_112 ::
@@ -215,9 +207,59 @@ du_helper_126 v0 v1
                     seq (coe v3)
                     (coe
                        MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38
-                       (coe
-                          (\ v4 ->
-                             coe
-                               MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                               erased)))
+                       (\ v4 ->
+                          coe
+                            MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction'8242'_74))
       _ -> MAlonzo.RTE.mazUnreachableError
+-- Relation.Nullary.Negation.∃⟶¬∀¬
+d_'8707''10230''172''8704''172'_158 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  (AgdaAny -> ()) ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  (AgdaAny ->
+   AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
+  MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
+d_'8707''10230''172''8704''172'_158 = erased
+-- Relation.Nullary.Negation.∀⟶¬∃¬
+d_'8704''10230''172''8707''172'_160 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  (AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny) ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
+d_'8704''10230''172''8707''172'_160 = erased
+-- Relation.Nullary.Negation.¬∃⟶∀¬
+d_'172''8707''10230''8704''172'_162 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  (AgdaAny -> ()) ->
+  (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+   MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
+  AgdaAny -> AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
+d_'172''8707''10230''8704''172'_162 = erased
+-- Relation.Nullary.Negation.∀¬⟶¬∃
+d_'8704''172''10230''172''8707'_164 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  (AgdaAny -> ()) ->
+  (AgdaAny ->
+   AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
+d_'8704''172''10230''172''8707'_164 = erased
+-- Relation.Nullary.Negation.∃¬⟶¬∀
+d_'8707''172''10230''172''8704'_166 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  (AgdaAny -> ()) ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  (AgdaAny -> AgdaAny) ->
+  MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
+d_'8707''172''10230''172''8704'_166 = erased

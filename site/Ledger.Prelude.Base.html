@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="img/Cardano-RGB_Logo-Icon-White.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -33,7 +33,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
@@ -12285,7 +12285,7 @@
 
 <a id="109" class="Keyword">open</a> <a id="114" class="Keyword">import</a> <a id="121" href="Agda.Primitive.html" class="Module">Agda.Primitive</a> <a id="136" class="Keyword">using</a> <a id="142" class="Symbol">(</a><a id="143" href="Agda.Primitive.html#915" class="Primitive">lzero</a><a id="148" class="Symbol">)</a> <a id="150" class="Keyword">renaming</a> <a id="159" class="Symbol">(</a><a id="160" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="164" class="Symbol">to</a> <a id="167" class="Primitive">Type</a><a id="171" class="Symbol">)</a> <a id="173" class="Keyword">public</a>
 <a id="180" class="Keyword">open</a> <a id="185" class="Keyword">import</a> <a id="192" href="Data.Nat.html" class="Module">Data.Nat</a>
-<a id="201" class="Keyword">open</a> <a id="206" class="Keyword">import</a> <a id="213" href="Data.Nat.DivMod.html" class="Module">Data.Nat.DivMod</a> <a id="229" class="Keyword">using</a> <a id="235" class="Symbol">(</a><a id="236" href="Data.Nat.Base.html#7102" class="Function Operator">_/_</a><a id="239" class="Symbol">)</a>
+<a id="201" class="Keyword">open</a> <a id="206" class="Keyword">import</a> <a id="213" href="Data.Nat.DivMod.html" class="Module">Data.Nat.DivMod</a> <a id="229" class="Keyword">using</a> <a id="235" class="Symbol">(</a><a id="236" href="Data.Nat.Base.html#7083" class="Function Operator">_/_</a><a id="239" class="Symbol">)</a>
 </pre>
 
 <h2 id="basic-types">Basic Types<a class="headerlink" href="#basic-types" title="Permanent link">&para;</a></h2>
@@ -12296,8 +12296,8 @@
 <a id="316" href="Ledger.Prelude.Base.html#296" class="Function">Milliseconds</a> <a id="329" class="Symbol">=</a> <a id="331" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
 
 <a id="334" class="Comment">-- The number of slots a duration spans, rounded up: ⌈d / slotLength⌉.</a>
-<a id="durationToSlots"></a><a id="405" href="Ledger.Prelude.Base.html#405" class="Function">durationToSlots</a> <a id="421" class="Symbol">:</a> <a id="423" class="Symbol">(</a><a id="424" href="Ledger.Prelude.Base.html#424" class="Bound">slotLength</a> <a id="435" class="Symbol">:</a> <a id="437" href="Ledger.Prelude.Base.html#296" class="Function">Milliseconds</a><a id="449" class="Symbol">)</a> <a id="451" class="Symbol">→</a> <a id="453" class="Symbol">⦃</a> <a id="455" href="Data.Nat.Base.html#3266" class="Record">NonZero</a> <a id="463" href="Ledger.Prelude.Base.html#424" class="Bound">slotLength</a> <a id="474" class="Symbol">⦄</a> <a id="476" class="Symbol">→</a> <a id="478" href="Ledger.Prelude.Base.html#296" class="Function">Milliseconds</a> <a id="491" class="Symbol">→</a> <a id="493" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
-<a id="495" href="Ledger.Prelude.Base.html#405" class="Function">durationToSlots</a> <a id="511" href="Ledger.Prelude.Base.html#511" class="Bound">l</a> <a id="513" href="Ledger.Prelude.Base.html#513" class="Bound">d</a> <a id="515" class="Symbol">=</a> <a id="517" class="Symbol">(</a><a id="518" href="Ledger.Prelude.Base.html#513" class="Bound">d</a> <a id="520" href="Agda.Builtin.Nat.html#336" class="Primitive Operator">+</a> <a id="522" href="Ledger.Prelude.Base.html#511" class="Bound">l</a> <a id="524" href="Data.Nat.Base.html#4462" class="Primitive Operator">∸</a> <a id="526" class="Number">1</a><a id="527" class="Symbol">)</a> <a id="529" href="Data.Nat.Base.html#7102" class="Function Operator">/</a> <a id="531" href="Ledger.Prelude.Base.html#511" class="Bound">l</a>
+<a id="durationToSlots"></a><a id="405" href="Ledger.Prelude.Base.html#405" class="Function">durationToSlots</a> <a id="421" class="Symbol">:</a> <a id="423" class="Symbol">(</a><a id="424" href="Ledger.Prelude.Base.html#424" class="Bound">slotLength</a> <a id="435" class="Symbol">:</a> <a id="437" href="Ledger.Prelude.Base.html#296" class="Function">Milliseconds</a><a id="449" class="Symbol">)</a> <a id="451" class="Symbol">→</a> <a id="453" class="Symbol">⦃</a> <a id="455" href="Data.Nat.Base.html#3259" class="Record">NonZero</a> <a id="463" href="Ledger.Prelude.Base.html#424" class="Bound">slotLength</a> <a id="474" class="Symbol">⦄</a> <a id="476" class="Symbol">→</a> <a id="478" href="Ledger.Prelude.Base.html#296" class="Function">Milliseconds</a> <a id="491" class="Symbol">→</a> <a id="493" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
+<a id="495" href="Ledger.Prelude.Base.html#405" class="Function">durationToSlots</a> <a id="511" href="Ledger.Prelude.Base.html#511" class="Bound">l</a> <a id="513" href="Ledger.Prelude.Base.html#513" class="Bound">d</a> <a id="515" class="Symbol">=</a> <a id="517" class="Symbol">(</a><a id="518" href="Ledger.Prelude.Base.html#513" class="Bound">d</a> <a id="520" href="Agda.Builtin.Nat.html#336" class="Primitive Operator">+</a> <a id="522" href="Ledger.Prelude.Base.html#511" class="Bound">l</a> <a id="524" href="Data.Nat.Base.html#4443" class="Primitive Operator">∸</a> <a id="526" class="Number">1</a><a id="527" class="Symbol">)</a> <a id="529" href="Data.Nat.Base.html#7083" class="Function Operator">/</a> <a id="531" href="Ledger.Prelude.Base.html#511" class="Bound">l</a>
 
 <a id="Donations"></a><a id="534" href="Ledger.Prelude.Base.html#534" class="Function">Donations</a> <a id="Fees"></a><a id="544" href="Ledger.Prelude.Base.html#544" class="Function">Fees</a> <a id="Reserves"></a><a id="549" href="Ledger.Prelude.Base.html#549" class="Function">Reserves</a> <a id="Treasury"></a><a id="558" href="Ledger.Prelude.Base.html#558" class="Function">Treasury</a> <a id="567" class="Symbol">:</a> <a id="569" href="Ledger.Prelude.Base.html#167" class="Primitive">Type</a>
 <a id="574" href="Ledger.Prelude.Base.html#534" class="Function">Donations</a>         <a id="592" class="Symbol">=</a> <a id="594" href="Ledger.Prelude.Base.html#274" class="Function">Coin</a>
@@ -12431,10 +12431,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
       

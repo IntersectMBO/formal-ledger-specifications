@@ -34,11 +34,11 @@ d_HasSubtract'45'ℤ_10 ::
 d_HasSubtract'45'ℤ_10
   = coe
       MAlonzo.Code.Interface.TypeClasses.HasSubtract.C_constructor_20
-      (coe MAlonzo.Code.Data.Integer.Base.d__'45'__302)
+      (coe MAlonzo.Code.Data.Integer.Base.d__'45'__320)
 -- Interface.TypeClasses.HasSubtract.Instances.HasSubtract-ℕ-ℤ
 d_HasSubtract'45'ℕ'45'ℤ_12 ::
   MAlonzo.Code.Interface.TypeClasses.HasSubtract.T_HasSubtract_10
 d_HasSubtract'45'ℕ'45'ℤ_12
   = coe
       MAlonzo.Code.Interface.TypeClasses.HasSubtract.C_constructor_20
-      (coe MAlonzo.Code.Data.Integer.Base.d__'8854'__266)
+      (coe MAlonzo.Code.Data.Integer.Base.d__'8854'__284)

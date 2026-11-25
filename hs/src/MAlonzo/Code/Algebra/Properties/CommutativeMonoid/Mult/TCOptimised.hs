@@ -30,16 +30,16 @@ import qualified MAlonzo.Code.Relation.Binary.Reasoning.Syntax
 import qualified MAlonzo.Code.Relation.Binary.Structures
 
 -- Algebra.Properties.CommutativeMonoid.Mult.TCOptimised._._×′_
-d__'215''8242'__152 ::
+d__'215''8242'__164 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_996 ->
   Integer -> AgdaAny -> AgdaAny
-d__'215''8242'__152 ~v0 ~v1 v2 = du__'215''8242'__152 v2
-du__'215''8242'__152 ::
+d__'215''8242'__164 ~v0 ~v1 v2 = du__'215''8242'__164 v2
+du__'215''8242'__164 ::
   MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_996 ->
   Integer -> AgdaAny -> AgdaAny
-du__'215''8242'__152 v0
+du__'215''8242'__164 v0
   = let v1
           = coe MAlonzo.Code.Algebra.Bundles.du_monoid_1066 (coe v0) in
     coe
@@ -63,36 +63,36 @@ du__'215''8242'__152 v0
                        1 -> coe v4
                        _ -> coe v6)))))
 -- Algebra.Properties.CommutativeMonoid.Mult.TCOptimised._.1+×
-d_1'43''215'_154 ::
+d_1'43''215'_166 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_996 ->
   Integer -> AgdaAny -> AgdaAny
-d_1'43''215'_154 ~v0 ~v1 v2 = du_1'43''215'_154 v2
-du_1'43''215'_154 ::
+d_1'43''215'_166 ~v0 ~v1 v2 = du_1'43''215'_166 v2
+du_1'43''215'_166 ::
   MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_996 ->
   Integer -> AgdaAny -> AgdaAny
-du_1'43''215'_154 v0
+du_1'43''215'_166 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Monoid.Mult.TCOptimised.du_1'43''215'_142
+      MAlonzo.Code.Algebra.Properties.Monoid.Mult.TCOptimised.du_1'43''215'_154
       (coe MAlonzo.Code.Algebra.Bundles.du_monoid_1066 (coe v0))
 -- Algebra.Properties.CommutativeMonoid.Mult.TCOptimised._.×-assocˡ
-d_'215''45'assoc'737'_156 ::
+d_'215''45'assoc'737'_168 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_996 ->
   AgdaAny -> Integer -> Integer -> AgdaAny
-d_'215''45'assoc'737'_156 ~v0 ~v1 v2
-  = du_'215''45'assoc'737'_156 v2
-du_'215''45'assoc'737'_156 ::
+d_'215''45'assoc'737'_168 ~v0 ~v1 v2
+  = du_'215''45'assoc'737'_168 v2
+du_'215''45'assoc'737'_168 ::
   MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_996 ->
   AgdaAny -> Integer -> Integer -> AgdaAny
-du_'215''45'assoc'737'_156 v0
+du_'215''45'assoc'737'_168 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Monoid.Mult.TCOptimised.du_'215''45'assoc'737'_204
+      MAlonzo.Code.Algebra.Properties.Monoid.Mult.TCOptimised.du_'215''45'assoc'737'_216
       (coe MAlonzo.Code.Algebra.Bundles.du_monoid_1066 (coe v0))
 -- Algebra.Properties.CommutativeMonoid.Mult.TCOptimised._.×-cong
-d_'215''45'cong_158 ::
+d_'215''45'cong_170 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_996 ->
@@ -102,8 +102,8 @@ d_'215''45'cong_158 ::
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   AgdaAny -> AgdaAny
-d_'215''45'cong_158 ~v0 ~v1 v2 = du_'215''45'cong_158 v2
-du_'215''45'cong_158 ::
+d_'215''45'cong_170 ~v0 ~v1 v2 = du_'215''45'cong_170 v2
+du_'215''45'cong_170 ::
   MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_996 ->
   Integer ->
   Integer ->
@@ -111,67 +111,67 @@ du_'215''45'cong_158 ::
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   AgdaAny -> AgdaAny
-du_'215''45'cong_158 v0 v1 v2 v3 v4 v5 v6
+du_'215''45'cong_170 v0 v1 v2 v3 v4 v5 v6
   = coe
-      MAlonzo.Code.Algebra.Properties.Monoid.Mult.TCOptimised.du_'215''45'cong_192
+      MAlonzo.Code.Algebra.Properties.Monoid.Mult.TCOptimised.du_'215''45'cong_204
       (coe MAlonzo.Code.Algebra.Bundles.du_monoid_1066 (coe v0)) v1 v3 v4
       v6
 -- Algebra.Properties.CommutativeMonoid.Mult.TCOptimised._.×-congʳ
-d_'215''45'cong'691'_160 ::
+d_'215''45'cong'691'_172 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_996 ->
   Integer -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'215''45'cong'691'_160 ~v0 ~v1 v2 = du_'215''45'cong'691'_160 v2
-du_'215''45'cong'691'_160 ::
+d_'215''45'cong'691'_172 ~v0 ~v1 v2 = du_'215''45'cong'691'_172 v2
+du_'215''45'cong'691'_172 ::
   MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_996 ->
   Integer -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'215''45'cong'691'_160 v0
+du_'215''45'cong'691'_172 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Monoid.Mult.TCOptimised.du_'215''45'cong'691'_182
+      MAlonzo.Code.Algebra.Properties.Monoid.Mult.TCOptimised.du_'215''45'cong'691'_194
       (coe MAlonzo.Code.Algebra.Bundles.du_monoid_1066 (coe v0))
 -- Algebra.Properties.CommutativeMonoid.Mult.TCOptimised._.×-homo-+
-d_'215''45'homo'45''43'_162 ::
+d_'215''45'homo'45''43'_174 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_996 ->
   AgdaAny -> Integer -> Integer -> AgdaAny
-d_'215''45'homo'45''43'_162 ~v0 ~v1 v2
-  = du_'215''45'homo'45''43'_162 v2
-du_'215''45'homo'45''43'_162 ::
+d_'215''45'homo'45''43'_174 ~v0 ~v1 v2
+  = du_'215''45'homo'45''43'_174 v2
+du_'215''45'homo'45''43'_174 ::
   MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_996 ->
   AgdaAny -> Integer -> Integer -> AgdaAny
-du_'215''45'homo'45''43'_162 v0
+du_'215''45'homo'45''43'_174 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Monoid.Mult.TCOptimised.du_'215''45'homo'45''43'_170
+      MAlonzo.Code.Algebra.Properties.Monoid.Mult.TCOptimised.du_'215''45'homo'45''43'_182
       (coe MAlonzo.Code.Algebra.Bundles.du_monoid_1066 (coe v0))
 -- Algebra.Properties.CommutativeMonoid.Mult.TCOptimised._.×ᵤ≈×
-d_'215''7524''8776''215'_164 ::
+d_'215''7524''8776''215'_176 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_996 ->
   Integer -> AgdaAny -> AgdaAny
-d_'215''7524''8776''215'_164 ~v0 ~v1 v2
-  = du_'215''7524''8776''215'_164 v2
-du_'215''7524''8776''215'_164 ::
+d_'215''7524''8776''215'_176 ~v0 ~v1 v2
+  = du_'215''7524''8776''215'_176 v2
+du_'215''7524''8776''215'_176 ::
   MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_996 ->
   Integer -> AgdaAny -> AgdaAny
-du_'215''7524''8776''215'_164 v0
+du_'215''7524''8776''215'_176 v0
   = coe
-      MAlonzo.Code.Algebra.Properties.Monoid.Mult.TCOptimised.du_'215''7524''8776''215'_156
+      MAlonzo.Code.Algebra.Properties.Monoid.Mult.TCOptimised.du_'215''7524''8776''215'_168
       (coe MAlonzo.Code.Algebra.Bundles.du_monoid_1066 (coe v0))
 -- Algebra.Properties.CommutativeMonoid.Mult.TCOptimised.×-distrib-+
-d_'215''45'distrib'45''43'_172 ::
+d_'215''45'distrib'45''43'_184 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_996 ->
   AgdaAny -> AgdaAny -> Integer -> AgdaAny
-d_'215''45'distrib'45''43'_172 ~v0 ~v1 v2 v3 v4 v5
-  = du_'215''45'distrib'45''43'_172 v2 v3 v4 v5
-du_'215''45'distrib'45''43'_172 ::
+d_'215''45'distrib'45''43'_184 ~v0 ~v1 v2 v3 v4 v5
+  = du_'215''45'distrib'45''43'_184 v2 v3 v4 v5
+du_'215''45'distrib'45''43'_184 ::
   MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_996 ->
   AgdaAny -> AgdaAny -> Integer -> AgdaAny
-du_'215''45'distrib'45''43'_172 v0 v1 v2 v3
+du_'215''45'distrib'45''43'_184 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
       (\ v4 v5 v6 ->
@@ -246,25 +246,25 @@ du_'215''45'distrib'45''43'_172 v0 v1 v2 v3
             (coe
                MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                  MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                     MAlonzo.Code.Algebra.Structures.d_isMagma_498
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                        MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                           MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                            (coe
                               MAlonzo.Code.Algebra.Bundles.d_isCommutativeMonoid_1020
                               (coe v0))))))))
          (MAlonzo.Code.Relation.Binary.Structures.d_sym_38
             (coe
-               MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+               MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                  MAlonzo.Code.Algebra.Structures.d_isMagma_498
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                     MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                        MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                         (coe
                            MAlonzo.Code.Algebra.Bundles.d_isCommutativeMonoid_1020
                            (coe v0)))))))
@@ -344,13 +344,13 @@ du_'215''45'distrib'45''43'_172 v0 v1 v2 v3
                (coe
                   MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                     MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                        MAlonzo.Code.Algebra.Structures.d_isMagma_498
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                           MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                              MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                               (coe
                                  MAlonzo.Code.Algebra.Bundles.d_isCommutativeMonoid_1020
                                  (coe v0))))))))
@@ -422,13 +422,13 @@ du_'215''45'distrib'45''43'_172 v0 v1 v2 v3
                   (coe
                      MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                        MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                           MAlonzo.Code.Algebra.Structures.d_isMagma_498
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                              MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                 MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                  (coe
                                     MAlonzo.Code.Algebra.Bundles.d_isCommutativeMonoid_1020
                                     (coe v0))))))))
@@ -533,13 +533,13 @@ du_'215''45'distrib'45''43'_172 v0 v1 v2 v3
                      (coe
                         MAlonzo.Code.Relation.Binary.Structures.d_refl_36
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isEquivalence_186
+                           MAlonzo.Code.Algebra.Structures.d_isEquivalence_188
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                              MAlonzo.Code.Algebra.Structures.d_isMagma_498
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                                 MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                                  (coe
-                                    MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                                    MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                                     (coe
                                        MAlonzo.Code.Algebra.Bundles.d_isCommutativeMonoid_1020
                                        (coe v0))))))))
@@ -584,12 +584,12 @@ du_'215''45'distrib'45''43'_172 v0 v1 v2 v3
                                  1 -> coe v2
                                  _ -> coe v6))))))
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_188
-                  (MAlonzo.Code.Algebra.Structures.d_isMagma_496
+                  MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_190
+                  (MAlonzo.Code.Algebra.Structures.d_isMagma_498
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_isSemigroup_722
+                        MAlonzo.Code.Algebra.Structures.d_isSemigroup_724
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_isMonoid_774
+                           MAlonzo.Code.Algebra.Structures.d_isMonoid_776
                            (coe
                               MAlonzo.Code.Algebra.Bundles.d_isCommutativeMonoid_1020
                               (coe v0)))))
@@ -648,17 +648,17 @@ du_'215''45'distrib'45''43'_172 v0 v1 v2 v3
                                  1 -> coe v2
                                  _ -> coe v7)))))
                   (coe
-                     MAlonzo.Code.Algebra.Properties.Monoid.Mult.TCOptimised.du_'215''7524''8776''215'_156
+                     MAlonzo.Code.Algebra.Properties.Monoid.Mult.TCOptimised.du_'215''7524''8776''215'_168
                      (coe MAlonzo.Code.Algebra.Bundles.du_monoid_1066 (coe v0)) (coe v3)
                      (coe v1))
                   (coe
-                     MAlonzo.Code.Algebra.Properties.Monoid.Mult.TCOptimised.du_'215''7524''8776''215'_156
+                     MAlonzo.Code.Algebra.Properties.Monoid.Mult.TCOptimised.du_'215''7524''8776''215'_168
                      (coe MAlonzo.Code.Algebra.Bundles.du_monoid_1066 (coe v0)) (coe v3)
                      (coe v2))))
             (coe
-               MAlonzo.Code.Algebra.Properties.CommutativeMonoid.Mult.du_'215''45'distrib'45''43'_252
+               MAlonzo.Code.Algebra.Properties.CommutativeMonoid.Mult.du_'215''45'distrib'45''43'_266
                (coe v0) (coe v1) (coe v2) (coe v3)))
          (coe
-            MAlonzo.Code.Algebra.Properties.Monoid.Mult.TCOptimised.du_'215''7524''8776''215'_156
+            MAlonzo.Code.Algebra.Properties.Monoid.Mult.TCOptimised.du_'215''7524''8776''215'_168
             (coe MAlonzo.Code.Algebra.Bundles.du_monoid_1066 (coe v0)) (coe v3)
             (coe MAlonzo.Code.Algebra.Bundles.d__'8729'__1016 v0 v1 v2)))

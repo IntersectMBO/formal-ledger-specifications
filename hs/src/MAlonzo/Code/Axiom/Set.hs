@@ -125,7 +125,7 @@ d_Dec'45'SpecProperty_102
            (coe v2 v3))
       (\ v0 v1 v2 v3 v4 v5 ->
          coe
-           MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
+           MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''63'__84
            (coe v3 v5) (coe v4 v5))
 -- Axiom.Set.Theory
 d_Theory_118 a0 = ()
@@ -832,7 +832,7 @@ du_'8712''45'concatMap'738'_548 v0 v1 v2 v3
          MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
          (\ v4 v5 v6 ->
             coe
-              MAlonzo.Code.Function.Base.du__'8728''8242'__216
+              MAlonzo.Code.Function.Base.du__'8728''8242'__230
               (coe
                  MAlonzo.Code.Function.Related.Propositional.du_K'45'trans_164
                  (coe MAlonzo.Code.Function.Related.Propositional.C_equivalence_12))
@@ -931,7 +931,7 @@ du_'8712''45'concatMap'738'_548 v0 v1 v2 v3
                                    _ -> MAlonzo.RTE.mazUnreachableError
                             _ -> MAlonzo.RTE.mazUnreachableError)))))
          (coe
-            MAlonzo.Code.Data.Product.Properties.du_'8707''8707''8596''8707''8707'_250))
+            MAlonzo.Code.Data.Product.Properties.du_'8707''8707''8596''8707''8707'_252))
       (coe
          MAlonzo.Code.Data.Product.Properties.Ext.du_'8707''45'cong'8242'_38
          (coe MAlonzo.Code.Function.Related.Propositional.C_equivalence_12)
@@ -1324,7 +1324,7 @@ du_'8712''45''8745'_740 v0 v1 v2 v3 v4
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
       (\ v5 v6 v7 ->
          coe
-           MAlonzo.Code.Function.Base.du__'8728''8242'__216
+           MAlonzo.Code.Function.Base.du__'8728''8242'__230
            (coe
               MAlonzo.Code.Function.Related.Propositional.du_K'45'trans_164
               (coe MAlonzo.Code.Function.Related.Propositional.C_equivalence_12))
@@ -4368,8 +4368,7 @@ du_incl'45'set'45'proj'8321''8839'_1780 v0 v1 v2 v3 v4
                 else coe
                        seq (coe v7)
                        (coe
-                          MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                          erased)
+                          MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68)
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Axiom.Set.Theoryᵈ._._._.helper
 d_helper_1808 ::

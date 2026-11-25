@@ -509,15 +509,13 @@ du_'43''43''45'cancel'691'_322 v0 v1 v2
                     MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.C_'91''93'_56
              (:) v3 v4
                -> coe
-                    MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                    erased
+                    MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
              _ -> MAlonzo.RTE.mazUnreachableError
       (:) v3 v4
         -> case coe v1 of
              []
                -> coe
-                    MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                    erased
+                    MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68
              (:) v5 v6
                -> case coe v2 of
                     MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.C__'8759'__62 v11 v12
@@ -916,8 +914,7 @@ du_filter'8314'_512 v0 v1 v2 v3 v4
                                                              (coe
                                                                 seq (coe v20)
                                                                 (coe
-                                                                   MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                   erased))
+                                                                   MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68))
                                                _ -> MAlonzo.RTE.mazUnreachableError
                                         else (case coe v16 of
                                                 MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v19 v20
@@ -927,8 +924,7 @@ du_filter'8314'_512 v0 v1 v2 v3 v4
                                                               (coe
                                                                  seq (coe v20)
                                                                  (coe
-                                                                    MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                    erased))
+                                                                    MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68))
                                                        else coe
                                                               du_filter'8314'_512 (coe v0) (coe v1)
                                                               (coe v12) (coe v14) (coe v10)

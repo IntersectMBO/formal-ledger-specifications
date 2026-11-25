@@ -323,13 +323,11 @@ du_unionThese_414 v0 v1 v2 v3 v4 v5
                                               (coe
                                                  (\ v12 ->
                                                     coe
-                                                      MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                      erased))
+                                                      MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68))
                                               (coe
                                                  (\ v12 ->
                                                     coe
-                                                      MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                      erased))
+                                                      MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68))
                                               (coe
                                                  MAlonzo.Code.Function.Bundles.d_from_1870
                                                  (coe
@@ -979,13 +977,11 @@ du_'8746'dom'8838'dom'8746''8314'_626 v0 v1 v2 v3 v4 v5 v6
                                                                                       (coe
                                                                                          (\ v21 ->
                                                                                             coe
-                                                                                              MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                              erased))
+                                                                                              MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68))
                                                                                       (coe
                                                                                          (\ v21 ->
                                                                                             coe
-                                                                                              MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                              erased))
+                                                                                              MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68))
                                                                                       (coe
                                                                                          MAlonzo.Code.Function.Bundles.d_from_1870
                                                                                          (coe
@@ -1459,13 +1455,11 @@ du_'8746'dom'8838'dom'8746''8314'_626 v0 v1 v2 v3 v4 v5 v6
                                                                                             (coe
                                                                                                (\ v21 ->
                                                                                                   coe
-                                                                                                    MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                                    erased))
+                                                                                                    MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68))
                                                                                             (coe
                                                                                                (\ v21 ->
                                                                                                   coe
-                                                                                                    MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                                    erased))
+                                                                                                    MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68))
                                                                                             (coe
                                                                                                MAlonzo.Code.Function.Bundles.d_from_1870
                                                                                                (coe
@@ -1650,13 +1644,11 @@ du_'8746'dom'8838'dom'8746''8314'_626 v0 v1 v2 v3 v4 v5 v6
                                                                                        (coe
                                                                                           (\ v20 ->
                                                                                              coe
-                                                                                               MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                               erased))
+                                                                                               MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68))
                                                                                        (coe
                                                                                           (\ v20 ->
                                                                                              coe
-                                                                                               MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                                                               erased))
+                                                                                               MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68))
                                                                                        (coe
                                                                                           MAlonzo.Code.Function.Bundles.d_from_1870
                                                                                           (coe
@@ -1920,7 +1912,7 @@ du_dom'8746''737''691'_662 v0 v1 v2 v3 v4 v5 v6
                              (coe
                                 MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42
                                 (coe
-                                   MAlonzo.Code.Function.Base.du__'124''62''8242'__232
+                                   MAlonzo.Code.Function.Base.du__'124''62''8242'__246
                                    (coe
                                       MAlonzo.Code.Function.Bundles.d_from_1870
                                       (coe
@@ -2416,7 +2408,7 @@ du_dom'8746''737''8838''8746'dom_694 v0 v1 v2 v3 v4 v5
                              (coe
                                 MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42
                                 (coe
-                                   MAlonzo.Code.Function.Base.du__'124''62''8242'__232
+                                   MAlonzo.Code.Function.Base.du__'124''62''8242'__246
                                    (coe
                                       MAlonzo.Code.Function.Bundles.d_from_1870
                                       (coe

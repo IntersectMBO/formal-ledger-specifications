@@ -44,7 +44,7 @@ import MAlonzo.Code.Ledger.Dijkstra.Foreign.NewEpoch          as X
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Ratify            as X
   (RatifyEnv(..), RatifyState(..), ratifyStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Rewards           as X
-  (RewardUpdate(..), Snapshot(..), Snapshots(..))
+  (RewardUpdate(..), Snapshot(..), Snapshots(..), maxPool)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Utxo              as X
   ( UTxOEnv(..), UTxOState(..), UTxO, utxoStep, utxowStep)
 import MAlonzo.Code.Ledger.Dijkstra.Foreign.Script.Base      as X

@@ -236,7 +236,7 @@ du_mkRawApplicative_96 v0 v1
          (coe
             (\ v2 v3 ->
                coe
-                 MAlonzo.Code.Function.Base.du__'8728''8242'__216 (coe v1 v2 v3)
+                 MAlonzo.Code.Function.Base.du__'8728''8242'__230 (coe v1 v2 v3)
                  (coe v0 ()))))
       (coe (\ v2 -> coe v0 v2)) (coe (\ v2 v3 -> coe v1 v2 v3))
 -- Effect.Applicative.RawApplicativeZero

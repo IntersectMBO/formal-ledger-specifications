@@ -38,6 +38,7 @@ import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Data.Product.Base
 import qualified MAlonzo.Code.Function.Bundles
 import qualified MAlonzo.Code.Relation.Binary.Bundles
+import qualified MAlonzo.Code.Relation.Binary.PropositionalEquality.Core
 import qualified MAlonzo.Code.Relation.Binary.Structures
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Negation.Core
@@ -295,7 +296,7 @@ du_updateAt'45'minimal_196 v0 v1 v2 v3 v4
                     (coe
                        seq (coe v4)
                        (coe
-                          MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
+                          MAlonzo.Code.Relation.Binary.PropositionalEquality.Core.du_'172''91'x'8802'x'93'_178
                           erased))
              MAlonzo.Code.Data.List.Relation.Unary.Any.C_there_54 v10
                -> coe
@@ -1657,7 +1658,7 @@ du_applyDownFrom'8314''8321'_1126 v0 v1
                 MAlonzo.Code.Data.List.Relation.Unary.All.C__'8759'__60
                 (coe
                    v1 v2
-                   (MAlonzo.Code.Data.Nat.Properties.d_'8804''45'refl_2900 (coe v0)))
+                   (MAlonzo.Code.Data.Nat.Properties.d_'8804''45'refl_3140 (coe v0)))
                 (coe
                    du_applyDownFrom'8314''8321'_1126 (coe v2)
                    (coe (\ v3 v4 -> coe v1 v3 v4))))
@@ -1930,8 +1931,7 @@ du_filter'8315'_1266 v0 v1 v2 v3
                                            then coe
                                                   seq (coe v11)
                                                   (coe
-                                                     MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                     erased)
+                                                     MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68)
                                            else coe
                                                   seq (coe v11)
                                                   (case coe v2 of
@@ -1963,8 +1963,7 @@ du_filter'8315'_1266 v0 v1 v2 v3
                                            else coe
                                                   seq (coe v11)
                                                   (coe
-                                                     MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
-                                                     erased)
+                                                     MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_68)
                                     _ -> MAlonzo.RTE.mazUnreachableError)
                    _ -> MAlonzo.RTE.mazUnreachableError))
       _ -> MAlonzo.RTE.mazUnreachableError
@@ -1990,7 +1989,7 @@ du_partition'45'All_1338 v0 v1
       (coe
          du_all'45'filter_1222
          (coe
-            MAlonzo.Code.Relation.Unary.Properties.du_'8705''63'_358 (coe v0))
+            MAlonzo.Code.Relation.Unary.Properties.du_'8705''63'_508 (coe v0))
          (coe v1))
 -- Data.List.Relation.Unary.All.Properties._.derun⁺
 d_derun'8314'_1358 ::
@@ -2628,7 +2627,7 @@ du_all'8314'_1610 v0 v1 v2
              (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                 (coe
                    MAlonzo.Code.Function.Bundles.d_to_1868
-                   (MAlonzo.Code.Data.Bool.Properties.d_T'45''8743'_4046
+                   (MAlonzo.Code.Data.Bool.Properties.d_T'45''8743'_4298
                       (coe v0 v3)
                       (coe
                          MAlonzo.Code.Data.List.Base.du_foldr_216
@@ -2642,7 +2641,7 @@ du_all'8314'_1610 v0 v1 v2
                    MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                    (coe
                       MAlonzo.Code.Function.Bundles.d_to_1868
-                      (MAlonzo.Code.Data.Bool.Properties.d_T'45''8743'_4046
+                      (MAlonzo.Code.Data.Bool.Properties.d_T'45''8743'_4298
                          (coe v0 v3)
                          (coe
                             MAlonzo.Code.Data.List.Base.du_foldr_216
@@ -2672,7 +2671,7 @@ du_all'8315'_1622 v0 v1 v2
              (:) v7 v8
                -> coe
                     MAlonzo.Code.Function.Bundles.d_from_1870
-                    (MAlonzo.Code.Data.Bool.Properties.d_T'45''8743'_4046
+                    (MAlonzo.Code.Data.Bool.Properties.d_T'45''8743'_4298
                        (coe v0 v7)
                        (coe
                           MAlonzo.Code.Data.List.Base.du_foldr_216

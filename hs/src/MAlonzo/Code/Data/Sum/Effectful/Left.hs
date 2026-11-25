@@ -139,10 +139,10 @@ du_monad_36
             coe
               MAlonzo.Code.Data.Sum.Base.du_'91'_'44'_'93''8242'_66
               (coe
-                 MAlonzo.Code.Function.Base.du__'8728''8242'__216
+                 MAlonzo.Code.Function.Base.du__'8728''8242'__230
                  (coe (\ v2 v3 -> v2))
                  (coe MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38))
-              (coe MAlonzo.Code.Function.Base.du__'124''62''8242'__232)))
+              (coe MAlonzo.Code.Function.Base.du__'124''62''8242'__246)))
 -- Data.Sum.Effectful.Left.join
 d_join_40 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->

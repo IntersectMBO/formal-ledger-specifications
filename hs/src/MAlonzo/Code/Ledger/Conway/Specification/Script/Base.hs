@@ -802,7 +802,7 @@ du_getLanguage_438 ::
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> Maybe AgdaAny
 du_getLanguage_438 v0 v1
   = coe
-      MAlonzo.Code.Class.Functor.Core.du__'60''38''62'__30
+      MAlonzo.Code.Class.Functor.Core.du__'60''38''62'__32
       (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
       (coe ()) (coe ()) (coe du_toP2Script_436 v1)
       (coe d_language_282 (coe d_ps_334 (coe v0)))
@@ -829,7 +829,7 @@ du_DecEq'45'LanguageCostModels_450 ::
   T_ScriptStructure_286 -> MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'LanguageCostModels_450 v0
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_26
       (coe
          (\ v1 ->
             case coe v1 of
@@ -841,6 +841,7 @@ du_DecEq'45'LanguageCostModels_450 v0
                             -> let v5
                                      = coe
                                          MAlonzo.Code.Data.List.Properties.du_'8801''45'dec_60
+                                         (coe ())
                                          (coe
                                             MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                                             (coe
@@ -910,7 +911,7 @@ du_Show'45'LanguageCostModels_456 v0
                      MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
                      (coe ("mkLanguageCostModels" :: Data.Text.Text))
                      (coe
-                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
+                        MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_48
                         (coe
                            MAlonzo.Code.Data.String.Base.d_braces_48
                            (coe

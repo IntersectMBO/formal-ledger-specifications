@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="img/Cardano-RGB_Logo-Icon-White.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -33,7 +33,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
@@ -12239,7 +12239,7 @@ started too early.</p>
   <code class="AgdaBound">RandomnessStabilisationWindowᶜ</code>, then the state is not updated.</li>
 </ul>
 <pre class="Agda"><a id="RUpdEnv"></a><a id="1771" href="Ledger.Conway.Specification.RewardUpdate.html#1771" class="Function">RUpdEnv</a> <a id="1779" class="Symbol">:</a> <a id="1781" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="1786" href="Ledger.Conway.Specification.RewardUpdate.html#1771" class="Function">RUpdEnv</a> <a id="1794" class="Symbol">=</a> <a id="1796" href="Ledger.Conway.Specification.Rewards.html#15781" class="Function">BlocksMade</a> <a id="1807" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="1809" href="Ledger.Conway.Specification.Epoch.html#2226" class="Record">EpochState</a>
+<a id="1786" href="Ledger.Conway.Specification.RewardUpdate.html#1771" class="Function">RUpdEnv</a> <a id="1794" class="Symbol">=</a> <a id="1796" href="Ledger.Conway.Specification.Rewards.html#15781" class="Function">BlocksMade</a> <a id="1807" href="Data.Product.Base.html#1752" class="Function Operator">×</a> <a id="1809" href="Ledger.Conway.Specification.Epoch.html#2226" class="Record">EpochState</a>
 
 
 <a id="1822" class="Keyword">data</a> <a id="_⊢_⇀⦇_,RUPD⦈_"></a><a id="1827" href="Ledger.Conway.Specification.RewardUpdate.html#1827" class="Datatype Operator">_⊢_⇀⦇_,RUPD⦈_</a>
@@ -12258,7 +12258,7 @@ started too early.</p>
     <a id="2302" class="Symbol">(</a><a id="2303" href="Ledger.Conway.Specification.RewardUpdate.html#2248" class="Bound">b</a> <a id="2305" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2307" href="Ledger.Conway.Specification.RewardUpdate.html#2250" class="Bound">es</a><a id="2309" class="Symbol">)</a> <a id="2311" href="Ledger.Conway.Specification.RewardUpdate.html#1827" class="Datatype Operator">⊢</a> <a id="2313" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="2318" href="Ledger.Conway.Specification.RewardUpdate.html#2255" class="Bound">ru</a> <a id="2321" href="Ledger.Conway.Specification.RewardUpdate.html#1827" class="Datatype Operator">⇀⦇</a> <a id="2324" href="Ledger.Conway.Specification.RewardUpdate.html#2253" class="Bound">s</a> <a id="2326" href="Ledger.Conway.Specification.RewardUpdate.html#1827" class="Datatype Operator">,RUPD⦈</a> <a id="2333" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="2338" href="Ledger.Conway.Specification.RewardUpdate.html#2255" class="Bound">ru</a>
 
   <a id="_⊢_⇀⦇_,RUPD⦈_.RUPD-Reward-Too-Early"></a><a id="2344" href="Ledger.Conway.Specification.RewardUpdate.html#2344" class="InductiveConstructor">RUPD-Reward-Too-Early</a> <a id="2366" class="Symbol">:</a> <a id="2368" class="Symbol">∀</a> <a id="2370" class="Symbol">{</a><a id="2371" href="Ledger.Conway.Specification.RewardUpdate.html#2371" class="Bound">b</a> <a id="2373" href="Ledger.Conway.Specification.RewardUpdate.html#2373" class="Bound">es</a> <a id="2376" href="Ledger.Conway.Specification.RewardUpdate.html#2376" class="Bound">s</a><a id="2377" class="Symbol">}</a> <a id="2379" class="Symbol">→</a>
-    <a id="2385" href="Prelude.InferenceRules.html#56075" class="Function Operator">∙</a> <a id="2387" href="Relation.Nullary.Negation.Core.html#677" class="Function Operator">¬</a> <a id="2389" href="Ledger.Conway.Specification.RewardUpdate.html#2376" class="Bound">s</a> <a id="2391" href="Class.HasOrder.Core.html#848" class="Function Operator">&gt;</a> <a id="2393" href="Ledger.Core.Specification.Epoch.html#1007" class="Function">firstSlot</a> <a id="2403" class="Symbol">(</a><a id="2404" href="Ledger.Core.Specification.Epoch.html#954" class="Function">epoch</a> <a id="2410" href="Ledger.Conway.Specification.RewardUpdate.html#2376" class="Bound">s</a><a id="2411" class="Symbol">)</a> <a id="2413" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="2415" href="Ledger.Core.Specification.Epoch.html#1060" class="Function">RandomnessStabilisationWindow</a>
+    <a id="2385" href="Prelude.InferenceRules.html#56075" class="Function Operator">∙</a> <a id="2387" href="Relation.Nullary.Negation.Core.html#669" class="Function Operator">¬</a> <a id="2389" href="Ledger.Conway.Specification.RewardUpdate.html#2376" class="Bound">s</a> <a id="2391" href="Class.HasOrder.Core.html#848" class="Function Operator">&gt;</a> <a id="2393" href="Ledger.Core.Specification.Epoch.html#1007" class="Function">firstSlot</a> <a id="2403" class="Symbol">(</a><a id="2404" href="Ledger.Core.Specification.Epoch.html#954" class="Function">epoch</a> <a id="2410" href="Ledger.Conway.Specification.RewardUpdate.html#2376" class="Bound">s</a><a id="2411" class="Symbol">)</a> <a id="2413" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="2415" href="Ledger.Core.Specification.Epoch.html#1060" class="Function">RandomnessStabilisationWindow</a>
     <a id="2449" href="Prelude.InferenceRules.html#13694" class="Function Operator">────────────────────────────────</a>
     <a id="2486" class="Symbol">(</a><a id="2487" href="Ledger.Conway.Specification.RewardUpdate.html#2371" class="Bound">b</a> <a id="2489" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2491" href="Ledger.Conway.Specification.RewardUpdate.html#2373" class="Bound">es</a><a id="2493" class="Symbol">)</a> <a id="2495" href="Ledger.Conway.Specification.RewardUpdate.html#1827" class="Datatype Operator">⊢</a> <a id="2497" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a> <a id="2505" href="Ledger.Conway.Specification.RewardUpdate.html#1827" class="Datatype Operator">⇀⦇</a> <a id="2508" href="Ledger.Conway.Specification.RewardUpdate.html#2376" class="Bound">s</a> <a id="2510" href="Ledger.Conway.Specification.RewardUpdate.html#1827" class="Datatype Operator">,RUPD⦈</a> <a id="2517" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>
 </pre>
@@ -12374,10 +12374,10 @@ necessary for the <code class="AgdaDatatype">NEWEPOCH</code> transition.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
       

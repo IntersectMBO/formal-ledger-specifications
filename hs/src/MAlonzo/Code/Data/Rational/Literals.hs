@@ -39,4 +39,4 @@ d_negative_16
       MAlonzo.Code.Agda.Builtin.FromNeg.C_constructor_32
       (\ v0 v1 ->
          d_fromℤ_6
-           (coe MAlonzo.Code.Data.Integer.Base.d_'45'__260 (coe v0)))
+           (coe MAlonzo.Code.Data.Integer.Base.d_'45'__278 (coe v0)))

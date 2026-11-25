@@ -430,7 +430,7 @@ du_braces'63'_128 v0
         -> coe MAlonzo.Code.Data.String.Base.d_braces_48
       MAlonzo.Code.Agda.Builtin.Reflection.C_instance'8242'_54
         -> coe
-             MAlonzo.Code.Function.Base.du__'8728''8242'__216
+             MAlonzo.Code.Function.Base.du__'8728''8242'__230
              (coe MAlonzo.Code.Data.String.Base.d_braces_48)
              (coe MAlonzo.Code.Data.String.Base.d_braces_48)
       _ -> MAlonzo.RTE.mazUnreachableError
@@ -478,7 +478,7 @@ d_showDefinition_168 v0
                       (coe
                          MAlonzo.Code.Data.List.Base.du_map_22
                          (coe
-                            MAlonzo.Code.Function.Base.du__'8728''8242'__216
+                            MAlonzo.Code.Function.Base.du__'8728''8242'__230
                             (coe MAlonzo.Code.Agda.Builtin.Reflection.d_primShowQName_12)
                             (coe MAlonzo.Code.Reflection.AST.Argument.d_unArg_74))
                          (coe v2)))))
