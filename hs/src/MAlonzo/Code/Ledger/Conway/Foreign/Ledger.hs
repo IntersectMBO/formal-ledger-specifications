@@ -4713,7 +4713,7 @@ d_ledger'45'step_4658 v0 v1
          (coe
             MAlonzo.Code.Interface.ComputationalRelation.du_compute_348
             (coe
-               MAlonzo.Code.Ledger.Conway.Conformance.Ledger.Properties.d_Computational'45'LEDGER_3472
+               MAlonzo.Code.Ledger.Conway.Conformance.Ledger.Properties.d_Computational'45'LEDGER_3474
                (coe
                   MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_690
                   (coe v0))
@@ -4780,7 +4780,7 @@ d_ledgers'45'step_4660 v0 v1 v2 v3
          (coe
             MAlonzo.Code.Interface.ComputationalRelation.du_compute_348
             (coe
-               MAlonzo.Code.Ledger.Conway.Conformance.Ledger.Properties.d_Computational'45'LEDGERS_3730
+               MAlonzo.Code.Ledger.Conway.Conformance.Ledger.Properties.d_Computational'45'LEDGERS_3732
                (coe
                   MAlonzo.Code.Ledger.Conway.Foreign.ExternalStructures.d_HSTransactionStructure_690
                   (coe v0))

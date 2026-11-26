@@ -140,316 +140,316 @@ d_utxoSt_3820 v0
 -- Ledger.Conway.Conformance.Epoch._.RatifyState
 d_RatifyState_3858 a0 a1 = ()
 -- Ledger.Conway.Conformance.Epoch._.RatifyState.delay
-d_delay_3992 ::
+d_delay_3994 ::
   MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1902 ->
   Bool
-d_delay_3992 v0
+d_delay_3994 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_delay_1914
       (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.RatifyState.es
-d_es_3994 ::
+d_es_3996 ::
   MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1902 ->
   MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1186
-d_es_3994 v0
+d_es_3996 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_1910 (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.RatifyState.removed
-d_removed_3996 ::
+d_removed_3998 ::
   MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1902 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-d_removed_3996 v0
+d_removed_3998 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_removed_1912
       (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.BlocksMade
-d_BlocksMade_4454 ::
+d_BlocksMade_4456 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2518 ->
   ()
-d_BlocksMade_4454 = erased
+d_BlocksMade_4456 = erased
 -- Ledger.Conway.Conformance.Epoch._.RewardUpdate
-d_RewardUpdate_4472 a0 a1 = ()
+d_RewardUpdate_4474 a0 a1 = ()
 -- Ledger.Conway.Conformance.Epoch._.Snapshots
-d_Snapshots_4484 a0 a1 = ()
+d_Snapshots_4486 a0 a1 = ()
 -- Ledger.Conway.Conformance.Epoch._.RewardUpdate.flowConservation
-d_flowConservation_4524 ::
+d_flowConservation_4526 ::
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_3018 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_flowConservation_4524 = erased
+d_flowConservation_4526 = erased
 -- Ledger.Conway.Conformance.Epoch._.RewardUpdate.rs
-d_rs_4526 ::
+d_rs_4528 ::
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_3018 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_rs_4526 v0
+d_rs_4528 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_rs_3042 (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.RewardUpdate.Δf
-d_Δf_4528 ::
+d_Δf_4530 ::
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_3018 ->
   Integer
-d_Δf_4528 v0
+d_Δf_4530 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δf_3040 (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.RewardUpdate.Δf-nonpositive
-d_Δf'45'nonpositive_4530 ::
+d_Δf'45'nonpositive_4532 ::
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_3018 ->
   MAlonzo.Code.Data.Integer.Base.T__'8804'__48
-d_Δf'45'nonpositive_4530 v0
+d_Δf'45'nonpositive_4532 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δf'45'nonpositive_3050
       (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.RewardUpdate.Δr
-d_Δr_4532 ::
+d_Δr_4534 ::
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_3018 ->
   Integer
-d_Δr_4532 v0
+d_Δr_4534 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δr_3038 (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.RewardUpdate.Δt
-d_Δt_4534 ::
+d_Δt_4536 ::
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_3018 ->
   Integer
-d_Δt_4534 v0
+d_Δt_4536 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δt_3036 (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.RewardUpdate.Δt-nonnegative
-d_Δt'45'nonnegative_4536 ::
+d_Δt'45'nonnegative_4538 ::
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_3018 ->
   MAlonzo.Code.Data.Integer.Base.T__'8804'__48
-d_Δt'45'nonnegative_4536 v0
+d_Δt'45'nonnegative_4538 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δt'45'nonnegative_3048
       (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.Snapshots.feeSS
-d_feeSS_4548 ::
+d_feeSS_4550 ::
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_3112 ->
   Integer
-d_feeSS_4548 v0
+d_feeSS_4550 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_feeSS_3128
       (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.Snapshots.go
-d_go_4550 ::
+d_go_4552 ::
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_3112 ->
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshot_3054
-d_go_4550 v0
+d_go_4552 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_3126 (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.Snapshots.mark
-d_mark_4552 ::
+d_mark_4554 ::
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_3112 ->
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshot_3054
-d_mark_4552 v0
+d_mark_4554 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_3122
       (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.Snapshots.set
-d_set_4554 ::
+d_set_4556 ::
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_3112 ->
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshot_3054
-d_set_4554 v0
+d_set_4556 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_3124
       (coe v0)
 -- Ledger.Conway.Conformance.Epoch.EpochSpec.EpochState
-d_EpochState_4564 a0 a1 = ()
+d_EpochState_4566 a0 a1 = ()
 -- Ledger.Conway.Conformance.Epoch.EpochSpec.NewEpochState
-d_NewEpochState_4646 a0 a1 = ()
+d_NewEpochState_4648 a0 a1 = ()
 -- Ledger.Conway.Conformance.Epoch.EpochSpec.EpochState.acnt
-d_acnt_4702 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3294 ->
+d_acnt_4704 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3296 ->
   MAlonzo.Code.Ledger.Conway.Specification.PParams.T_Acnt_190
-d_acnt_4702 v0
+d_acnt_4704 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_acnt_3306 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_acnt_3308 (coe v0)
 -- Ledger.Conway.Conformance.Epoch.EpochSpec.EpochState.es
-d_es_4704 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3294 ->
+d_es_4706 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3296 ->
   MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1186
-d_es_4704 v0
+d_es_4706 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_es_3312 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_es_3314 (coe v0)
 -- Ledger.Conway.Conformance.Epoch.EpochSpec.EpochState.fut
-d_fut_4706 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3294 ->
+d_fut_4708 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3296 ->
   MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1902
-d_fut_4706 v0
+d_fut_4708 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_fut_3314 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_fut_3316 (coe v0)
 -- Ledger.Conway.Conformance.Epoch.EpochSpec.EpochState.ls
-d_ls_4708 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3294 ->
+d_ls_4710 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3296 ->
   MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LState_2974
-d_ls_4708 v0
+d_ls_4710 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3310 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3312 (coe v0)
 -- Ledger.Conway.Conformance.Epoch.EpochSpec.EpochState.ss
-d_ss_4710 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3294 ->
+d_ss_4712 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3296 ->
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_3112
-d_ss_4710 v0
+d_ss_4712 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ss_3308 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ss_3310 (coe v0)
 -- Ledger.Conway.Conformance.Epoch.EpochSpec.NewEpochState.bcur
-d_bcur_4746 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3366 ->
+d_bcur_4748 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3368 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_bcur_4746 v0
+d_bcur_4748 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_bcur_3384 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_bcur_3386 (coe v0)
 -- Ledger.Conway.Conformance.Epoch.EpochSpec.NewEpochState.bprev
-d_bprev_4748 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3366 ->
+d_bprev_4750 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3368 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_bprev_4748 v0
+d_bprev_4750 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_bprev_3382
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_bprev_3384
       (coe v0)
 -- Ledger.Conway.Conformance.Epoch.EpochSpec.NewEpochState.epochState
-d_epochState_4750 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3366 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3294
-d_epochState_4750 v0
+d_epochState_4752 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3368 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_EpochState_3296
+d_epochState_4752 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_epochState_3386
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_epochState_3388
       (coe v0)
 -- Ledger.Conway.Conformance.Epoch.EpochSpec.NewEpochState.lastEpoch
-d_lastEpoch_4752 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3366 ->
+d_lastEpoch_4754 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3368 ->
   AgdaAny
-d_lastEpoch_4752 v0
+d_lastEpoch_4754 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_lastEpoch_3380
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_lastEpoch_3382
       (coe v0)
 -- Ledger.Conway.Conformance.Epoch.EpochSpec.NewEpochState.pd
-d_pd_4754 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3366 ->
+d_pd_4756 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3368 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_pd_4754 v0
+d_pd_4756 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_pd_3390 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_pd_3392 (coe v0)
 -- Ledger.Conway.Conformance.Epoch.EpochSpec.NewEpochState.ru
-d_ru_4756 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3366 ->
+d_ru_4758 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Epoch.T_NewEpochState_3368 ->
   Maybe
     MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_3018
-d_ru_4756 v0
+d_ru_4758 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ru_3388 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ru_3390 (coe v0)
 -- Ledger.Conway.Conformance.Epoch.EpochState
-d_EpochState_4810 a0 a1 = ()
-data T_EpochState_4810
-  = C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4832 MAlonzo.Code.Ledger.Conway.Specification.PParams.T_Acnt_190
+d_EpochState_4814 a0 a1 = ()
+data T_EpochState_4814
+  = C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4836 MAlonzo.Code.Ledger.Conway.Specification.PParams.T_Acnt_190
                                                        MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_3112
                                                        MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2718
                                                        MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1186
                                                        MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1902
 -- Ledger.Conway.Conformance.Epoch.EpochState.acnt
-d_acnt_4822 ::
-  T_EpochState_4810 ->
+d_acnt_4826 ::
+  T_EpochState_4814 ->
   MAlonzo.Code.Ledger.Conway.Specification.PParams.T_Acnt_190
-d_acnt_4822 v0
+d_acnt_4826 v0
   = case coe v0 of
-      C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4832 v1 v2 v3 v4 v5
+      C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4836 v1 v2 v3 v4 v5
         -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Epoch.EpochState.ss
-d_ss_4824 ::
-  T_EpochState_4810 ->
+d_ss_4828 ::
+  T_EpochState_4814 ->
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_3112
-d_ss_4824 v0
+d_ss_4828 v0
   = case coe v0 of
-      C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4832 v1 v2 v3 v4 v5
+      C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4836 v1 v2 v3 v4 v5
         -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Epoch.EpochState.ls
-d_ls_4826 ::
-  T_EpochState_4810 ->
+d_ls_4830 ::
+  T_EpochState_4814 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2718
-d_ls_4826 v0
+d_ls_4830 v0
   = case coe v0 of
-      C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4832 v1 v2 v3 v4 v5
+      C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4836 v1 v2 v3 v4 v5
         -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Epoch.EpochState.es
-d_es_4828 ::
-  T_EpochState_4810 ->
+d_es_4832 ::
+  T_EpochState_4814 ->
   MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1186
-d_es_4828 v0
+d_es_4832 v0
   = case coe v0 of
-      C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4832 v1 v2 v3 v4 v5
+      C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4836 v1 v2 v3 v4 v5
         -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Epoch.EpochState.fut
-d_fut_4830 ::
-  T_EpochState_4810 ->
+d_fut_4834 ::
+  T_EpochState_4814 ->
   MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1902
-d_fut_4830 v0
+d_fut_4834 v0
   = case coe v0 of
-      C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4832 v1 v2 v3 v4 v5
+      C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4836 v1 v2 v3 v4 v5
         -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Epoch.NewEpochState
-d_NewEpochState_4834 a0 a1 = ()
-data T_NewEpochState_4834
-  = C_constructor_4860 AgdaAny MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-                       MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 T_EpochState_4810
+d_NewEpochState_4838 a0 a1 = ()
+data T_NewEpochState_4838
+  = C_constructor_4864 AgdaAny MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+                       MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 T_EpochState_4814
                        (Maybe
                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_3018)
                        MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Ledger.Conway.Conformance.Epoch.NewEpochState.lastEpoch
-d_lastEpoch_4848 :: T_NewEpochState_4834 -> AgdaAny
-d_lastEpoch_4848 v0
+d_lastEpoch_4852 :: T_NewEpochState_4838 -> AgdaAny
+d_lastEpoch_4852 v0
   = case coe v0 of
-      C_constructor_4860 v1 v2 v3 v4 v5 v6 -> coe v1
+      C_constructor_4864 v1 v2 v3 v4 v5 v6 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Epoch.NewEpochState.bprev
-d_bprev_4850 ::
-  T_NewEpochState_4834 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_bprev_4850 v0
+d_bprev_4854 ::
+  T_NewEpochState_4838 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_bprev_4854 v0
   = case coe v0 of
-      C_constructor_4860 v1 v2 v3 v4 v5 v6 -> coe v2
+      C_constructor_4864 v1 v2 v3 v4 v5 v6 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Epoch.NewEpochState.bcur
-d_bcur_4852 ::
-  T_NewEpochState_4834 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_bcur_4852 v0
+d_bcur_4856 ::
+  T_NewEpochState_4838 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_bcur_4856 v0
   = case coe v0 of
-      C_constructor_4860 v1 v2 v3 v4 v5 v6 -> coe v3
+      C_constructor_4864 v1 v2 v3 v4 v5 v6 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Epoch.NewEpochState.epochState
-d_epochState_4854 :: T_NewEpochState_4834 -> T_EpochState_4810
-d_epochState_4854 v0
+d_epochState_4858 :: T_NewEpochState_4838 -> T_EpochState_4814
+d_epochState_4858 v0
   = case coe v0 of
-      C_constructor_4860 v1 v2 v3 v4 v5 v6 -> coe v4
+      C_constructor_4864 v1 v2 v3 v4 v5 v6 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Epoch.NewEpochState.ru
-d_ru_4856 ::
-  T_NewEpochState_4834 ->
+d_ru_4860 ::
+  T_NewEpochState_4838 ->
   Maybe
     MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_3018
-d_ru_4856 v0
+d_ru_4860 v0
   = case coe v0 of
-      C_constructor_4860 v1 v2 v3 v4 v5 v6 -> coe v5
+      C_constructor_4864 v1 v2 v3 v4 v5 v6 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Epoch.NewEpochState.pd
-d_pd_4858 ::
-  T_NewEpochState_4834 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_pd_4858 v0
+d_pd_4862 ::
+  T_NewEpochState_4838 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_pd_4862 v0
   = case coe v0 of
-      C_constructor_4860 v1 v2 v3 v4 v5 v6 -> coe v6
+      C_constructor_4864 v1 v2 v3 v4 v5 v6 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Epoch.HasCast-EpochState
-d_HasCast'45'EpochState_4862 ::
+d_HasCast'45'EpochState_4866 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2518 ->
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-d_HasCast'45'EpochState_4862 ~v0 ~v1
-  = du_HasCast'45'EpochState_4862
-du_HasCast'45'EpochState_4862 ::
+d_HasCast'45'EpochState_4866 ~v0 ~v1
+  = du_HasCast'45'EpochState_4866
+du_HasCast'45'EpochState_4866 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-du_HasCast'45'EpochState_4862
+du_HasCast'45'EpochState_4866
   = coe
       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
       (coe
@@ -475,7 +475,7 @@ du_HasCast'45'EpochState_4862
                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                            (coe
                               (MAlonzo.RTE.QName
-                                 (4810 :: Integer) (11290226015743492707 :: Integer)
+                                 (4814 :: Integer) (11290226015743492707 :: Integer)
                                  "Ledger.Conway.Conformance.Epoch.EpochState"
                                  (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                            (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
@@ -508,7 +508,7 @@ du_HasCast'45'EpochState_4862
                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                               (coe
                                  (MAlonzo.RTE.QName
-                                    (4810 :: Integer) (11290226015743492707 :: Integer)
+                                    (4814 :: Integer) (11290226015743492707 :: Integer)
                                     "Ledger.Conway.Conformance.Epoch.EpochState"
                                     (MAlonzo.RTE.Fixity
                                        MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -520,7 +520,7 @@ du_HasCast'45'EpochState_4862
                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                               (coe
                                  (MAlonzo.RTE.QName
-                                    (4484 :: Integer) (11290226015743492707 :: Integer)
+                                    (4486 :: Integer) (11290226015743492707 :: Integer)
                                     "Ledger.Conway.Conformance.Epoch._.Snapshots"
                                     (MAlonzo.RTE.Fixity
                                        MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -544,7 +544,7 @@ du_HasCast'45'EpochState_4862
                                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                  (coe
                                     (MAlonzo.RTE.QName
-                                       (4810 :: Integer) (11290226015743492707 :: Integer)
+                                       (4814 :: Integer) (11290226015743492707 :: Integer)
                                        "Ledger.Conway.Conformance.Epoch.EpochState"
                                        (MAlonzo.RTE.Fixity
                                           MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -581,7 +581,7 @@ du_HasCast'45'EpochState_4862
                                     MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                     (coe
                                        (MAlonzo.RTE.QName
-                                          (4810 :: Integer) (11290226015743492707 :: Integer)
+                                          (4814 :: Integer) (11290226015743492707 :: Integer)
                                           "Ledger.Conway.Conformance.Epoch.EpochState"
                                           (MAlonzo.RTE.Fixity
                                              MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -618,7 +618,7 @@ du_HasCast'45'EpochState_4862
                                        MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                        (coe
                                           (MAlonzo.RTE.QName
-                                             (4810 :: Integer) (11290226015743492707 :: Integer)
+                                             (4814 :: Integer) (11290226015743492707 :: Integer)
                                              "Ledger.Conway.Conformance.Epoch.EpochState"
                                              (MAlonzo.RTE.Fixity
                                                 MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -636,17 +636,17 @@ du_HasCast'45'EpochState_4862
                                                 MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                                        (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
                            (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
-         (coe C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4832))
+         (coe C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4836))
 -- Ledger.Conway.Conformance.Epoch.HasCast-NewEpochState
-d_HasCast'45'NewEpochState_4864 ::
+d_HasCast'45'NewEpochState_4868 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2518 ->
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-d_HasCast'45'NewEpochState_4864 ~v0 ~v1
-  = du_HasCast'45'NewEpochState_4864
-du_HasCast'45'NewEpochState_4864 ::
+d_HasCast'45'NewEpochState_4868 ~v0 ~v1
+  = du_HasCast'45'NewEpochState_4868
+du_HasCast'45'NewEpochState_4868 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-du_HasCast'45'NewEpochState_4864
+du_HasCast'45'NewEpochState_4868
   = coe
       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
       (coe
@@ -672,7 +672,7 @@ du_HasCast'45'NewEpochState_4864
                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                            (coe
                               (MAlonzo.RTE.QName
-                                 (4834 :: Integer) (11290226015743492707 :: Integer)
+                                 (4838 :: Integer) (11290226015743492707 :: Integer)
                                  "Ledger.Conway.Conformance.Epoch.NewEpochState"
                                  (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                            (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
@@ -705,7 +705,7 @@ du_HasCast'45'NewEpochState_4864
                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                               (coe
                                  (MAlonzo.RTE.QName
-                                    (4834 :: Integer) (11290226015743492707 :: Integer)
+                                    (4838 :: Integer) (11290226015743492707 :: Integer)
                                     "Ledger.Conway.Conformance.Epoch.NewEpochState"
                                     (MAlonzo.RTE.Fixity
                                        MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -717,7 +717,7 @@ du_HasCast'45'NewEpochState_4864
                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                               (coe
                                  (MAlonzo.RTE.QName
-                                    (4454 :: Integer) (11290226015743492707 :: Integer)
+                                    (4456 :: Integer) (11290226015743492707 :: Integer)
                                     "Ledger.Conway.Conformance.Epoch._.BlocksMade"
                                     (MAlonzo.RTE.Fixity
                                        MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -741,7 +741,7 @@ du_HasCast'45'NewEpochState_4864
                                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                  (coe
                                     (MAlonzo.RTE.QName
-                                       (4834 :: Integer) (11290226015743492707 :: Integer)
+                                       (4838 :: Integer) (11290226015743492707 :: Integer)
                                        "Ledger.Conway.Conformance.Epoch.NewEpochState"
                                        (MAlonzo.RTE.Fixity
                                           MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -753,7 +753,7 @@ du_HasCast'45'NewEpochState_4864
                                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                  (coe
                                     (MAlonzo.RTE.QName
-                                       (4454 :: Integer) (11290226015743492707 :: Integer)
+                                       (4456 :: Integer) (11290226015743492707 :: Integer)
                                        "Ledger.Conway.Conformance.Epoch._.BlocksMade"
                                        (MAlonzo.RTE.Fixity
                                           MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -778,7 +778,7 @@ du_HasCast'45'NewEpochState_4864
                                     MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                     (coe
                                        (MAlonzo.RTE.QName
-                                          (4834 :: Integer) (11290226015743492707 :: Integer)
+                                          (4838 :: Integer) (11290226015743492707 :: Integer)
                                           "Ledger.Conway.Conformance.Epoch.NewEpochState"
                                           (MAlonzo.RTE.Fixity
                                              MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -790,7 +790,7 @@ du_HasCast'45'NewEpochState_4864
                                     MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                     (coe
                                        (MAlonzo.RTE.QName
-                                          (4810 :: Integer) (11290226015743492707 :: Integer)
+                                          (4814 :: Integer) (11290226015743492707 :: Integer)
                                           "Ledger.Conway.Conformance.Epoch.EpochState"
                                           (MAlonzo.RTE.Fixity
                                              MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -815,7 +815,7 @@ du_HasCast'45'NewEpochState_4864
                                        MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                        (coe
                                           (MAlonzo.RTE.QName
-                                             (4834 :: Integer) (11290226015743492707 :: Integer)
+                                             (4838 :: Integer) (11290226015743492707 :: Integer)
                                              "Ledger.Conway.Conformance.Epoch.NewEpochState"
                                              (MAlonzo.RTE.Fixity
                                                 MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -874,7 +874,7 @@ du_HasCast'45'NewEpochState_4864
                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                    (coe
                                                       (MAlonzo.RTE.QName
-                                                         (4472 :: Integer)
+                                                         (4474 :: Integer)
                                                          (11290226015743492707 :: Integer)
                                                          "Ledger.Conway.Conformance.Epoch._.RewardUpdate"
                                                          (MAlonzo.RTE.Fixity
@@ -905,7 +905,7 @@ du_HasCast'45'NewEpochState_4864
                                           MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                           (coe
                                              (MAlonzo.RTE.QName
-                                                (4834 :: Integer) (11290226015743492707 :: Integer)
+                                                (4838 :: Integer) (11290226015743492707 :: Integer)
                                                 "Ledger.Conway.Conformance.Epoch.NewEpochState"
                                                 (MAlonzo.RTE.Fixity
                                                    MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -976,16 +976,16 @@ du_HasCast'45'NewEpochState_4864
                                                 (coe
                                                    MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
                               (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))
-         (coe C_constructor_4860))
+         (coe C_constructor_4864))
 -- Ledger.Conway.Conformance.Epoch.EpochStateFromConf
-d_EpochStateFromConf_4866 ::
+d_EpochStateFromConf_4870 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2518 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_EpochStateFromConf_4866 ~v0 ~v1 = du_EpochStateFromConf_4866
-du_EpochStateFromConf_4866 ::
+d_EpochStateFromConf_4870 ~v0 ~v1 = du_EpochStateFromConf_4870
+du_EpochStateFromConf_4870 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_EpochStateFromConf_4866
+du_EpochStateFromConf_4870
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C_constructor_36
       (coe
@@ -1018,7 +1018,7 @@ du_EpochStateFromConf_4866
                                       MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                       (coe
                                          (MAlonzo.RTE.QName
-                                            (3294 :: Integer) (4112555248803407823 :: Integer)
+                                            (3296 :: Integer) (4112555248803407823 :: Integer)
                                             "Ledger.Conway.Specification.Epoch.EpochState"
                                             (MAlonzo.RTE.Fixity
                                                MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -1055,7 +1055,7 @@ du_EpochStateFromConf_4866
                                          MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                          (coe
                                             (MAlonzo.RTE.QName
-                                               (3294 :: Integer) (4112555248803407823 :: Integer)
+                                               (3296 :: Integer) (4112555248803407823 :: Integer)
                                                "Ledger.Conway.Specification.Epoch.EpochState"
                                                (MAlonzo.RTE.Fixity
                                                   MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -1067,7 +1067,7 @@ du_EpochStateFromConf_4866
                                          MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                          (coe
                                             (MAlonzo.RTE.QName
-                                               (3024 :: Integer) (4112555248803407823 :: Integer)
+                                               (3026 :: Integer) (4112555248803407823 :: Integer)
                                                "Ledger.Conway.Specification.Epoch._.Snapshots"
                                                (MAlonzo.RTE.Fixity
                                                   MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -1093,7 +1093,7 @@ du_EpochStateFromConf_4866
                                             MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                             (coe
                                                (MAlonzo.RTE.QName
-                                                  (3294 :: Integer) (4112555248803407823 :: Integer)
+                                                  (3296 :: Integer) (4112555248803407823 :: Integer)
                                                   "Ledger.Conway.Specification.Epoch.EpochState"
                                                   (MAlonzo.RTE.Fixity
                                                      MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -1132,7 +1132,7 @@ du_EpochStateFromConf_4866
                                                MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                (coe
                                                   (MAlonzo.RTE.QName
-                                                     (3294 :: Integer)
+                                                     (3296 :: Integer)
                                                      (4112555248803407823 :: Integer)
                                                      "Ledger.Conway.Specification.Epoch.EpochState"
                                                      (MAlonzo.RTE.Fixity
@@ -1176,7 +1176,7 @@ du_EpochStateFromConf_4866
                                                   MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                   (coe
                                                      (MAlonzo.RTE.QName
-                                                        (3294 :: Integer)
+                                                        (3296 :: Integer)
                                                         (4112555248803407823 :: Integer)
                                                         "Ledger.Conway.Specification.Epoch.EpochState"
                                                         (MAlonzo.RTE.Fixity
@@ -1201,68 +1201,68 @@ du_EpochStateFromConf_4866
                                                      MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
                                       (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
                     (coe
-                       MAlonzo.Code.Ledger.Conway.Specification.Epoch.C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_3316)))
+                       MAlonzo.Code.Ledger.Conway.Specification.Epoch.C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_3318)))
               (coe
                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                 (coe d_acnt_4822 (coe v1))
+                 (coe d_acnt_4826 (coe v1))
                  (coe
                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                    (coe d_ss_4824 (coe v1))
+                    (coe d_ss_4828 (coe v1))
                     (coe
                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                        (coe
                           MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_86
                           (coe
                              MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.du_LStateFromConf_4110)
-                          (coe d_ls_4826 (coe v1)))
+                          (coe d_ls_4830 (coe v1)))
                        (coe
                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                          (coe d_es_4828 (coe v1)) (coe d_fut_4830 (coe v1))))))))
+                          (coe d_es_4832 (coe v1)) (coe d_fut_4834 (coe v1))))))))
 -- Ledger.Conway.Conformance.Epoch._.acnt
-d_acnt_4872 ::
-  T_EpochState_4810 ->
+d_acnt_4876 ::
+  T_EpochState_4814 ->
   MAlonzo.Code.Ledger.Conway.Specification.PParams.T_Acnt_190
-d_acnt_4872 v0 = coe d_acnt_4822 (coe v0)
+d_acnt_4876 v0 = coe d_acnt_4826 (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.es
-d_es_4874 ::
-  T_EpochState_4810 ->
+d_es_4878 ::
+  T_EpochState_4814 ->
   MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1186
-d_es_4874 v0 = coe d_es_4828 (coe v0)
+d_es_4878 v0 = coe d_es_4832 (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.fut
-d_fut_4876 ::
-  T_EpochState_4810 ->
+d_fut_4880 ::
+  T_EpochState_4814 ->
   MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_1902
-d_fut_4876 v0 = coe d_fut_4830 (coe v0)
+d_fut_4880 v0 = coe d_fut_4834 (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.ls
-d_ls_4878 ::
-  T_EpochState_4810 ->
+d_ls_4882 ::
+  T_EpochState_4814 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2718
-d_ls_4878 v0 = coe d_ls_4826 (coe v0)
+d_ls_4882 v0 = coe d_ls_4830 (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.ss
-d_ss_4880 ::
-  T_EpochState_4810 ->
+d_ss_4884 ::
+  T_EpochState_4814 ->
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_3112
-d_ss_4880 v0 = coe d_ss_4824 (coe v0)
+d_ss_4884 v0 = coe d_ss_4828 (coe v0)
 -- Ledger.Conway.Conformance.Epoch.EpochStateToConf
-d_EpochStateToConf_4882 ::
+d_EpochStateToConf_4886 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2518 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_EpochStateToConf_4882 ~v0 ~v1 = du_EpochStateToConf_4882
-du_EpochStateToConf_4882 ::
+d_EpochStateToConf_4886 ~v0 ~v1 = du_EpochStateToConf_4886
+du_EpochStateToConf_4886 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_EpochStateToConf_4882
+du_EpochStateToConf_4886
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C_constructor_36
       (coe
          (\ v0 v1 ->
             coe
-              C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4832
+              C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_4836
               (coe
-                 MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_acnt_3306
+                 MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_acnt_3308
                  (coe v1))
               (coe
-                 MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ss_3308 (coe v1))
+                 MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ss_3310 (coe v1))
               (coe
                  MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
                  (coe
@@ -1400,13 +1400,13 @@ du_EpochStateToConf_4882
                     (coe
                        MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_utxoSt_2982
                        (coe
-                          MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3310 (coe v1)))
+                          MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3312 (coe v1)))
                     (coe
                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                        (coe
                           MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_govSt_2984
                           (coe
-                             MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3310 (coe v1)))
+                             MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3312 (coe v1)))
                        (coe
                           MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
                           (coe
@@ -2087,7 +2087,7 @@ du_EpochStateToConf_4882
                                          (coe
                                             MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_certState_2986
                                             (coe
-                                               MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3310
+                                               MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3312
                                                (coe v1)))))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -2098,7 +2098,7 @@ du_EpochStateToConf_4882
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_certState_2986
                                                (coe
-                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3310
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3312
                                                   (coe v1)))))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -2109,14 +2109,14 @@ du_EpochStateToConf_4882
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_certState_2986
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3310
+                                                     MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3312
                                                      (coe v1)))))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Deposits.du_certDeposits_4218
                                                (coe
-                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3310
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3312
                                                   (coe v1))))))))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -2125,7 +2125,7 @@ du_EpochStateToConf_4882
                                    (coe
                                       MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_certState_2986
                                       (coe
-                                         MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3310
+                                         MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3312
                                          (coe v1))))
                                 (coe
                                    MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_52
@@ -3275,7 +3275,7 @@ du_EpochStateToConf_4882
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_certState_2986
                                                (coe
-                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3310
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3312
                                                   (coe v1)))))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -3286,30 +3286,30 @@ du_EpochStateToConf_4882
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Specification.Ledger.d_certState_2986
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3310
+                                                     MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3312
                                                      (coe v1)))))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Deposits.du_certDeposits_4218
                                                (coe
-                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3310
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ls_3312
                                                   (coe v1)))))))))))))
               (coe
-                 MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_es_3312 (coe v1))
+                 MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_es_3314 (coe v1))
               (coe
-                 MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_fut_3314
+                 MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_fut_3316
                  (coe v1))))
 -- Ledger.Conway.Conformance.Epoch.NewEpochStateFromConf
-d_NewEpochStateFromConf_4900 ::
+d_NewEpochStateFromConf_4904 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2518 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_NewEpochStateFromConf_4900 ~v0 ~v1
-  = du_NewEpochStateFromConf_4900
-du_NewEpochStateFromConf_4900 ::
+d_NewEpochStateFromConf_4904 ~v0 ~v1
+  = du_NewEpochStateFromConf_4904
+du_NewEpochStateFromConf_4904 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_NewEpochStateFromConf_4900
+du_NewEpochStateFromConf_4904
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C_constructor_36
       (coe
@@ -3342,7 +3342,7 @@ du_NewEpochStateFromConf_4900
                                       MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                       (coe
                                          (MAlonzo.RTE.QName
-                                            (3366 :: Integer) (4112555248803407823 :: Integer)
+                                            (3368 :: Integer) (4112555248803407823 :: Integer)
                                             "Ledger.Conway.Specification.Epoch.NewEpochState"
                                             (MAlonzo.RTE.Fixity
                                                MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -3379,7 +3379,7 @@ du_NewEpochStateFromConf_4900
                                          MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                          (coe
                                             (MAlonzo.RTE.QName
-                                               (3366 :: Integer) (4112555248803407823 :: Integer)
+                                               (3368 :: Integer) (4112555248803407823 :: Integer)
                                                "Ledger.Conway.Specification.Epoch.NewEpochState"
                                                (MAlonzo.RTE.Fixity
                                                   MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -3391,7 +3391,7 @@ du_NewEpochStateFromConf_4900
                                          MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                          (coe
                                             (MAlonzo.RTE.QName
-                                               (2996 :: Integer) (4112555248803407823 :: Integer)
+                                               (2998 :: Integer) (4112555248803407823 :: Integer)
                                                "Ledger.Conway.Specification.Epoch._.BlocksMade"
                                                (MAlonzo.RTE.Fixity
                                                   MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -3417,7 +3417,7 @@ du_NewEpochStateFromConf_4900
                                             MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                             (coe
                                                (MAlonzo.RTE.QName
-                                                  (3366 :: Integer) (4112555248803407823 :: Integer)
+                                                  (3368 :: Integer) (4112555248803407823 :: Integer)
                                                   "Ledger.Conway.Specification.Epoch.NewEpochState"
                                                   (MAlonzo.RTE.Fixity
                                                      MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -3429,7 +3429,7 @@ du_NewEpochStateFromConf_4900
                                             MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                             (coe
                                                (MAlonzo.RTE.QName
-                                                  (2996 :: Integer) (4112555248803407823 :: Integer)
+                                                  (2998 :: Integer) (4112555248803407823 :: Integer)
                                                   "Ledger.Conway.Specification.Epoch._.BlocksMade"
                                                   (MAlonzo.RTE.Fixity
                                                      MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -3456,7 +3456,7 @@ du_NewEpochStateFromConf_4900
                                                MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                (coe
                                                   (MAlonzo.RTE.QName
-                                                     (3366 :: Integer)
+                                                     (3368 :: Integer)
                                                      (4112555248803407823 :: Integer)
                                                      "Ledger.Conway.Specification.Epoch.NewEpochState"
                                                      (MAlonzo.RTE.Fixity
@@ -3470,7 +3470,7 @@ du_NewEpochStateFromConf_4900
                                                MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                (coe
                                                   (MAlonzo.RTE.QName
-                                                     (3294 :: Integer)
+                                                     (3296 :: Integer)
                                                      (4112555248803407823 :: Integer)
                                                      "Ledger.Conway.Specification.Epoch.EpochState"
                                                      (MAlonzo.RTE.Fixity
@@ -3500,7 +3500,7 @@ du_NewEpochStateFromConf_4900
                                                   MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                   (coe
                                                      (MAlonzo.RTE.QName
-                                                        (3366 :: Integer)
+                                                        (3368 :: Integer)
                                                         (4112555248803407823 :: Integer)
                                                         "Ledger.Conway.Specification.Epoch.NewEpochState"
                                                         (MAlonzo.RTE.Fixity
@@ -3565,7 +3565,7 @@ du_NewEpochStateFromConf_4900
                                                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                               (coe
                                                                  (MAlonzo.RTE.QName
-                                                                    (3014 :: Integer)
+                                                                    (3016 :: Integer)
                                                                     (4112555248803407823 :: Integer)
                                                                     "Ledger.Conway.Specification.Epoch._.RewardUpdate"
                                                                     (MAlonzo.RTE.Fixity
@@ -3597,7 +3597,7 @@ du_NewEpochStateFromConf_4900
                                                      MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                      (coe
                                                         (MAlonzo.RTE.QName
-                                                           (3366 :: Integer)
+                                                           (3368 :: Integer)
                                                            (4112555248803407823 :: Integer)
                                                            "Ledger.Conway.Specification.Epoch.NewEpochState"
                                                            (MAlonzo.RTE.Fixity
@@ -3612,7 +3612,7 @@ du_NewEpochStateFromConf_4900
                                                      MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                      (coe
                                                         (MAlonzo.RTE.QName
-                                                           (3364 :: Integer)
+                                                           (3366 :: Integer)
                                                            (4112555248803407823 :: Integer)
                                                            "Ledger.Conway.Specification.Epoch.PoolDelegatedStake"
                                                            (MAlonzo.RTE.Fixity
@@ -3622,57 +3622,57 @@ du_NewEpochStateFromConf_4900
                                                         MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
                                          (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))
                     (coe
-                       MAlonzo.Code.Ledger.Conway.Specification.Epoch.C_constructor_3392)))
+                       MAlonzo.Code.Ledger.Conway.Specification.Epoch.C_constructor_3394)))
               (coe
                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                 (coe d_lastEpoch_4848 (coe v1))
+                 (coe d_lastEpoch_4852 (coe v1))
                  (coe
                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                    (coe d_bprev_4850 (coe v1))
+                    (coe d_bprev_4854 (coe v1))
                     (coe
                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                       (coe d_bcur_4852 (coe v1))
+                       (coe d_bcur_4856 (coe v1))
                        (coe
                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                           (coe
                              MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_86
-                             (coe du_EpochStateFromConf_4866) (coe d_epochState_4854 (coe v1)))
+                             (coe du_EpochStateFromConf_4870) (coe d_epochState_4858 (coe v1)))
                           (coe
                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                             (coe d_ru_4856 (coe v1)) (coe d_pd_4858 (coe v1)))))))))
+                             (coe d_ru_4860 (coe v1)) (coe d_pd_4862 (coe v1)))))))))
 -- Ledger.Conway.Conformance.Epoch._.bcur
-d_bcur_4906 ::
-  T_NewEpochState_4834 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_bcur_4906 v0 = coe d_bcur_4852 (coe v0)
+d_bcur_4910 ::
+  T_NewEpochState_4838 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_bcur_4910 v0 = coe d_bcur_4856 (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.bprev
-d_bprev_4908 ::
-  T_NewEpochState_4834 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_bprev_4908 v0 = coe d_bprev_4850 (coe v0)
+d_bprev_4912 ::
+  T_NewEpochState_4838 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_bprev_4912 v0 = coe d_bprev_4854 (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.epochState
-d_epochState_4910 :: T_NewEpochState_4834 -> T_EpochState_4810
-d_epochState_4910 v0 = coe d_epochState_4854 (coe v0)
+d_epochState_4914 :: T_NewEpochState_4838 -> T_EpochState_4814
+d_epochState_4914 v0 = coe d_epochState_4858 (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.lastEpoch
-d_lastEpoch_4912 :: T_NewEpochState_4834 -> AgdaAny
-d_lastEpoch_4912 v0 = coe d_lastEpoch_4848 (coe v0)
+d_lastEpoch_4916 :: T_NewEpochState_4838 -> AgdaAny
+d_lastEpoch_4916 v0 = coe d_lastEpoch_4852 (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.pd
-d_pd_4914 ::
-  T_NewEpochState_4834 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_pd_4914 v0 = coe d_pd_4858 (coe v0)
+d_pd_4918 ::
+  T_NewEpochState_4838 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_pd_4918 v0 = coe d_pd_4862 (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.ru
-d_ru_4916 ::
-  T_NewEpochState_4834 ->
+d_ru_4920 ::
+  T_NewEpochState_4838 ->
   Maybe
     MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_3018
-d_ru_4916 v0 = coe d_ru_4856 (coe v0)
+d_ru_4920 v0 = coe d_ru_4860 (coe v0)
 -- Ledger.Conway.Conformance.Epoch.NewEpochStateToConf
-d_NewEpochStateToConf_4918 ::
+d_NewEpochStateToConf_4922 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2518 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_NewEpochStateToConf_4918 ~v0 ~v1 = du_NewEpochStateToConf_4918
-du_NewEpochStateToConf_4918 ::
+d_NewEpochStateToConf_4922 ~v0 ~v1 = du_NewEpochStateToConf_4922
+du_NewEpochStateToConf_4922 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_NewEpochStateToConf_4918
+du_NewEpochStateToConf_4922
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C_constructor_36
       (coe
@@ -3705,7 +3705,7 @@ du_NewEpochStateToConf_4918
                                       MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                       (coe
                                          (MAlonzo.RTE.QName
-                                            (4834 :: Integer) (11290226015743492707 :: Integer)
+                                            (4838 :: Integer) (11290226015743492707 :: Integer)
                                             "Ledger.Conway.Conformance.Epoch.NewEpochState"
                                             (MAlonzo.RTE.Fixity
                                                MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -3742,7 +3742,7 @@ du_NewEpochStateToConf_4918
                                          MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                          (coe
                                             (MAlonzo.RTE.QName
-                                               (4834 :: Integer) (11290226015743492707 :: Integer)
+                                               (4838 :: Integer) (11290226015743492707 :: Integer)
                                                "Ledger.Conway.Conformance.Epoch.NewEpochState"
                                                (MAlonzo.RTE.Fixity
                                                   MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -3754,7 +3754,7 @@ du_NewEpochStateToConf_4918
                                          MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                          (coe
                                             (MAlonzo.RTE.QName
-                                               (4454 :: Integer) (11290226015743492707 :: Integer)
+                                               (4456 :: Integer) (11290226015743492707 :: Integer)
                                                "Ledger.Conway.Conformance.Epoch._.BlocksMade"
                                                (MAlonzo.RTE.Fixity
                                                   MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
@@ -3780,7 +3780,7 @@ du_NewEpochStateToConf_4918
                                             MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                             (coe
                                                (MAlonzo.RTE.QName
-                                                  (4834 :: Integer)
+                                                  (4838 :: Integer)
                                                   (11290226015743492707 :: Integer)
                                                   "Ledger.Conway.Conformance.Epoch.NewEpochState"
                                                   (MAlonzo.RTE.Fixity
@@ -3793,7 +3793,7 @@ du_NewEpochStateToConf_4918
                                             MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                             (coe
                                                (MAlonzo.RTE.QName
-                                                  (4454 :: Integer)
+                                                  (4456 :: Integer)
                                                   (11290226015743492707 :: Integer)
                                                   "Ledger.Conway.Conformance.Epoch._.BlocksMade"
                                                   (MAlonzo.RTE.Fixity
@@ -3821,7 +3821,7 @@ du_NewEpochStateToConf_4918
                                                MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                (coe
                                                   (MAlonzo.RTE.QName
-                                                     (4834 :: Integer)
+                                                     (4838 :: Integer)
                                                      (11290226015743492707 :: Integer)
                                                      "Ledger.Conway.Conformance.Epoch.NewEpochState"
                                                      (MAlonzo.RTE.Fixity
@@ -3835,7 +3835,7 @@ du_NewEpochStateToConf_4918
                                                MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                (coe
                                                   (MAlonzo.RTE.QName
-                                                     (4810 :: Integer)
+                                                     (4814 :: Integer)
                                                      (11290226015743492707 :: Integer)
                                                      "Ledger.Conway.Conformance.Epoch.EpochState"
                                                      (MAlonzo.RTE.Fixity
@@ -3865,7 +3865,7 @@ du_NewEpochStateToConf_4918
                                                   MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                   (coe
                                                      (MAlonzo.RTE.QName
-                                                        (4834 :: Integer)
+                                                        (4838 :: Integer)
                                                         (11290226015743492707 :: Integer)
                                                         "Ledger.Conway.Conformance.Epoch.NewEpochState"
                                                         (MAlonzo.RTE.Fixity
@@ -3930,7 +3930,7 @@ du_NewEpochStateToConf_4918
                                                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                               (coe
                                                                  (MAlonzo.RTE.QName
-                                                                    (4472 :: Integer)
+                                                                    (4474 :: Integer)
                                                                     (11290226015743492707 ::
                                                                        Integer)
                                                                     "Ledger.Conway.Conformance.Epoch._.RewardUpdate"
@@ -3963,7 +3963,7 @@ du_NewEpochStateToConf_4918
                                                      MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                      (coe
                                                         (MAlonzo.RTE.QName
-                                                           (4834 :: Integer)
+                                                           (4838 :: Integer)
                                                            (11290226015743492707 :: Integer)
                                                            "Ledger.Conway.Conformance.Epoch.NewEpochState"
                                                            (MAlonzo.RTE.Fixity
@@ -4042,34 +4042,34 @@ du_NewEpochStateToConf_4918
                                                            (coe
                                                               MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
                                          (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))
-                    (coe C_constructor_4860)))
+                    (coe C_constructor_4864)))
               (coe
                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                  (coe
-                    MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_lastEpoch_3380
+                    MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_lastEpoch_3382
                     (coe v1))
                  (coe
                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                     (coe
-                       MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_bcur_3384
+                       MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_bcur_3386
                        (coe v1))
                     (coe
                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                        (coe
-                          MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_bprev_3382
+                          MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_bprev_3384
                           (coe v1))
                        (coe
                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                           (coe
                              MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_86
-                             (coe du_EpochStateToConf_4882)
+                             (coe du_EpochStateToConf_4886)
                              (coe
-                                MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_epochState_3386
+                                MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_epochState_3388
                                 (coe v1)))
                           (coe
                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                              (coe
-                                MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ru_3388 (coe v1))
+                                MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_ru_3390 (coe v1))
                              (coe
-                                MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_pd_3390
+                                MAlonzo.Code.Ledger.Conway.Specification.Epoch.d_pd_3392
                                 (coe v1)))))))))

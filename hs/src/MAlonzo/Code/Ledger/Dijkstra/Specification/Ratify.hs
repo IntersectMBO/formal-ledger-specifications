@@ -5416,17 +5416,27 @@ d_expired'63'_2824 v0 v1 v2
             (MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.d_expiresIn_1124
                (coe v2))
             v1))
+-- Ledger.Dijkstra.Specification.Ratify.expired⁇
+d_expired'8263'_2830 ::
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
+  AgdaAny ->
+  MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Actions.T_GovActionState_1106 ->
+  MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
+d_expired'8263'_2830 v0 v1 v2
+  = coe
+      MAlonzo.Code.Class.Decidable.Core.C_'8263'__30
+      (coe d_expired'63'_2824 (coe v0) (coe v1) (coe v2))
 -- Ledger.Dijkstra.Specification.Ratify._⊢_⇀⦇_,RATIFY⦈_
-d__'8866'_'8640''10631'_'44'RATIFY'10632'__2842 a0 a1 a2 a3 a4 = ()
-data T__'8866'_'8640''10631'_'44'RATIFY'10632'__2842
-  = C_RATIFY'45'Accept_2854 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
-    C_RATIFY'45'Reject_2862 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
-    C_RATIFY'45'Continue_2870 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d__'8866'_'8640''10631'_'44'RATIFY'10632'__2848 a0 a1 a2 a3 a4 = ()
+data T__'8866'_'8640''10631'_'44'RATIFY'10632'__2848
+  = C_RATIFY'45'Accept_2860 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
+    C_RATIFY'45'Reject_2868 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
+    C_RATIFY'45'Continue_2876 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Ledger.Dijkstra.Specification.Ratify._⊢_⇀⦇_,RATIFIES⦈_
-d__'8866'_'8640''10631'_'44'RATIFIES'10632'__2872 ::
+d__'8866'_'8640''10631'_'44'RATIFIES'10632'__2878 ::
   MAlonzo.Code.Ledger.Dijkstra.Specification.Gov.Base.T_GovStructure_10 ->
   T_RatifyEnv_2134 ->
   T_RatifyState_2170 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   T_RatifyState_2170 -> ()
-d__'8866'_'8640''10631'_'44'RATIFIES'10632'__2872 = erased
+d__'8866'_'8640''10631'_'44'RATIFIES'10632'__2878 = erased
