@@ -158,6 +158,7 @@ record TransactionStructure : Type₁ where
       txIns                : ℙ TxIn
       refInputs            : ℙ TxIn
       collateralInputs     : ℙ TxIn
+      totalCollateral      : Maybe Coin
       txOuts               : Ix ⇀ TxOut
       txId                 : TxId
       txCerts              : List DCert

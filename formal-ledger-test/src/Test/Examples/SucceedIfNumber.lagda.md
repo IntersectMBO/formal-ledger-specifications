@@ -99,6 +99,7 @@ succeedTx = record { body = record
                          ; currentTreasury = nothing
                          ; txId = 7
                          ; collateralInputs = Ledger.Prelude.fromList ((5 , 5) ∷ [])
+                         ; totalCollateral = nothing
                          ; reqSignerHashes = ∅
                          ; scriptIntegrityHash = nothing
                          } ;
@@ -134,6 +135,7 @@ failTx = record { body = record
                          ; currentTreasury = nothing
                          ; txId = 7
                          ; collateralInputs = ∅
+                         ; totalCollateral = nothing
                          ; reqSignerHashes = ∅
                          ; scriptIntegrityHash = nothing
                          } ;
