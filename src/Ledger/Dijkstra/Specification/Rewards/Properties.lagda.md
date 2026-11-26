@@ -14,4 +14,5 @@ module Ledger.Dijkstra.Specification.Rewards.Properties where
 
 ```agda
 open import Ledger.Dijkstra.Specification.Rewards.Properties.Computational
+open import Ledger.Dijkstra.Specification.Rewards.Properties.MaxPool
 ```

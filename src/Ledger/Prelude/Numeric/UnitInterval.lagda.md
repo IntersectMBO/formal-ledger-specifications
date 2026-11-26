@@ -108,6 +108,10 @@ fromUnitInterval-inUnitInterval (x , [ p0 ]) with isInUnitInterval x
 ... | no ¬p = ⊥-elim-irr (¬p p0)
 ... | yes p = p
 
+-- Unit interval elements are non-negative.
+fromUnitInterval-0≤ : ∀ (x : UnitInterval) → 0 ≤ fromUnitInterval x
+fromUnitInterval-0≤ x = proj₁ (fromUnitInterval-inUnitInterval x)
+
 -- Left multiplication by unit interval element preserves non-negativity.
 UnitInterval-*-0≤
   : ∀ (x : ℚ) (y : UnitInterval) → 0 ≤ x → 0 ≤ x * fromUnitInterval y
