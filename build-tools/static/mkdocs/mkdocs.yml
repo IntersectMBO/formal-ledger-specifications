@@ -297,6 +297,7 @@ nav:
       - Properties: Ledger.Dijkstra.Specification.Rewards.Properties.md
       - Properties/:
         - Computational: Ledger.Dijkstra.Specification.Rewards.Properties.Computational.md
+        - MaxPool: Ledger.Dijkstra.Specification.Rewards.Properties.MaxPool.md
     - RewardUpdate: Ledger.Dijkstra.Specification.RewardUpdate.md
     - RewardUpdate/:
       - Properties: Ledger.Dijkstra.Specification.RewardUpdate.Properties.md
