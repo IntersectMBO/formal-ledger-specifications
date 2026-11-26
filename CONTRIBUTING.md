@@ -4,25 +4,25 @@
 
 <!-- DO NOT REMOVE TRAILING WHITE SPACE FROM TOC LIST -->
 
-[🖊️️ Style Guidelines][]  
-[🗺️ Project Overview][]  
-[💻 Development Environment Setup][]  
-[🏗️ Building Project Artifacts][]  
-[📖 HTML Documentation][]  
-[🖥️ IDE Integration][]  
-[🧑‍🔧 Working on the Agda source code][]  
-[📋 Tracking Properties of the Ledger][]  
-[🔁 CI/CD Workflow][]  
-[🕵️‍♀️ Conformance Testing][]  
-[🗃️ Miscellanea][]  
-[👷 Maintainers][]  
-[🔧 Build Toolchain Reference][]
+[Style Guidelines][]  
+[Project Overview][]  
+[Development Environment Setup][]  
+[Building Project Artifacts][]  
+[HTML Documentation][]  
+[IDE Integration][]  
+[Working on the Agda source code][]  
+[Tracking Properties of the Ledger][]  
+[CI/CD Workflow][]  
+[Conformance Testing][]  
+[Miscellanea][]  
+[Maintainers][]  
+[Build Toolchain Reference][]
 
 
 ---
 
 <a id="style-guidelines"></a>
-## 🖊️️ Style Guidelines
+## Style Guidelines
 
 We adhere to the [Agda standard library style guide][] where practical.
 However, because we use [literate][] Agda to produce html documentation, readability
@@ -65,14 +65,14 @@ of the latter takes precedence over code formatting.
     class" instances allow us to access those values without having to remember the
     specific paths to the field names of those record types.  Another example of the
     [getter type class pattern](#example-getter-type-class) is given in the
-    [🗃️ Miscellanea][] section below.
+    [Miscellanea][] section below.
 
 2.  Use camel case for field names (e.g., `txNetworkId` instead of `txnetworkid`).
 
 ---
 
 <a id="project-overview"></a>
-## 🗺️ Project Overview
+## Project Overview
 
 This repository uses [Nix][] and [Shake][] to provide a reproducible, declarative,
 and portable development environment.
@@ -140,12 +140,12 @@ The main directories and files involved in the build process are as follows.
 ---
 
 <a id="development-environment-setup"></a>
-## 💻 Development Environment Setup
+## Development Environment Setup
 
 We provide several development shells tailored for different tasks. You can
 enter them using `nix develop`.
 
-+  🐚 **Default Shell**
++  **Default Shell**
 
     Use this shell for the specification and build tools.
 
@@ -154,14 +154,14 @@ enter them using `nix develop`.
     nix develop
     ```
 
-    ⚒️ **Available Tools**
+    **Available Tools**
 
     + [`agda`][Agda] (`fls-agda` with the five dependency libraries)
     + `fls-shake` (our custom build tool)
     + [`mkdocs`][mkdocs] (with Python dependencies)
     + [`hpack`][hpack] (the Haskell package helper)
 
-+  🧪 **Test Library Shell**
++  **Test Library Shell**
 
     This shell registers a built snapshot of `formal-ledger` alongside the
     five dependency libraries.  Re-enter it to pick up subsequent changes
@@ -183,7 +183,7 @@ dependency libraries.
 
 
 <a id="building-project-artifacts"></a>
-## 🏗️ Building Project Artifacts
+## Building Project Artifacts
 
 You can build project artifacts in several ways. The recommended method is using `nix build`.
 
@@ -267,7 +267,7 @@ Use `fls-shake --trace mkdocs`, for example, to trace a build.
 ---
 
 <a id="html-documentation"></a>
-## 📖 HTML Documentation
+## HTML Documentation
 
 ### Building and viewing the formal specification
 
@@ -315,7 +315,7 @@ Then point your browser to <http://127.0.0.1:8000>.
 ---
 
 <a id="ide-integration"></a>
-## 🖥️ IDE Integration
+## IDE Integration
 
 Start Emacs from the development shell of the library you are editing, so that
 agda-mode runs the project's Agda:
@@ -332,7 +332,7 @@ mode matches the shell's Agda.
 ---
 
 <a id="working-on-the-agda-source-code"></a>
-## 🧑‍🔧 Working on the Agda source code
+## Working on the Agda source code
 
 ### Editing the source files
 
@@ -420,7 +420,7 @@ modules or changing imports, rerun `fls-shake mkdocs` to rebuild the site.
 ---
 
 <a id="tracking-properties-of-the-ledger"></a>
-## 📋 Tracking Properties of the Ledger
+## Tracking Properties of the Ledger
 
 Ledger properties (preservation of value, governance invariants, and so on) are
 tracked across eras by the following three artifacts, each the single source of
@@ -528,7 +528,7 @@ Nix shell does not provide `gh`).
 ---
 
 <a id="cicd-workflow"></a>
-## 🔁 CI/CD Workflow
+## CI/CD Workflow
 
 GitHub Actions and IOG's Hydra build the flake.  The Actions pipeline in
 `.github/workflows/` builds and publishes artifacts, with the following details:
@@ -585,7 +585,7 @@ Formalization of the ledger changes required by Ouroboros Leios is staged on the
 ---
 
 <a id="conformance-testing"></a>
-## 🕵️‍♀️ Conformance Testing
+## Conformance Testing
 
 After producing the Agda-generated Haskell code with `nix build .#hs-src`, you
 can run the conformance tests.
@@ -595,7 +595,7 @@ See [the `conformance-example` directory][conformance-example].
 ---
 
 <a id="miscellanea"></a>
-## 🗃️ Miscellanea
+## Miscellanea
 
 
 ### Plotting typechecking times
@@ -666,7 +666,7 @@ write `cs .dState .voteDelegs`, or, if we want to avoid `open` clutter, `DState.
 ---
 
 <a id="maintainers"></a>
-## 🧑‍🔧 Maintainers
+## Maintainers
 
 This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamdemeo][].
 
@@ -675,7 +675,7 @@ This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamde
 ---
 
 <a id="build-toolchain-reference"></a>
-## 🔧 Build Toolchain Reference
+## Build Toolchain Reference
 
 This section covers the details needed to inspect or change the toolchain.
 For routine builds, see [Building Project Artifacts](#building-project-artifacts).
@@ -813,21 +813,21 @@ stack.  Compare warnings with master and address new ones before merging.
 <!-- `markdown-toc-generate-toc` is used to update the toc. -->
 <!-- TODO: find or make a script/utility that generates all the links from the toc -->
 
-[🖊️️ Style Guidelines]: #style-guidelines
-[🗺️ Project Overview]: #project-overview
-[💻 Development Environment Setup]: #development-environment-setup
-[🏗️ Building Project Artifacts]: #building-project-artifacts
-[📖 HTML Documentation]: #html-documentation
+[Style Guidelines]: #style-guidelines
+[Project Overview]: #project-overview
+[Development Environment Setup]: #development-environment-setup
+[Building Project Artifacts]: #building-project-artifacts
+[HTML Documentation]: #html-documentation
 [Building and viewing the formal specification]: #building-and-viewing-the-formal-specification
 [Browsing the source code]: #browsing-the-source-code
-[🧑‍🔧 Working on the Agda source code]: #working-on-the-agda-source-code
-[📋 Tracking Properties of the Ledger]: #tracking-properties-of-the-ledger
-[🕵️‍♀️ Conformance Testing]: #conformance-testing
-[🖥️ IDE Integration]: #ide-integration
-[🔁 CI/CD Workflow]: #cicd-workflow
-[🗃️ Miscellanea]: #miscellanea
-[👷 Maintainers]: #maintainers
-[🔧 Build Toolchain Reference]: #build-toolchain-reference
+[Working on the Agda source code]: #working-on-the-agda-source-code
+[Tracking Properties of the Ledger]: #tracking-properties-of-the-ledger
+[Conformance Testing]: #conformance-testing
+[IDE Integration]: #ide-integration
+[CI/CD Workflow]: #cicd-workflow
+[Miscellanea]: #miscellanea
+[Maintainers]: #maintainers
+[Build Toolchain Reference]: #build-toolchain-reference
 
 
 [^1]: However, our custom mkdocs configuration provides a toggle button that allows the reader to view hidden code blocks if desired.)
