@@ -13,7 +13,6 @@
 [🧑‍🔧 Working on the Agda source code][]  
 [📋 Tracking Properties of the Ledger][]  
 [🔁 CI/CD Workflow][]  
-[🎛️️ Setup Without Nix][]  
 [🕵️‍♀️ Conformance Testing][]  
 [🗃️ Miscellanea][]  
 [👷 Maintainers][]  
@@ -318,117 +317,17 @@ Then point your browser to <http://127.0.0.1:8000>.
 <a id="ide-integration"></a>
 ## 🖥️ IDE Integration
 
-For the best development experience, you should configure your IDE to use the Agda executable provided by this project's Nix environment.
-
-First, build `fls-agdaWithPackages` and create a stable symlink to it in your home directory. This prevents you from having to update your IDE settings every time the project's dependencies change.
+Start Emacs from the development shell of the library you are editing, so that
+agda-mode runs the project's Agda:
 
 ```bash
-nix build ./#fls-agdaWithPackages -o ~/ledger-agda
+nix develop                     # or: nix develop .#formal-ledger-test
+emacs src/Ledger.lagda.md
 ```
 
-Then make sure that the `~/ledger-agda/bin` directory is in your `PATH` when starting your editor.
-
-**Tip**. You can manage multiple versions of Agda with `update-alternatives`.  See [Using `update-alternatives`](#using-update-alternatives-to-manage-agda-versions).
-
----
-
-### Emacs
-
-1.  **Match your `agda2-mode` elisp to the project's Agda**.
-
-    `agda2-mode` refuses to talk to an Agda whose version differs from its own, and
-    reports, for example,
-
-    ```
-    The Agda mode's version (2.6.4.1) does not match that of agda (2.8.0).
-    ```
-
-    This project's Agda is version 2.8.0, and it carries the Emacs mode of that same
-    release.  From inside the Nix shell, print the path of the matching elisp with
-
-    ```bash
-    agda --emacs-mode locate
-    ```
-
-    and load that file from your [Emacs init file][] with `(load-file "…/agda2.el")`.
-    Alternatively, `agda --emacs-mode setup` adds the setup code to your `~/.emacs`
-    (useful only if that is the init file you actually use), and
-    `agda --emacs-mode compile` byte-compiles the mode.  The separate `agda-mode`
-    executable is deprecated as of Agda 2.8.0, and ours does not provide one;
-    `agda --emacs-mode` replaces it.
-
-2.  **Configure Emacs for version switching**.
-
-    Add the following to your [Emacs init file][] (highlight and `M-x eval-region` to load without restarting):
-
-    ```elisp
-    ;; Defines a function `my/switch-agda' that switches between different
-    ;; `agda' executables defined in `my/agda-versions'. The first entry of
-    ;; `my/agda-versions' is assumed to be the default Agda.
-    ;;
-    ;; If there are two entries in `my/agda-versions', `my/switch-agda' toggles
-    ;; between the two. If there are more entries, it will ask which one
-    ;; to choose.
-    (setq my/agda-versions `(("System Agda"  "2.8.0" "agda")  ; Adjust version as needed
-                             ("Ledger Agda"  "2.8.0" "~/ledger-agda/bin/agda")))
-    (setq my/selected-agda (caar my/agda-versions))
-
-    (defun my/switch-agda (name version path)
-      (interactive
-       (cond ((> (length my/agda-versions) 2)
-              (assoc (completing-read "Agda: " my/agda-versions '(lambda (x) 't) 't) my/agda-versions))
-             ((= (length my/agda-versions) 2)
-              (car (seq-filter '(lambda (x) (not (string= my/selected-agda (car x)))) my/agda-versions)))
-             (t (error "my/agda-versions needs to have at least two elements!"))))
-      (message "Selecting %s, version %s" name version)
-      (setq my/selected-agda   name
-            agda2-version      version
-            agda2-program-name path)
-      (agda2-restart))
-
-    ;; Bind the switch function to C-c C-x C-t in agda2-mode
-    (with-eval-after-load 'agda2-mode
-      (define-key agda2-mode-map (kbd "C-c C-x C-t") 'my/switch-agda))
-    ```
-
-    **Notes**
-
-    + Update the system Agda version in `my/agda-versions` to match your installation.
-    + Check your system Agda with `which agda && agda --version`.
-    + Once configured, use `M-x my/switch-agda` (or `C-c C-x C-t`) to switch between Agda versions.
-    + This works with most Emacs distributions (Doom, Spacemacs, vanilla, etc.).
-    + `my/switch-agda` sets `agda2-version`, which satisfies the version check described
-      in step 1 when you switch executables; it cannot make one release's elisp speak
-      another release's protocol, so the elisp still has to come from a matching Agda.
-
-3.  Launch Emacs from within the project's Nix shell so that it inherits the
-    environment.  Choose the shell for the library you are editing as described
-    in [💻 Development Environment Setup][].
-
-    ```bash
-    nix develop                     # or: nix develop .#formal-ledger-test
-    emacs src/Ledger.lagda.md
-    ```
-
-4.  Use standard `agda-mode` commands (e.g., `C-c C-l` to load a file).
-
-
-### Visual Studio Code
-
-1.  Install the official **Agda Language Server** extension from the marketplace.
-
-2.  Configure the extension to use the project's Agda executable. Open your `settings.json` (`Ctrl+Shift+P` \> "Preferences: Open User Settings (JSON)") and add the path to the symlink:
-    ```json
-    {
-      "agdaMode.connection.paths": [
-        "~/ledger-agda/bin/agda",
-        "agda"
-      ]
-    }
-    ```
-    *(Note: VS Code may not expand `~`, so you might need to use the full path, e.g., `/home/user/ledger-agda/bin/agda`)*.
-
-3.  Use `Ctrl+C Ctrl+R` to switch between Agda versions if you have multiple configured.
+Run `agda --emacs-mode setup` once from the shell.  It adds code to your
+[Emacs init file][] that loads the agda-mode of the `agda` on `PATH`, so the
+mode matches the shell's Agda.
 
 ---
 
@@ -437,11 +336,8 @@ Then make sure that the `~/ledger-agda/bin` directory is in your `PATH` when sta
 
 ### Editing the source files
 
-You can use either Emacs or VSCode to edit the source code files under the main `src`
-directory.  Currently, we have a mixture of plain Agda (`.agda`), LaTeX-based
-literate Agda (`.lagda`), and Markdown-based literate Agda (`.lagda.md`), but
-eventually all Agda files under `src` will be of the Markdown flavor and as such will
-have the `.lagda.md` extension.
+The source files under `src` are plain Agda (`.agda`) and Markdown-based literate
+Agda (`.lagda.md`); eventually all of them will be of the Markdown flavor.
 
 Markdown-flavored literate Agda files contain English prose, formatted using Markdown
 syntax, along with code blocks each of which is delimited by an Agda code fence. For
@@ -557,9 +453,8 @@ catalog is malformed.  The check runs in CI
 regenerated dashboard fails the pull request; the Agda `--safe` typecheck in the
 main CI is what makes `proved` mean proved.
 
-Run the scanner from the default development shell (`nix develop` provides
-`python3` with PyYAML; without Nix, any Python 3.8+ with the `pyyaml` package
-works):
+Run the scanner from the default development shell, which provides `python3`
+with PyYAML:
 
 ```bash
 python3 build-tools/scripts/property-tracking/scan_properties.py          # regenerate the dashboard
@@ -686,119 +581,6 @@ Formalization of the ledger changes required by Ouroboros Leios is staged on the
 
 + Changes required but independent of Leios (e.g. `Ledger.Core`, `Ledger.Prelude`, the STS
    machinery) should be made first on a PR to `master` and then merged into `leios-main`.
----
-
-<a id="setup-without-nix"></a>
-## 🎛️️ Setup Without Nix
-
-While we recommend using Nix for the best experience, it's possible to work with
-this repository without Nix. Those making nontrivial contributions are advised
-to use the Nix-based approach, but these instructions are provided for those who
-prefer not to use Nix.
-
-### Installing Agda and Dependencies Manually
-
-1.  **Install Agda 2.8.0**.
-
-    Follow the [Agda installation instructions][].  The version must match the
-    `Agda ==` bound in `build-tools/agda/fls-agda.cabal`.
-
-2.  **Check out the five Agda libraries**.
-
-    From the repository root, fetch the revisions used by this specification.
-    The [pin locations](#where-each-version-is-pinned) identify their sources.
-
-    ```bash
-    mkdir -p LIB
-    git clone --branch v2.4 --depth 1 https://github.com/agda/agda-stdlib.git LIB/agda-stdlib
-    git clone --branch v2.4 --depth 1 https://github.com/agda/agda-stdlib-classes.git LIB/agda-stdlib-classes
-    git clone --branch v2.4 --depth 1 https://github.com/agda/agda-stdlib-meta.git LIB/agda-stdlib-meta
-    git clone https://github.com/input-output-hk/agda-sets.git LIB/agda-sets
-    git -C LIB/agda-sets checkout --detach 83288a9b3f0f03244ebd1d884a761b65f64ebbea
-    git clone https://github.com/input-output-hk/iog-agda-prelude.git LIB/iog-agda-prelude
-    git -C LIB/iog-agda-prelude checkout --detach 2c752d5ec3b454885cd5aa692d973a254fdc89dd
-    ```
-
-3.  **Create a library configuration**.
-
-    From the repository root, create `LIB/libraries` with absolute paths, as
-    follows:
-
-    ```bash
-    cat > LIB/libraries <<EOF
-    $PWD/LIB/agda-stdlib/standard-library.agda-lib
-    $PWD/LIB/agda-stdlib-classes/agda-stdlib-classes.agda-lib
-    $PWD/LIB/agda-stdlib-meta/agda-stdlib-meta.agda-lib
-    $PWD/LIB/agda-sets/abstract-set-theory.agda-lib
-    $PWD/LIB/iog-agda-prelude/iog-prelude.agda-lib
-    EOF
-    ```
-
-    To check tests, add the absolute path to this repository's
-    `formal-ledger.agda-lib` to the registry and run Agda from
-    `formal-ledger-test/`.
-
-4.  **Use Agda with the libraries**.
-
-    ```bash
-    agda --library-file=LIB/libraries src/Ledger.lagda.md
-    ```
-
-### Building fls-shake Without Nix
-
-The build system `fls-shake` can be compiled manually by following the steps
-below.  The artifact targets also need the `fls-agda` backend: build it with
-Cabal in `build-tools/agda/` and put its `agda` executable on `PATH`, with the
-library configuration above.  Install hpack too; the `hs` target uses it to
-generate the Haskell package description.
-
-From the repository root, make the library configuration available to every
-Agda invocation launched by Shake, as follows:
-
-```bash
-export AGDA_DIR="$PWD/LIB"
-```
-
-1.  **Install GHC and Cabal**.
-
-    Follow the [official Haskell instructions][].
-
-    Verify installation and update:
-
-    ```bash
-    ghc --version
-    cabal --version
-    cabal update
-    ```
-
-2.  **Compile fls-shake**.
-
-    ```bash
-    cd build-tools/shake
-    cabal build fls-shake
-    ```
-
-3.  **Run fls-shake:**
-
-    ```bash
-    # Build HTML and Haskell outputs
-    cabal run fls-shake -- -C '../..' mkdocs
-    cabal run fls-shake -- -C '../..' html
-    cabal run fls-shake -- -C '../..' hs
-    ```
-
-    Note: The `-C '../..'` option makes fls-shake run from the repository's main directory.
-
-
-### Required System Dependencies
-
-For non-Nix users, you'll also need to install the following:
-
-+  **Python and dependencies** (for documentation tools)
-
-   ```bash
-   pip install mkdocs mkdocs-material pymdown-extensions pyyaml pybtex
-   ```
 
 ---
 
@@ -830,32 +612,6 @@ Frome the git repository, run,
 python build-tools/scripts/plot_typecheck_time.py > index.html
 ```
 and open `index.html` in your browser.
-
----
-
-<a id="using-update-alternatives-to-manage-agda-versions"></a>
-### Using `update-alternatives` to manage Agda versions
-
-If you have the `update-alternatives` program installed, then instead of creating a
-symlink from your home directory to our version of Agda in `~/ledger-agda/bin/agda`,
-you can configure multiple versions of `agda` as follows:
-
-```bash
-sudo update-alternatives --install /usr/bin/agda agda ~/ledger-agda/bin/agda 1
-```
-
-Do the same for any other versions of Agda that you have installed, and want to make
-available, on your system. For example,
-
-```bash
-sudo update-alternatives --install /usr/bin/agda agda ~/.cabal/bin/agda-2.8.0 10
-```
-
-Then choose which Agda version you want to use.
-
-```bash
-sudo update-alternatives --config agda
-```
 
 ---
 
@@ -997,7 +753,6 @@ before committing it.
     iog-agda-prelude.  Their READMEs describe supported combinations.
 4.  The specification, checked against Agda's breaking changes in its
     `CHANGELOG.md`.
-5.  The versions in [Setup Without Nix](#setup-without-nix).
 
 Build `formal-ledger`, `formal-ledger-test`, and `hs-src` after changing the
 stack.  Compare warnings with master and address new ones before merging.
@@ -1015,7 +770,6 @@ stack.  Compare warnings with master and address new ones before merging.
 [agda-stdlib-meta]: https://github.com/agda/agda-stdlib-meta
 [agda-sets]: https://github.com/input-output-hk/agda-sets
 [agda.nix]: https://github.com/carlostome/agda.nix
-[Agda installation instructions]: https://agda.readthedocs.io/en/v2.8.0/getting-started/installation.html
 [binary]: https://github.com/haskell/binary
 [conformance-example]: https://github.com/IntersectMBO/formal-ledger-specifications/tree/master/conformance-example
 [deepseq]: https://github.com/haskell/deepseq
@@ -1043,7 +797,6 @@ stack.  Compare warnings with master and address new ones before merging.
 [Nix flakes]: https://nixos.wiki/wiki/Flakes
 [Nix download instructions]: https://nixos.org/download/
 [nixpkgs Agda documentation]: https://nixos.org/manual/nixpkgs/stable/#how-to-use-agda
-[official Haskell instructions]: https://www.haskell.org/downloads/
 [pandoc]: https://pandoc.org/
 [python311]: https://www.python.org/downloads/release/python-3110/
 [Shake]: https://shakebuild.com/
@@ -1072,7 +825,6 @@ stack.  Compare warnings with master and address new ones before merging.
 [🕵️‍♀️ Conformance Testing]: #conformance-testing
 [🖥️ IDE Integration]: #ide-integration
 [🔁 CI/CD Workflow]: #cicd-workflow
-[🎛️️ Setup Without Nix]: #setup-without-nix
 [🗃️ Miscellanea]: #miscellanea
 [👷 Maintainers]: #maintainers
 [🔧 Build Toolchain Reference]: #build-toolchain-reference
