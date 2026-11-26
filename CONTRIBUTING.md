@@ -86,18 +86,18 @@ The stack has the following layers:
 
 1.  [nixpkgs][] provides GHC, the Haskell `Agda` library (the type checker),
     Nix's Agda package machinery, Python, and mkdocs.
-2.  `fls-agda` is Agda's command line with the FLS HTML backend added.  The flake
+2.  `fls-agda`: custom Agda backend for generating html documentation.  The flake
     uses it to build the Agda libraries as well as the specification.
-3.  The five Agda dependencies are [agda-stdlib][] (the standard library),
+3.  `fls-shake` drives `fls-agda` to produce the website, browsable source, and
+    Haskell code for conformance testing.
+4.  `formal-ledger` is the specification library, with sources in `src/` and
+    `src-lib-exts/`.  The separate `formal-ledger-test` library in
+    `formal-ledger-test/` depends on it.
+5.  The five Agda dependencies are [agda-stdlib][] (the standard library),
     [agda-stdlib-classes][] (type classes), [agda-stdlib-meta][] (metaprogramming),
     [agda-sets][] (abstract set theory), and [iog-agda-prelude][] (supplementary
     definitions).  nixpkgs and the [agda.nix][] overlay supply these libraries;
     their locked revisions determine the sources used.
-4.  `formal-ledger` is the specification library, with sources in `src/` and
-    `src-lib-exts/`.  The separate `formal-ledger-test` library in
-    `formal-ledger-test/` depends on it.
-5.  `fls-shake` drives `fls-agda` to produce the website, browsable source, and
-    Haskell code for conformance testing.
 
 All dependencies are pinned through `flake.lock`, either directly or through
 the package definitions in its locked nixpkgs and agda.nix revisions.  See
@@ -170,7 +170,6 @@ enter them using `nix develop`.
     `mkdocs`.
 
     ```bash
-    unset AGDA_DIR
     nix develop .#formal-ledger-test
     cd formal-ledger-test
     agda src/Test/Prelude.lagda.md
@@ -978,39 +977,16 @@ Use `nix develop .#fls-agda` when working on the backend itself.
 
 ### Changing versions
 
-**Agda libraries**.  Update the input or package definition that supplies the
-library.  For a separate flake input, update its locked revision.  For a
-source defined in agda.nix, change its revision and hash there, then point the
-`agda-nix` input here at that revision and run `nix flake lock`.
-`nix flake update agda-nix` instead takes the latest revision of the configured
-agda.nix repository.  Inspect its overlay and the lock diff: updating agda.nix
-can move several libraries together.
-
-For a library supplied by nixpkgs, update `nixpkgs` to a revision with the
-desired version, or add a local package overlay in `flake.nix` to override the
-library's source, version, and hash.  The configured agda.nix repository is
-named in `flake.nix`; its locked revision is in `flake.lock`.
-
-To try a local agda.nix checkout without changing the committed lock, use the
-following:
-
-```bash
-nix build .#fls-agdaWithPackages \
-  --override-input agda-nix path:/absolute/path/to/agda.nix \
-  --no-write-lock-file
-```
-
-A library whose `.agda-lib` depends on an exact version, such as
-`standard-library-2.3`, stops resolving when that dependency moves.  Use a
-compatible library release; a version-independent `standard-library`
-dependency avoids the name mismatch but does not establish API compatibility.
+**Agda libraries**.  Each library is an ordinary nixpkgs Agda package; agda.nix
+adds the two that nixpkgs lacks.  The [nixpkgs Agda documentation][] explains
+how to update or override one.
 
 **nixpkgs**.  `nix flake update nixpkgs` can move GHC, Python, mkdocs, Agda, and
 the libraries supplied by nixpkgs together.  The input follows nixpkgs' `master`
 branch, so a new revision may not yet have cached builds.  Read the lock diff
 before committing it.
 
-**Agda**.  A new Agda requires checking the following layers:
+**Agda**.  A new Agda version requires checking the following layers:
 
 1.  The Haskell `Agda` library from nixpkgs.  Before nixpkgs packages a new
     release, this needs an override of `haskellPackages.Agda` or Agda's own
@@ -1025,25 +1001,6 @@ before committing it.
 
 Build `formal-ledger`, `formal-ledger-test`, and `hs-src` after changing the
 stack.  Compare warnings with master and address new ones before merging.
-
-Rebuild an editor's Agda after changing the pins, as follows:
-
-```bash
-nix build .#fls-agdaWithPackages -o ~/ledger-agda
-```
-
-Keep `~/ledger-agda/bin` on the editor's `PATH`.  A symlink built once does not
-update when another checkout's `flake.lock` changes; rebuild it from the
-checkout being edited.
-
-### UTF-8 locales
-
-Every build that runs Agda needs a UTF-8 locale: a warning containing a
-non-ASCII identifier can otherwise fail with "cannot encode character".
-nixpkgs' Agda `mkDerivation` supplies `C.UTF-8` on Linux for the library
-builds, including `formal-ledger` and `formal-ledger-test`.  The
-`html`, `mkdocs`, and `hs-src` derivations set `LANG`, `LC_ALL`, and
-the Linux `LOCALE_ARCHIVE` explicitly.
 
 ---
 
@@ -1085,6 +1042,7 @@ the Linux `LOCALE_ARCHIVE` explicitly.
 [Nix]: https://nixos.org/
 [Nix flakes]: https://nixos.wiki/wiki/Flakes
 [Nix download instructions]: https://nixos.org/download/
+[nixpkgs Agda documentation]: https://nixos.org/manual/nixpkgs/stable/#how-to-use-agda
 [official Haskell instructions]: https://www.haskell.org/downloads/
 [pandoc]: https://pandoc.org/
 [python311]: https://www.python.org/downloads/release/python-3110/
