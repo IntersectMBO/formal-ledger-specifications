@@ -169,6 +169,78 @@ module _ {utxo utxo' : UTxO} where
       where open Tactic.EquationalReasoning.≡-Reasoning {A = ℕ} (solve-macro (quoteTerm +-0-monoid))
 
 
+split-balance : ∀ {utxo : UTxO} keys
+  → cbalance utxo ≡ cbalance (utxo ∣ keys ᶜ) + cbalance (utxo ∣ keys)
+split-balance {utxo} keys = begin
+  cbalance utxo
+    ≡˘⟨ balance-cong-coin {utxo = (utxo ∣ keys ᶜ) ∪ˡ (utxo ∣ keys)} {utxo}
+      $ disjoint-∪ˡ-∪ (disjoint-sym res-ex-disjoint)
+      ≡ᵉ-∘ ∪-sym
+      ≡ᵉ-∘ res-ex-∪ (_∈? keys) ⟩
+  cbalance ((utxo ∣ keys ᶜ) ∪ˡ (utxo ∣ keys))
+    ≡⟨ balance-∪ {utxo ∣ keys ᶜ} {utxo ∣ keys} (flip res-ex-disjoint) ⟩
+  cbalance (utxo ∣ keys ᶜ) + cbalance (utxo ∣ keys)
+    ∎
+  where
+  open Prelude.≡-Reasoning
+  open IsEquivalence ≡ᵉ-isEquivalence renaming (trans to infixl 4 _≡ᵉ-∘_)
+
+module _ {txb : TxBody} {utxo : UTxO} where
+
+  opaque
+    unfolding collOuts
+
+    collOuts-disjoint : ∀ {ret}
+      → txb .TxBody.txId ∉ mapˢ proj₁ (dom utxo)
+      → disjoint (dom utxo) (dom (collOuts txb ret))
+    collOuts-disjoint {ret = nothing} _ _ key∈ =
+      ∉-∅ (proj₂ (from dom∈ key∈))
+    collOuts-disjoint {ret = just _} fresh key∈ retKey∈ =
+      fresh (to ∈-map (-, sym (cong proj₁ (from ∈-dom-singleton-pair retKey∈)) , key∈))
+
+  opaque
+    unfolding collBalance
+
+    collBalance-coin : ∀ {ret fee}
+      → collBalance txb utxo ret fee
+      → cbalance (utxo ∣ txb .TxBody.collateralInputs) ≡ cbalance (collOuts txb ret) + fee
+    collBalance-coin {ret} {fee} eq =
+      trans (⟦⟧-cong coinIsMonoidHomomorphism eq) $
+      coin-inject-lemma {val = balance (collOuts txb ret)} {c = fee}
+
+  opaque
+    unfolding collOuts setToList
+
+    collBalance-no-return : ∀ {fee}
+      → collBalance txb utxo nothing fee
+      → cbalance (utxo ∣ txb .TxBody.collateralInputs) ≡ fee
+    collBalance-no-return {fee} eq =
+      trans (collBalance-coin {ret = nothing} {fee} eq) $
+      cong (_+ fee) (ε-homo coinIsMonoidHomomorphism)
+
+  collateral-coin-preserved : ∀ {ret fee}
+    → collBalance txb utxo ret fee
+    → disjoint (dom (utxo ∣ txb .TxBody.collateralInputs ᶜ)) (dom (collOuts txb ret))
+    → cbalance utxo
+      ≡ cbalance ((utxo ∣ txb .TxBody.collateralInputs ᶜ) ∪ˡ collOuts txb ret) + fee
+  collateral-coin-preserved {ret} {fee} eq disj = begin
+    cbalance utxo
+      ≡⟨ split-balance {utxo} keys ⟩
+    cbalance remaining + cbalance (utxo ∣ keys)
+      ≡⟨ cong (cbalance remaining +_) (collBalance-coin {ret} {fee} eq) ⟩
+    cbalance remaining + (cbalance returned + fee)
+      ≡˘⟨ +-assoc (cbalance remaining) (cbalance returned) fee ⟩
+    cbalance remaining + cbalance returned + fee
+      ≡˘⟨ cong (_+ fee) (balance-∪ {remaining} {returned} disj) ⟩
+    cbalance (remaining ∪ˡ returned) + fee
+      ∎
+    where
+    open Prelude.≡-Reasoning
+    keys = txb .TxBody.collateralInputs
+    remaining = utxo ∣ keys ᶜ
+    returned = collOuts txb ret
+
+
 module _
   {utxo utxo' : UTxO}
   {fees fees' : Fees}
@@ -262,19 +334,6 @@ module _
     (ℤ.+_ dep) ℤ.+ (tot - ref)                ≡⟨ distribʳ-⊖-+-pos dep tot ref ⟩
     (dep + tot) - ref                         ≡⟨ ⊖-≥ (m≤n⇒m≤n+o tot ref≤dep) ⟩
     ℤ.+_ (dep + tot - ref) ∎
-
-  split-balance : ∀ keys → cbalance utxo ≡ cbalance (utxo ∣ keys ᶜ) + cbalance (utxo ∣ keys)
-  split-balance keys = begin
-                      cbalance utxo
-                        ≡˘⟨ balance-cong-coin {utxo = (utxo ∣ keys ᶜ) ∪ˡ (utxo ∣ keys)}{utxo}
-                          $ disjoint-∪ˡ-∪ (disjoint-sym res-ex-disjoint)
-                          ≡ᵉ-∘ ∪-sym
-                          ≡ᵉ-∘ res-ex-∪ (_∈? keys) ⟩
-                      cbalance ((utxo ∣ keys ᶜ) ∪ˡ (utxo ∣ keys))
-                        ≡⟨ balance-∪ {utxo ∣ keys ᶜ} {utxo ∣ keys} $ flip res-ex-disjoint ⟩
-                      cbalance (utxo ∣ keys ᶜ) + cbalance (utxo ∣ keys)
-                        ∎
-    where open IsEquivalence ≡ᵉ-isEquivalence renaming (trans to infixl 4 _≡ᵉ-∘_)
 
   module _ (balanceUtxo balanceIns balanceNoIns balanceOuts balanceUtxo' : Coin)
            (ref txFee txDonation tot : Coin)

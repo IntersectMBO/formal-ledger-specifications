@@ -67,6 +67,7 @@ instance
   HSTransactionStructure = record
     { TxId            = ℕ
     ; Ix              = ℕ
+    ; natToIx         = id
     ; AuxiliaryData   = ℕ
     ; POSIXTimeRange  = ⊤
     ; epochStructure  = it

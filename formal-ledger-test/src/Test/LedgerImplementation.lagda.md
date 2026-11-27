@@ -190,6 +190,7 @@ open import Ledger.Conway.Conformance.Certs it hiding (StakePoolParams; DCert)
 SVTransactionStructure : TransactionStructure
 SVTransactionStructure = record
   { Implementation
+  ; natToIx        = id
   ; POSIXTimeRange = ⊤
   ; epochStructure  = SVEpochStructure
   ; globalConstants = SVGlobalConstants
